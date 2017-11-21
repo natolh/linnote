@@ -1,0 +1,16 @@
+# System
+.DS_Store
+
+# Byte-compiled / optimized / DLL files
+__pycache__
+*.py[cod]
+
+# Packaging / Environment / Distribution
+env
+build
+dist
+*.egg
+*.egg-info
+
+# Additionnal ressources
+ressources
