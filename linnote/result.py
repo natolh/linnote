@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Implement results.
+Implement marks.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -13,6 +13,7 @@ class Mark(object):
     """Student's mark to an evaluation."""
 
     def __init__(self, student, score, scale=1, bonus=0):
+        """Create a new mark."""
         super(Mark, self).__init__()
         self.student = student
         self.raw = score / scale

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from locale import setlocale, LC_ALL
-from linnote.configuration import LOCALE, root
+from linnote.configuration import LOCALE, ROOT
 from linnote.evaluation import Assessment, Test
 
 
@@ -14,7 +14,7 @@ def rank_simple(test):
 
 
 setlocale(LC_ALL, LOCALE)
-tests_results = list(root.joinpath('results').glob('*.xlsx'))
+tests_results = list(ROOT.joinpath('results').glob('*.xlsx'))
 
 if not len(tests_results) > 1:
     print("Classement simple")

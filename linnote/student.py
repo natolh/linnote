@@ -2,20 +2,28 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Implement students.
+Implement student and students groups.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from pandas import read_excel
-from linnote.configuration import root
+from linnote.configuration import ROOT
 
 
 class Student(object):
-    """Represent a student."""
+    """Someone seeking to learn about life, the universe and everything."""
 
     def __init__(self, identifier):
+        """
+        Create a new student.
+
+        - identifier:   An integer. A unique, anonymous, identifier for the
+                        student to use during assessments.
+
+        Return: None.
+        """
         super(Student, self).__init__()
         self.identifier = identifier
 
@@ -48,13 +56,20 @@ class Group(object):
     """A group of students."""
 
     def __init__(self, students, name=None):
-        """Create a new group of students."""
+        """
+        Create a new students group.
+
+        - students: List of 'Student' objects. Members of the group.
+        - name:     String. The name of the group.
+
+        Return: None.
+        """
         super(Group, self).__init__()
         self.students = students
         self.name = name
 
     def __repr__(self):
-        return '<Group of students>'
+        return '<Group of students: {}>'.format(self.name)
 
     def __len__(self):
         """Number of students in the group."""
@@ -74,7 +89,7 @@ class Group(object):
 
         Return: Generator sequence of path-like objects.
         """
-        return root.joinpath("groups").glob("*.xlsx")
+        return ROOT.joinpath("groups").glob("*.xlsx")
 
     @staticmethod
     def load(file):

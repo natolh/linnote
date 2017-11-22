@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Miscallenous tools.
+Miscellaneous tools for the application.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -16,7 +16,7 @@ from linnote.configuration import CHARSET
 
 
 def make_stats(sample):
-    """Calculate basic stats."""
+    """Basic statistics about an assessment's marks."""
     # Return statistics.
     return {
         "size": len(sample),
@@ -28,6 +28,7 @@ def make_stats(sample):
 
 
 def make_histogram(sample, coefficient):
+    """Distribution of marks to an assessment."""
     document = StringIO()
     plot.figure(figsize=(6, 4))
     plot.hist(x=sample, bins=coefficient, range=(0, coefficient),
@@ -42,9 +43,10 @@ def render_template(template, **kwargs):
     """
     Load a template and render it.
 
-    The template name is equal to the template argument. The template is render
-    with arguments passed in the kwargs dictionnary. Return an encoded version
-    of the template.
+    - template: A string. Name of the template.
+    - kwargs:   Dictionnary. Arguments to fill the template.
+
+    Return: An HTML document.
     """
     # Load Jinja2 environnement and load the template.
     env = Environment(loader=PackageLoader("linnote"))

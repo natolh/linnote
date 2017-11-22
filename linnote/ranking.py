@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ranking tools.
+Implement ranking tools.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from itertools import groupby
 from operator import attrgetter
-from linnote.configuration import root
+from linnote.configuration import ROOT
 from linnote.utils import make_stats, render_template, make_histogram
 
 
@@ -48,7 +48,7 @@ class Ranking(object):
             histogram=make_histogram([rank.score for rank in self.ranks], self.evaluation.coefficient),
             **kwargs)
 
-        document = root.joinpath("rankings", self.name).with_suffix(".html")
+        document = ROOT.joinpath("rankings", self.name).with_suffix(".html")
         document.write_bytes(output)
 
     def rank(self):
