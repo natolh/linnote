@@ -9,15 +9,19 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 
-class Result(object):
-    """Represent a result."""
+class Mark(object):
+    """Student's mark to an evaluation."""
 
-    def __init__(self, student, mark):
-        super(Result, self).__init__()
+    def __init__(self, student, score, scale=1, bonus=0):
+        super(Mark, self).__init__()
         self.student = student
-        self.raw_mark = mark
-        self.adjusted_mark = float()
-        self.rank = int()
+        self.raw = score / scale
+        self.bonus = bonus / scale
 
     def __repr__(self):
-        return '<Result of student #{}>'.format(self.student.identifier)
+        return '<Mark of {}: {}>'.format(self.student, self.value)
+
+    @property
+    def value(self):
+        """The processed mark, including bonus points."""
+        return self.raw + self.bonus
