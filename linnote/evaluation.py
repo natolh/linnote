@@ -14,7 +14,7 @@ from time import strptime, strftime
 from pandas import read_excel
 from linnote.configuration import root
 from linnote.result import Result
-from linnote.student import Student
+from linnote.student import Student, Group
 from linnote.table import Table
 from linnote.utils import make_stats
 
@@ -23,8 +23,18 @@ class Evaluation(object):
 
     def __init__(self):
         super(Evaluation, self).__init__()
-        self.tables = [Table(evaluation=self, group_name=table.stem, src=table)
-                       for table in Table.find()]
+        self.tables = list()
+
+        # Create tables.
+        for group_definition in Group.find():
+            # Create group.
+            students = Group.load(group_definition)
+            name = group_definition.stem
+            group = Group(students, name)
+
+            # Create table.
+            table = Table(self, group)
+            self.tables.append(table)
 
     def adjust_marks(self):
         maximum = make_stats([result.raw_mark for result in self.results])[
@@ -44,7 +54,7 @@ class Evaluation(object):
     def results_to_table(self):
         for table in self.tables:
             table.results = list(
-                filter(lambda r: r.student in table.students, self.results))
+                filter(lambda r: r.student in table.group, self.results))
 
         return self.results
 

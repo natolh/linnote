@@ -9,54 +9,25 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from itertools import groupby
-from pandas import read_excel
 from linnote.configuration import root
-from linnote.student import Student
 from linnote.utils import make_stats, render_template, make_histogram
 
 
 class Table(object):
     """A group of student and their results to a test or an assessment."""
 
-    def __init__(self, evaluation, group_name, src=None):
+    def __init__(self, evaluation, group):
         super(Table, self).__init__()
         self.evaluation = evaluation
-        self.group_name = group_name
-        self.students = self.assign(src) if src else None
+        self.group = group
         self.results = list()
-
-    @classmethod
-    def find(cls):
-        """
-        Find files describing student's groups.
-
-        Each group of student will generate a standalone table so that students
-        of different groups will be grade in different tables.
-        """
-        # Return an iterable containing all group description files path
-        # objects.
-        return root.joinpath("groups").glob("*.xlsx")
 
     @property
     def name(self):
-        return "{0} - {1}".format(self.evaluation.name, self.group_name)
+        return "{0} - {1}".format(self.evaluation.name, self.group.name)
 
     def __repr__(self):
-        return "<Table {0} | {1} students>".format(self.name, len(self.students))
-
-    def assign(self, src):
-        """
-        Assign students to a table instance.
-
-        Students list is loaded from a file.
-        """
-        # Open the group description files and parse it.
-        document = read_excel(src, names=["anonymat"])
-
-        # For each student list in the group description file create a student
-        # object and append it to the students list of the table. Then return
-        # students.
-        return [Student(identifier=student["anonymat"]) for student in document.to_dict("records")]
+        return "<Table {0} | {1} students>".format(self.name, len(self.group))
 
     def export(self, template, **kwargs):
         """Export table to an HTML document."""
