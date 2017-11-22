@@ -8,12 +8,10 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from time import sleep
 from itertools import groupby
 from operator import attrgetter
 from time import strptime, strftime
 from pandas import read_excel
-from linnote.configuration import root
 from linnote.result import Mark
 from linnote.student import Student, Group
 from linnote.ranking import Ranking, Rank
@@ -101,24 +99,11 @@ class Assessment(Evaluation):
                 precision=self.precision
             )
 
-    def process(self):
-        for test in Test.find():
-            test = Test.create(assessment=self, src=test)
-            self.tests.append(test)
-            test.process()
-            sleep(2)
-
-        self.aggregate_results()
-        self.results_to_ranking()
-        self.grade()
-        self.export_rankings()
-
 
 class Test(Evaluation):
 
-    def __init__(self, assessment, label, date, scale, coefficient, precision, src):
+    def __init__(self, label, date, scale, coefficient, precision, src):
         super(Test, self).__init__()
-        self.assessment = assessment
         self.label = label
         self.date = date
         self.scale = scale
@@ -127,19 +112,15 @@ class Test(Evaluation):
         self.results = self.load_results(src)
 
     @classmethod
-    def create(cls, assessment, src):
+    def create(cls, src):
         print(src.name)
         label = input('Référence : ')
         date = strptime(input('Date (DD/MM/YYYY) : '), '%d/%m/%Y')
         scale = float(input('Barème : '))
         coefficient = int(input('Coefficient : '))
         precision = int(input('Précision : '))
-        return cls(assessment=assessment, label=label, date=date, scale=scale,
+        return cls(label=label, date=date, scale=scale,
                    coefficient=coefficient, precision=precision, src=src)
-
-    @classmethod
-    def find(cls):
-        return root.joinpath('results').glob('*.xlsx')
 
     @property
     def name(self):
@@ -166,9 +147,3 @@ class Test(Evaluation):
             stack.append(mark)
 
         return stack
-
-    def process(self):
-        self.adjust_marks()
-        self.results_to_ranking()
-        self.grade()
-        self.export_rankings()
