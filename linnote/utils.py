@@ -29,7 +29,7 @@ def make_stats(sample):
 
 def make_histogram(sample, coefficient):
     document = StringIO()
-    figure = plot.figure(figsize=(6, 4))
+    plot.figure(figsize=(6, 4))
     plot.hist(x=sample, bins=coefficient, range=(0, coefficient),
               color=(0.80, 0.80, 0.80), histtype="stepfilled")
     plot.title("Répartition des notes")
