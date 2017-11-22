@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from time import sleep
 from locale import setlocale, LC_ALL
 from linnote.configuration import LOCALE, root
 from linnote.evaluation import Assessment, Test
@@ -12,7 +11,6 @@ def rank_simple(test):
     test.results_to_ranking()
     test.grade()
     test.export_rankings()
-    sleep(1.5)
 
 
 setlocale(LC_ALL, LOCALE)
