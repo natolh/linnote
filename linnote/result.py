@@ -2,22 +2,36 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Implement results.
+Implement marks.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 
-class Result(object):
-    """Represent a result."""
+class Mark(object):
+    """Student's mark to an evaluation."""
 
-    def __init__(self, student, mark):
-        super(Result, self).__init__()
+    def __init__(self, student, evaluation, score, scale=1, bonus=0):
+        """Create a new mark."""
+        super(Mark, self).__init__()
         self.student = student
-        self.raw_mark = mark
-        self.adjusted_mark = float()
-        self.rank = int()
+        self.evaluation = evaluation
+        self._raw = score / scale
+        self._bonus = bonus / scale
 
     def __repr__(self):
-        return '<Result of student #{}>'.format(self.student.identifier)
+        return '<Mark of {}: {}>'.format(self.student, self.value)
+
+    @property
+    def raw(self):
+        return self._raw * self.evaluation.coefficient
+
+    @property
+    def bonus(self):
+        return self._bonus * self.evaluation.coefficient
+
+    @property
+    def value(self):
+        """The processed mark, including bonus points."""
+        return (self._raw + self._bonus) * self.evaluation.coefficient

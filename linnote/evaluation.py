@@ -8,45 +8,47 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from time import sleep
 from itertools import groupby
+from operator import attrgetter
 from time import strptime, strftime
 from pandas import read_excel
-from linnote.configuration import root
-from linnote.result import Result
-from linnote.student import Student
-from linnote.table import Table
-from linnote.utils import make_stats
+from linnote.result import Mark
+from linnote.student import Student, Group
+from linnote.ranking import Ranking, Rank
 
 
 class Evaluation(object):
 
     def __init__(self):
         super(Evaluation, self).__init__()
-        self.tables = [Table(evaluation=self, group_name=table.stem, src=table)
-                       for table in Table.find()]
+        self.rankings = list()
+
+        # Create rankings.
+        for group_definition in Group.find():
+            # Create group.
+            students = Group.load(group_definition)
+            name = group_definition.stem
+            group = Group(students, name)
+
+            # Create a ranking.
+            ranking = Ranking(self, group)
+            self.rankings.append(ranking)
 
     def adjust_marks(self):
-        maximum = make_stats([result.raw_mark for result in self.results])[
-            'maximum']
-        for result in self.results:
-            result.adjusted_mark = (
-                result.raw_mark / maximum) * self.coefficient
-
-        return self.results
+        maximum = max([mark._raw for mark in self.results])
+        for mark in self.results:
+            mark._bonus = (mark._raw / maximum) - mark._raw
 
     def grade(self):
-        for table in self.tables:
-            table.grade()
+        for ranking in self.rankings:
+            ranking.rank()
 
-        return self.tables
-
-    def results_to_table(self):
-        for table in self.tables:
-            table.results = list(
-                filter(lambda r: r.student in table.students, self.results))
-
-        return self.results
+    def results_to_ranking(self):
+        for ranking in self.rankings:
+            marks = filter(lambda m: m.student in ranking.group, self.results)
+            for mark in marks:
+                rank = Rank(mark.student.identifier, mark.raw, adj=mark.value)
+                ranking.ranks.append(rank)
 
 
 class Assessment(Evaluation):
@@ -78,45 +80,30 @@ class Assessment(Evaluation):
         return '<Assessment #{}>'.format(self.identifier)
 
     def aggregate_results(self):
-        results = sorted(
-            [result for test in self.tests for result in test.results], key=lambda r: r.student)
+        by_student = attrgetter('student')
 
-        for student, results in groupby(results, key=lambda r: r.student):
-            results = list(results)
-            if len(results) == len(self.tests):
-                result = Result(
-                    student=student,
-                    mark=sum([result.adjusted_mark for result in results])
-                )
-                self.results.append(result)
-            else:
-                pass
+        results = [mark for test in self.tests for mark in test.results]
+        results.sort(key=by_student)
 
-    def export_tables(self):
-        for table in self.tables:
-            table.export(
+        for student, marks in groupby(results, by_student):
+            marks = list(marks)
+
+            if len(marks) == len(self.tests):
+                mark = Mark(student, self, sum([mark.value for mark in marks]), self.coefficient)
+                self.results.append(mark)
+
+    def export_rankings(self):
+        for ranking in self.rankings:
+            ranking.export(
                 template='assessment.html',
                 precision=self.precision
             )
 
-    def process(self):
-        for test in Test.find():
-            test = Test.create(assessment=self, src=test)
-            self.tests.append(test)
-            test.process()
-            sleep(2)
-
-        self.aggregate_results()
-        self.results_to_table()
-        self.grade()
-        self.export_tables()
-
 
 class Test(Evaluation):
 
-    def __init__(self, assessment, label, date, scale, coefficient, precision, src):
+    def __init__(self, label, date, scale, coefficient, precision, src):
         super(Test, self).__init__()
-        self.assessment = assessment
         self.label = label
         self.date = date
         self.scale = scale
@@ -125,23 +112,15 @@ class Test(Evaluation):
         self.results = self.load_results(src)
 
     @classmethod
-    def create(cls, assessment, src):
+    def create(cls, src):
         print(src.name)
         label = input('Référence : ')
         date = strptime(input('Date (DD/MM/YYYY) : '), '%d/%m/%Y')
         scale = float(input('Barème : '))
         coefficient = int(input('Coefficient : '))
         precision = int(input('Précision : '))
-        return cls(assessment=assessment,
-                   label=label, date=date,
-                   scale=scale,
-                   coefficient=coefficient,
-                   precision=precision,
-                   src=src)
-
-    @classmethod
-    def find(cls):
-        return root.joinpath('results').glob('*.xlsx')
+        return cls(label=label, date=date, scale=scale,
+                   coefficient=coefficient, precision=precision, src=src)
 
     @property
     def name(self):
@@ -150,23 +129,21 @@ class Test(Evaluation):
     def __repr__(self):
         return '<Test>'
 
-    def export_tables(self):
-        for table in self.tables:
-            table.export(
+    def export_rankings(self):
+        for ranking in self.rankings:
+            ranking.export(
                 template='test.html',
                 precision=self.precision
             )
 
-    def load_results(self, src):
-        document = read_excel(
-            src,
-            names=['anonymat', 'note'],
-            usecols=1,
-        ).dropna(how='all')
-        return [Result(student=Student(identifier=int(result['anonymat'])), mark=(result['note'] / self.scale) * self.coefficient) for result in document.to_dict('records')]
+    def load_results(self, file):
+        results = read_excel(file, names=['anonymat', 'note'], usecols=1)
+        results.dropna(how='all')
 
-    def process(self):
-        self.adjust_marks()
-        self.results_to_table()
-        self.grade()
-        self.export_tables()
+        stack = list()
+        for result in results.to_dict('records'):
+            student = Student(int(result['anonymat']))
+            mark = Mark(student, self, float(result['note']), self.scale)
+            stack.append(mark)
+
+        return stack
