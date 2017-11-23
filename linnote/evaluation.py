@@ -35,9 +35,9 @@ class Evaluation(object):
             self.rankings.append(ranking)
 
     def adjust_marks(self):
-        maximum = max([mark.raw for mark in self.results])
+        maximum = max([mark._raw for mark in self.results])
         for mark in self.results:
-            mark.bonus = (mark.raw / maximum) - mark.raw
+            mark._bonus = (mark._raw / maximum) - mark._raw
 
     def grade(self):
         for ranking in self.rankings:
@@ -47,7 +47,7 @@ class Evaluation(object):
         for ranking in self.rankings:
             marks = filter(lambda m: m.student in ranking.group, self.results)
             for mark in marks:
-                rank = Rank(mark.student.identifier, mark.raw * self.coefficient, adj=mark.value * self.coefficient)
+                rank = Rank(mark.student.identifier, mark.raw, adj=mark.value)
                 ranking.ranks.append(rank)
 
 
@@ -89,7 +89,7 @@ class Assessment(Evaluation):
             marks = list(marks)
 
             if len(marks) == len(self.tests):
-                mark = Mark(student, sum([mark.value for mark in marks]), len(marks))
+                mark = Mark(student, self, sum([mark.value for mark in marks]), self.coefficient)
                 self.results.append(mark)
 
     def export_rankings(self):
@@ -143,7 +143,7 @@ class Test(Evaluation):
         stack = list()
         for result in results.to_dict('records'):
             student = Student(int(result['anonymat']))
-            mark = Mark(student, float(result['note']), self.scale)
+            mark = Mark(student, self, float(result['note']), self.scale)
             stack.append(mark)
 
         return stack
