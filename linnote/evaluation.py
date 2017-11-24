@@ -41,7 +41,7 @@ class Evaluation(object):
 
     def grade(self):
         for ranking in self.rankings:
-            ranking.rank()
+            ranking.make()
 
     def results_to_ranking(self):
         for ranking in self.rankings:
