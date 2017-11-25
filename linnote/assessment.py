@@ -102,5 +102,6 @@ class Assessment(object):
             marks = list(marks)
 
             if len(marks) == len(tests):
-                mark = Mark(student, test, sum([mark.value for mark in marks]), test.coefficient)
+                mark = Mark(student, test, sum([mark.value for mark in marks]),
+                            test.coefficient)
                 test.results.append(mark)
