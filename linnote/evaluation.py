@@ -10,45 +10,17 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from itertools import groupby
 from operator import attrgetter
-from time import strptime, strftime
 from pandas import read_excel
 from linnote.result import Mark
-from linnote.student import Student, Group
-from linnote.ranking import Ranking, Rank
+from linnote.student import Student
 
 
 class Evaluation(object):
-
-    def __init__(self):
-        super(Evaluation, self).__init__()
-        self.rankings = list()
-
-        # Create rankings.
-        for group_definition in Group.find():
-            # Create group.
-            students = Group.load(group_definition)
-            name = group_definition.stem
-            group = Group(students, name)
-
-            # Create a ranking.
-            ranking = Ranking(self, group)
-            self.rankings.append(ranking)
 
     def adjust_marks(self):
         maximum = max([mark._raw for mark in self.results])
         for mark in self.results:
             mark._bonus = (mark._raw / maximum) - mark._raw
-
-    def grade(self):
-        for ranking in self.rankings:
-            ranking.make()
-
-    def results_to_ranking(self):
-        for ranking in self.rankings:
-            marks = filter(lambda m: m.student in ranking.group, self.results)
-            for mark in marks:
-                rank = Rank(mark.student.identifier, mark.raw, adj=mark.value)
-                ranking.ranks.append(rank)
 
 
 class Assessment(Evaluation):
@@ -67,10 +39,6 @@ class Assessment(Evaluation):
     @property
     def coefficient(self):
         return sum([test.coefficient for test in self.tests])
-
-    @property
-    def name(self):
-        return 'Session N°{}'.format(self.identifier)
 
     @property
     def precision(self):
@@ -92,20 +60,11 @@ class Assessment(Evaluation):
                 mark = Mark(student, self, sum([mark.value for mark in marks]), self.coefficient)
                 self.results.append(mark)
 
-    def export_rankings(self):
-        for ranking in self.rankings:
-            ranking.export(
-                template='assessment.html',
-                precision=self.precision
-            )
-
 
 class Test(Evaluation):
 
-    def __init__(self, label, date, scale, coefficient, precision, src):
+    def __init__(self, scale, coefficient, precision, src):
         super(Test, self).__init__()
-        self.label = label
-        self.date = date
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
@@ -114,27 +73,14 @@ class Test(Evaluation):
     @classmethod
     def create(cls, src):
         print(src.name)
-        label = input('Référence : ')
-        date = strptime(input('Date (DD/MM/YYYY) : '), '%d/%m/%Y')
-        scale = float(input('Barème : '))
-        coefficient = int(input('Coefficient : '))
-        precision = int(input('Précision : '))
-        return cls(label=label, date=date, scale=scale,
-                   coefficient=coefficient, precision=precision, src=src)
-
-    @property
-    def name(self):
-        return 'Classement {0} du {1}'.format(self.label, strftime('%A %d %B %Y', self.date))
+        scale = float(input('Barème :'))
+        coefficient = int(input('Coefficient :'))
+        precision = int(input('Précision :'))
+        return cls(scale=scale, coefficient=coefficient, precision=precision,
+                   src=src)
 
     def __repr__(self):
         return '<Test>'
-
-    def export_rankings(self):
-        for ranking in self.rankings:
-            ranking.export(
-                template='test.html',
-                precision=self.precision
-            )
 
     def load_results(self, file):
         results = read_excel(file, names=['anonymat', 'note'], usecols=1)
