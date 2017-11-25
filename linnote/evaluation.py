@@ -27,14 +27,8 @@ class Assessment(Evaluation):
 
     def __init__(self, identifier):
         super(Assessment, self).__init__()
-        self.identifier = identifier
         self.tests = list()
         self.results = list()
-
-    @classmethod
-    def create(cls):
-        identifier = input('Session N° : ')
-        return cls(identifier=identifier)
 
     @property
     def coefficient(self):
@@ -45,7 +39,7 @@ class Assessment(Evaluation):
         return min([test.precision for test in self.tests])
 
     def __repr__(self):
-        return '<Assessment #{}>'.format(self.identifier)
+        return '<Assessment>'
 
     def aggregate_results(self):
         by_student = attrgetter('student')
