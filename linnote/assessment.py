@@ -42,54 +42,14 @@ class Mark(object):
         return (self._raw + self._bonus) * self.evaluation.coefficient
 
 
-class Evaluation(object):
+class Test(object):
 
-    def adjust_marks(self):
-        maximum = max([mark._raw for mark in self.results])
-        for mark in self.results:
-            mark._bonus = (mark._raw / maximum) - mark._raw
-
-
-class Assessment(Evaluation):
-
-    def __init__(self):
-        super(Assessment, self).__init__()
-        self.tests = list()
-        self.results = list()
-
-    @property
-    def coefficient(self):
-        return sum([test.coefficient for test in self.tests])
-
-    @property
-    def precision(self):
-        return min([test.precision for test in self.tests])
-
-    def __repr__(self):
-        return '<Assessment>'
-
-    def aggregate_results(self):
-        by_student = attrgetter('student')
-
-        results = [mark for test in self.tests for mark in test.results]
-        results.sort(key=by_student)
-
-        for student, marks in groupby(results, by_student):
-            marks = list(marks)
-
-            if len(marks) == len(self.tests):
-                mark = Mark(student, self, sum([mark.value for mark in marks]), self.coefficient)
-                self.results.append(mark)
-
-
-class Test(Evaluation):
-
-    def __init__(self, scale, coefficient, precision, src):
+    def __init__(self, scale, coefficient, precision, src=None):
         super(Test, self).__init__()
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
-        self.results = self.load_results(src)
+        self.results = self.load_results(src) if src else list()
 
     @classmethod
     def create(cls, src):
@@ -103,6 +63,11 @@ class Test(Evaluation):
     def __repr__(self):
         return '<Test>'
 
+    def adjust_marks(self):
+        maximum = max([mark._raw for mark in self.results])
+        for mark in self.results:
+            mark._bonus = (mark._raw / maximum) - mark._raw
+
     def load_results(self, file):
         results = read_excel(file, names=['anonymat', 'note'], usecols=1)
         results.dropna(how='all')
@@ -114,3 +79,17 @@ class Test(Evaluation):
             stack.append(mark)
 
         return stack
+
+    @staticmethod
+    def aggregate_results(tests, test):
+        by_student = attrgetter('student')
+
+        results = [mark for test in tests for mark in test.results]
+        results.sort(key=by_student)
+
+        for student, marks in groupby(results, by_student):
+            marks = list(marks)
+
+            if len(marks) == len(tests):
+                mark = Mark(student, test, sum([mark.value for mark in marks]), test.coefficient)
+                test.results.append(mark)
