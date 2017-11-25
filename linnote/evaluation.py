@@ -25,7 +25,7 @@ class Evaluation(object):
 
 class Assessment(Evaluation):
 
-    def __init__(self, identifier):
+    def __init__(self):
         super(Assessment, self).__init__()
         self.tests = list()
         self.results = list()
