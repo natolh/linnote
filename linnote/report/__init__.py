@@ -11,6 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from pathlib import Path
 from jinja2 import Environment, PackageLoader
 from linnote import APP_DIR
+from linnote.report.utils import sanitize_filename
 
 
 ENV = Environment(loader=PackageLoader("linnote"))
@@ -88,5 +89,6 @@ class Report(object):
         report = self.build()
 
         folder = Path(path).resolve()
-        document = folder.joinpath(self.title).with_suffix('.' + format)
+        filename = sanitize_filename(self.title) + '.' + format
+        document = folder.joinpath(filename)
         document.write_bytes(report)
