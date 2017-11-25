@@ -42,6 +42,34 @@
                     </tbody>
                 </table>
 
+                <svg width="100%" height="50%" preserveAspectRatio="X432Y288" viewBox="0 0 432 288">
+                    {{ data.graph }}
+                </svg>
+
+                <table id="grade">
+                    <thead>
+                        <tr>
+                            <th class="left-align">Anonymat</th>
+                            <th class="left-align">Note brute</th>
+                            <th class="right-align">Rang</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rank in data.ranking.ranks %}
+                        <tr>
+                            <td class="left-align">
+                                <strong>{{ rank.identifier }}</strong>
+                            </td>
+                            <td class="left-align">
+                                {{ rank.score|round(precision) }}
+                            </td>
+                            <td class="right-align">
+                                <strong>{{ rank.position }}</strong>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </section>
             {% endfor %}
         </main>
