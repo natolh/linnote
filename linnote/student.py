@@ -17,14 +17,14 @@ class Student(object):
 
     def __init__(self, identifier):
         """
-        Create a new student.
+        Initialize a new student.
 
         - identifier:   An integer. A unique, anonymous, identifier for the
                         student to use during assessments.
 
         Return: None.
         """
-        super(Student, self).__init__()
+        super().__init__()
         self.identifier = identifier
 
     def __repr__(self):
@@ -57,7 +57,7 @@ class Group(object):
 
     def __init__(self, students, name=None):
         """
-        Create a new students group.
+        Initialize a new students group.
 
         - students: List of 'Student' objects. Members of the group.
         - name:     String. The name of the group.
@@ -100,5 +100,5 @@ class Group(object):
 
         Return: List of 'Student'.
         """
-        students = read_excel(file, names=['anonymat']).to_dict('records')
-        return [Student(student["anonymat"]) for student in students]
+        students = read_excel(file, names=['identifier']).to_dict('records')
+        return [Student(student["identifier"]) for student in students]
