@@ -51,6 +51,7 @@
                         <tr>
                             <th class="left-align">Anonymat</th>
                             <th class="left-align">Note brute</th>
+                            <th class="left-align">Note</th>
                             <th class="right-align">Rang</th>
                         </tr>
                     </thead>
@@ -58,10 +59,15 @@
                         {% for rank in data.ranking.ranks %}
                         <tr>
                             <td class="left-align">
-                                <strong>{{ rank.identifier }}</strong>
+                                <strong>
+                                    {{ rank.item.student.identifier }}
+                                </strong>
                             </td>
                             <td class="left-align">
-                                {{ rank.score|round(precision) }}
+                                {{ rank.item.raw }}
+                            </td>
+                            <td class="left-align">
+                                {{ rank.score }}
                             </td>
                             <td class="right-align">
                                 <strong>{{ rank.position }}</strong>

@@ -12,6 +12,7 @@ from io import StringIO
 from operator import attrgetter
 from statistics import mean, median
 from matplotlib import pyplot
+from linnote.ranking import Ranking
 
 value = attrgetter('value')
 
@@ -40,5 +41,7 @@ def histogram(assessment, group):
     document.seek(0)
     return "\n".join(document.readlines()[5:-1])
 
+
 def ranking(assessment, group):
-    pass
+    marks = [mark for mark in assessment.results if mark.student in group]
+    return Ranking(marks, key=value)

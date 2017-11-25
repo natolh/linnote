@@ -10,6 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from functools import wraps
 from itertools import groupby, repeat
+from operator import attrgetter
 
 
 def ranker(f):
@@ -63,17 +64,14 @@ class Ranking(object):
         Return: None.
         """
         super(Ranking, self).__init__()
-        self.items = sorted(items, self.key, reverse)
-        self.key = key
-        self.reverse = reverse
+        self.ranks = [Rank(item, key(item)) for item in items]
+        self.key = attrgetter('score')
         self.start = start
         self.handle = handle
 
-        # Create ranking items.
-        for item in items:
-            self.items += Rank(label(item), score(item))
+        # Establish ranking.
+        self.ranks.sort(key=self.key, reverse=reverse)
 
-        # Rank.
         for rank, item in self.rank():
             item.position = rank
 
@@ -81,12 +79,12 @@ class Ranking(object):
         return '<Ranking>'
 
     def __iter__(self):
-        return iter(self.items)
+        return iter(self.ranks)
 
     def rank(self):
         """Calculate ranks."""
         index = self.start
-        for score, group in groupby(self.items):
+        for score, group in groupby(self.ranks, self.key):
             group = list(group)
             ranks, offset = self.handle(index, group)
             index += offset
@@ -96,24 +94,21 @@ class Ranking(object):
 class Rank(object):
     """Ranking item."""
 
-    def __init__(self, identifier, score, position=None, **kwargs):
+    def __init__(self, item, score, position=None):
         """
         Create a new rank.
 
-        - identifier:   A string or an integer. Something to identify the
-                        person responsible for that rank.
+        - item:         An object. The item beeing ranked.
         - score:        A sortable value. The score of the person, this value
                         is used to rank.
         - position:     Integer. The student's position in the ranking.
-        - kwargs:       Dictionnary. Extra informations.
 
         Return: None.
         """
         super(Rank, self).__init__()
-        self.identifier = identifier
+        self.item = item
         self.score = score
         self.position = position
-        self.kwargs = kwargs
 
     def __repr__(self):
         return '<Rank #{}: {}>'.format(self.position, self.score)
