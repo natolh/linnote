@@ -3,36 +3,23 @@
 
 from locale import setlocale, LC_ALL
 from linnote.configuration import LOCALE, ROOT
-from linnote.evaluation import Assessment, Test
-
-
-def rank_simple(test):
-    test.adjust_marks()
-    test.results_to_ranking()
-    test.grade()
-    test.export_rankings()
-
+from linnote.evaluation import Test
+from linnote.student import Group
+from linnote.report import MetaReport
 
 setlocale(LC_ALL, LOCALE)
+
 tests_results = list(ROOT.joinpath('results').glob('*.xlsx'))
+groups = list(Group(Group.load(gdef), gdef.stem) for gdef in Group.find())
 
-if not len(tests_results) > 1:
-    print("Classement simple")
-    test = Test.create(src=tests_results[0])
-    rank_simple(test)
+RankingReport = MetaReport('RankingReport', 'test.html')
 
-else:
-    print("Classement multi-épreuves")
-    assessment = Assessment.create()
+for results in tests_results:
+    # Create and process test.
+    test = Test.create(src=results)
+    test.adjust_marks()
 
-    for n in range(0, len(tests_results)):
-        test = Test.create(src=tests_results[n])
-        assessment.tests.append(test)
-
-    for test in assessment.tests:
-        rank_simple(test)
-
-    assessment.aggregate_results()
-    assessment.results_to_ranking()
-    assessment.grade()
-    assessment.export_rankings()
+    # Create and make the report.
+    title = input('Titre du rapport :')
+    report = RankingReport(title, test, groups)
+    report.write()
