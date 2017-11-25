@@ -45,14 +45,14 @@ class Mark(object):
 class Assessment(object):
     """Evaluation of students knowledge."""
 
-    def __init__(self, scale, coefficient, precision, src=None):
+    def __init__(self, scale, coefficient, precision, results=None):
         """
         Initialize a new assessment.
 
         - scale:        Float. Actual scale in results file.
         - coefficient:  Float. Desired scale for output.
         - precision:    Integer. Number of decimals for outputing marks.
-        - src:          Path-like object. Path pointing to the results file.
+        - results:      Path-like object. Path pointing to the results file.
 
         Return: None.
         """
@@ -60,16 +60,7 @@ class Assessment(object):
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
-        self.results = self.load_results(src) if src else list()
-
-    @classmethod
-    def create(cls, src):
-        print(src.name)
-        scale = float(input('Barème :'))
-        coefficient = int(input('Coefficient :'))
-        precision = int(input('Précision :'))
-        return cls(scale=scale, coefficient=coefficient, precision=precision,
-                   src=src)
+        self.results = self.load_results(results) if results else list()
 
     def __repr__(self):
         return '<Assessment>'
@@ -91,8 +82,7 @@ class Assessment(object):
 
         return stack
 
-    @staticmethod
-    def aggregate_results(tests, test):
+    def aggregate_results(self, tests):
         by_student = attrgetter('student')
 
         results = [mark for test in tests for mark in test.results]
@@ -102,6 +92,6 @@ class Assessment(object):
             marks = list(marks)
 
             if len(marks) == len(tests):
-                mark = Mark(student, test, sum([mark.value for mark in marks]),
-                            test.coefficient)
-                test.results.append(mark)
+                mark = Mark(student, self, sum([mark.value for mark in marks]),
+                            self.coefficient)
+                self.results.append(mark)
