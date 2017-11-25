@@ -8,9 +8,19 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from functools import wraps
-from operator import attrgetter
 
-def ranking(assessment, group):
+from opertator import attrgetter
+from statistics import mean, median
 
-    return Ranking(marks, )
+value = attrgetter('value')
+
+
+def statistics(assessment, group):
+    marks = [value(m) for m in assessment.results if m.student in group]
+    return {
+        "size": len(marks),
+        "maximum": max(marks, default=0),
+        "minimum": min(marks, default=0),
+        "mean": mean(marks) if marks else 0,
+        "median": median(marks) if marks else 0
+    }
