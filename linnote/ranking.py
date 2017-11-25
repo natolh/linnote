@@ -24,22 +24,65 @@ def ranker(f):
 
 @ranker
 def HGH(position, size):
+    """
+    Tie handling function.
+
+    Handle tie ranking using the 'Standard Competition' strategy defined here:
+    https://en.wikipedia.org/wiki/Ranking. Tied values are assigned the current
+    rank, the next available ranks is equal to the sum of the actual rank plus
+    the number of tied values.
+
+    Return: A tuple. First item is the rank for tied values ; second item is
+            the offset to the next rank.
+    """
     return position, size
 
 
 @ranker
 def LOW(position, size):
+    """
+    Tie handling function.
+
+    Handle tie ranking using the 'Standard Competition' strategy defined here:
+    https://en.wikipedia.org/wiki/Ranking. The next available ranks is equal to
+    the sum of the actual rank plus the number of tied values, tied values are
+    assigned this next rank minus one.
+
+    Return: A tuple. First item is the rank for tied values ; second item is
+            the offset to the next rank.
+    """
     return position + size - 1, size
 
 
 # Consider using decimal instead.
 @ranker
 def AVR(position, size):
+    """
+    Tie handling function.
+
+    Handle tie ranking using the 'Standard Competition' strategy defined here:
+    https://en.wikipedia.org/wiki/Ranking. The next available ranks is equal to
+    the sum of the actual rank plus the number of tied values, tied values are
+    assigned the arithmetic mean of the curent rank and the next rank.
+
+    Return: A tuple. First item is the rank for tied values ; second item is
+            the offset to the next rank.
+    """
     return position * (1 + size) / 2, size
 
 
 @ranker
 def SEQ(position, size):
+    """
+    Tie handling function.
+
+    Handle tie ranking using the 'Standard Competition' strategy defined here:
+    https://en.wikipedia.org/wiki/Ranking. Tied values are assigned the current
+    rank, the next available rank is equal to the next integer.
+
+    Return: A tuple. First item is the rank for tied values ; second item is
+            the offset to the next rank.
+    """
     return position, 1
 
 
@@ -71,7 +114,6 @@ class Ranking(object):
 
         # Establish ranking.
         self.ranks.sort(key=self.key, reverse=reverse)
-
         for rank, item in self.rank():
             item.position = rank
 
