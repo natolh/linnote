@@ -3,8 +3,8 @@
 
 from locale import setlocale, LC_ALL
 from linnote import APP_DIR
+from linnote.assessment import Assessment, Test
 from linnote.configuration import LOCALE
-from linnote.evaluation import Assessment, Test
 from linnote.student import Group
 from linnote.report import MetaReport
 from linnote.report.composer import histogram, statistics, ranking
