@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Reporting tools
+Reporting tools.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -11,6 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from pathlib import Path
 from jinja2 import Environment, PackageLoader
 from linnote import APP_DIR
+
 
 ENV = Environment(loader=PackageLoader("linnote"))
 

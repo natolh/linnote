@@ -9,6 +9,7 @@ from linnote.student import Group
 from linnote.report import MetaReport
 from linnote.report.composer import histogram, statistics, ranking
 
+
 setlocale(LC_ALL, LOCALE)
 
 tests_results = list(APP_DIR.joinpath('results').glob('*.xlsx'))

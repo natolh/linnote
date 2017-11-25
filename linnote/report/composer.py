@@ -14,6 +14,7 @@ from statistics import mean, median
 from matplotlib import pyplot
 from linnote.ranking import Ranking
 
+
 value = attrgetter('value')
 
 
