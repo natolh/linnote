@@ -4,35 +4,50 @@
 from locale import setlocale, LC_ALL
 from linnote.configuration import LOCALE, ROOT
 from linnote.evaluation import Assessment, Test
-
-
-def rank_simple(test):
-    test.adjust_marks()
-    test.results_to_ranking()
-    test.grade()
-    test.export_rankings()
-
+from linnote.student import Group
+from linnote.report import MetaReport
+from linnote.report.composer import histogram, statistics, ranking
 
 setlocale(LC_ALL, LOCALE)
+
 tests_results = list(ROOT.joinpath('results').glob('*.xlsx'))
+groups = list(Group(Group.load(gdef), gdef.stem) for gdef in Group.find())
+
+RankingReport = MetaReport('RankingReport', 'test.html')
+RankingReport.composers.update({'statistics': statistics, 'graph': histogram, 'ranking': ranking})
+
 
 if not len(tests_results) > 1:
-    print("Classement simple")
-    test = Test.create(src=tests_results[0])
-    rank_simple(test)
+    print('--- Classement simple ---')
+    for results in tests_results:
+        # Create and process test.
+        test = Test.create(src=results)
+        test.adjust_marks()
+
+        # Create and make the report.
+        title = input('Titre du rapport :')
+        report = RankingReport(title, test, groups)
+        report.write()
 
 else:
-    print("Classement multi-épreuves")
-    assessment = Assessment.create()
+    print('--- Classement multi-épreuves ---')
+    assessment = Assessment()
 
-    for n in range(0, len(tests_results)):
-        test = Test.create(src=tests_results[n])
+    print("Génération des classements d'épreuves")
+    for results in tests_results:
+        # Create and process test.
+        test = Test.create(src=results)
         assessment.tests.append(test)
+        test.adjust_marks()
 
-    for test in assessment.tests:
-        rank_simple(test)
+        # Create and make the report.
+        title = input('Titre du rapport :')
+        report = RankingReport(title, test, groups)
+        report.write()
 
     assessment.aggregate_results()
-    assessment.results_to_ranking()
-    assessment.grade()
-    assessment.export_rankings()
+
+    print("Génération de l'interclassement")
+    title = input('Titre du rapport :')
+    report = RankingReport(title, assessment, groups)
+    report.write()

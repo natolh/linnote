@@ -13,6 +13,10 @@ body {
     text-align: center;
 }
 
+section {
+    page-break-after: always;
+}
+
 h1 {
     font-size: 1.7rem;
     font-weight: bold;
