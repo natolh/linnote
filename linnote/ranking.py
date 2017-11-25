@@ -10,22 +10,19 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from functools import wraps
 from itertools import groupby, repeat
-from operator import attrgetter
-from linnote.configuration import ROOT
-from linnote.utils import make_stats, render_template, make_histogram
 
 
 def ranker(f):
     @wraps(f)
     def wrapper(position, group):
-        size = sum((1 for _ in group))
+        size = sum(1 for _ in group)
         rank, offset = f(position, size)
         return repeat(rank, size), offset
     return wrapper
 
 
 @ranker
-def HIGH(position, size):
+def HGH(position, size):
     return position, size
 
 
@@ -34,95 +31,79 @@ def LOW(position, size):
     return position + size - 1, size
 
 
+# Consider using decimal instead.
 @ranker
-def AVERAGE(position, size):
+def AVR(position, size):
     return position * (1 + size) / 2, size
 
 
 @ranker
-def SEQUENTIAL(position, size):
+def SEQ(position, size):
     return position, 1
 
 
-def rank(items, key=None, reverse=True, start=1, handle=HIGH):
-    """
-    Generate ranks on the fly.
-
-    - items:    Iterable. Collection of homogenous items to rank.
-    - key:      Callable. Retrieve the key for ranking items.
-    - reverse:  Boolean. If set to True, items are ranked by decreasing order ;
-                if set to False items are ranked by increasing order.
-    - start:    Integer. Starting rank.
-    - handle:   Callable. A callable to determine rank for tied values and the
-                next rank.
-
-    Return: A list of Rank objects.
-    """
-    index = start
-    items = sorted(items, key=key, reverse=reverse)
-
-    for score, group in groupby(items):
-        group = list(group)
-        ranks, offset = handle(index, group)
-        index += offset
-        yield from zip(ranks, group)
-
-
 class Ranking(object):
-    """A ranked list of students results to an assessment."""
+    """A ranked sequence of things."""
 
-    def __init__(self, evaluation, group):
+    def __init__(self, items, key=None, reverse=True, start=1, handle=HGH):
         """
         Create a new ranking.
 
-        - evaluation:   An 'evaluation.Evaluation' object. The results to rank.
-        - group:        A 'student.Group' object. The list of students to rank.
+        - items:    An interable. Items to rank.
+        - key:      A callable. When call upon 'item' return a sortable object.
+        - label:    A callable. When call upon 'item' return a unique
+                    identifier.
+        - reverse:  Boolean. If set to True, items are ranked by decreasing
+                    order ; if set to False items are ranked by increasing
+                    order.
+        - start:    Integer. Starting rank.
+        - handle:   Callable. A callable to determine rank for tied values and
+                    the next rank.
 
         Return: None.
         """
         super(Ranking, self).__init__()
-        self.evaluation = evaluation
-        self.group = group
-        self.ranks = list()
+        self.items = sorted(items, self.key, reverse)
+        self.key = key
+        self.reverse = reverse
+        self.start = start
+        self.handle = handle
+
+        # Create ranking items.
+        for item in items:
+            self.items += Rank(label(item), score(item))
+
+        # Rank.
+        for rank, item in self.rank():
+            item.position = rank
 
     def __repr__(self):
-        return '<Ranking: {}>'.format(self.name)
+        return '<Ranking>'
 
-    @property
-    def name(self):
-        return '{} - {}'.format(self.evaluation.name, self.group.name)
+    def __iter__(self):
+        return iter(self.items)
 
-    def export(self, template, **kwargs):
-        """Export ranking to an HTML document."""
-        output = render_template(
-            template=template,
-            ranking=self,
-            evaluation=self.evaluation,
-            statistics=make_stats([rank.score for rank in self.ranks]),
-            histogram=make_histogram([rank.score for rank in self.ranks], self.evaluation.coefficient),
-            **kwargs)
-
-        document = ROOT.joinpath("rankings", self.name).with_suffix(".html")
-        document.write_bytes(output)
-
-    def make(self):
-        """Build the ranking."""
-        score = attrgetter('score')
-        for r, item in rank(self.ranks, score):
-            item.position = r
+    def rank(self):
+        """Calculate ranks."""
+        index = self.start
+        for score, group in groupby(self.items):
+            group = list(group)
+            ranks, offset = self.handle(index, group)
+            index += offset
+            yield from zip(ranks, group)
 
 
 class Rank(object):
-    """Student's rank to an evaluation."""
+    """Ranking item."""
 
     def __init__(self, identifier, score, position=None, **kwargs):
         """
         Create a new rank.
 
         - identifier:   A string or an integer. Something to identify the
-                        student.
-        - score:        A sortable value. The score of the student to the
-                        assessment. Used to establish the ranking.
+                        person responsible for that rank.
+        - score:        A sortable value. The score of the person, this value
+                        is used to rank.
         - position:     Integer. The student's position in the ranking.
         - kwargs:       Dictionnary. Extra informations.
 
