@@ -6,6 +6,7 @@ from linnote.configuration import LOCALE, ROOT
 from linnote.evaluation import Test
 from linnote.student import Group
 from linnote.report import MetaReport
+from linnote.report.composer import statistics
 
 setlocale(LC_ALL, LOCALE)
 
@@ -13,6 +14,7 @@ tests_results = list(ROOT.joinpath('results').glob('*.xlsx'))
 groups = list(Group(Group.load(gdef), gdef.stem) for gdef in Group.find())
 
 RankingReport = MetaReport('RankingReport', 'test.html')
+RankingReport.composers.update({'statistics': statistics})
 
 for results in tests_results:
     # Create and process test.

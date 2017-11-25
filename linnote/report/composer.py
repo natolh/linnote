@@ -9,7 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 
-from opertator import attrgetter
+from operator import attrgetter
 from statistics import mean, median
 
 value = attrgetter('value')

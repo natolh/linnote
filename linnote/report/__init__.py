@@ -18,16 +18,17 @@ ENV = Environment(loader=PackageLoader("linnote"))
 class MetaReport(type):
     """Metaclass for creating Report classes."""
 
-    def __new__(cls, name, template, composers):
+    def __new__(cls, name, template, composers={}):
         """Create a new report class."""
         bases = (Report, )
         attrs = dict()
         return super().__new__(cls, name, bases, attrs)
 
-    def __init__(self, name, template, composers):
+    def __init__(self, name, template, composers={}):
         """Initialize the new report class."""
         self.template = ENV.get_template(template)
         self.composers = composers
+
 
 class Report(object):
     """Common method for Report classes."""
@@ -39,8 +40,8 @@ class Report(object):
         - title:        String. The report's title.
         - assessment:   An 'evaluation.Evaluation' object. The object of the
                         report.
-        - groups:       A list of 'student.Group' objects. If provided, the
-                        analysis will be performed for each group independently.
+        - groups:       A list of 'student.Group' objects. If provided,
+                        analysis will run for each group independently.
         - kwargs:       A dictionnary. Optionnal static arguments to display in
                         the report.
 
