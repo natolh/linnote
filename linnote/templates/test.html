@@ -33,10 +33,10 @@
                     <tbody>
                         <tr>
                             <td>{{ data.statistics.size }}</td>
-                            <td>{{ data.statistics.minimum }}</td>
-                            <td>{{ data.statistics.maximum }}</td>
-                            <td>{{ data.statistics.mean }}</td>
-                            <td>{{ data.statistics.median }}</td>
+                            <td>{{ data.statistics.minimum|round(rep.assessment.precision) }}</td>
+                            <td>{{ data.statistics.maximum|round(rep.assessment.precision) }}</td>
+                            <td>{{ data.statistics.mean|round(rep.assessment.precision) }}</td>
+                            <td>{{ data.statistics.median|round(rep.assessment.precision) }}</td>
                             <td>{{ rep.assessment.coefficient }}</td>
                         </tr>
                     </tbody>
@@ -64,10 +64,10 @@
                                 </strong>
                             </td>
                             <td class="left-align">
-                                {{ rank.item.raw }}
+                                {{ rank.item.raw|round(rep.assessment.precision) }}
                             </td>
                             <td class="left-align">
-                                {{ rank.score }}
+                                {{ rank.score|round(rep.assessment.precision) }}
                             </td>
                             <td class="right-align">
                                 <strong>{{ rank.position }}</strong>
