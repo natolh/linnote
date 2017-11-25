@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from pathlib import Path
 from jinja2 import Environment, PackageLoader
-from linnote.configuration import ROOT
+from linnote.configuration import APP_DIR
 
 ENV = Environment(loader=PackageLoader("linnote"))
 
@@ -72,7 +72,7 @@ class Report(object):
 
         return report.encode('utf8')
 
-    def write(self, path=ROOT.joinpath('rankings'), format="html"):
+    def write(self, path=APP_DIR.joinpath('rankings'), format="html"):
         """
         Build and export the report to the filesystem.
 

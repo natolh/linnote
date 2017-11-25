@@ -12,7 +12,7 @@ from pathlib import Path
 from platform import system as plateform
 
 
-ROOT = Path(__file__).resolve().parents[1]
+APP_DIR = Path(__file__).resolve().parents[1]
 LANGUAGE = 'fr_FR'
 CHARSET = 'UTF-8'
 LOCALE = 'French_France.1252' if plateform() == 'Windows' else 'fr_FR.UTF-8'

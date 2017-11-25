@@ -9,7 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from pandas import read_excel
-from linnote.configuration import ROOT
+from linnote.configuration import APP_DIR
 
 
 class Student(object):
@@ -89,7 +89,7 @@ class Group(object):
 
         Return: Generator sequence of path-like objects.
         """
-        return ROOT.joinpath("groups").glob("*.xlsx")
+        return APP_DIR.joinpath("groups").glob("*.xlsx")
 
     @staticmethod
     def load(file):

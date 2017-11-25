@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from locale import setlocale, LC_ALL
-from linnote.configuration import LOCALE, ROOT
+from linnote.configuration import LOCALE, APP_DIR
 from linnote.evaluation import Assessment, Test
 from linnote.student import Group
 from linnote.report import MetaReport
@@ -10,7 +10,7 @@ from linnote.report.composer import histogram, statistics, ranking
 
 setlocale(LC_ALL, LOCALE)
 
-tests_results = list(ROOT.joinpath('results').glob('*.xlsx'))
+tests_results = list(APP_DIR.joinpath('results').glob('*.xlsx'))
 groups = list(Group(Group.load(gdef), gdef.stem) for gdef in Group.find())
 
 RankingReport = MetaReport('RankingReport', 'test.html')
