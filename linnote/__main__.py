@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from locale import setlocale, LC_ALL
-from linnote.configuration import LOCALE, APP_DIR
+from linnote import APP_DIR
+from linnote.configuration import LOCALE
 from linnote.evaluation import Assessment, Test
 from linnote.student import Group
 from linnote.report import MetaReport

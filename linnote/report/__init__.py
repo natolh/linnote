@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from pathlib import Path
 from jinja2 import Environment, PackageLoader
-from linnote.configuration import APP_DIR
+from linnote import APP_DIR
 
 ENV = Environment(loader=PackageLoader("linnote"))
 

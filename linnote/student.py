@@ -9,7 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from pandas import read_excel
-from linnote.configuration import APP_DIR
+from linnote import APP_DIR
 
 
 class Student(object):
