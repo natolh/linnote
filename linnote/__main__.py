@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from locale import setlocale, LC_ALL
 from linnote import APP_DIR
 from linnote.assessment import Assessment, Test
-from linnote.configuration import LOCALE
 from linnote.student import Group
 from linnote.report import MetaReport
 from linnote.report.composer import histogram, statistics, ranking
 
-
-setlocale(LC_ALL, LOCALE)
 
 tests_results = list(APP_DIR.joinpath('results').glob('*.xlsx'))
 groups = list(Group(Group.load(gdef), gdef.stem) for gdef in Group.find())
