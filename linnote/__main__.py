@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from linnote import APP_DIR
-from linnote.assessment import Test
+from linnote.assessment import Assessment
 from linnote.student import Group
 from linnote.report import MetaReport
 from linnote.report.composer import histogram, statistics, ranking
@@ -19,7 +19,7 @@ if not len(tests_results) > 1:
     print('--- Classement simple ---')
     for results in tests_results:
         # Create and process test.
-        test = Test.create(src=results)
+        test = Assessment.create(src=results)
         test.adjust_marks()
 
         # Create and make the report.
@@ -34,7 +34,7 @@ else:
     print("Génération des classements d'épreuves")
     for results in tests_results:
         # Create and process test.
-        test = Test.create(src=results)
+        test = Assessment.create(src=results)
         TESTS.append(test)
         test.adjust_marks()
 
@@ -49,8 +49,8 @@ else:
     coefficient = sum(test.coefficient for test in TESTS)
     precision = min(test.precision for test in TESTS)
 
-    merged = Test(scale, coefficient, precision)
-    Test.aggregate_results(TESTS, merged)
+    merged = Assessment(scale, coefficient, precision)
+    Assessment.aggregate_results(TESTS, merged)
 
     title = input('Titre du rapport :')
     report = RankingReport(title, merged, GROUPS)

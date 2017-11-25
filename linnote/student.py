@@ -76,7 +76,7 @@ class Group(object):
         return len(self.students)
 
     def __contains__(self, item):
-        """Test if a student is in the group."""
+        """Assessment if a student is in the group."""
         if not isinstance(item, Student):
             raise TypeError
 

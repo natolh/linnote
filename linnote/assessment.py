@@ -42,10 +42,10 @@ class Mark(object):
         return (self._raw + self._bonus) * self.evaluation.coefficient
 
 
-class Test(object):
+class Assessment(object):
 
     def __init__(self, scale, coefficient, precision, src=None):
-        super(Test, self).__init__()
+        super(Assessment, self).__init__()
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
@@ -61,7 +61,7 @@ class Test(object):
                    src=src)
 
     def __repr__(self):
-        return '<Test>'
+        return '<Assessment>'
 
     def adjust_marks(self):
         maximum = max([mark._raw for mark in self.results])
