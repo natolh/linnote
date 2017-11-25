@@ -39,7 +39,7 @@ class Report(object):
         Prepare the new report object.
 
         - title:        String. The report's title.
-        - assessment:   An 'evaluation.Evaluation' object. The object of the
+        - assessment:   An 'assessment.Assessment' object. The object of the
                         report.
         - groups:       A list of 'student.Group' objects. If provided,
                         analysis will run for each group independently.

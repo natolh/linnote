@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Implement evaluation.
+Implement assessments and related tools.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -15,13 +15,13 @@ from linnote.student import Student
 
 
 class Mark(object):
-    """Student's mark to an evaluation."""
+    """Student's mark to an assessment."""
 
-    def __init__(self, student, evaluation, score, scale=1, bonus=0):
+    def __init__(self, student, assessment, score, scale=1, bonus=0):
         """Create a new mark."""
         super(Mark, self).__init__()
         self.student = student
-        self.evaluation = evaluation
+        self.assessment = assessment
         self._raw = score / scale
         self._bonus = bonus / scale
 
@@ -30,22 +30,33 @@ class Mark(object):
 
     @property
     def raw(self):
-        return self._raw * self.evaluation.coefficient
+        return self._raw * self.assessment.coefficient
 
     @property
     def bonus(self):
-        return self._bonus * self.evaluation.coefficient
+        return self._bonus * self.assessment.coefficient
 
     @property
     def value(self):
         """The processed mark, including bonus points."""
-        return (self._raw + self._bonus) * self.evaluation.coefficient
+        return (self._raw + self._bonus) * self.assessment.coefficient
 
 
 class Assessment(object):
+    """Evaluation of students knowledge."""
 
     def __init__(self, scale, coefficient, precision, src=None):
-        super(Assessment, self).__init__()
+        """
+        Initialize a new assessment.
+
+        - scale:        Float. Actual scale in results file.
+        - coefficient:  Float. Desired scale for output.
+        - precision:    Integer. Number of decimals for outputing marks.
+        - src:          Path-like object. Path pointing to the results file.
+
+        Return: None.
+        """
+        super().__init__()
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
