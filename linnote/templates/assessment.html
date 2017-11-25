@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta lang="fr">
 
-        <title>{{ evaluation.name }} - {{ ranking.group.name }}</title>
+        <title>{{ assessment.name }} - {{ ranking.group.name }}</title>
         <meta name="author" content="Tutorat Santé Lyon Sud">
 
         <link rel="stylesheet" type="text/css" media="all" href="../linnote/statics/main.css">
@@ -12,7 +12,7 @@
 
     <body>
         <h1>
-            {{ evaluation.name }}<br>
+            {{ assessment.name }}<br>
             <span class="subheader">{{ ranking.group.name|title }}</span>
         </h1>
 
@@ -34,7 +34,7 @@
                     <td>{{ statistics.maximum|round(precision) }}</td>
                     <td>{{ statistics.mean|round(precision) }}</td>
                     <td>{{ statistics.median|round(precision) }}</td>
-                    <td>{{ evaluation.coefficient }}</td>
+                    <td>{{ assessment.coefficient }}</td>
                 </tr>
             </tbody>
         </table>

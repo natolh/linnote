@@ -9,7 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from pandas import read_excel
-from linnote.configuration import ROOT
+from linnote import APP_DIR
 
 
 class Student(object):
@@ -17,14 +17,14 @@ class Student(object):
 
     def __init__(self, identifier):
         """
-        Create a new student.
+        Initialize a new student.
 
         - identifier:   An integer. A unique, anonymous, identifier for the
                         student to use during assessments.
 
         Return: None.
         """
-        super(Student, self).__init__()
+        super().__init__()
         self.identifier = identifier
 
     def __repr__(self):
@@ -57,7 +57,7 @@ class Group(object):
 
     def __init__(self, students, name=None):
         """
-        Create a new students group.
+        Initialize a new students group.
 
         - students: List of 'Student' objects. Members of the group.
         - name:     String. The name of the group.
@@ -76,7 +76,7 @@ class Group(object):
         return len(self.students)
 
     def __contains__(self, item):
-        """Test if a student is in the group."""
+        """Assessment if a student is in the group."""
         if not isinstance(item, Student):
             raise TypeError
 
@@ -89,7 +89,7 @@ class Group(object):
 
         Return: Generator sequence of path-like objects.
         """
-        return ROOT.joinpath("groups").glob("*.xlsx")
+        return APP_DIR.joinpath("groups").glob("*.xlsx")
 
     @staticmethod
     def load(file):
@@ -100,5 +100,5 @@ class Group(object):
 
         Return: List of 'Student'.
         """
-        students = read_excel(file, names=['anonymat']).to_dict('records')
-        return [Student(student["anonymat"]) for student in students]
+        students = read_excel(file, names=['identifier']).to_dict('records')
+        return [Student(student["identifier"]) for student in students]

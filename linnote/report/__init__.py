@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Reporting tools
+Reporting tools.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -10,7 +10,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from pathlib import Path
 from jinja2 import Environment, PackageLoader
-from linnote.configuration import ROOT
+from linnote import APP_DIR
+from linnote.report.utils import sanitize_filename
+
 
 ENV = Environment(loader=PackageLoader("linnote"))
 
@@ -38,7 +40,7 @@ class Report(object):
         Prepare the new report object.
 
         - title:        String. The report's title.
-        - assessment:   An 'evaluation.Evaluation' object. The object of the
+        - assessment:   An 'assessment.Assessment' object. The object of the
                         report.
         - groups:       A list of 'student.Group' objects. If provided,
                         analysis will run for each group independently.
@@ -72,7 +74,7 @@ class Report(object):
 
         return report.encode('utf8')
 
-    def write(self, path=ROOT.joinpath('rankings'), format="html"):
+    def write(self, path=APP_DIR.joinpath('rankings'), format="html"):
         """
         Build and export the report to the filesystem.
 
@@ -87,5 +89,6 @@ class Report(object):
         report = self.build()
 
         folder = Path(path).resolve()
-        document = folder.joinpath(self.title).with_suffix('.' + format)
+        filename = sanitize_filename(self.title) + '.' + format
+        document = folder.joinpath(filename)
         document.write_bytes(report)
