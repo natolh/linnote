@@ -83,13 +83,15 @@ class Group(object):
         return APP_DIR.joinpath("groups").glob("*.xlsx")
 
     @staticmethod
-    def load(file):
+    def load(file, name=None):
         """
-        Load a students list from an excel file.
+        Load a student group from an excel file.
 
         - file: A path-like object. The path to the file.
+        - name: String. The group's name.
 
-        Return: List of 'Student'.
+        Return: A 'Group' object.
         """
         students = read_excel(file, names=['identifier']).to_dict('records')
-        return [Student(student["identifier"]) for student in students]
+        students = [Student(student["identifier"]) for student in students]
+        return Group(students=students, name=name)

@@ -7,6 +7,6 @@ from linnote.student import Group
 
 
 files = list(APP_DIR.joinpath('results').glob('*.xlsx'))
-groups = list(Group(Group.load(gdef), gdef.stem) for gdef in Group.find())
+GROUPS = list(Group.load(file, file.stem) for file in Group.find())
 
-ranking(files, groups)
+ranking(files, GROUPS)
