@@ -36,18 +36,6 @@ class Student(object):
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def __lt__(self, other):
-        return self.identifier < other.identifier
-
-    def __le__(self, other):
-        return self.identifier <= other.identifier
-
-    def __gt__(self, other):
-        return self.identifier > other.identifier
-
-    def __ge__(self, other):
-        return self.identifier >= other.identifier
-
     def __hash__(self):
         return hash(self.identifier)
 

@@ -83,15 +83,16 @@ class Assessment(object):
         return stack
 
     def aggregate_results(self, tests):
-        by_student = attrgetter('student')
+        by_student = attrgetter('student.identifier')
 
         results = [mark for test in tests for mark in test.results]
         results.sort(key=by_student)
 
-        for student, marks in groupby(results, by_student):
+        for student_id, marks in groupby(results, by_student):
             marks = list(marks)
 
             if len(marks) == len(tests):
+                student = Student(student_id)
                 mark = Mark(student, self, sum([mark.value for mark in marks]),
                             self.coefficient)
                 self.results.append(mark)
