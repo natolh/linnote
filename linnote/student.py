@@ -57,14 +57,14 @@ class Group(object):
 
     def __init__(self, students, name=None):
         """
-        Initialize a new students group.
+        Initialize a new group of students.
 
         - students: List of 'Student' objects. Members of the group.
         - name:     String. The name of the group.
 
         Return: None.
         """
-        super(Group, self).__init__()
+        super().__init__()
         self.students = students
         self.name = name
 
