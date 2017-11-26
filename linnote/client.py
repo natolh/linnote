@@ -21,7 +21,7 @@ RankingReport.composers.update({'statistics': statistics,
                                 'ranking': ranking})
 
 
-def ranking(files, groups, precision=3, merge=True):
+def rank(files, groups, precision=3, merge=True):
     assessments = list()
 
     click.echo("*** Création des rapports d'épreuves ***")
