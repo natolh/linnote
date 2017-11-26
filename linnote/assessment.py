@@ -29,6 +29,44 @@ class Mark(object):
     def __repr__(self):
         return '<Mark of {}: {}>'.format(self.student, self.value)
 
+    def __eq__(self, other):
+        if isinstance(other, Mark):
+            return self.value == other.value
+
+        else:
+            raise NotImplemented # pylint: disable = E0702, E0711
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __gt__(self, other):
+        if isinstance(other, Mark):
+            return self.value > other.value
+
+        else:
+            raise NotImplemented # pylint: disable = E0702, E0711
+
+    def __lt__(self, other):
+        if isinstance(other, Mark):
+            return self.value < other.value
+
+        else:
+            raise NotImplemented # pylint: disable = E0702, E0711
+
+    def __ge__(self, other):
+        if isinstance(other, Mark):
+            return self.value >= other.value
+
+        else:
+            raise NotImplemented # pylint: disable = E0702, E0711
+
+    def __le__(self, other):
+        if isinstance(other, Mark):
+            return self.value <= other.value
+
+        else:
+            raise NotImplemented # pylint: disable = E0702, E0711
+
     def __add__(self, other):
         if isinstance(other, Mark) and self.student == other.student:
             score = self.raw + other.raw
@@ -77,7 +115,7 @@ class Assessment(object):
         return '<Assessment>'
 
     def adjust_marks(self):
-        maximum = max([mark._raw for mark in self.results])
+        maximum = max(self.results)._raw
         for mark in self.results:
             mark._bonus = (mark._raw / maximum) - mark._raw
 
