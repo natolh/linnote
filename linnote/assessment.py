@@ -8,8 +8,9 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from functools import reduce
 from itertools import groupby
-from operator import attrgetter
+from operator import add, attrgetter
 from pandas import read_excel
 from linnote.student import Student
 
@@ -17,29 +18,39 @@ from linnote.student import Student
 class Mark(object):
     """Student's mark to an assessment."""
 
-    def __init__(self, student, assessment, score, scale=1, bonus=0):
+    def __init__(self, student, coefficient, score, scale=1, bonus=0):
         """Initialize a new mark."""
         super().__init__()
         self.student = student
-        self.assessment = assessment
+        self.coefficient = coefficient
         self._raw = score / scale
         self._bonus = bonus / scale
 
     def __repr__(self):
         return '<Mark of {}: {}>'.format(self.student, self.value)
 
+    def __add__(self, other):
+        if isinstance(other, Mark) and self.student == other.student:
+            score = self.raw + other.raw
+            bonus = self.bonus + other.bonus
+            coefficient = self.coefficient + other.coefficient
+            return Mark(self.student, coefficient, score, coefficient, bonus)
+
+        else:
+            raise NotImplemented # pylint: disable = E0702, E0711
+
     @property
     def raw(self):
-        return self._raw * self.assessment.coefficient
+        return self._raw * self.coefficient
 
     @property
     def bonus(self):
-        return self._bonus * self.assessment.coefficient
+        return self._bonus * self.coefficient
 
     @property
     def value(self):
         """The processed mark, including bonus points."""
-        return (self._raw + self._bonus) * self.assessment.coefficient
+        return (self._raw + self._bonus) * self.coefficient
 
 
 class Assessment(object):
@@ -77,7 +88,7 @@ class Assessment(object):
         stack = list()
         for result in results.to_dict('records'):
             student = Student(int(result['anonymat']))
-            mark = Mark(student, self, float(result['note']), self.scale)
+            mark = Mark(student, self.coefficient, float(result['note']), self.scale)
             stack.append(mark)
 
         return stack
@@ -88,11 +99,9 @@ class Assessment(object):
         results = [mark for test in tests for mark in test.results]
         results.sort(key=by_student)
 
-        for student_id, marks in groupby(results, by_student):
+        for _, marks in groupby(results, by_student):
             marks = list(marks)
 
             if len(marks) == len(tests):
-                student = Student(student_id)
-                mark = Mark(student, self, sum([mark.value for mark in marks]),
-                            self.coefficient)
+                mark = reduce(add, marks)
                 self.results.append(mark)
