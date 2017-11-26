@@ -36,18 +36,6 @@ class Student(object):
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def __lt__(self, other):
-        return self.identifier < other.identifier
-
-    def __le__(self, other):
-        return self.identifier <= other.identifier
-
-    def __gt__(self, other):
-        return self.identifier > other.identifier
-
-    def __ge__(self, other):
-        return self.identifier >= other.identifier
-
     def __hash__(self):
         return hash(self.identifier)
 
@@ -57,14 +45,14 @@ class Group(object):
 
     def __init__(self, students, name=None):
         """
-        Initialize a new students group.
+        Initialize a new group of students.
 
         - students: List of 'Student' objects. Members of the group.
         - name:     String. The name of the group.
 
         Return: None.
         """
-        super(Group, self).__init__()
+        super().__init__()
         self.students = students
         self.name = name
 
@@ -74,6 +62,9 @@ class Group(object):
     def __len__(self):
         """Number of students in the group."""
         return len(self.students)
+
+    def __iter__(self):
+        return iter(self.students)
 
     def __contains__(self, item):
         """Assessment if a student is in the group."""
@@ -92,13 +83,15 @@ class Group(object):
         return APP_DIR.joinpath("groups").glob("*.xlsx")
 
     @staticmethod
-    def load(file):
+    def load(file, name=None):
         """
-        Load a students list from an excel file.
+        Load a student group from an excel file.
 
         - file: A path-like object. The path to the file.
+        - name: String. The group's name.
 
-        Return: List of 'Student'.
+        Return: A 'Group' object.
         """
         students = read_excel(file, names=['identifier']).to_dict('records')
-        return [Student(student["identifier"]) for student in students]
+        students = [Student(student["identifier"]) for student in students]
+        return Group(students=students, name=name)
