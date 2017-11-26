@@ -18,8 +18,8 @@ class Mark(object):
     """Student's mark to an assessment."""
 
     def __init__(self, student, assessment, score, scale=1, bonus=0):
-        """Create a new mark."""
-        super(Mark, self).__init__()
+        """Initialize a new mark."""
+        super().__init__()
         self.student = student
         self.assessment = assessment
         self._raw = score / scale
