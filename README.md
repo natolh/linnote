@@ -1,5 +1,16 @@
 # linnote
 
+## Fonctionnalités
+
+- [X] Mise en page automatique des rapports de classement
+- [ ] Export PDF des rapports de classement
+- [X] Statistiques descriptives des notes de l'épreuve
+- [X] Graphique de distribution des notes de l'épreuve
+- [X] Analyse en sous-groupes des notes de l'épreuve
+- [X] Classement sur un aggrégat d'épreuves (interclassement)
+- [X] Conversion des notes
+- [ ] Post-traitement des notes de l'épreuve (uniquement lissage pour le moment)
+
 ## Pré-requis
 
 Que vous soyez sur mac ou windows, `linnote` est une application en ligne de commande il faudra donc vous familiariser avec le `Terminal` ou l'`Invité de commandes` respectivement.
