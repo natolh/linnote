@@ -75,6 +75,9 @@ class Group(object):
         """Number of students in the group."""
         return len(self.students)
 
+    def __iter__(self):
+        return iter(self.students)
+
     def __contains__(self, item):
         """Assessment if a student is in the group."""
         if not isinstance(item, Student):
