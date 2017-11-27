@@ -15,7 +15,7 @@ from linnote.report import MetaReport
 from linnote.report.composer import histogram, statistics, ranking
 
 
-RankingReport = MetaReport('RankingReport', 'test.html')
+RankingReport = MetaReport('RankingReport', 'ranking.html')
 RankingReport.composers.update({'statistics': statistics,
                                 'graph': histogram,
                                 'ranking': ranking})
