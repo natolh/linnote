@@ -47,7 +47,7 @@ def rank(files, groups, precision=3, merge=True):
         coefficient = sum(assessment.coefficient for assessment in assessments)
 
         assessment = Assessment(scale, coefficient, precision)
-        assessment.aggregate_results(assessments)
+        assessment.aggregate(assessments)
 
         report = RankingReport(title, assessment, groups)
         report.write()

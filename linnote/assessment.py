@@ -131,7 +131,8 @@ class Assessment(object):
 
         return stack
 
-    def aggregate_results(self, tests):
+    def aggregate(self, tests):
+        """Aggregate students results to assessments."""
         by_student = attrgetter('student.identifier')
 
         results = [mark for test in tests for mark in test.results]
