@@ -54,8 +54,15 @@ class Report(object):
     def build(self):
         """Build the report."""
         # Compute data.
+        general_data = dict(group_name='Général')
+        for composer in self.composers:
+            compose = getattr(self, composer)
+            general_data.update({composer: compose()})
+
+        self.data.append(general_data)
+
         for group in self.groups:
-            group_data = dict(group=group)
+            group_data = dict(group_name=group.name)
 
             for composer in self.composers:
                 compose = getattr(self, composer)
@@ -106,11 +113,31 @@ class Report(object):
         """
         return sub(r'[/\.\\\?<>\|\*:]+', substitute, filename)
 
+    def marks(self, group=None):
+        """
+        Get assessment marks.
+
+        - group:    A 'Group' object. If provided, only assessment marks of
+                    students in the group will be fetched. If not provided, all
+                    marks of the assessment will be fetched.
+
+        Return: A list of 'Mark' objects.
+        """
+        if not group:
+            return self.assessment.results
+
+        marks = list()
+        for mark in self.assessment.results:
+            if mark.student in group:
+                marks.append(mark)
+
+        return marks
+
     # Methods for composing the report.
-    def statistics(self, group):
+    def statistics(self, group=None):
         """Descriptive statistics of the group's marks."""
         value = attrgetter('value')
-        marks = [value(m) for m in self.assessment.results if m.student in group]
+        marks = [value(mark) for mark in self.marks(group)]
         return {
             "size": len(marks),
             "maximum": max(marks, default=0),
@@ -119,12 +146,12 @@ class Report(object):
             "median": median(marks) if marks else 0
         }
 
-    def histogram(self, group):
+    def histogram(self, group=None):
         """Distribution of the group's marks as an histogram."""
         value = attrgetter('value')
         document = StringIO()
         coefficient = self.assessment.coefficient
-        marks = [value(m) for m in self.assessment.results if m.student in group]
+        marks = [value(mark) for mark in self.marks(group)]
 
         pyplot.figure(figsize=(6, 4))
         pyplot.hist(marks, bins=coefficient, range=(0, coefficient),
@@ -134,8 +161,7 @@ class Report(object):
         document.seek(0)
         return "\n".join(document.readlines()[5:-1])
 
-    def ranking(self, group):
+    def ranking(self, group=None):
         """Ranking of the group's marks."""
         value = attrgetter('value')
-        marks = [mark for mark in self.assessment.results if mark.student in group]
-        return Ranking(marks, key=value)
+        return Ranking(self.marks(group), key=value)
