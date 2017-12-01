@@ -54,8 +54,15 @@ class Report(object):
     def build(self):
         """Build the report."""
         # Compute data.
+        general_data = dict(group_name='Général')
+        for composer in self.composers:
+            compose = getattr(self, composer)
+            general_data.update({composer: compose()})
+
+        self.data.append(general_data)
+
         for group in self.groups:
-            group_data = dict(group=group)
+            group_data = dict(group_name=group.name)
 
             for composer in self.composers:
                 compose = getattr(self, composer)
