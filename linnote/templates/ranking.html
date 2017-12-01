@@ -16,7 +16,7 @@
             <section>
                 <h1>
                     {{ rep.title }}<br>
-                    <span class="subheader">{{ data.group.name }}</span>
+                    <span class="subheader">{{ data.group_name }}</span>
                 </h1>
 
                 <table id="statistics">
@@ -43,7 +43,7 @@
                 </table>
 
                 <svg width="100%" height="50%" preserveAspectRatio="X432Y288" viewBox="0 0 432 288">
-                    {{ data.graph }}
+                    {{ data.histogram }}
                 </svg>
 
                 <table id="grade">

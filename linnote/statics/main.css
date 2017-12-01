@@ -4,6 +4,10 @@ CSS for rendering tables
 
 @charset "UTF-8";
 
+@page {
+    margin: 2cm;
+}
+
 body {
     margin: 0px;
     padding: 0px;

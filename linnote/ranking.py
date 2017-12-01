@@ -13,17 +13,21 @@ from itertools import groupby, repeat
 from operator import attrgetter
 
 
-def ranker(f):
-    @wraps(f)
+def ranker(function):
+    """Decorator for tie handling methods."""
+
+    @wraps(function)
     def wrapper(position, group):
+        """Wrapping function."""
         size = sum(1 for _ in group)
-        rank, offset = f(position, size)
+        rank, offset = function(position, size)
         return repeat(rank, size), offset
+
     return wrapper
 
 
 @ranker
-def HGH(position, size):
+def high(position, size):
     """
     Tie handling function.
 
@@ -39,7 +43,7 @@ def HGH(position, size):
 
 
 @ranker
-def LOW(position, size):
+def low(position, size):
     """
     Tie handling function.
 
@@ -56,7 +60,7 @@ def LOW(position, size):
 
 # Consider using decimal instead.
 @ranker
-def AVR(position, size):
+def average(position, size):
     """
     Tie handling function.
 
@@ -72,7 +76,7 @@ def AVR(position, size):
 
 
 @ranker
-def SEQ(position, size):
+def sequential(position, size):
     """
     Tie handling function.
 
@@ -89,7 +93,7 @@ def SEQ(position, size):
 class Ranking(object):
     """A ranked sequence of things."""
 
-    def __init__(self, items, key=None, reverse=True, start=1, handle=HGH):
+    def __init__(self, items, key=None, reverse=True, start=1, handle=high):
         """
         Create a new ranking.
 
@@ -126,7 +130,7 @@ class Ranking(object):
     def rank(self):
         """Calculate ranks."""
         index = self.start
-        for score, group in groupby(self.ranks, self.key):
+        for _, group in groupby(self.ranks, self.key):
             group = list(group)
             ranks, offset = self.handle(index, group)
             index += offset
