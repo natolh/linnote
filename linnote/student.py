@@ -12,7 +12,7 @@ from pandas import read_excel
 from linnote import APP_DIR
 
 
-class Student(object):
+class Student(object): # pylint: disable=R0903
     """Someone seeking to learn about life, the universe and everything."""
 
     def __init__(self, identifier):
