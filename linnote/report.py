@@ -106,6 +106,7 @@ class Report(object):
         """
         return sub(r'[/\.\\\?<>\|\*:]+', substitute, filename)
 
+    # Methods for composing the report.
     def statistics(self, group):
         """Descriptive statistics of the group's marks."""
         value = attrgetter('value')
