@@ -11,14 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 import click
 from linnote.assessment import Assessment
-from linnote.report import MetaReport
-from linnote.report.composer import histogram, statistics, ranking
-
-
-RankingReport = MetaReport('RankingReport', 'ranking.html')
-RankingReport.composers.update({'statistics': statistics,
-                                'graph': histogram,
-                                'ranking': ranking})
+from linnote.report import Report
 
 
 def rank(files, groups, precision=3, merge=True):
@@ -35,7 +28,7 @@ def rank(files, groups, precision=3, merge=True):
         assessment = Assessment(scale, coefficient, precision, results=file)
         assessment.adjust_marks()
 
-        report = RankingReport(title, assessment, groups)
+        report = Report(title, assessment, groups)
         report.write()
 
         assessments.append(assessment)
@@ -49,5 +42,5 @@ def rank(files, groups, precision=3, merge=True):
         assessment = Assessment(scale, coefficient, precision)
         assessment.aggregate(assessments)
 
-        report = RankingReport(title, assessment, groups)
+        report = Report(title, assessment, groups)
         report.write()
