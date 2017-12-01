@@ -9,9 +9,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from pathlib import Path
+from re import sub
 from jinja2 import Environment, PackageLoader
 from linnote import APP_DIR
-from linnote.report.utils import sanitize_filename
 
 
 ENV = Environment(loader=PackageLoader("linnote"))
@@ -89,6 +89,24 @@ class Report(object):
         report = self.build()
 
         folder = Path(path).resolve()
-        filename = sanitize_filename(self.title) + '.' + format
+        filename = self.sanitize_filename(self.title) + '.' + format
         document = folder.joinpath(filename)
         document.write_bytes(report)
+
+    @staticmethod
+    def sanitize_filename(filename, rep='-'):
+        """
+        Sanitize filename so it would be valid on multiple platforms.
+
+        REGEXP is build to sanitize filenames on macOS, windows and UNIX.
+        Unallowed characters have been defined using the following references :
+        https://msdn.microsoft.com/en-us/library/aa365247#naming_conventions,
+        https://en.wikipedia.org/wiki/Filename.
+
+        - filename: String. The filename to sanitize.
+        - rep:      String. Character or string for replacing unallowed
+                    characters in the filename.
+
+        Return: String. The sanitized filename.
+        """
+        return sub(r'[/\.\\\?<>\|\*:]+', rep, filename)
