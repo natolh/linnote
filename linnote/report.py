@@ -8,32 +8,25 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from io import StringIO
+from operator import attrgetter
 from pathlib import Path
+from statistics import mean, median
 from re import sub
 from jinja2 import Environment, PackageLoader
+from matplotlib import pyplot
 from linnote import APP_DIR
+from linnote.ranking import Ranking
 
 
 ENV = Environment(loader=PackageLoader("linnote"))
 
 
-class MetaReport(type):
-    """Metaclass for creating Report classes."""
-
-    def __new__(cls, name, template, composers={}):
-        """Create a new report class."""
-        bases = (Report, )
-        attrs = dict()
-        return super().__new__(cls, name, bases, attrs)
-
-    def __init__(self, name, template, composers={}):
-        """Initialize the new report class."""
-        self.template = ENV.get_template(template)
-        self.composers = composers
-
-
 class Report(object):
     """Common method for Report classes."""
+
+    template = ENV.get_template('ranking.html')
+    composers = {'statistics', 'histogram', 'ranking'}
 
     def __init__(self, title, assessment, groups=None, **kwargs):
         """
@@ -64,8 +57,9 @@ class Report(object):
         for group in self.groups:
             group_data = dict(group=group)
 
-            for ref, composer in self.composers.items():
-                group_data.update({ref: composer(self.assessment, group)})
+            for composer in self.composers:
+                compose = getattr(self, composer)
+                group_data.update({composer: compose(self.assessment, group)})
 
             self.data.append(group_data)
 
@@ -111,3 +105,36 @@ class Report(object):
         Return: String. The sanitized filename.
         """
         return sub(r'[/\.\\\?<>\|\*:]+', substitute, filename)
+
+    @staticmethod
+    def statistics(assessment, group):
+        value = attrgetter('value')
+        marks = [value(m) for m in assessment.results if m.student in group]
+        return {
+            "size": len(marks),
+            "maximum": max(marks, default=0),
+            "minimum": min(marks, default=0),
+            "mean": mean(marks) if marks else 0,
+            "median": median(marks) if marks else 0
+        }
+
+    @staticmethod
+    def histogram(assessment, group):
+        value = attrgetter('value')
+        document = StringIO()
+        coefficient = assessment.coefficient
+        marks = [value(m) for m in assessment.results if m.student in group]
+
+        pyplot.figure(figsize=(6, 4))
+        pyplot.hist(marks, bins=coefficient, range=(0, coefficient),
+                    color=(0.80, 0.80, 0.80), histtype="stepfilled")
+        pyplot.title("Répartition des notes")
+        pyplot.savefig(document, format="svg")
+        document.seek(0)
+        return "\n".join(document.readlines()[5:-1])
+
+    @staticmethod
+    def ranking(assessment, group):
+        value = attrgetter('value')
+        marks = [mark for mark in assessment.results if mark.student in group]
+        return Ranking(marks, key=value)
