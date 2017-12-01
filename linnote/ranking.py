@@ -130,7 +130,7 @@ class Ranking(object):
     def rank(self):
         """Calculate ranks."""
         index = self.start
-        for score, group in groupby(self.ranks, self.key):
+        for _, group in groupby(self.ranks, self.key):
             group = list(group)
             ranks, offset = self.handle(index, group)
             index += offset
