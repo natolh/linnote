@@ -91,6 +91,7 @@ class Report(object):
         folder = Path(path).resolve()
         filename = self.sanitize_filename(self.title) + '.' + doctype
         document = folder.joinpath(filename)
+
         document.write_bytes(report) # pylint: disable=E1101
 
     @staticmethod
