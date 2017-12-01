@@ -11,6 +11,3 @@ build
 dist
 *.egg
 *.egg-info
-
-# Additionnal ressources
-ressources
