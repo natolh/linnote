@@ -59,7 +59,7 @@ class Report(object):
 
             for composer in self.composers:
                 compose = getattr(self, composer)
-                group_data.update({composer: compose(self.assessment, group)})
+                group_data.update({composer: compose(group)})
 
             self.data.append(group_data)
 
@@ -106,11 +106,10 @@ class Report(object):
         """
         return sub(r'[/\.\\\?<>\|\*:]+', substitute, filename)
 
-    @staticmethod
-    def statistics(assessment, group):
+    def statistics(self, group):
         """Descriptive statistics of the group's marks."""
         value = attrgetter('value')
-        marks = [value(m) for m in assessment.results if m.student in group]
+        marks = [value(m) for m in self.assessment.results if m.student in group]
         return {
             "size": len(marks),
             "maximum": max(marks, default=0),
@@ -119,13 +118,12 @@ class Report(object):
             "median": median(marks) if marks else 0
         }
 
-    @staticmethod
-    def histogram(assessment, group):
+    def histogram(self, group):
         """Distribution of the group's marks as an histogram."""
         value = attrgetter('value')
         document = StringIO()
-        coefficient = assessment.coefficient
-        marks = [value(m) for m in assessment.results if m.student in group]
+        coefficient = self.assessment.coefficient
+        marks = [value(m) for m in self.assessment.results if m.student in group]
 
         pyplot.figure(figsize=(6, 4))
         pyplot.hist(marks, bins=coefficient, range=(0, coefficient),
@@ -135,9 +133,8 @@ class Report(object):
         document.seek(0)
         return "\n".join(document.readlines()[5:-1])
 
-    @staticmethod
-    def ranking(assessment, group):
+    def ranking(self, group):
         """Ranking of the group's marks."""
         value = attrgetter('value')
-        marks = [mark for mark in assessment.results if mark.student in group]
+        marks = [mark for mark in self.assessment.results if mark.student in group]
         return Ranking(marks, key=value)
