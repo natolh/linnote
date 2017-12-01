@@ -60,14 +60,12 @@ class Group(object):
         return '<Group of students: {}>'.format(self.name)
 
     def __len__(self):
-        """Number of students in the group."""
         return len(self.students)
 
     def __iter__(self):
         return iter(self.students)
 
     def __contains__(self, item):
-        """Assessment if a student is in the group."""
         if not isinstance(item, Student):
             raise TypeError
 
