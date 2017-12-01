@@ -23,7 +23,7 @@ def ranker(f):
 
 
 @ranker
-def HGH(position, size):
+def high(position, size):
     """
     Tie handling function.
 
@@ -39,7 +39,7 @@ def HGH(position, size):
 
 
 @ranker
-def LOW(position, size):
+def low(position, size):
     """
     Tie handling function.
 
@@ -56,7 +56,7 @@ def LOW(position, size):
 
 # Consider using decimal instead.
 @ranker
-def AVR(position, size):
+def average(position, size):
     """
     Tie handling function.
 
@@ -72,7 +72,7 @@ def AVR(position, size):
 
 
 @ranker
-def SEQ(position, size):
+def sequential(position, size):
     """
     Tie handling function.
 
@@ -89,7 +89,7 @@ def SEQ(position, size):
 class Ranking(object):
     """A ranked sequence of things."""
 
-    def __init__(self, items, key=None, reverse=True, start=1, handle=HGH):
+    def __init__(self, items, key=None, reverse=True, start=1, handle=high):
         """
         Create a new ranking.
 
