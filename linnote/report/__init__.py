@@ -74,13 +74,13 @@ class Report(object):
 
         return report.encode('utf8')
 
-    def write(self, path=APP_DIR.joinpath('rankings'), format="html"):
+    def write(self, path=APP_DIR.joinpath('rankings'), doctype="html"):
         """
         Build and export the report to the filesystem.
 
         - path:     A path-like object. Directory where the application should
                     write the report.
-        - format:   A string. Document format in which to provide the report,
+        - doctype:  A string. Document format in which to provide the report,
                     specify as the extension of this format. Currently, only
                     HTML output is supported.
 
@@ -89,9 +89,9 @@ class Report(object):
         report = self.build()
 
         folder = Path(path).resolve()
-        filename = self.sanitize_filename(self.title) + '.' + format
+        filename = self.sanitize_filename(self.title) + '.' + doctype
         document = folder.joinpath(filename)
-        document.write_bytes(report)
+        document.write_bytes(report) # pylint: disable=E1101
 
     @staticmethod
     def sanitize_filename(filename, substitute='-'):
