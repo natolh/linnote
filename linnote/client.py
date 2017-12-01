@@ -15,6 +15,7 @@ from linnote.report import Report
 
 
 def rank(files, groups, precision=3, merge=True):
+    """Rank command establish a ranking report for an assessment."""
     assessments = list()
 
     click.echo("*** Création des rapports d'épreuves ***")
