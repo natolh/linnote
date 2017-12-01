@@ -94,7 +94,7 @@ class Report(object):
         document.write_bytes(report)
 
     @staticmethod
-    def sanitize_filename(filename, rep='-'):
+    def sanitize_filename(filename, substitute='-'):
         """
         Sanitize filename so it would be valid on multiple platforms.
 
@@ -103,10 +103,10 @@ class Report(object):
         https://msdn.microsoft.com/en-us/library/aa365247#naming_conventions,
         https://en.wikipedia.org/wiki/Filename.
 
-        - filename: String. The filename to sanitize.
-        - rep:      String. Character or string for replacing unallowed
-                    characters in the filename.
+        - filename:     String. The filename to sanitize.
+        - substitute:   String. Character or string for replacing unallowed
+                        characters in the filename.
 
         Return: String. The sanitized filename.
         """
-        return sub(r'[/\.\\\?<>\|\*:]+', rep, filename)
+        return sub(r'[/\.\\\?<>\|\*:]+', substitute, filename)
