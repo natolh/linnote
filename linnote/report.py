@@ -108,6 +108,7 @@ class Report(object):
 
     @staticmethod
     def statistics(assessment, group):
+        """Descriptive statistics of the group's marks."""
         value = attrgetter('value')
         marks = [value(m) for m in assessment.results if m.student in group]
         return {
@@ -120,6 +121,7 @@ class Report(object):
 
     @staticmethod
     def histogram(assessment, group):
+        """Distribution of the group's marks as an histogram."""
         value = attrgetter('value')
         document = StringIO()
         coefficient = assessment.coefficient
@@ -135,6 +137,7 @@ class Report(object):
 
     @staticmethod
     def ranking(assessment, group):
+        """Ranking of the group's marks."""
         value = attrgetter('value')
         marks = [mark for mark in assessment.results if mark.student in group]
         return Ranking(marks, key=value)
