@@ -13,11 +13,11 @@ from itertools import groupby, repeat
 from operator import attrgetter
 
 
-def ranker(f):
-    @wraps(f)
+def ranker(function):
+    @wraps(function)
     def wrapper(position, group):
         size = sum(1 for _ in group)
-        rank, offset = f(position, size)
+        rank, offset = function(position, size)
         return repeat(rank, size), offset
     return wrapper
 
