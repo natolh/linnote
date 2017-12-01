@@ -14,11 +14,15 @@ from operator import attrgetter
 
 
 def ranker(function):
+    """Decorator for tie handling methods."""
+
     @wraps(function)
     def wrapper(position, group):
+        """Wrapping function."""
         size = sum(1 for _ in group)
         rank, offset = function(position, size)
         return repeat(rank, size), offset
+
     return wrapper
 
 
