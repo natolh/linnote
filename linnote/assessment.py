@@ -129,7 +129,6 @@ class Assessment(object):
         Return: A list of 'Mark' objects.
         """
         results = read_excel(file, names=['anonymat', 'note'], usecols=1)
-        results.dropna(how='all')
 
         stack = list()
         for result in results.to_dict('records'):
