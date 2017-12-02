@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Ranking tools for mock assessment of French first year health students. 
+Ranking tool for mock assessment of French first year health students.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
