@@ -114,12 +114,6 @@ class Assessment(object):
     def __repr__(self):
         return '<Assessment>'
 
-    def rescale(self):
-        """Rescale assessment's results."""
-        maximum = max(self.results)._raw
-        for mark in self.results:
-            mark._bonus = (mark._raw / maximum) - mark._raw
-
     def load(self, file):
         """
         Load students results from an excel file.
@@ -138,6 +132,12 @@ class Assessment(object):
             stack.append(mark)
 
         return stack
+
+    def rescale(self):
+        """Rescale assessment's results."""
+        maximum = max(self.results)._raw
+        for mark in self.results:
+            mark._bonus = (mark._raw / maximum) - mark._raw
 
     def aggregate(self, tests):
         """Aggregate students results to assessments."""
