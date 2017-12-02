@@ -23,7 +23,7 @@ ENV = Environment(loader=PackageLoader("linnote"))
 
 
 class Report(object):
-    """Common method for Report classes."""
+    """Report for an assessment."""
 
     template = ENV.get_template('ranking.html')
     composers = {'statistics', 'histogram', 'ranking'}
