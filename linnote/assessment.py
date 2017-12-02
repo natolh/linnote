@@ -115,6 +115,7 @@ class Assessment(object):
         return '<Assessment>'
 
     def rescale(self):
+        """Rescale assessment's results."""
         maximum = max(self.results)._raw
         for mark in self.results:
             mark._bonus = (mark._raw / maximum) - mark._raw
