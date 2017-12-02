@@ -114,7 +114,7 @@ class Assessment(object):
     def __repr__(self):
         return '<Assessment>'
 
-    def adjust_marks(self):
+    def rescale(self):
         maximum = max(self.results)._raw
         for mark in self.results:
             mark._bonus = (mark._raw / maximum) - mark._raw

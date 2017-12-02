@@ -27,7 +27,7 @@ def rank(files, groups, precision=3, merge=True):
         coefficient = click.prompt('Coefficient', type=int)
 
         assessment = Assessment(scale, coefficient, precision, results=file)
-        assessment.adjust_marks()
+        assessment.rescale()
 
         report = Report(title, assessment, groups)
         report.write()
