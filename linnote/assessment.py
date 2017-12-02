@@ -109,7 +109,7 @@ class Assessment(object):
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
-        self.results = self.load_results(results) if results else list()
+        self.results = self.load(results) if results else list()
 
     def __repr__(self):
         return '<Assessment>'
@@ -119,7 +119,15 @@ class Assessment(object):
         for mark in self.results:
             mark._bonus = (mark._raw / maximum) - mark._raw
 
-    def load_results(self, file):
+    def load(self, file):
+        """
+        Load students results from an excel file.
+
+        - file: A path-like object. Path poiting to the file holding the
+                results.
+
+        Return: A list of 'Mark' objects.
+        """
         results = read_excel(file, names=['anonymat', 'note'], usecols=1)
         results.dropna(how='all')
 
