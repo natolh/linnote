@@ -7,7 +7,11 @@ from linnote.student import Group
 
 
 RESULTS = list(APP_DIR.joinpath('results').glob('*.xlsx'))
-GROUPS = list(Group.load(file, file.stem) for file in Group.find())
+
+GROUPS = list()
+for group_definition in Group.find(APP_DIR.joinpath('groups')):
+    group = Group.load(group_definition)
+    GROUPS.append(group)
 
 if RESULTS:
     rank(RESULTS, GROUPS)
