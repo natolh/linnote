@@ -9,7 +9,6 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from pandas import read_excel
-from linnote import APP_DIR
 
 
 class Student(object): # pylint: disable=R0903
@@ -72,13 +71,16 @@ class Group(object):
         return item in self.students
 
     @staticmethod
-    def find():
+    def find(folder):
         """
         Discover files containing group definition.
 
+        - folder:   Path-like object. Path pointing to a folder containing one
+                    or multiple group definitions.
+
         Return: Generator sequence of path-like objects.
         """
-        return APP_DIR.joinpath("groups").glob("*.xlsx")
+        return folder.glob('*.xlsx')
 
     @staticmethod
     def load(file, name=None):
