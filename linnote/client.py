@@ -9,39 +9,14 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 
-import click
-from linnote.assessment import Assessment
-from linnote.report import Report
+from flask import Flask
+from flask import render_template
 
 
-def rank(files, groups, precision=3, merge=True):
-    """Rank command establish a ranking report for an assessment."""
-    assessments = list()
+APP = Flask("linnote")
 
-    click.echo("*** Création des rapports d'épreuves ***")
-    for file in files:
-        click.echo(file.stem)
 
-        title = click.prompt('Titre du rapport')
-        scale = click.prompt('Barème', type=float)
-        coefficient = click.prompt('Coefficient', type=int)
-
-        assessment = Assessment(scale, coefficient, precision, results=file)
-        assessment.rescale()
-
-        report = Report(title, assessment, groups)
-        report.write()
-
-        assessments.append(assessment)
-
-    click.echo("*** Création de la synthèse ***")
-    if merge:
-        title = click.prompt('Titre du rapport')
-        scale = sum(assessment.scale for assessment in assessments)
-        coefficient = sum(assessment.coefficient for assessment in assessments)
-
-        assessment = Assessment(scale, coefficient, precision)
-        assessment.aggregate(assessments)
-
-        report = Report(title, assessment, groups)
-        report.write()
+@APP.route('/', methods=["GET", "POST"])
+def home():
+    """Home page."""
+    return render_template("base.html")
