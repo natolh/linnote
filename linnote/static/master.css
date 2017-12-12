@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+html {
+    height: 100%;
+    width: 100%;
+    font-size: 15px;
+}
+
+body {
+    min-height: 100%;
+    display: grid;
+    grid-template: 3rem repeat(2, 1fr) / none;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(224, 195, 195);
+}
+
+header h1 {
+    margin: 0;
+    align-self: center;
+    font-family: "Amatic SC";
+    font-size: 2rem;
+    color: white;
+    text-transform: uppercase;
+}
