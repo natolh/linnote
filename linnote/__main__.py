@@ -9,4 +9,8 @@ from linnote.student import Group
 RESULTS = list(APP_DIR.joinpath('results').glob('*.xlsx'))
 GROUPS = list(Group.load(file, file.stem) for file in Group.find())
 
-rank(RESULTS, GROUPS)
+if RESULTS:
+    rank(RESULTS, GROUPS)
+
+else:
+    print("Aucun fichier de résultats...")
