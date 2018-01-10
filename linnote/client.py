@@ -8,13 +8,12 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-
 from flask import Flask
 from flask import redirect, render_template
+from linnote import APP_DIR
 
 
 APP = Flask('linnote')
-
 
 @APP.route('/')
 @APP.route('/index')
@@ -26,9 +25,9 @@ def home():
 @APP.route('/assessments')
 def assessments():
     """List of assessments."""
-    return render_template('base.html')
+    return render_template('assessments.html', assessments=APP_DIR.joinpath('results').glob('*.xlsx'))
 
 @APP.route('/reports')
 def reports():
     """List of reports."""
-    return render_template('base.html')
+    return render_template('reports.html', reports=APP_DIR.joinpath('rankings').glob('*.html'))

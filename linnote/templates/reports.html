@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<menu type="toolbar">
+    <li>
+        <a href="#">
+            Nouveau
+        </a>
+    </li>
+</menu>
+
+<ul>
+    {% for report in reports %}
+    <li>
+        {{ report.stem }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
