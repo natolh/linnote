@@ -17,6 +17,8 @@ APP = Flask("linnote")
 
 
 @APP.route('/', methods=['GET'])
+@APP.route('/index', methods=['GET'])
+@APP.route('/home', methods=['GET'])
 def home():
     """Home page."""
     return render_template("base.html")
