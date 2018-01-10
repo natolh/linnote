@@ -3,5 +3,5 @@
 
 from linnote.client import APP
 
-
-APP.run(debug=True)
+APP.config.update(DEBUG=True, TEMPLATES_AUTO_RELOAD=True)
+APP.run()
