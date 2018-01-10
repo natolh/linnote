@@ -20,13 +20,14 @@ header {
     background-color: rgb(224, 195, 195);
 }
 
-header h1 {
+header h1 a {
     margin: 0;
     align-self: center;
     font-family: "Amatic SC";
     font-size: 2rem;
     color: white;
     text-transform: uppercase;
+    text-decoration: none;
 }
 
 main {
