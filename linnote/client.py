@@ -13,7 +13,7 @@ from flask import Flask
 from flask import render_template
 
 
-APP = Flask("linnote")
+APP = Flask('linnote')
 
 
 @APP.route('/')
@@ -21,4 +21,4 @@ APP = Flask("linnote")
 @APP.route('/home')
 def home():
     """Home page."""
-    return render_template("base.html")
+    return render_template('base.html')
