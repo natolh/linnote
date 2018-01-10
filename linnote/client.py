@@ -27,6 +27,12 @@ def assessments():
     """List of assessments."""
     return render_template('assessments.html', assessments=APP_DIR.joinpath('results').glob('*.xlsx'))
 
+@APP.route('/assessment', defaults={'name': None}, methods=['GET', 'POST'])
+@APP.route('/assessment/<name>', methods=['GET', 'POST'])
+def assessment(name=None):
+    """An assessment."""
+    return render_template('base.html')
+
 @APP.route('/reports')
 def reports():
     """List of reports."""

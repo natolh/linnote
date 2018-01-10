@@ -3,7 +3,7 @@
 {% block content %}
 <menu type="toolbar">
     <li>
-        <a href="#">
+        <a href="/assessment">
             Nouveau
         </a>
     </li>
@@ -12,7 +12,9 @@
 <ul>
     {% for assessment in assessments %}
     <li>
-        {{ assessment.stem }}
+        <a href="{{ url_for('assessment', name=assessment.stem) }}">
+            {{ assessment.stem }}
+        </a>
     </li>
     {% endfor %}
 </ul>
