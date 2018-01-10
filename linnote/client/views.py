@@ -2,18 +2,16 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Command Line Tool for the application.
+Controllers for the client.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import Flask
 from flask import redirect, render_template
 from linnote import APP_DIR
+from linnote.client import APP
 
-
-APP = Flask('linnote')
 
 @APP.route('/')
 @APP.route('/index')
