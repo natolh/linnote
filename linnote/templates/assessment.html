@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {{ form.title.label }}
+    {{ form.title() }}
+
+    {{ form.results.label }}
+    {{ form.results() }}
+
+    {{ form.scale.label }}
+    {{ form.scale() }}
+
+    {{ form.coefficient.label }}
+    {{ form.coefficient() }}
+
+    {{ form.precision.label }}
+    {{ form.precision() }}
+
+    <input type="submit" value="Créer">
+</form>
+{% endblock %}
