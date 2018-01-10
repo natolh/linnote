@@ -5,6 +5,7 @@
         <title>linnote</title>
 
         <link rel="stylesheet" media="all" href="{{ url_for('static', filename='normalize.css') }}">
+        <link rel="stylesheet" media="all" href="{{ url_for('static', filename='reset.css') }}">
         <link rel="stylesheet" media="all" href="{{ url_for('static', filename='master.css') }}">
     </head>
     <body>
@@ -14,6 +15,20 @@
                     linnote
                 </a>
             </h1>
+
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">Épreuves</a>
+                    </li>
+                    <li>
+                        <a href="#">Classements</a>
+                    </li>
+                    <li>
+                        <a href="#">Préférences</a>
+                    </li>
+                </ul>
+            </nav>
         </header>
         <main>
         {% block content %}

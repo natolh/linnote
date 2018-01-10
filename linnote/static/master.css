@@ -16,18 +16,38 @@ body {
 header {
     padding: 0 2rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     background-color: rgb(224, 195, 195);
 }
 
 header h1 a {
     margin: 0;
-    align-self: center;
     font-family: "Amatic SC";
     font-size: 2rem;
     color: white;
     text-transform: uppercase;
     text-decoration: none;
+}
+
+nav ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav a {
+    margin: 0 0.5rem;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 200;
+}
+
+nav a:hover {
+    border-radius: 0.2rem;
+    background-color: rgba(255, 255, 255, 0.33);
 }
 
 main {
