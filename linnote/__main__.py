@@ -3,4 +3,4 @@
 
 from linnote.client import APP
 
-APP.run(debug=True)
+APP.run()
