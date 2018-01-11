@@ -71,8 +71,20 @@ def report(name=None):
     form.assessments.choices = [(a.stem, a.stem) for a in APP_DIR.joinpath('results').glob('[!.]*')]
 
     if request.method == 'POST':
-        assess = load(APP_DIR.joinpath('results', form.assessments.data).open('rb'))
-        rep = Report(form.title.data, assess, GROUPS)
+        if len(form.assessments.data) > 1:
+            assessments = [load(APP_DIR.joinpath('results', assessment).open('rb')) for assessment in form.assessments.data]
+            scale = sum(assessment.scale for assessment in assessments)
+            coefficient = sum(assessment.coefficient for assessment in assessments)
+            precision = min(assessment.precision for assessment in assessments)
+
+            assessment = Assessment(scale, coefficient, precision)
+            assessment.aggregate(assessments)
+
+        else:
+            assessment = load(APP_DIR.joinpath('results', form.assessments.data[0]).open('rb'))
+
+        rep = Report(form.title.data, assessment, GROUPS)
         rep.write()
+        return redirect('reports')
 
     return render_template('report.html', form=form)

@@ -9,7 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from wtforms.form import Form
-from wtforms.fields import StringField, FileField, FloatField, IntegerField, SelectField
+from wtforms.fields import StringField, FileField, FloatField, IntegerField, SelectMultipleField
 
 
 class AssessmentForm(Form):
@@ -22,4 +22,4 @@ class AssessmentForm(Form):
 
 class ReportForm(Form):
     title = StringField('Titre')
-    assessments = SelectField('Épreuves', coerce=str)
+    assessments = SelectMultipleField('Épreuves', coerce=str)
