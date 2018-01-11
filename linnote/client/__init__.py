@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from pickle import dump, load
 from flask import Flask
-from flask import redirect, render_template, request, send_from_directory
+from flask import redirect, render_template, request
 from linnote import APP_DIR
 from linnote.assessment import Assessment
 from linnote.report import Report
