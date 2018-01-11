@@ -3,7 +3,7 @@
 {% block content %}
 <menu type="toolbar">
     <li>
-        <a href="#">
+        <a href="/report">
             Nouveau
         </a>
     </li>
@@ -12,7 +12,9 @@
 <ul>
     {% for report in reports %}
     <li>
-        {{ report.stem }}
+        <a href="{{ url_for('report', name=report.stem) }}">
+            {{ report.stem }}
+        </a>
     </li>
     {% endfor %}
 </ul>

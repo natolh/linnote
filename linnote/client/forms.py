@@ -9,12 +9,17 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from wtforms.form import Form
-from wtforms.fields import StringField, FileField, DecimalField, IntegerField
+from wtforms.fields import StringField, FileField, FloatField, IntegerField, SelectField
 
 
 class AssessmentForm(Form):
     title = StringField('Libellé')
     results = FileField('Notes')
-    scale = DecimalField('Barème', places=3)
-    coefficient = DecimalField('Coefficient', places=3, default=1)
+    scale = FloatField('Barème')
+    coefficient = IntegerField('Coefficient', default=1)
     precision = IntegerField('Précision', default=3)
+
+
+class ReportForm(Form):
+    title = StringField('Titre')
+    assessments = SelectField('Épreuves', coerce=str)
