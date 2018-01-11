@@ -58,14 +58,15 @@ def assessment():
 @APP.route('/reports')
 def reports():
     """List of reports."""
-    return render_template('reports.html', reports=APP_DIR.joinpath('rankings').glob('*.html'))
+    return render_template('reports.html', reports=APP_DIR.joinpath('rankings').glob('[!.]*'))
 
 @APP.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
 @APP.route('/report/<name>')
 def report(name=None):
     """A report."""
     if name:
-        return send_from_directory(APP_DIR.joinpath('rankings'), name + '.html')
+        rep = Report.load(name)
+        return render_template('ranking.html', rep=rep)
 
     form = ReportForm(request.form)
     form.assessments.choices = [(a.stem, a.stem) for a in APP_DIR.joinpath('results').glob('[!.]*')]
@@ -84,7 +85,8 @@ def report(name=None):
             assessment = load(APP_DIR.joinpath('results', form.assessments.data[0]).open('rb'))
 
         rep = Report(form.title.data, assessment, GROUPS)
-        rep.write()
-        return redirect('reports')
+        rep.build()
+        rep.save()
+        return render_template('ranking.html', rep=rep)
 
     return render_template('report.html', form=form)

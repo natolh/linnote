@@ -21,8 +21,7 @@ header {
     background-color: rgb(224, 195, 195);
 }
 
-header h1 a {
-    margin: 0;
+header #brand {
     font-family: "Amatic SC";
     font-size: 2rem;
     color: white;
