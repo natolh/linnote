@@ -11,21 +11,17 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from io import StringIO
 from operator import attrgetter
 from pathlib import Path
+from pickle import dump, load
 from statistics import mean, median
 from re import sub
-from jinja2 import Environment, PackageLoader
 from matplotlib import pyplot
 from linnote import APP_DIR
 from linnote.ranking import Ranking
 
 
-ENV = Environment(loader=PackageLoader("linnote"))
-
-
 class Report(object):
-    """Common method for Report classes."""
+    """Report for an assessment."""
 
-    template = ENV.get_template('ranking.html')
     composers = {'statistics', 'histogram', 'ranking'}
 
     def __init__(self, title, assessment, groups=None, **kwargs):
@@ -70,30 +66,15 @@ class Report(object):
 
             self.data.append(group_data)
 
-        # Fill the report.
-        report = self.template.render(rep=self)
+    def save(self, path=APP_DIR.joinpath('rankings')):
+        """Save the report to the filesystem."""
+        filename = self.sanitize_filename(self.title)
+        dump(self, path.joinpath(filename).open('wb'), -1)
 
-        return report.encode('utf8')
-
-    def write(self, path=APP_DIR.joinpath('rankings'), doctype="html"):
-        """
-        Build and export the report to the filesystem.
-
-        - path:     A path-like object. Directory where the application should
-                    write the report.
-        - doctype:  A string. Document format in which to provide the report,
-                    specify as the extension of this format. Currently, only
-                    HTML output is supported.
-
-        Return: None.
-        """
-        report = self.build()
-
-        folder = Path(path).resolve()
-        filename = self.sanitize_filename(self.title) + '.' + doctype
-        document = folder.joinpath(filename)
-
-        document.write_bytes(report) # pylint: disable=E1101
+    @staticmethod
+    def load(name, path=APP_DIR.joinpath('rankings')):
+        """Load a report from the filesystem."""
+        return load(path.joinpath(name).open('rb'))
 
     @staticmethod
     def sanitize_filename(filename, substitute='-'):

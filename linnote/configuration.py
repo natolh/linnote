@@ -8,9 +8,22 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from platform import system as plateform
+from configparser import ConfigParser
+from linnote import APP_DIR
 
 
-LANGUAGE = 'fr_FR'
-CHARSET = 'UTF-8'
-LOCALE = 'French_France.1252' if plateform() == 'Windows' else 'fr_FR.UTF-8'
+DEFAULT_CONFIG = APP_DIR.joinpath('configuration.ini')
+
+
+def load(configfile=DEFAULT_CONFIG):
+    """
+    Load configuration from INI file.
+
+    - configfile:   A pathlike object. Path to the configuration file default to
+                    the file named 'configuration.ini' in the app directory.
+
+    Return: A config object.
+    """
+    configuration = ConfigParser()
+    configuration.read(configfile)
+    return configuration

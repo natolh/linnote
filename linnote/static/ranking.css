@@ -4,21 +4,8 @@ CSS for rendering tables
 
 @charset "UTF-8";
 
-@page {
-    margin: 2cm;
-}
-
 body {
-    margin: 0px;
-    padding: 0px;
-    color: black;
-    font-family: Verdana;
-    font-size: 9pt;
     text-align: center;
-}
-
-section {
-    page-break-after: always;
 }
 
 h1 {
@@ -61,4 +48,26 @@ table {
 
 #grade tbody tr:nth-child(even) {
     background-color: #F2F2F2;
+}
+
+@media print {
+
+    @page {
+        margin: 2cm;
+    }
+
+    body {
+        color: black;
+        font-family: Verdana;
+        font-size: 9pt;
+    }
+
+    section {
+        page-break-after: always;
+    }
+
+    header, footer {
+        display: none !important;
+    }
+
 }

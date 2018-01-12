@@ -1,16 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from linnote import APP_DIR
-from linnote.client import rank
-from linnote.student import Group
+from linnote.client import APP
 
-
-RESULTS = list(APP_DIR.joinpath('results').glob('*.xlsx'))
-GROUPS = list(Group.load(file, file.stem) for file in Group.find())
-
-if RESULTS:
-    rank(RESULTS, GROUPS)
-
-else:
-    print("Aucun fichier de résultats...")
+APP.run()

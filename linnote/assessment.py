@@ -109,19 +109,21 @@ class Assessment(object):
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
-        self.results = self.load_results(results) if results else list()
+        self.results = self.load(results) if results else list()
 
     def __repr__(self):
         return '<Assessment>'
 
-    def adjust_marks(self):
-        maximum = max(self.results)._raw
-        for mark in self.results:
-            mark._bonus = (mark._raw / maximum) - mark._raw
+    def load(self, file):
+        """
+        Load students results from an excel file.
 
-    def load_results(self, file):
+        - file: A path-like object. Path poiting to the file holding the
+                results.
+
+        Return: A list of 'Mark' objects.
+        """
         results = read_excel(file, names=['anonymat', 'note'], usecols=1)
-        results.dropna(how='all')
 
         stack = list()
         for result in results.to_dict('records'):
@@ -130,6 +132,12 @@ class Assessment(object):
             stack.append(mark)
 
         return stack
+
+    def rescale(self):
+        """Rescale assessment's results."""
+        maximum = max(self.results)._raw
+        for mark in self.results:
+            mark._bonus = (mark._raw / maximum) - mark._raw
 
     def aggregate(self, tests):
         """Aggregate students results to assessments."""

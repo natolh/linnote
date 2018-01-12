@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Epreuves | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<menu type="toolbar">
+    <li>
+        <a href="/assessment">
+            Créer
+        </a>
+    </li>
+</menu>
+
+<ul>
+    {% for assessment in assessments %}
+    <li>
+        {{ assessment.stem }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

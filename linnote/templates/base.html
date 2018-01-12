@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block header %}
+        <meta charset="utf-8">
+        <title>{% block title %}linnote{% endblock %}</title>
+
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='normalize.css') }}">
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='reset.css') }}">
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='master.css') }}">
+    {% endblock %}
+    </head>
+    <body>
+        <header>
+            <a id="brand" href="/">
+                linnote
+            </a>
+
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/assessments">Épreuves</a>
+                    </li>
+                    <li>
+                        <a href="/reports">Classements</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+        {% block content %}
+            Hello The World !
+        {% endblock %}
+        </main>
+        <footer>
+            <p>
+                Copyright © 2014-2017, <a href="https://github.com/natolh">A. HANNIET</a> — <a href="https://www.mozilla.org/en-US/MPL/2.0/">Mozilla Public License</a>.
+            </p>
+        </footer>
+    </body>
+</html>
