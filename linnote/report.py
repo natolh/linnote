@@ -66,13 +66,13 @@ class Report(object):
 
             self.data.append(group_data)
 
-    def save(self, path=APP_DIR.joinpath('rankings')):
+    def save(self, path=APP_DIR.joinpath('ressources', 'private', 'rankings')):
         """Save the report to the filesystem."""
         filename = self.sanitize_filename(self.title)
         dump(self, path.joinpath(filename).open('wb'), -1)
 
     @staticmethod
-    def load(name, path=APP_DIR.joinpath('rankings')):
+    def load(name, path=APP_DIR.joinpath('ressources', 'private', 'rankings')):
         """Load a report from the filesystem."""
         return load(path.joinpath(name).open('rb'))
 

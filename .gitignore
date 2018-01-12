@@ -12,3 +12,9 @@ dist
 *.egg
 *.egg-info
 configuration.ini
+
+# Others
+ressources/private/
+ressources/public/
+!ressources/private/templates/
+!ressources/public/media/

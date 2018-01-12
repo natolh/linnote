@@ -3,4 +3,4 @@
 
 from linnote.client import APP
 
-APP.run()
+APP.run(host='0.0.0.0')
