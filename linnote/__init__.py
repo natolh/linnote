@@ -8,8 +8,8 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-import matplotlib
 from pathlib import Path
+import matplotlib
 
 
 APP_DIR = Path(__file__).resolve().parent
