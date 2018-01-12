@@ -10,7 +10,6 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from io import StringIO
 from operator import attrgetter
-from pathlib import Path
 from pickle import dump, load
 from statistics import mean, median
 from re import sub
