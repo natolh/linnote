@@ -1,83 +1,81 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta lang="fr">
+{% extends "base.html" %}
 
-        <title>{{ rep.title }}</title>
-        <meta name="author" content="Tutorat Santé Lyon Sud">
+{% block title %}
+    {{ rep.title }} | {{ super() }}
+{% endblock %}
 
-        <link rel="stylesheet" type="text/css" media="all" href="../linnote/statics/main.css">
-    </head>
+{% block header %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='ranking.css') }}">
+{% endblock %}
 
-    <body>
-        <main>
-            {% for data in rep.data %}
-            <section>
-                <h1>
-                    {{ rep.title }}<br>
-                    <span class="subheader">{{ data.group_name }}</span>
-                </h1>
+{% block content %}
+    {% for data in rep.data %}
+    <section>
+        <h1>
+            {{ rep.title }}<br>
+            <span class="subheader">{{ data.group_name }}</span>
+        </h1>
 
-                <table id="statistics">
-                    <thead>
-                        <tr>
-                            <th>Effectif</th>
-                            <th>Minimum</th>
-                            <th>Maximum</th>
-                            <th>Moyenne</th>
-                            <th>Médiane</th>
-                            <th>Coefficient</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ data.statistics.size }}</td>
-                            <td>{{ data.statistics.minimum|round(rep.assessment.precision) }}</td>
-                            <td>{{ data.statistics.maximum|round(rep.assessment.precision) }}</td>
-                            <td>{{ data.statistics.mean|round(rep.assessment.precision) }}</td>
-                            <td>{{ data.statistics.median|round(rep.assessment.precision) }}</td>
-                            <td>{{ rep.assessment.coefficient }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <table id="statistics">
+            <thead>
+                <tr>
+                    <th>Effectif</th>
+                    <th>Minimum</th>
+                    <th>Maximum</th>
+                    <th>Moyenne</th>
+                    <th>Médiane</th>
+                    <th>Coefficient</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ data.statistics.size }}</td>
+                    <td>{{ data.statistics.minimum|round(rep.assessment.precision) }}</td>
+                    <td>{{ data.statistics.maximum|round(rep.assessment.precision) }}</td>
+                    <td>{{ data.statistics.mean|round(rep.assessment.precision) }}</td>
+                    <td>{{ data.statistics.median|round(rep.assessment.precision) }}</td>
+                    <td>{{ rep.assessment.coefficient }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-                <svg width="100%" height="50%" preserveAspectRatio="X432Y288" viewBox="0 0 432 288">
-                    {{ data.histogram }}
-                </svg>
+        <svg width="100%" height="50%" preserveAspectRatio="X432Y288" viewBox="0 0 432 288">
+        {% autoescape false %}
+            {{ data.histogram }}
+        {% endautoescape %}
+        </svg>
 
-                <table id="grade">
-                    <thead>
-                        <tr>
-                            <th class="left-align">Anonymat</th>
-                            <th class="left-align">Note brute</th>
-                            <th class="left-align">Note</th>
-                            <th class="right-align">Rang</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for rank in data.ranking.ranks %}
-                        <tr>
-                            <td class="left-align">
-                                <strong>
-                                    {{ rank.item.student.identifier }}
-                                </strong>
-                            </td>
-                            <td class="left-align">
-                                {{ rank.item.raw|round(rep.assessment.precision) }}
-                            </td>
-                            <td class="left-align">
-                                {{ rank.score|round(rep.assessment.precision) }}
-                            </td>
-                            <td class="right-align">
-                                <strong>{{ rank.position }}</strong>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </section>
-            {% endfor %}
-        </main>
-    </body>
-</html>
+        <table id="grade">
+            <thead>
+                <tr>
+                    <th class="left-align">Anonymat</th>
+                    <th class="left-align">Note brute</th>
+                    <th class="left-align">Note</th>
+                    <th class="right-align">Rang</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rank in data.ranking.ranks %}
+                <tr>
+                    <td class="left-align">
+                        <strong>
+                            {{ rank.item.student.identifier }}
+                        </strong>
+                    </td>
+                    <td class="left-align">
+                        {{ rank.item.raw|round(rep.assessment.precision) }}
+                    </td>
+                    <td class="left-align">
+                        {{ rank.score|round(rep.assessment.precision) }}
+                    </td>
+                    <td class="right-align">
+                        <strong>{{ rank.position }}</strong>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    {% endfor %}
+{% endblock %}
