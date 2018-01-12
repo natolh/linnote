@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+    {{ rep.title }} | {{ super() }}
+{% endblock %}
+
 {% block header %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='ranking.css') }}">
