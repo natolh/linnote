@@ -21,7 +21,7 @@ from linnote.client.forms import AssessmentForm, ReportForm
 APP = Flask('linnote')
 GROUPS = list()
 for group_definition in Group.find(APP_DIR.joinpath('groups')):
-    group = Group.load(group_definition)
+    group = Group.load(group_definition, group_definition.stem)
     GROUPS.append(group)
 
 @APP.route('/')
