@@ -16,7 +16,7 @@
 <ul>
     {% for report in reports %}
     <li>
-        <a href="{{ url_for('report', name=report.stem) }}">
+        <a href="{{ url_for('site.report', name=report.stem) }}">
             {{ report.stem }}
         </a>
     </li>
