@@ -8,6 +8,7 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from pathlib import Path
 from pickle import dump, load
 from flask import Flask
 from flask import redirect, render_template, request
@@ -19,10 +20,26 @@ from linnote.student import Group
 from linnote.client.forms import AssessmentForm, ReportForm
 
 
+def configure_app(app, configpath='config.ini'):
+    """Configure an application instance."""
+    # Locate configuration file.
+    configpath = Path(configpath)
+    if not configpath.is_absolute():
+        APP_DIR.joinpath(configpath)
+
+    # Load and set configuration.
+    config = load_config(configpath)
+    config = [(k.upper(), v) for (k, v) in config['FLASK'].items()]
+    app.config.from_mapping(config)
+
+    # Fix configuration for some special parameters.
+    app.template_folder = app.config['TEMPLATE_FOLDER']
+    app.static_folder = app.config['STATIC_FOLDER']
+
+
 APP = Flask('linnote')
-c = load_config('config.cfg')
-APP.template_folder = c.get('DEFAULT','TEMPLATE_FOLDER')
-APP.static_folder = c.get('DEFAULT','STATIC_FOLDER')
+configure_app(APP)
+
 GROUPS = list()
 for group_definition in Group.find(APP_DIR.joinpath('ressources', 'private', 'groups')):
     group = Group.load(group_definition, group_definition.stem)
