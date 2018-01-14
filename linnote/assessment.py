@@ -11,6 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from functools import reduce
 from itertools import groupby
 from operator import add, attrgetter
+from os import remove
 from pickle import dump, load
 from pandas import read_excel
 from linnote import APP_DIR
@@ -161,6 +162,10 @@ class Assessment(object):
     def save(self, filename=None):
         """Save the assessment to the filesystem."""
         dump(self, STORAGE.joinpath(filename).open('wb'), -1)
+
+    def delete(self, filename):
+        """Delete the assessment from the filesystem."""
+        remove(STORAGE.joinpath(filename))
 
     @staticmethod
     def fetch(filename=None):

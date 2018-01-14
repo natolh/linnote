@@ -10,6 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from io import StringIO
 from operator import attrgetter
+from os import remove
 from pickle import dump, load
 from statistics import mean, median
 from re import sub
@@ -143,6 +144,9 @@ class Report(object):
         """Save the assessment to the filesystem."""
         filename = self.sanitize_filename(filename)
         dump(self, STORAGE.joinpath(filename).open('wb'), -1)
+
+    def delete(self, filename):
+        remove(STORAGE.joinpath(filename))
 
     @staticmethod
     def fetch(filename=None):

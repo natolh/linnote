@@ -19,6 +19,9 @@
         <a href="{{ url_for('site.report', name=report.stem) }}">
             {{ report.stem }}
         </a>
+        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', name=report.stem) }}')">
+            Supprimer
+        </button>
     </li>
     {% endfor %}
 </ul>

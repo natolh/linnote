@@ -3,7 +3,7 @@
     <head>
     {% block header %}
         <meta charset="utf-8">
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title>{% block title %}linnote{% endblock %}</title>
@@ -11,6 +11,8 @@
         <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='normalize.css') }}">
         <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='reset.css') }}">
         <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='master.css') }}">
+
+        <script type="text/javascript" src="{{ url_for('static', filename='master.js') }}" defer></script>
     {% endblock %}
     </head>
     <body>

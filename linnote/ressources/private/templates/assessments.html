@@ -17,6 +17,9 @@
     {% for assessment in assessments %}
     <li>
         {{ assessment.stem }}
+        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', name=assessment.stem) }}')">
+            Supprimer
+        </button>
     </li>
     {% endfor %}
 </ul>
