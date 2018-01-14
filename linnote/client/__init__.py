@@ -14,7 +14,8 @@ from linnote import APP_DIR
 from linnote.configuration import load
 from linnote.client.controllers import APP
 
-def create_app(name=None, config_path='config.ini', blueprints=None):
+
+def create_app(name=None, config_path='config.ini'):
     """
     Create a new instance of the application.
 
