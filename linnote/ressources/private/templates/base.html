@@ -24,10 +24,11 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="/assessments">Épreuves</a>
+                        <a href="{{ url_for('site.assessments') }}">Épreuves</a>
                     </li>
                     <li>
-                        <a href="/reports">Classements</a>
+                        <a href="{{ url_for('site.reports') }}">Classements</a>
+                    </li>
                     <li>
                         <a href="{{ url_for('site.groups') }}">Étudiants</a>
                     </li>

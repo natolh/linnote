@@ -12,7 +12,7 @@ from pathlib import Path
 from flask import Flask
 from linnote import APP_DIR
 from linnote.configuration import load
-from linnote.client.controllers import site
+from linnote.client.controllers import SITE
 from linnote.client.api import API
 
 
@@ -27,7 +27,7 @@ def create_app(name=None, config_path='config.ini'):
     """
     app = Flask(name)
     configure_app(app, config_path)
-    app.register_blueprint(site)
+    app.register_blueprint(SITE)
     app.register_blueprint(API)
     return app
 
