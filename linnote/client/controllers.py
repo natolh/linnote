@@ -14,12 +14,9 @@ from linnote import APP_DIR
 from linnote.assessment import Assessment
 from linnote.report import Report
 from linnote.student import Group
-from linnote.client.forms import AssessmentForm, ReportForm
+from linnote.client.forms import AssessmentForm, ReportForm, GroupForm
 
-GROUPS = list()
-for group_definition in Group.find(APP_DIR.joinpath('ressources', 'private', 'groups')):
-    group = Group.load(group_definition, group_definition.stem)
-    GROUPS.append(group)
+GROUPS = [Group.fetch(gdef) for gdef in Group.fetch()]
 
 site = Blueprint('site', __name__)
 
@@ -89,3 +86,15 @@ def report(name=None):
         return render_template('ranking.html', rep=rep)
 
     return render_template('report.html', form=form)
+
+@site.route('/students/groups')
+def groups():
+    return render_template('groups.html', groups=Group.fetch())
+
+@site.route('/students/group', methods=['GET', 'POST'])
+def group():
+    form = GroupForm(request.form)
+    if request.method == 'POST':
+        g = Group(request.files['students'], form.title.data)
+        g.save(form.title.data)
+    return render_template('group.html', form=form)

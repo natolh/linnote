@@ -24,3 +24,7 @@ class AssessmentForm(Form): # pylint: disable=R0903
 class ReportForm(Form): # pylint: disable=R0903
     title = StringField('Titre')
     assessments = SelectMultipleField('Épreuves', coerce=str)
+
+class GroupForm(Form): # pylint: disable=R0903
+    title = StringField('Titre')
+    students = FileField('Listing')

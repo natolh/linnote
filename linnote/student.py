@@ -8,7 +8,12 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from pickle import dump, load
 from pandas import read_excel
+from linnote import APP_DIR
+
+
+STORAGE = APP_DIR.joinpath('ressources', 'private', 'groups')
 
 
 class Student(object): # pylint: disable=R0903
@@ -71,16 +76,12 @@ class Group(object):
         return item in self.students
 
     @staticmethod
-    def find(folder):
-        """
-        Discover files containing group definition.
+    def fetch(filename=None):
+        if not filename:
+            return STORAGE.glob('*')
 
-        - folder:   Path-like object. Path pointing to a folder containing one
-                    or multiple group definitions.
-
-        Return: Generator sequence of path-like objects.
-        """
-        return folder.glob('*.xlsx')
+        group = STORAGE.joinpath(filename).open('rb')
+        return load(group)
 
     @staticmethod
     def load(file, name=None):
@@ -95,3 +96,6 @@ class Group(object):
         students = read_excel(file, names=['identifier']).to_dict('records')
         students = [Student(student["identifier"]) for student in students]
         return Group(students=students, name=name)
+
+    def save(self, filename):
+        dump(self, STORAGE.joinpath(filename).open('wb'), -1)

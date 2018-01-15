@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Epreuves | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<menu type="toolbar">
+    <li>
+        <a href="{{ url_for('site.group') }}">
+            Créer
+        </a>
+    </li>
+</menu>
+
+<ul>
+    {% for group in groups %}
+    <li>
+        {{ group.name }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
