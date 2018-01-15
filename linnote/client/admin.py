@@ -16,23 +16,23 @@ from linnote.student import Group
 from linnote.client.forms import AssessmentForm, ReportForm, GroupForm
 
 
-SITE = Blueprint('site', __name__)
+ADMIN = Blueprint('admin', __name__, url_prefix='/admin')
 GROUPS = [Group.fetch(group_def) for group_def in Group.fetch()]
 
 
-@SITE.route('/')
-@SITE.route('/index')
-@SITE.route('/home')
+@ADMIN.route('/')
+@ADMIN.route('/index')
+@ADMIN.route('/home')
 def home():
     """Home page."""
     return redirect('assessments', code=303)
 
-@SITE.route('/assessments')
+@ADMIN.route('/assessments')
 def assessments():
     """List of assessments."""
     return render_template('assessments.html', assessments=Assessment.fetch())
 
-@SITE.route('/assessment', methods=['GET', 'POST'])
+@ADMIN.route('/assessment', methods=['GET', 'POST'])
 def assessment():
     """An assessment."""
     form = AssessmentForm(request.form)
@@ -51,13 +51,13 @@ def assessment():
 
     return render_template('assessment.html', form=form)
 
-@SITE.route('/reports')
+@ADMIN.route('/reports')
 def reports():
     """List of reports."""
     return render_template('reports.html', reports=Report.fetch())
 
-@SITE.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
-@SITE.route('/report/<name>')
+@ADMIN.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
+@ADMIN.route('/report/<name>')
 def report(name=None):
     """A report."""
     if name:
@@ -87,11 +87,11 @@ def report(name=None):
 
     return render_template('report.html', form=form)
 
-@SITE.route('/students/groups')
+@ADMIN.route('/students/groups')
 def groups():
     return render_template('groups.html', groups=Group.fetch())
 
-@SITE.route('/students/group', methods=['GET', 'POST'])
+@ADMIN.route('/students/group', methods=['GET', 'POST'])
 def group():
     form = GroupForm(request.form)
     if request.method == 'POST':
