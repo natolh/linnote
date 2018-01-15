@@ -7,7 +7,7 @@
 {% block content %}
 <menu type="toolbar">
     <li>
-        <a href="/report">
+        <a href="{{ url_for('admin.report') }}">
             Créer
         </a>
     </li>
@@ -16,9 +16,12 @@
 <ul>
     {% for report in reports %}
     <li>
-        <a href="{{ url_for('report', name=report.stem) }}">
+        <a href="{{ url_for('admin.report', name=report.stem) }}">
             {{ report.stem }}
         </a>
+        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', name=report.stem) }}')">
+            Supprimer
+        </button>
     </li>
     {% endfor %}
 </ul>

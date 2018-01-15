@@ -2,15 +2,13 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Ranking tool for mock assessment of French first year health students.
+WSGI connector.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from pathlib import Path
-import matplotlib
+from linnote.client import create_app
 
 
-APP_DIR = Path(__file__).resolve().parent
-matplotlib.use('Agg')
+APPLICATION = create_app('linnote')

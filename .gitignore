@@ -11,10 +11,13 @@ build
 dist
 *.egg
 *.egg-info
-configuration.ini
 
 # Others
 linnote/ressources/private/groups/**
 linnote/ressources/private/rankings/**
 linnote/ressources/private/results/**
 linnote/ressources/public/media/**
+
+# Configuration
+*.cfg
+*.ini

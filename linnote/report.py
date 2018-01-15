@@ -10,13 +10,16 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from io import StringIO
 from operator import attrgetter
-from pathlib import Path
+from os import remove
 from pickle import dump, load
 from statistics import mean, median
 from re import sub
 from matplotlib import pyplot
 from linnote import APP_DIR
 from linnote.ranking import Ranking
+
+
+STORAGE = APP_DIR.joinpath('ressources', 'private', 'rankings')
 
 
 class Report(object):
@@ -65,16 +68,6 @@ class Report(object):
                 group_data.update({composer: compose(group)})
 
             self.data.append(group_data)
-
-    def save(self, path=APP_DIR.joinpath('ressources', 'private', 'rankings')):
-        """Save the report to the filesystem."""
-        filename = self.sanitize_filename(self.title)
-        dump(self, path.joinpath(filename).open('wb'), -1)
-
-    @staticmethod
-    def load(name, path=APP_DIR.joinpath('ressources', 'private', 'rankings')):
-        """Load a report from the filesystem."""
-        return load(path.joinpath(name).open('rb'))
 
     @staticmethod
     def sanitize_filename(filename, substitute='-'):
@@ -146,3 +139,20 @@ class Report(object):
         """Ranking of the group's marks."""
         value = attrgetter('value')
         return Ranking(self.marks(group), key=value)
+
+    def save(self, filename=None):
+        """Save the assessment to the filesystem."""
+        filename = self.sanitize_filename(filename)
+        dump(self, STORAGE.joinpath(filename).open('wb'), -1)
+
+    def delete(self, filename):
+        remove(STORAGE.joinpath(filename))
+
+    @staticmethod
+    def fetch(filename=None):
+        """Fetch assessment(s) from the filesystem."""
+        if not filename:
+            return STORAGE.glob('*') # pylint: disable=E1101
+
+        report = STORAGE.joinpath(filename).open('rb')
+        return load(report)

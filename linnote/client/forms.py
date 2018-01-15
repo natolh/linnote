@@ -9,10 +9,11 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from wtforms.form import Form
-from wtforms.fields import StringField, FileField, FloatField, IntegerField, SelectMultipleField
+from wtforms.fields import (StringField, FileField, FloatField, IntegerField,
+                            SelectMultipleField)
 
 
-class AssessmentForm(Form):
+class AssessmentForm(Form): # pylint: disable=R0903
     title = StringField('Libellé')
     results = FileField('Notes')
     scale = FloatField('Barème')
@@ -20,6 +21,10 @@ class AssessmentForm(Form):
     precision = IntegerField('Précision', default=3)
 
 
-class ReportForm(Form):
+class ReportForm(Form): # pylint: disable=R0903
     title = StringField('Titre')
     assessments = SelectMultipleField('Épreuves', coerce=str)
+
+class GroupForm(Form): # pylint: disable=R0903
+    title = StringField('Titre')
+    students = FileField('Listing')

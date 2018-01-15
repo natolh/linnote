@@ -11,8 +11,14 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from functools import reduce
 from itertools import groupby
 from operator import add, attrgetter
+from os import remove
+from pickle import dump, load
 from pandas import read_excel
+from linnote import APP_DIR
 from linnote.student import Student
+
+
+STORAGE = APP_DIR.joinpath('ressources', 'private', 'results')
 
 
 class Mark(object):
@@ -152,3 +158,20 @@ class Assessment(object):
             if len(marks) == len(tests):
                 mark = reduce(add, marks)
                 self.results.append(mark)
+
+    def save(self, filename=None):
+        """Save the assessment to the filesystem."""
+        dump(self, STORAGE.joinpath(filename).open('wb'), -1)
+
+    def delete(self, filename):
+        """Delete the assessment from the filesystem."""
+        remove(STORAGE.joinpath(filename))
+
+    @staticmethod
+    def fetch(filename=None):
+        """Fetch assessment(s) from the filesystem."""
+        if not filename:
+            return STORAGE.glob('*')
+
+        assessment = STORAGE.joinpath(filename).open('rb')
+        return load(assessment)

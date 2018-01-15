@@ -7,17 +7,17 @@
 {% block content %}
 <menu type="toolbar">
     <li>
-        <a href="{{ url_for('admin.assessment') }}">
+        <a href="{{ url_for('admin.group') }}">
             Créer
         </a>
     </li>
 </menu>
 
 <ul>
-    {% for assessment in assessments %}
+    {% for group in groups %}
     <li>
-        {{ assessment.stem }}
-        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', name=assessment.stem) }}')">
+        {{ group.name }}
+        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', name=group.name) }}')">
             Supprimer
         </button>
     </li>

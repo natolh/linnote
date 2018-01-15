@@ -9,13 +9,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from configparser import ConfigParser
-from linnote import APP_DIR
 
 
-DEFAULT_CONFIG = APP_DIR.joinpath('configuration.ini')
-
-
-def load(configfile=DEFAULT_CONFIG):
+def load(config_path):
     """
     Load configuration from INI file.
 
@@ -25,5 +21,5 @@ def load(configfile=DEFAULT_CONFIG):
     Return: A config object.
     """
     configuration = ConfigParser()
-    configuration.read(configfile)
+    configuration.read(config_path)
     return configuration
