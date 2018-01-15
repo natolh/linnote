@@ -19,14 +19,14 @@ API = Blueprint('api', __name__, url_prefix='/api')
 
 @API.route('/assessment/<name>', methods=['DELETE'])
 def assessment(name):
-    """API endpoint for assessment objects."""
+    """API endpoint for assessment."""
     i = Assessment.fetch(name)
     i.delete(name)
     return make_response('DELETE has success', 200, None)
 
 @API.route('/report/<name>', methods=['DELETE'])
 def report(name):
-    """API endpoint for report objects."""
+    """API endpoint for report."""
     i = Report.fetch(name)
     i.delete(name)
     return make_response('DELETE has success', 200, None)
