@@ -6,11 +6,16 @@
 
 {% block content %}
 <form method="post">
-    {{ form.title.label }}
-    {{ form.title(autocomplete="off") }}
+    <div class="control">
+        {{ form.title.label }}
+        {{ form.title(autocomplete="off", required="required") }}
+    </div>
 
-    {{ form.assessments.label }}
-    {{ form.assessments() }}
+
+    <div class="control">
+        {{ form.assessments.label }}
+        {{ form.assessments(required="required") }}
+    </div>
 
     <input type="submit" value="Créer">
 </form>

@@ -6,11 +6,16 @@
 
 {% block content %}
 <form method="post" enctype="multipart/form-data">
-    {{ form.title.label }}
-    {{ form.title(autocomplete="off") }}
+    <div class="control">
+        {{ form.title.label }}
+        {{ form.title(autocomplete="off") }}
+    </div>
 
-    {{ form.students.label }}
-    {{ form.students() }}
+
+    <div class="control">
+        {{ form.students.label }}
+        {{ form.students() }}
+    </div>
 
     <input type="submit" value="Créer">
 </form>

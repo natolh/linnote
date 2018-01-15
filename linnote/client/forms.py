@@ -16,8 +16,8 @@ from wtforms.fields import (StringField, FileField, FloatField, IntegerField,
 class AssessmentForm(Form): # pylint: disable=R0903
     title = StringField('Libellé')
     results = FileField('Notes')
-    scale = FloatField('Barème')
-    coefficient = IntegerField('Coefficient', default=1)
+    scale = FloatField('Barème', default=20)
+    coefficient = IntegerField('Coefficient', default=20)
     precision = IntegerField('Précision', default=3)
 
 

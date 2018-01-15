@@ -6,20 +6,31 @@
 
 {% block content %}
 <form method="post" enctype="multipart/form-data">
-    {{ form.title.label }}
-    {{ form.title(autocomplete="off") }}
 
-    {{ form.results.label }}
-    {{ form.results() }}
+    <div class="control">
+        {{ form.title.label }}
+        {{ form.title(autocomplete="off") }}
+    </div>
 
-    {{ form.scale.label }}
-    {{ form.scale(autocomplete="off") }}
+    <div class="control">
+        {{ form.results.label }}
+        {{ form.results() }}
+    </div>
 
-    {{ form.coefficient.label }}
-    {{ form.coefficient(autocomplete="off") }}
+    <div class="control">
+        {{ form.scale.label }}
+        {{ form.scale(type="number", autocomplete="off") }}
+    </div>
 
-    {{ form.precision.label }}
-    {{ form.precision(autocomplete="off") }}
+    <div class="control">
+        {{ form.coefficient.label }}
+        {{ form.coefficient(type="number", autocomplete="off") }}
+    </div>
+
+    <div class="control">
+        {{ form.precision.label }}
+        {{ form.precision(type="number", autocomplete="off") }}
+    </div>
 
     <input type="submit" value="Créer">
 </form>
