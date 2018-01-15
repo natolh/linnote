@@ -8,6 +8,7 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from os import remove
 from pickle import dump, load
 from pandas import read_excel
 from linnote import APP_DIR
@@ -99,3 +100,6 @@ class Group(object):
 
     def save(self, filename):
         dump(self, STORAGE.joinpath(filename).open('wb'), -1)
+
+    def delete(self, filename):
+        remove(STORAGE.joinpath(filename))

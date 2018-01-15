@@ -17,6 +17,9 @@
     {% for group in groups %}
     <li>
         {{ group.name }}
+        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', name=group.name) }}')">
+            Supprimer
+        </button>
     </li>
     {% endfor %}
 </ul>

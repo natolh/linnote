@@ -10,29 +10,29 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from flask import redirect, render_template, request
-from linnote import APP_DIR
 from linnote.assessment import Assessment
 from linnote.report import Report
 from linnote.student import Group
 from linnote.client.forms import AssessmentForm, ReportForm, GroupForm
 
-GROUPS = [Group.fetch(gdef) for gdef in Group.fetch()]
 
-site = Blueprint('site', __name__)
+SITE = Blueprint('site', __name__)
+GROUPS = [Group.fetch(group_def) for group_def in Group.fetch()]
 
-@site.route('/')
-@site.route('/index')
-@site.route('/home')
+
+@SITE.route('/')
+@SITE.route('/index')
+@SITE.route('/home')
 def home():
     """Home page."""
     return redirect('assessments', code=303)
 
-@site.route('/assessments')
+@SITE.route('/assessments')
 def assessments():
     """List of assessments."""
     return render_template('assessments.html', assessments=Assessment.fetch())
 
-@site.route('/assessment', methods=['GET', 'POST'])
+@SITE.route('/assessment', methods=['GET', 'POST'])
 def assessment():
     """An assessment."""
     form = AssessmentForm(request.form)
@@ -51,13 +51,13 @@ def assessment():
 
     return render_template('assessment.html', form=form)
 
-@site.route('/reports')
+@SITE.route('/reports')
 def reports():
     """List of reports."""
     return render_template('reports.html', reports=Report.fetch())
 
-@site.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
-@site.route('/report/<name>')
+@SITE.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
+@SITE.route('/report/<name>')
 def report(name=None):
     """A report."""
     if name:
@@ -87,14 +87,14 @@ def report(name=None):
 
     return render_template('report.html', form=form)
 
-@site.route('/students/groups')
+@SITE.route('/students/groups')
 def groups():
     return render_template('groups.html', groups=Group.fetch())
 
-@site.route('/students/group', methods=['GET', 'POST'])
+@SITE.route('/students/group', methods=['GET', 'POST'])
 def group():
     form = GroupForm(request.form)
     if request.method == 'POST':
-        g = Group(request.files['students'], form.title.data)
+        g = Group.load(request.files['students'], form.title.data)
         g.save(form.title.data)
     return render_template('group.html', form=form)
