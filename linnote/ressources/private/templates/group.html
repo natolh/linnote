@@ -8,7 +8,7 @@
 <form method="post" enctype="multipart/form-data">
     <div class="control">
         {{ form.title.label }}
-        {{ form.title(autocomplete="off") }}
+        {{ form.title(autocomplete="off", pattern="[\w\.\- ]+") }}
     </div>
 
 
