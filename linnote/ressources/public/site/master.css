@@ -5,7 +5,8 @@ html {
     width: 100%;
     font-family: "Open Sans", sans-serif;
     font-size: 15px;
-    --main-tone: rgb(224, 195, 195);
+    --main-tone: hsl(340, 62%, 32%);
+    --lighter: hsl(340, 62%, 42%);
 }
 
 body {
@@ -68,6 +69,10 @@ footer a {
     text-decoration: none;
 }
 
+menu {
+    margin-bottom: 2rem;
+}
+
 footer a:hover {
     color: rgb(120, 120, 120);
     text-decoration: underline;
@@ -98,6 +103,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     border-radius: 0.15rem;
     line-height: 1.5rem;
     vertical-align: super;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="url"]:focus {
@@ -132,9 +140,84 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: rgb(247, 209, 203);
+    background-color: var(--lighter);
 }
 
 a, input[type="submit"], button {
     cursor: pointer;
+}
+
+a[disabled="yes"] {
+    cursor: not-allowed !important;
+}
+
+a[type="button"], input[type="submit"], button {
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    min-width: 10rem;
+    border: none;
+    max-width: 10rem;
+    cursor: pointer;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.15rem;
+    color: white;
+    display: inline;
+    background-color: var(--main-tone);
+}
+
+.cards {
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.cards > li {
+    display: flex;
+    flex-direction: column;
+    border: 0.1rem solid rgb(200, 200, 200);
+    border-radius: 0.2rem;
+}
+
+.cards > li > * {
+    flex: 1 100%;
+}
+
+.cards > li .header, .cards > li .content, .cards > li .footer {
+    margin: 0;
+    padding: 0.8rem 1rem;
+}
+
+.cards > li .header {
+    background-color: rgb(230, 230, 230);
+    font-weight: bolder;
+    border-bottom: 0.15rem solid rgb(200, 200, 200);
+}
+
+.cards li:hover {
+    box-shadow: 0px 0px 2px 0px #B5B5B5;
+}
+
+@media only screen and (min-width: 600px) {
+    .cards {
+        grid-template: auto / repeat(2, 1fr);
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .cards {
+        grid-template: auto / repeat(4, 1fr);
+    }
+}
+
+.cards li p {
+    margin: 0;
+    vertical-align: center;
+}
+
+.flex {
+    float: left;
+}
+
+.white {
+    fill: #D43847;
 }

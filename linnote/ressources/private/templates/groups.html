@@ -13,13 +13,17 @@
     </li>
 </menu>
 
-<ul>
+<ul class="cards">
     {% for group in groups %}
     <li>
-        {{ group.name }}
-        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', name=group.name) }}')">
-            Supprimer
-        </button>
+        <div class="flex header">
+            <p>
+                {{ group.name }}
+            </p>
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', name=group.name) }}')">
+                Supprimer
+            </button>
+        </div>
     </li>
     {% endfor %}
 </ul>

@@ -13,13 +13,17 @@
     </li>
 </menu>
 
-<ul>
+<ul class="cards">
     {% for assessment in assessments %}
     <li>
-        {{ assessment.stem }}
-        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', name=assessment.stem) }}')">
-            Supprimer
-        </button>
+        <div class="flex header">
+            <p>
+                {{ assessment.stem }}
+            </p>
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', name=assessment.stem) }}')">
+                Supprimer
+            </button>
+        </div>
     </li>
     {% endfor %}
 </ul>

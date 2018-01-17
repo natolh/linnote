@@ -13,15 +13,20 @@
     </li>
 </menu>
 
-<ul>
+<ul class="cards">
     {% for report in reports %}
     <li>
-        <a href="{{ url_for('admin.report', name=report.stem) }}">
-            {{ report.stem }}
-        </a>
-        <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', name=report.stem) }}')">
-            Supprimer
-        </button>
+        <div class="flex header">
+            <p>
+                {{ report.stem }}
+            </p>
+            <a href="{{ url_for('admin.report', name=report.stem) }}" type="button">
+                Afficher
+            </a>
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', name=report.stem) }}')">
+                Supprimer
+            </button>
+        </div>
     </li>
     {% endfor %}
 </ul>

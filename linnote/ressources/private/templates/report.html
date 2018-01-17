@@ -8,13 +8,13 @@
 <form method="post">
     <div class="control">
         {{ form.title.label }}
-        {{ form.title(autocomplete="off", pattern="[\w\.\- ]+", required="required") }}
+        {{ form.title(autocomplete="off", pattern="[\w\.\- ]+") }}
     </div>
 
 
     <div class="control">
         {{ form.assessments.label }}
-        {{ form.assessments(required="required") }}
+        {{ form.assessments() }}
     </div>
 
     <input type="submit" value="Créer">
