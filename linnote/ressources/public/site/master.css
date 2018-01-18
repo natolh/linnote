@@ -166,7 +166,7 @@ input[type="submit"] {
     background-color: var(--main-tone);
 }
 
-input[type="submit"]:hover {
+a[type="button"]:hover, input[type="submit"]:hover, button:hover {
     background-color: var(--lighter);
 }
 
