@@ -8,11 +8,13 @@
 <h1>Nouveau groupe d'étudiants</h1>
 
 <form method="post" enctype="multipart/form-data">
+
+    {{ form.csrf_token }}
+
     <div class="control">
         {{ form.title.label }}
         {{ form.title(autocomplete="off", pattern="[\w\.\- ]+") }}
     </div>
-
 
     <div class="control">
         {{ form.students.label }}

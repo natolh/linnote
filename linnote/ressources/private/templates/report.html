@@ -8,11 +8,13 @@
 <h1>Nouveau rapport de classement</h1>
 
 <form method="post">
+
+    {{ form.csrf_token }}
+
     <div class="control">
         {{ form.title.label }}
         {{ form.title(autocomplete="off", pattern="[\w\.\- ]+") }}
     </div>
-
 
     <div class="control">
         {{ form.assessments.label }}

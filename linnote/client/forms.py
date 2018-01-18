@@ -8,7 +8,7 @@ Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from wtforms.form import Form
+from flask_wtf import FlaskForm as Form
 from wtforms.fields import (StringField, FileField, FloatField, IntegerField,
                             SelectMultipleField, BooleanField)
 

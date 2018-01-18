@@ -1,3 +1,4 @@
 [FLASK]
+SECRET_KEY = my-super-secret-key
 TEMPLATE_FOLDER = path/to/template/folder
 STATIC_FOLDER = path/to/static/folder

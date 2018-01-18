@@ -9,6 +9,8 @@
 
 <form method="post" enctype="multipart/form-data">
 
+    {{ form.csrf_token }}
+
     <div class="control">
         {{ form.title.label }}
         {{ form.title(autocomplete="off", pattern="[\w\.\- ]+") }}
