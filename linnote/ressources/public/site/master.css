@@ -79,7 +79,8 @@ menu {
 
 footer a:hover {
     color: rgb(120, 120, 120);
-    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 0.15rem solid white;
 }
 
 menu a {
