@@ -20,7 +20,7 @@
             <p>
                 {{ assessment.stem }}
             </p>
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', name=assessment.stem) }}')">
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', identifier=assessment.stem) }}')">
                 Supprimer
             </button>
         </div>

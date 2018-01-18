@@ -23,7 +23,7 @@
             <a href="{{ url_for('admin.report', name=report.stem) }}" type="button">
                 Afficher
             </a>
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', name=report.stem) }}')">
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', identifier=report.stem) }}')">
                 Supprimer
             </button>
         </div>

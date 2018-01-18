@@ -20,7 +20,7 @@
             <p>
                 {{ group.name }}
             </p>
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', name=group.name) }}')">
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', identifier=group.name) }}')">
                 Supprimer
             </button>
         </div>
