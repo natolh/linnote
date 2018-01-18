@@ -174,10 +174,6 @@ a, input[type="submit"], button {
     cursor: pointer;
 }
 
-a[disabled="yes"] {
-    cursor: not-allowed !important;
-}
-
 a[type="button"], input[type="submit"], button {
     text-align: center;
     text-decoration: none;
@@ -245,8 +241,6 @@ a[type="button"], input[type="submit"], button {
     float: left;
 }
 
-.white {
-    fill: #D43847;
 h1 {
     display: block;
     color: rgb(20, 20, 20);
