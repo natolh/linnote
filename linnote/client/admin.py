@@ -17,7 +17,6 @@ from linnote.client.forms import AssessmentForm, ReportForm, GroupForm
 
 
 ADMIN = Blueprint('admin', __name__)
-GROUPS = [Group.fetch(group_def) for group_def in Group.fetch()]
 
 
 @ADMIN.route('/')
@@ -80,7 +79,9 @@ def report(name=None):
         else:
             assessment = Assessment.fetch(form.assessments.data[0])
 
-        rep = Report(form.title.data, assessment, GROUPS)
+        groups = [Group.fetch(group_def) for group_def in Group.fetch()]
+
+        rep = Report(form.title.data, assessment, groups)
         rep.build()
         rep.save(form.title.data)
         return render_template('ranking.html', rep=rep)
