@@ -225,4 +225,7 @@ a[type="button"], input[type="submit"], button {
 
 .white {
     fill: #D43847;
+h1 {
+    display: block;
+    color: rgb(20, 20, 20);
 }
