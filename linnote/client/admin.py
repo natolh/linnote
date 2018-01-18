@@ -46,8 +46,6 @@ def assessment():
         item.rescale()
         item.save(form.title.data)
 
-        return redirect('assessments', code=303)
-
     return render_template('assessment.html', form=form)
 
 @ADMIN.route('/reports')
@@ -84,7 +82,6 @@ def report(name=None):
         rep = Report(form.title.data, assessment, groups)
         rep.build()
         rep.save(form.title.data)
-        return render_template('ranking.html', rep=rep)
 
     return render_template('report.html', form=form)
 
