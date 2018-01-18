@@ -19,15 +19,17 @@
         {{ form.results() }}
     </div>
 
-    <div class="control">
-        {{ form.scale.label }}
-        {{ form.scale(type="number", autocomplete="off") }}
-    </div>
+    <fieldset>
+        <div class="control">
+            {{ form.scale.label }}
+            {{ form.scale(type="number", autocomplete="off") }}
+        </div>
 
-    <div class="control">
-        {{ form.coefficient.label }}
-        {{ form.coefficient(type="number", autocomplete="off") }}
-    </div>
+        <div class="control">
+            {{ form.coefficient.label }}
+            {{ form.coefficient(type="number", autocomplete="off") }}
+        </div>
+    </fieldset>
 
     <div class="control">
         {{ form.precision.label }}

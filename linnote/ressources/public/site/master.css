@@ -131,6 +131,28 @@ form .control {
     display: block;
 }
 
+form fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+form fieldset > * {
+    flex: 1 1 auto;
+    margin: 0 1rem;
+}
+
+form fieldset > *:first-child {
+    margin-left: 0;
+}
+
+form fieldset > *:last-child {
+    margin-right: 0;
+}
+
 input[type="submit"] {
     box-sizing: border-box;
     width: 10%;
