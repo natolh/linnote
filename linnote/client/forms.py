@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from wtforms.form import Form
 from wtforms.fields import (StringField, FileField, FloatField, IntegerField,
-                            SelectMultipleField)
+                            SelectMultipleField, BooleanField)
 
 
 class AssessmentForm(Form): # pylint: disable=R0903
@@ -20,10 +20,10 @@ class AssessmentForm(Form): # pylint: disable=R0903
     coefficient = IntegerField('Coefficient', default=20)
     precision = IntegerField('Précision', default=3)
 
-
 class ReportForm(Form): # pylint: disable=R0903
     title = StringField('Titre')
     assessments = SelectMultipleField('Épreuves', coerce=str)
+    subgroups = SelectMultipleField('Groupes', coerce=str)
 
 class GroupForm(Form): # pylint: disable=R0903
     title = StringField('Titre')

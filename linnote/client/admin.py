@@ -63,6 +63,7 @@ def report(name=None):
 
     form = ReportForm(request.form)
     form.assessments.choices = [(a.stem, a.stem) for a in Assessment.fetch()]
+    form.subgroups.choices = [(g.stem, g.stem) for g in Group.fetch()]
 
     if request.method == 'POST':
         if len(form.assessments.data) > 1:
@@ -77,7 +78,7 @@ def report(name=None):
         else:
             assessment = Assessment.fetch(form.assessments.data[0])
 
-        groups = [Group.fetch(group_def) for group_def in Group.fetch()]
+        groups = [Group.fetch(group_def) for group_def in form.subgroups.data]
 
         rep = Report(form.title.data, assessment, groups)
         rep.build()

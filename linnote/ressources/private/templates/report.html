@@ -19,6 +19,14 @@
         {{ form.assessments() }}
     </div>
 
+    <div class="control">
+        {{ form.subgroups.label }}
+        <p class="helper">
+            {{ form.subgroups.description }}
+        </p>
+        {{ form.subgroups() }}
+    </div>
+
     <input type="submit" value="Créer">
 </form>
 {% endblock %}
