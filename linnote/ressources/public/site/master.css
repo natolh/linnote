@@ -154,19 +154,6 @@ form fieldset > *:last-child {
     margin-right: 0;
 }
 
-input[type="submit"] {
-    box-sizing: border-box;
-    width: 10%;
-    height: 2.9rem;
-    max-width: 10rem;
-    border: none;
-    padding: 0.4rem 0.5rem;
-    border-radius: 0.15rem;
-    color: white;
-    display: block;
-    background-color: var(--main-tone);
-}
-
 a[type="button"]:hover, input[type="submit"]:hover, button:hover {
     background-color: var(--lighter);
 }
@@ -179,20 +166,22 @@ a[type="button"], input[type="submit"], button {
     text-align: center;
     text-decoration: none;
     box-sizing: border-box;
-    min-width: 10rem;
     border: none;
     max-width: 10rem;
     cursor: pointer;
     padding: 0.4rem 0.5rem;
     border-radius: 0.15rem;
     color: white;
-    display: inline;
     background-color: var(--main-tone);
 }
 
 .cards {
     display: grid;
     grid-gap: 1rem;
+}
+
+.cards a[type="button"], button {
+    display: inline-block;
 }
 
 .cards > li {
