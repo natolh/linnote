@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Web client for the application.
+Web client.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
