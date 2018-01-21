@@ -233,3 +233,30 @@ h1 {
     display: block;
     color: rgb(20, 20, 20);
 }
+
+.message {
+    --success-strong: rgb(147, 221, 26);
+    --warning-strong: rgb(255, 223, 45);
+    --error-strong: rgb(200, 5, 23);
+    --neutral-strong: rgb(156, 156, 156);
+    --success-light: rgba(147, 221, 26, 0.12);
+    --warning-light: rgba(255, 223, 45, 0.12);
+    --error-light: rgba(200, 5, 23, 0.12);
+    --neutral-light: rgba(156, 156, 156, 0.12);
+    }
+
+p.message {
+    border-left: 0.8rem solid var(--neutral-strong);
+    padding: 0.8rem 1rem;
+    background-color: var(--neutral-light);
+}
+
+*.success {
+    border-color: var(--success-strong) !important;
+    background-color: var(--success-light) !important;
+}
+
+*.error {
+    border-color: var(--error-strong) !important;
+    background-color: var(--error-light) !important;
+}

@@ -10,9 +10,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from flask import redirect, render_template, request, url_for
-from linnote.assessment import Assessment
-from linnote.report import Report
-from linnote.student import Group
+from linnote.core.assessment import Assessment
+from linnote.core.report import Report
+from linnote.core.student import Group
 from linnote.client.forms import AssessmentForm, ReportForm, GroupForm
 
 

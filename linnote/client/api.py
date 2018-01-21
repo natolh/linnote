@@ -10,9 +10,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from flask.views import MethodView
-from linnote.assessment import Assessment
-from linnote.report import Report
-from linnote.student import Group
+from linnote.core.assessment import Assessment
+from linnote.core.report import Report
+from linnote.core.student import Group
 
 
 API = Blueprint('api', __name__, url_prefix='/api')

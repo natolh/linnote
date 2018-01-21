@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from pathlib import Path
 from flask import Flask
 from linnote import APP_DIR
-from linnote.configuration import load
+from linnote.core.configuration import load
 from linnote.client.admin import ADMIN
 from linnote.client.api import API
 

@@ -16,10 +16,10 @@ from statistics import mean, median
 from re import sub
 from matplotlib import pyplot
 from linnote import APP_DIR
-from linnote.ranking import Ranking
+from .ranking import Ranking
 
 
-STORAGE = APP_DIR.joinpath('ressources', 'private', 'rankings')
+STORAGE = APP_DIR.parent.joinpath('storage', 'rankings')
 
 
 class Report(object):
