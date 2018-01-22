@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask_wtf import FlaskForm as Form
 from wtforms.fields import (StringField, FileField, FloatField, IntegerField,
-                            SelectMultipleField, BooleanField)
+                            SelectMultipleField)
 
 
 class AssessmentForm(Form): # pylint: disable=R0903
