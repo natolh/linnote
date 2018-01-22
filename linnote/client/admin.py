@@ -34,9 +34,9 @@ def assessments():
 @ADMIN.route('/assessment', methods=['GET', 'POST'])
 def assessment():
     """An assessment."""
-    form = AssessmentForm(request.form)
+    form = AssessmentForm()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
         scale = form.scale.data
         coefficient = form.coefficient.data
         precision = form.precision.data
@@ -61,11 +61,11 @@ def report(name=None):
         rep = Report.fetch(name)
         return render_template('ranking.html', rep=rep)
 
-    form = ReportForm(request.form)
+    form = ReportForm()
     form.assessments.choices = [(a.stem, a.stem) for a in Assessment.fetch()]
     form.subgroups.choices = [(g.stem, g.stem) for g in Group.fetch()]
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
         if len(form.assessments.data) > 1:
             assessments = [Assessment.fetch(assessment) for assessment in form.assessments.data]
             scale = sum(assessment.scale for assessment in assessments)
@@ -92,8 +92,8 @@ def groups():
 
 @ADMIN.route('/students/group', methods=['GET', 'POST'])
 def group():
-    form = GroupForm(request.form)
-    if request.method == 'POST':
+    form = GroupForm()
+    if request.method == 'POST' and form.validate():
         g = Group.load(request.files['students'], form.title.data)
         g.save(form.title.data)
     return render_template('group.html', form=form)

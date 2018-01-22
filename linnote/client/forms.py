@@ -9,22 +9,24 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask_wtf import FlaskForm as Form
-from wtforms.fields import (StringField, FileField, FloatField, IntegerField,
+from flask_wtf.file import FileField, FileRequired
+from wtforms.fields import (StringField, FloatField, IntegerField,
                             SelectMultipleField)
+from wtforms.validators import DataRequired, Length, Optional, NumberRange
 
 
 class AssessmentForm(Form): # pylint: disable=R0903
-    title = StringField('Libellé')
-    results = FileField('Notes')
-    scale = FloatField('Barème', default=20)
-    coefficient = IntegerField('Coefficient', default=20)
-    precision = IntegerField('Précision', default=3)
+    title = StringField('Libellé', validators=[DataRequired(), Length(min=2)])
+    results = FileField('Notes', validators=[FileRequired()])
+    scale = FloatField('Barème', default=20, validators=[DataRequired(), NumberRange(min=0)])
+    coefficient = IntegerField('Coefficient', default=20, validators=[DataRequired(), NumberRange(min=0)])
+    precision = IntegerField('Précision', default=3, validators=[DataRequired(), NumberRange(min=0, max=10)])
 
 class ReportForm(Form): # pylint: disable=R0903
-    title = StringField('Titre')
-    assessments = SelectMultipleField('Épreuves', coerce=str)
-    subgroups = SelectMultipleField('Groupes', coerce=str)
+    title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
+    assessments = SelectMultipleField('Épreuves', coerce=str, validators=[DataRequired()])
+    subgroups = SelectMultipleField('Groupes', coerce=str, validators=[Optional()])
 
 class GroupForm(Form): # pylint: disable=R0903
-    title = StringField('Titre')
-    students = FileField('Listing')
+    title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
+    students = FileField('Listing', validators=[FileRequired()])
