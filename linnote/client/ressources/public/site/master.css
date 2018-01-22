@@ -161,7 +161,7 @@ a, input[type="submit"], button {
     cursor: pointer;
 }
 
-a[type="button"], input[type="submit"], button {
+[type="button"], [type="submit"], [type="reset"], button {
     text-align: center;
     text-decoration: none;
     box-sizing: border-box;
@@ -172,6 +172,9 @@ a[type="button"], input[type="submit"], button {
     border-radius: 0.15rem;
     color: white;
     background-color: var(--main-tone);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .cards {
