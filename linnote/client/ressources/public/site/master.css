@@ -175,6 +175,7 @@ a, input[type="submit"], button {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    vertical-align: middle;
 }
 
 .cards {
@@ -182,7 +183,7 @@ a, input[type="submit"], button {
     grid-gap: 1rem;
 }
 
-.cards a[type="button"], button {
+.cards [type="button"], .cards button {
     display: inline-block;
 }
 
@@ -226,10 +227,6 @@ a, input[type="submit"], button {
 
 .cards li p {
     margin: 0;
-}
-
-.flex {
-    float: left;
 }
 
 h1 {
