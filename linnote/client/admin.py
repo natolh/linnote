@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Web client for the application.
+Administrative client for the project.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -10,10 +10,10 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from flask import redirect, render_template, request, url_for
-from linnote.assessment import Assessment
-from linnote.report import Report
-from linnote.student import Group
-from linnote.client.forms import AssessmentForm, ReportForm, GroupForm
+from linnote.core.assessment import Assessment
+from linnote.core.report import Report
+from linnote.core.student import Group
+from .forms import AssessmentForm, ReportForm, GroupForm
 
 
 ADMIN = Blueprint('admin', __name__)
@@ -34,9 +34,9 @@ def assessments():
 @ADMIN.route('/assessment', methods=['GET', 'POST'])
 def assessment():
     """An assessment."""
-    form = AssessmentForm(request.form)
+    form = AssessmentForm()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
         scale = form.scale.data
         coefficient = form.coefficient.data
         precision = form.precision.data
@@ -45,8 +45,6 @@ def assessment():
         item = Assessment(scale, coefficient, precision, results)
         item.rescale()
         item.save(form.title.data)
-
-        return redirect('assessments', code=303)
 
     return render_template('assessment.html', form=form)
 
@@ -63,10 +61,11 @@ def report(name=None):
         rep = Report.fetch(name)
         return render_template('ranking.html', rep=rep)
 
-    form = ReportForm(request.form)
+    form = ReportForm()
     form.assessments.choices = [(a.stem, a.stem) for a in Assessment.fetch()]
+    form.subgroups.choices = [(g.stem, g.stem) for g in Group.fetch()]
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
         if len(form.assessments.data) > 1:
             assessments = [Assessment.fetch(assessment) for assessment in form.assessments.data]
             scale = sum(assessment.scale for assessment in assessments)
@@ -79,12 +78,11 @@ def report(name=None):
         else:
             assessment = Assessment.fetch(form.assessments.data[0])
 
-        groups = [Group.fetch(group_def) for group_def in Group.fetch()]
+        groups = [Group.fetch(group_def) for group_def in form.subgroups.data]
 
         rep = Report(form.title.data, assessment, groups)
         rep.build()
         rep.save(form.title.data)
-        return render_template('ranking.html', rep=rep)
 
     return render_template('report.html', form=form)
 
@@ -94,8 +92,8 @@ def groups():
 
 @ADMIN.route('/students/group', methods=['GET', 'POST'])
 def group():
-    form = GroupForm(request.form)
-    if request.method == 'POST':
+    form = GroupForm()
+    if request.method == 'POST' and form.validate():
         g = Group.load(request.files['students'], form.title.data)
         g.save(form.title.data)
     return render_template('group.html', form=form)

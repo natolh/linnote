@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Nouvelle épreuve | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Nouvelle épreuve</h1>
+
+<form method="post" enctype="multipart/form-data">
+
+    {{ form.csrf_token }}
+
+    <div class="control">
+        {{ form.title.label }}
+        {{ form.title(autocomplete="off", autofocus="on") }}
+    </div>
+
+    <div class="control">
+        {{ form.results.label }}
+        {{ form.results() }}
+    </div>
+
+    <fieldset>
+        <div class="control">
+            {{ form.scale.label }}
+            {{ form.scale(type="number", autocomplete="off") }}
+        </div>
+
+        <div class="control">
+            {{ form.coefficient.label }}
+            {{ form.coefficient(type="number", autocomplete="off") }}
+        </div>
+    </fieldset>
+
+    <div class="control">
+        {{ form.precision.label }}
+        {{ form.precision(type="number", autocomplete="off") }}
+    </div>
+
+    <input type="submit" value="Créer">
+</form>
+{% endblock %}

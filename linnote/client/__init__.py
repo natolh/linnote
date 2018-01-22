@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Web client for the application.
+Web client.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -11,9 +11,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from pathlib import Path
 from flask import Flask
 from linnote import APP_DIR
-from linnote.configuration import load
-from linnote.client.admin import ADMIN
-from linnote.client.api import API
+from linnote.core.configuration import load
+from .admin import ADMIN
+from .api import API
 
 
 def create_app(name=None, config_path='config.ini'):

@@ -13,9 +13,7 @@ dist
 *.egg-info
 
 # Others
-linnote/ressources/private/groups/**
-linnote/ressources/private/rankings/**
-linnote/ressources/private/results/**
+storage/**
 linnote/ressources/public/media/**
 
 # Configuration

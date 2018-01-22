@@ -2,39 +2,54 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Web client for the application.
+API for the project.
 
 Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import Blueprint
-from flask import make_response
-from linnote.assessment import Assessment
-from linnote.report import Report
-from linnote.student import Group
+from flask.views import MethodView
+from linnote.core.assessment import Assessment
+from linnote.core.report import Report
+from linnote.core.student import Group
 
 
 API = Blueprint('api', __name__, url_prefix='/api')
 
 
-@API.route('/assessment/<name>', methods=['DELETE'])
-def assessment(name):
-    """API endpoint for assessment."""
-    i = Assessment.fetch(name)
-    i.delete(name)
-    return make_response('DELETE has success', 200, None)
+class AssessmentView(MethodView):
+    """API for assessment ressources."""
 
-@API.route('/report/<name>', methods=['DELETE'])
-def report(name):
-    """API endpoint for report."""
-    i = Report.fetch(name)
-    i.delete(name)
-    return make_response('DELETE has success', 200, None)
+    @staticmethod
+    def delete(identifier):
+        """Delete an assessment ressource."""
+        assessment = Assessment.fetch(identifier)
+        assessment.delete(identifier)
+        return "DELETED"
 
-@API.route('/students/groups/<name>', methods=['DELETE'])
-def group(name):
-    """API endpoint for students group."""
-    i = Group.fetch(name)
-    i.delete(name)
-    return make_response('DELETE has success', 200, None)
+class ReportView(MethodView):
+    """API for report ressources."""
+
+    @staticmethod
+    def delete(identifier):
+        """Delete an report ressource."""
+        report = Report.fetch(identifier)
+        report.delete(identifier)
+        return "DELETED"
+
+class GroupView(MethodView):
+    """API for group ressources."""
+
+    @staticmethod
+    def delete(identifier):
+        """Delete an group ressource."""
+        group = Group.fetch(identifier)
+        group.delete(identifier)
+        return "DELETED"
+
+
+# Routes.
+API.add_url_rule('/assessments/<identifier>', view_func=AssessmentView.as_view('assessment'))
+API.add_url_rule('/reports/<identifier>', view_func=ReportView.as_view('report'))
+API.add_url_rule('/students/groups/<identifier>', view_func=GroupView.as_view('group'))

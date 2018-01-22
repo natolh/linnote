@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Nouveau classement | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Nouveau rapport de classement</h1>
+
+<form method="post">
+
+    {{ form.csrf_token }}
+
+    <div class="control">
+        {{ form.title.label }}
+        {{ form.title(autocomplete="off", autofocus="on") }}
+    </div>
+
+    <div class="control">
+        {{ form.assessments.label }}
+        {{ form.assessments() }}
+    </div>
+
+    <div class="control">
+        {{ form.subgroups.label }}
+        {{ form.subgroups() }}
+    </div>
+
+    <input type="submit" value="Créer">
+</form>
+{% endblock %}

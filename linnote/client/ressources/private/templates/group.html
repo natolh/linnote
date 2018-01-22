@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Nouveau groupe | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Nouveau groupe d'étudiants</h1>
+
+<form method="post" enctype="multipart/form-data">
+
+    {{ form.csrf_token }}
+
+    <div class="control">
+        {{ form.title.label }}
+        {{ form.title(autocomplete="off", autofocus="on") }}
+    </div>
+
+    <div class="control">
+        {{ form.students.label }}
+        {{ form.students() }}
+    </div>
+
+    <input type="submit" value="Créer">
+</form>
+{% endblock %}

@@ -14,7 +14,7 @@ from pandas import read_excel
 from linnote import APP_DIR
 
 
-STORAGE = APP_DIR.joinpath('ressources', 'private', 'groups')
+STORAGE = APP_DIR.parent.joinpath('storage', 'groups')
 
 
 class Student(object): # pylint: disable=R0903

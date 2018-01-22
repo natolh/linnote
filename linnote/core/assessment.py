@@ -15,10 +15,10 @@ from os import remove
 from pickle import dump, load
 from pandas import read_excel
 from linnote import APP_DIR
-from linnote.student import Student
+from .student import Student
 
 
-STORAGE = APP_DIR.joinpath('ressources', 'private', 'results')
+STORAGE = APP_DIR.parent.joinpath('storage', 'results')
 
 
 class Mark(object):

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Classements | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Rapports</h1>
+
+<menu type="toolbar">
+    <li>
+        <a href="{{ url_for('admin.report') }}">
+            Créer
+        </a>
+    </li>
+</menu>
+
+<ul class="cards">
+    {% for report in reports %}
+    <li>
+        <div class="flex header">
+            <p>
+                {{ report.stem }}
+            </p>
+        </div>
+        <div class="footer">
+            <a href="{{ url_for('admin.report', name=report.stem) }}" type="button">
+                Afficher
+            </a>
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', identifier=report.stem) }}')">
+                Supprimer
+            </button>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
