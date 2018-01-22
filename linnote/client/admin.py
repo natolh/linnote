@@ -13,7 +13,7 @@ from flask import redirect, render_template, request, url_for
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.student import Group
-from linnote.client.forms import AssessmentForm, ReportForm, GroupForm
+from .forms import AssessmentForm, ReportForm, GroupForm
 
 
 ADMIN = Blueprint('admin', __name__)

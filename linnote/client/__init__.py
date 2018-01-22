@@ -12,8 +12,8 @@ from pathlib import Path
 from flask import Flask
 from linnote import APP_DIR
 from linnote.core.configuration import load
-from linnote.client.admin import ADMIN
-from linnote.client.api import API
+from .admin import ADMIN
+from .api import API
 
 
 def create_app(name=None, config_path='config.ini'):
