@@ -7,9 +7,9 @@
     --color-main-light: hsl(340, 62%, 36%);
 
     /* Neutral tone */
-    --color-neutral: hsl(0, 0%, 61%);
-    --color-neutral-deep: hsl(0, 0%, 59%);
-    --color-neutral-light: hsl(0, 0%, 65%);
+    --color-neutral: hsl(0, 0%, 80%);
+    --color-neutral-deep: hsl(0, 0%, 72%);
+    --color-neutral-light: hsl(0, 0%, 84%);
 
     /* Success tone */
     --color-success: hsl(83, 79%, 46%);
