@@ -140,8 +140,6 @@ form fieldset {
     flex-wrap: wrap;
     justify-content: space-between;
     border: none;
-    padding: 0;
-    margin: 0;
 }
 
 form fieldset > * {
@@ -203,7 +201,6 @@ a, input[type="submit"], button {
 }
 
 .cards > li .header, .cards > li .content, .cards > li .footer {
-    margin: 0;
     padding: 0.8rem 1rem;
 }
 
@@ -227,10 +224,6 @@ a, input[type="submit"], button {
     .cards {
         grid-template: auto / repeat(4, 1fr);
     }
-}
-
-.cards li p {
-    margin: 0;
 }
 
 h1 {
