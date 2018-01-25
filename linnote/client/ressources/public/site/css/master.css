@@ -1,12 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Amatic+SC|Open+Sans');
+@charset "UTF-8";
+
+@import url('normalize.css');
+@import url('reset.css');
+@import url('fonts.css');
+@import url('colors.css');
 
 html {
     height: 100%;
     width: 100%;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
     font-size: 15px;
-    --main-tone: hsl(340, 62%, 32%);
-    --lighter: hsl(340, 62%, 42%);
 }
 
 body {
@@ -20,12 +25,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--main-tone);
+    background-color: var(--color-main);
 }
 
 header #brand {
-    font-family: "Amatic SC";
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: rgba(255, 255, 255, 0.5);
     text-transform: uppercase;
     text-decoration: none;
@@ -154,7 +158,7 @@ form fieldset > *:last-child {
 }
 
 a[type="button"]:hover, input[type="submit"]:hover, button:hover {
-    background-color: var(--lighter);
+    background-color: var(--color-main-light);
 }
 
 a, input[type="submit"], button {
@@ -171,7 +175,7 @@ a, input[type="submit"], button {
     padding: 0.4rem 0.5rem;
     border-radius: 0.15rem;
     color: white;
-    background-color: var(--main-tone);
+    background-color: var(--color-main);
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -234,29 +238,18 @@ h1 {
     color: rgb(20, 20, 20);
 }
 
-.message {
-    --success-strong: rgb(147, 221, 26);
-    --warning-strong: rgb(255, 223, 45);
-    --error-strong: rgb(200, 5, 23);
-    --neutral-strong: rgb(156, 156, 156);
-    --success-light: rgba(147, 221, 26, 0.12);
-    --warning-light: rgba(255, 223, 45, 0.12);
-    --error-light: rgba(200, 5, 23, 0.12);
-    --neutral-light: rgba(156, 156, 156, 0.12);
-    }
-
 p.message {
-    border-left: 0.8rem solid var(--neutral-strong);
+    border-left: 0.8rem solid var(--color-neutral);
     padding: 0.8rem 1rem;
-    background-color: var(--neutral-light);
+    background-color: var(--color-neutral-light);
 }
 
 *.success {
-    border-color: var(--success-strong) !important;
-    background-color: var(--success-light) !important;
+    border-color: var(--color-success) !important;
+    background-color: var(--color-success-light) !important;
 }
 
 *.error {
-    border-color: var(--error-strong) !important;
-    background-color: var(--error-light) !important;
+    border-color: var(--color-error) !important;
+    background-color: var(--color-error-light) !important;
 }
