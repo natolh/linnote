@@ -2,11 +2,28 @@
 
 
 header {
-    padding: 0.6rem;
+    padding: 1.4rem;
+    width: 100vw;
     display: flex;
+    flex-flow: column nowrap;
     justify-content: space-between;
     align-items: center;
     background-color: var(--color-main);
+}
+
+header > *:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+
+@media screen and (min-width: 510px) {
+    header {
+        flex-flow: row nowrap;
+        padding: 0.4rem;
+    }
+    
+    header > * {
+        margin: 0 !important;
+    }
 }
 
 #brand {
@@ -23,8 +40,8 @@ header {
 
 nav ul {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    max-width: calc(100vw - 2rem);
+    overflow-x: scroll;
 }
 
 nav a {
