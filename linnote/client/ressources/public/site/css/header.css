@@ -45,12 +45,14 @@ nav ul {
 }
 
 nav a {
-    margin: 0 0.5rem;
-    padding: 0.25rem 0.5rem;
     color: white;
     text-decoration: none;
     text-transform: uppercase;
     font-weight: 200;
+}
+
+nav ul li:not(:last-child) {
+    margin-right: 0.7rem;
 }
 
 nav a:hover {
