@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-label {
-    font-weight: bolder;
-}
-
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], input[type="tel"], input[type="url"], select {
     display: inline-block;
     box-sizing: border-box;
@@ -28,6 +24,7 @@ input[type="text"]:invalid, input[type="password"]:invalid, input[type="number"]
 label {
     display: block;
     margin-bottom: 0.15rem;
+    font-weight: bold;
 }
 
 form .control {
