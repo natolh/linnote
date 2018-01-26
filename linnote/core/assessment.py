@@ -14,6 +14,7 @@ from operator import add, attrgetter
 from os import remove
 from pickle import dump, load
 from pandas import read_excel
+from werkzeug.utils import secure_filename
 from linnote import APP_DIR
 from .student import Student
 
@@ -161,7 +162,7 @@ class Assessment(object):
 
     def save(self, filename=None):
         """Save the assessment to the filesystem."""
-        dump(self, STORAGE.joinpath(filename).open('wb'), -1)
+        dump(self, STORAGE.joinpath(secure_filename(filename)).open('wb'), -1)
 
     def delete(self, filename):
         """Delete the assessment from the filesystem."""
