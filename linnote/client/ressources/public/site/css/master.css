@@ -20,10 +20,10 @@ body {
     grid-template: min-content 1fr min-content / 1fr;
 }
 
-main {
-    padding: 1rem 2rem;
+body header, body main, body footer {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
 }
-
 
 menu {
     margin-bottom: 2rem;

@@ -4,7 +4,6 @@ footer {
     --footer-color-text: hsl(0, 0%, 70%);
     --footer-color-text-highlight: hsl(0, 0%, 90%);
 
-    padding: 2rem 2rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -28,8 +27,6 @@ footer a:hover {
 
 @media screen and (min-width: 590px) {
     footer {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
         flex-flow: row nowrap;
     }
 }
