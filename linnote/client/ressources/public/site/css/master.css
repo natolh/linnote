@@ -5,6 +5,7 @@
 @import url('fonts.css');
 @import url('colors.css');
 @import url('footer.css');
+@import url('header.css');
 
 
 html {
@@ -17,45 +18,6 @@ html {
 body {
     display: grid;
     grid-template: 3rem 1fr auto / none;
-}
-
-header {
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--color-main);
-}
-
-#brand {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
-    text-decoration: none;
-}
-
-#brand:hover {
-    color: rgb(255, 255, 255);
-}
-
-nav ul {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-nav a {
-    margin: 0 0.5rem;
-    padding: 0.25rem 0.5rem;
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 200;
-}
-
-nav a:hover {
-    border-radius: 0.2rem;
-    background-color: rgba(255, 255, 255, 0.33);
 }
 
 main {
