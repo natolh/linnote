@@ -27,14 +27,14 @@ header {
     background-color: var(--color-main);
 }
 
-header #brand {
+#brand {
     font-size: 1.5rem;
     color: rgba(255, 255, 255, 0.5);
     text-transform: uppercase;
     text-decoration: none;
 }
 
-header #brand:hover {
+#brand:hover {
     color: rgb(255, 255, 255);
 }
 
