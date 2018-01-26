@@ -10,8 +10,8 @@ footer {
     justify-content: center;
     align-items: center;
     color: var(--footer-color-text);
-    background-color: hsl(0, 0%, 16%);
-    font-size: 0.9rem;
+    background-color: hsl(0, 0%, 12%);
+    font-size: 0.8rem;
     line-height: 1.4rem;
     text-align: center;
 }
