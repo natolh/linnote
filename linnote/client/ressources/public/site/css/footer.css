@@ -4,6 +4,7 @@ footer {
     --footer-color-text: hsl(0, 0%, 70%);
     --footer-color-text-highlight: hsl(0, 0%, 90%);
 
+    padding: 0.6rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;

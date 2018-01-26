@@ -25,6 +25,10 @@ body header, body main, body footer {
     padding-right: 1rem !important;
 }
 
+main {
+    padding: 1rem;
+}
+
 menu {
     margin-bottom: 2rem;
 }
