@@ -20,7 +20,7 @@ header > *:not(:last-child) {
         flex-flow: row nowrap;
         padding: 0.4rem;
     }
-    
+
     header > * {
         margin: 0 !important;
     }
