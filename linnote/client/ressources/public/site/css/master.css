@@ -7,6 +7,7 @@
 @import url('header.css');
 @import url('footer.css');
 @import url('forms.css');
+@import url('cards.css');
 
 html {
     font-family: "Lato", sans-serif;
@@ -33,6 +34,10 @@ main {
     grid-gap: 1rem 0.5rem;
 }
 
+main > * {
+    grid-column: 1 / -1;
+}
+
 @media screen and (min-width: 600px) {
     main {
         grid-template: min-content / repeat(2, 1fr);
@@ -53,13 +58,8 @@ main {
 
 h1 {
     margin: 0;
-    grid-column: 1 / -1;
     display: block;
     color: rgb(20, 20, 20);
-}
-
-menu {
-    grid-column: 1 / -1;
 }
 
 menu a {
@@ -98,52 +98,6 @@ a, input[type="submit"], button {
     -webkit-appearance: none;
     -moz-appearance: none;
     vertical-align: middle;
-}
-
-.cards {
-    display: grid;
-    grid-gap: 1rem;
-}
-
-.cards [type="button"], .cards button {
-    display: inline-block;
-}
-
-.cards > li {
-    display: flex;
-    flex-direction: column;
-    border: 0.1rem solid var(--color-neutral-deep);
-    border-radius: 0.2rem;
-}
-
-.cards > li > * {
-    flex: 1 1 auto;
-}
-
-.cards > li .header, .cards > li .content, .cards > li .footer {
-    padding: 0.8rem 1rem;
-}
-
-.cards > li .header {
-    background-color: var(--color-neutral);
-    font-weight: bolder;
-    border-bottom: 0.15rem solid var(--color-neutral-deep);
-}
-
-.cards li:hover {
-    box-shadow: 0px 0px 2px 0px #B5B5B5;
-}
-
-@media only screen and (min-width: 600px) {
-    .cards {
-        grid-template: auto / repeat(2, 1fr);
-    }
-}
-
-@media only screen and (min-width: 900px) {
-    .cards {
-        grid-template: auto / repeat(4, 1fr);
-    }
 }
 
 p.message {
