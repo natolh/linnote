@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+@import url('normalize.css');
+@import url('reset.css');
+@import url('fonts.css');
+@import url('colors.css');
+@import url('header.css');
+@import url('footer.css');
+@import url('forms.css');
+@import url('cards.css');
+@import url('messages.css');
+
+html {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 100%;
+}
+
+body {
+    display: grid;
+    grid-template: min-content 1fr min-content / 1fr;
+}
+
+body header, body main, body footer {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+main {
+    padding: 1rem;
+    display: grid;
+    grid-template: min-content / 1fr;
+    grid-auto-rows: min-content;
+    grid-gap: 1rem 0.5rem;
+}
+
+main > * {
+    grid-column: 1 / -1;
+}
+
+@media screen and (min-width: 600px) {
+    main {
+        grid-template: min-content / repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 900px) {
+    main {
+        grid-template: min-content / repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    main {
+        grid-template: min-content / repeat(4, 1fr);
+    }
+}
+
+h1 {
+    margin: 0;
+    display: block;
+    color: rgb(20, 20, 20);
+}
+
+menu a {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: rgb(200, 200, 200);
+    border-radius: 0.2rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+menu a:hover {
+    background-color: rgb(180, 180, 180);
+}
+
+a[type="button"]:hover, input[type="submit"]:hover, button:hover {
+    background-color: var(--color-main-light);
+}
+
+a, input[type="submit"], button {
+    cursor: pointer;
+}
+
+[type="button"], [type="submit"], [type="reset"], button {
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    border: none;
+    max-width: 10rem;
+    cursor: pointer;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.15rem;
+    color: white;
+    background-color: var(--color-main);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    vertical-align: middle;
+}

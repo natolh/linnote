@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+:root {
+    /* Main theme tone */
+    --color-main: hsl(340, 62%, 32%);
+    --color-main-deep: hsl(340, 62%, 30%);
+    --color-main-light: hsl(340, 62%, 36%);
+
+    /* Neutral tone */
+    --color-neutral: hsl(0, 0%, 80%);
+    --color-neutral-deep: hsl(0, 0%, 72%);
+    --color-neutral-light: hsl(0, 0%, 84%);
+
+    /* Success tone */
+    --color-success: hsl(83, 79%, 46%);
+    --color-success-deep: hsl(83, 79%, 44%);
+    --color-success-light: hsl(83, 79%, 50%);
+
+    /* Warning tone */
+    --color-warning: hsl(51, 100%, 59%);
+    --color-warning-deep: hsl(51, 100%, 57%);
+    --color-warning-light: hsl(51, 100%, 63%);
+
+    /* Error tone */
+    --color-error: hsl(354, 95%, 40%);
+    --color-error-deep: hsl(354, 95%, 38%);
+    --color-error-light: hsl(354, 95%, 44%);
+}

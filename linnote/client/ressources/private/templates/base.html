@@ -4,20 +4,19 @@
     {% block header %}
         <meta charset="utf-8">
 
+        <title>{% block title %}linnote{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>{% block title %}linnote{% endblock %}</title>
+        <!-- Style -->
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/master.css') }}">
 
-        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='normalize.css') }}">
-        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='reset.css') }}">
-        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='master.css') }}">
-
-        <script type="text/javascript" src="{{ url_for('static', filename='master.js') }}" defer></script>
+        <!-- Animation -->
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/master.js') }}" defer></script>
     {% endblock %}
     </head>
     <body>
         <header>
-            <a id="brand" href="#">
+            <a id="brand" href="/">
                 linnote
             </a>
 
@@ -41,8 +40,8 @@
         {% endblock %}
         </main>
         <footer>
-            <p>
-                Copyright © 2014-2017, <a href="https://github.com/natolh">A. HANNIET</a> — <a href="https://www.mozilla.org/en-US/MPL/2.0/">Licence</a>.
+            <p class="copyright">
+                Copyright © 2016-2018 Anatole Hanniet, l'application est disponible sous licence <a href="https://www.mozilla.org/en-US/MPL/2.0/">Mozilla Public License</a>.
             </p>
         </footer>
     </body>

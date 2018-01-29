@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.message {
+    border-left: 0.8rem solid var(--color-neutral);
+    padding: 0.8rem 1rem;
+    transition: all 200ms ease-in;
+    background-color: hsl(0, 0%, 98%);
+}
+
+*.primary {
+    border-color: var(--color-main);
+}
+
+*.success {
+    border-color: var(--color-success-light);
+}
+
+*.warning {
+    border-color: var(--color-warning);
+}
+
+*.error {
+    border-color: var(--color-error);
+}
