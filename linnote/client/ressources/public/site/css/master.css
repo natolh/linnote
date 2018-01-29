@@ -8,6 +8,7 @@
 @import url('footer.css');
 @import url('forms.css');
 @import url('cards.css');
+@import url('messages.css');
 
 html {
     font-family: "Lato", sans-serif;
@@ -98,20 +99,4 @@ a, input[type="submit"], button {
     -webkit-appearance: none;
     -moz-appearance: none;
     vertical-align: middle;
-}
-
-p.message {
-    border-left: 0.8rem solid var(--color-neutral);
-    padding: 0.8rem 1rem;
-    background-color: var(--color-neutral-light);
-}
-
-*.success {
-    border-color: var(--color-success) !important;
-    background-color: var(--color-success-light) !important;
-}
-
-*.error {
-    border-color: var(--color-error) !important;
-    background-color: var(--color-error-light) !important;
 }
