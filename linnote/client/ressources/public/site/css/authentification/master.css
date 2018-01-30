@@ -10,12 +10,13 @@
 body {
     display: grid;
     grid-template: 1fr min-content / 1fr;
-    background-color: hsl(0, 0%, 99%);
+    background-color: hsl(0, 0%, 95%);
 }
 
 main {
     display: flex;
     flex-flow: column nowrap;
+    align-items: center;
     justify-content: center;
     padding: 1rem;
 }
@@ -34,12 +35,16 @@ form {
     width: 100%;
 }
 
-@media screen and (min-width: 300px) {
+@media screen and (min-width: 350px) and (min-height: 500px) {
+
     main {
+        border-radius: 0.2rem;
+        height: min-content;
+        width: min-content;
         align-items: center;
     }
 
     form {
-        width: 300px;
+        width: calc(350px - 2rem);
     }
 }
