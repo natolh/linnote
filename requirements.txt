@@ -3,3 +3,5 @@ matplotlib==2.1.0
 pandas==0.21.0
 xlrd==1.1.0
 flask_wtf==0.14.2
+flask_sqlalchemy==2.3.2
+flask_migrate==2.1.1
