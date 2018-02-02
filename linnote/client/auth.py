@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import redirect, render_template, request, url_for
 from flask_login import login_user, logout_user
 from linnote.core.user import User
-from .database import session
+from .utils import session
 from .forms import LoginForm
 
 
