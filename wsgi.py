@@ -13,5 +13,5 @@ from linnote.client import api, auth, admin
 
 
 BLUEPRINTS = [api.API, auth.AUTH, admin.ADMIN]
-APPLICATION = create_app('linnote', config_path='config.ini',
+APPLICATION = create_app('linnote', config_path='configuration.ini',
                          blueprints=BLUEPRINTS)

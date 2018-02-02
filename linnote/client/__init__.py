@@ -16,7 +16,7 @@ from linnote.core.user import User
 from .utils import session, LOGIN_MANAGER
 
 
-def create_app(name=None, config_path='config.ini', blueprints=None):
+def create_app(name=None, config_path='configuration.ini', blueprints=None):
     """
     Create a new instance of the application.
 
@@ -39,11 +39,6 @@ def create_app(name=None, config_path='config.ini', blueprints=None):
 
 def configure_app(app, config_path):
     """Configure an application instance."""
-    # Locate configuration file.
-    config_path = Path(config_path)
-    if not config_path.is_absolute():
-        config_path = APP_DIR.parent.joinpath(config_path)
-
     # Load and set configuration.
     config = load(config_path)
     config = [(k.upper(), v) for (k, v) in config['FLASK'].items()]
