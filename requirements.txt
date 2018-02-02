@@ -3,5 +3,6 @@ matplotlib
 pandas
 xlrd
 sqlalchemy[postgresql]
+alembic
 flask_login
 flask_wtf
