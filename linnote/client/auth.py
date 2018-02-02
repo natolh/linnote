@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+u"""
+Authentification endpoints for the web client.
+
+Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
+License: Mozilla Public License, see 'LICENSE.txt' for details.
+"""
+
 from flask import Blueprint
 from flask import redirect, render_template, request, url_for
 from flask_login import login_user, logout_user
