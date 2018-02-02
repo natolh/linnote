@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileField, FileRequired
 from wtforms.fields import (StringField, FloatField, IntegerField,
-                            SelectMultipleField)
+                            SelectMultipleField, PasswordField)
 from wtforms.validators import DataRequired, Length, Optional, NumberRange
 
 
@@ -30,3 +30,7 @@ class ReportForm(Form): # pylint: disable=R0903
 class GroupForm(Form): # pylint: disable=R0903
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     students = FileField('Listing', validators=[FileRequired()])
+
+class LoginForm(Form):
+    identifier = StringField('Identifiant', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[DataRequired()])

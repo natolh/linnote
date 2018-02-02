@@ -15,7 +15,7 @@ from linnote.core.report import Report
 from linnote.core.student import Group
 
 
-API = Blueprint('api', __name__, url_prefix='/api')
+BLUEPRINT = Blueprint('api', __name__, url_prefix='/api')
 
 
 class AssessmentView(MethodView):
@@ -50,6 +50,6 @@ class GroupView(MethodView):
 
 
 # Routes.
-API.add_url_rule('/assessments/<identifier>', view_func=AssessmentView.as_view('assessment'))
-API.add_url_rule('/reports/<identifier>', view_func=ReportView.as_view('report'))
-API.add_url_rule('/students/groups/<identifier>', view_func=GroupView.as_view('group'))
+BLUEPRINT.add_url_rule('/assessments/<identifier>', view_func=AssessmentView.as_view('assessment'))
+BLUEPRINT.add_url_rule('/reports/<identifier>', view_func=ReportView.as_view('report'))
+BLUEPRINT.add_url_rule('/students/groups/<identifier>', view_func=GroupView.as_view('group'))

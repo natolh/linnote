@@ -28,7 +28,7 @@ label {
     font-weight: bold;
 }
 
-form .control {
+form .control, form div[role="group"] {
     margin-bottom: 1rem;
     display: block;
 }

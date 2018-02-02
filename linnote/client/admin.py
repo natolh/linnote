@@ -10,28 +10,30 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.student import Group
 from .forms import AssessmentForm, ReportForm, GroupForm
 
 
-ADMIN = Blueprint('admin', __name__)
+BLUEPRINT = Blueprint('admin', __name__, url_prefix='/admin')
 
 
-@ADMIN.route('/')
-@ADMIN.route('/index')
-@ADMIN.route('/home')
+@BLUEPRINT.route('/')
+@login_required
 def home():
     """Home page."""
     return redirect(url_for('admin.assessments'), code=303)
 
-@ADMIN.route('/assessments')
+@BLUEPRINT.route('/assessments')
+@login_required
 def assessments():
     """List of assessments."""
     return render_template('assessments.html', assessments=Assessment.fetch())
 
-@ADMIN.route('/assessment', methods=['GET', 'POST'])
+@BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
+@login_required
 def assessment():
     """An assessment."""
     form = AssessmentForm()
@@ -48,13 +50,15 @@ def assessment():
 
     return render_template('assessment.html', form=form)
 
-@ADMIN.route('/reports')
+@BLUEPRINT.route('/reports')
+@login_required
 def reports():
     """List of reports."""
     return render_template('reports.html', reports=Report.fetch())
 
-@ADMIN.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
-@ADMIN.route('/report/<name>')
+@BLUEPRINT.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
+@BLUEPRINT.route('/report/<name>')
+@login_required
 def report(name=None):
     """A report."""
     if name:
@@ -86,11 +90,13 @@ def report(name=None):
 
     return render_template('report.html', form=form)
 
-@ADMIN.route('/students/groups')
+@BLUEPRINT.route('/students/groups')
+@login_required
 def groups():
     return render_template('groups.html', groups=Group.fetch())
 
-@ADMIN.route('/students/group', methods=['GET', 'POST'])
+@BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
+@login_required
 def group():
     form = GroupForm()
     if request.method == 'POST' and form.validate():

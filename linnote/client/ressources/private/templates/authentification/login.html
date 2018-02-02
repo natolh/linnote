@@ -1,0 +1,21 @@
+{% extends 'authentification/base.html' %}
+
+{% block content %}
+<h1>linnote</h1>
+
+<form method="post">
+    {{ form.csrf_token }}
+
+    <div role="group">
+        {{ form.identifier.label }}
+        {{ form.identifier(autofocus="on") }}
+    </div>
+
+    <div role="group">
+        {{ form.password.label }}
+        {{ form.password() }}
+    </div>
+
+    <input type="submit" value="connexion">
+</form>
+{% endblock %}
