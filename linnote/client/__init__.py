@@ -12,11 +12,11 @@ from pathlib import Path
 from flask import Flask
 from linnote import APP_DIR
 from linnote.core.configuration import load
-from .admin import ADMIN
-from .api import API
+from linnote.core.user import User
+from .utils import session, LOGIN_MANAGER
 
 
-def create_app(name=None, config_path='config.ini'):
+def create_app(name=None, config_path='config.ini', blueprints=None):
     """
     Create a new instance of the application.
 
@@ -26,9 +26,15 @@ def create_app(name=None, config_path='config.ini'):
     Return: A new 'flask.Flask' object.
     """
     app = Flask(name)
+
+    # Configure app.
     configure_app(app, config_path)
-    app.register_blueprint(ADMIN)
-    app.register_blueprint(API)
+    LOGIN_MANAGER.init_app(app)
+
+    # Register blueprints to the app.
+    if blueprints:
+        register_blueprints(app, blueprints)
+
     return app
 
 def configure_app(app, config_path):
@@ -46,3 +52,8 @@ def configure_app(app, config_path):
     # Fix configuration for some special parameters.
     app.template_folder = app.config['TEMPLATE_FOLDER']
     app.static_folder = app.config['STATIC_FOLDER']
+
+def register_blueprints(app, blueprints):
+    """Register blueprints to the application instance."""
+    for blueprint in blueprints:
+        app.register_blueprint(blueprint)
