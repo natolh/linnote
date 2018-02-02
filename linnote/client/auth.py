@@ -6,7 +6,7 @@ from .utils import session
 from .forms import LoginForm
 
 
-AUTH = Blueprint('auth', __name__, url_prefix='/auth')
+AUTH = Blueprint('auth', __name__)
 
 
 @AUTH.route('/login', methods=['GET', 'POST'])

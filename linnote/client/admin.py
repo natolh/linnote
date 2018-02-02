@@ -17,12 +17,10 @@ from linnote.core.student import Group
 from .forms import AssessmentForm, ReportForm, GroupForm
 
 
-ADMIN = Blueprint('admin', __name__)
+ADMIN = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 @ADMIN.route('/')
-@ADMIN.route('/index')
-@ADMIN.route('/home')
 @login_required
 def home():
     """Home page."""
