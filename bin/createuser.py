@@ -9,11 +9,11 @@ from linnote.core.user import User
 
 session = Session()
 
-username = input('Identifiant : ')
+name = input('Identifiant : ')
 email = input('Email : ')
 password = input('Mot de passe : ')
 
-user = User(username=username, email=email)
+user = User(name=name, email=email)
 user.set_password(password)
 
 session.add(user)
