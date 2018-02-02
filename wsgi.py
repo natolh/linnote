@@ -9,6 +9,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from linnote.client import create_app
+from linnote.client import api, auth, admin
 
 
-APPLICATION = create_app('linnote')
+BLUEPRINTS = [api.API, auth.AUTH, admin.ADMIN]
+APPLICATION = create_app('linnote', config_path='config.ini',
+                         blueprints=BLUEPRINTS)
