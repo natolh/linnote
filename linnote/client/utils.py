@@ -13,7 +13,7 @@ from flask_login import LoginManager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from linnote import APP_DIR
-from linnote.core.configuration import load
+from linnote.core.utils.configuration import load
 from linnote.core.user import User
 
 

@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from sqlalchemy import Column
 from sqlalchemy import Integer, String, Text, Boolean
 from werkzeug.security import generate_password_hash, check_password_hash
-from .database import Base
+from .utils.database import Base
 
 
 class User(Base):

@@ -4,7 +4,7 @@ from pathlib import Path
 CWD = Path().resolve().parent
 path.append(str(CWD))
 
-from linnote.core.database import Session
+from linnote.core.utils.database import Session
 from linnote.core.user import User
 
 session = Session()
