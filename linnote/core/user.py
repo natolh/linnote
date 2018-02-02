@@ -60,3 +60,6 @@ class User(Base):
     def is_anonymous(self):
         """Boolean showing if the current user is anonymous or not."""
         return not self.is_authenticated()
+
+    def is_active(self):
+        return self.is_active
