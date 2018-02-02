@@ -17,6 +17,15 @@ from linnote.core.utils.configuration import load
 
 # Session factory.
 config = load(APP_DIR.parent.joinpath('configuration.ini'))
-engine = create_engine(config.get('DATABASE', 'URL'))
+engine = create_engine(config.get('DATABASE', 'URL'), pool_recycle=280)
 session = scoped_session(sessionmaker(bind=engine),
                          _app_ctx_stack.__ident_func__)
+
+
+def configure_session(app):
+
+    app.session = session
+
+    @app.teardown_appcontext
+    def remove(*args, **kwargs):
+        app.session.remove()

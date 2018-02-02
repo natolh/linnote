@@ -13,7 +13,7 @@ from flask import Flask
 from linnote import APP_DIR
 from linnote.core.utils.configuration import load
 from linnote.core.user import User
-from .utils import session, LOGIN_MANAGER
+from .utils import configure_session, LOGIN_MANAGER
 
 
 def create_app(name=None, config_path='configuration.ini', blueprints=None):
@@ -34,6 +34,9 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
     # Register blueprints to the app.
     if blueprints:
         register_blueprints(app, blueprints)
+
+    # Session.
+    configure_session(app)
 
     return app
 
