@@ -3,7 +3,9 @@ flask
 matplotlib
 pandas
 xlrd
-sqlalchemy[postgresql]
+sqlalchemy
+psycopg2
+mysql-connector-python
 alembic
 flask_login
 flask_wtf
