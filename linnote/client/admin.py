@@ -17,22 +17,22 @@ from linnote.core.student import Group
 from .forms import AssessmentForm, ReportForm, GroupForm
 
 
-ADMIN = Blueprint('admin', __name__, url_prefix='/admin')
+BLUEPRINT = Blueprint('admin', __name__, url_prefix='/admin')
 
 
-@ADMIN.route('/')
+@BLUEPRINT.route('/')
 @login_required
 def home():
     """Home page."""
     return redirect(url_for('admin.assessments'), code=303)
 
-@ADMIN.route('/assessments')
+@BLUEPRINT.route('/assessments')
 @login_required
 def assessments():
     """List of assessments."""
     return render_template('assessments.html', assessments=Assessment.fetch())
 
-@ADMIN.route('/assessment', methods=['GET', 'POST'])
+@BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
 @login_required
 def assessment():
     """An assessment."""
@@ -50,14 +50,14 @@ def assessment():
 
     return render_template('assessment.html', form=form)
 
-@ADMIN.route('/reports')
+@BLUEPRINT.route('/reports')
 @login_required
 def reports():
     """List of reports."""
     return render_template('reports.html', reports=Report.fetch())
 
-@ADMIN.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
-@ADMIN.route('/report/<name>')
+@BLUEPRINT.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
+@BLUEPRINT.route('/report/<name>')
 @login_required
 def report(name=None):
     """A report."""
@@ -90,12 +90,12 @@ def report(name=None):
 
     return render_template('report.html', form=form)
 
-@ADMIN.route('/students/groups')
+@BLUEPRINT.route('/students/groups')
 @login_required
 def groups():
     return render_template('groups.html', groups=Group.fetch())
 
-@ADMIN.route('/students/group', methods=['GET', 'POST'])
+@BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
 @login_required
 def group():
     form = GroupForm()

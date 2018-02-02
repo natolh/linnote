@@ -12,6 +12,6 @@ from linnote.client import create_app
 from linnote.client import api, auth, admin, site
 
 
-BLUEPRINTS = [api.API, auth.AUTH, admin.ADMIN, site.BLUEPRINT]
+BLUEPRINTS = [api, auth, admin, site]
 APPLICATION = create_app('linnote', config_path='configuration.ini',
                          blueprints=BLUEPRINTS)

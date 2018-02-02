@@ -16,10 +16,10 @@ from .utils import session
 from .forms import LoginForm
 
 
-AUTH = Blueprint('auth', __name__)
+BLUEPRINT = Blueprint('auth', __name__)
 
 
-@AUTH.route('/login', methods=['GET', 'POST'])
+@BLUEPRINT.route('/login', methods=['GET', 'POST'])
 def login():
     """Login endpoint for the application."""
     form = LoginForm()
@@ -33,7 +33,7 @@ def login():
 
     return render_template('authentification/login.html', form=form)
 
-@AUTH.route('/logout')
+@BLUEPRINT.route('/logout')
 def logout():
     """Logout endpoint for the application."""
     logout_user()

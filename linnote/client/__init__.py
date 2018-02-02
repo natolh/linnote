@@ -51,4 +51,5 @@ def configure_app(app, config_path):
 def register_blueprints(app, blueprints):
     """Register blueprints to the application instance."""
     for blueprint in blueprints:
+        blueprint = getattr(blueprint, 'BLUEPRINT')
         app.register_blueprint(blueprint)
