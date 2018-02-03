@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from flask import redirect, render_template, request, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from linnote.core.user import User
 from .utils import session
 from .forms import LoginForm
@@ -23,6 +23,9 @@ BLUEPRINT = Blueprint('auth', __name__)
 def login():
     """Login endpoint for the application."""
     form = LoginForm()
+
+    if current_user.is_authenticated:
+        return redirect(url_for('admin.home'))
 
     if request.method == 'POST' and form.validate():
         user = session.query(User).filter(User.name == form.identifier.data).one_or_none()
