@@ -11,12 +11,12 @@
 
     {{ form.csrf_token }}
 
-    <div class="control">
+    <div role="group">
         {{ form.title.label }}
         {{ form.title(autocomplete="off", autofocus="on") }}
     </div>
 
-    <div class="control">
+    <div role="group">
         {{ form.students.label }}
         {{ form.students() }}
     </div>

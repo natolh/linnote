@@ -11,29 +11,29 @@
 
     {{ form.csrf_token }}
 
-    <div class="control">
+    <div role="group">
         {{ form.title.label }}
         {{ form.title(autocomplete="off", autofocus="on") }}
     </div>
 
-    <div class="control">
+    <div role="group">
         {{ form.results.label }}
         {{ form.results() }}
     </div>
 
     <fieldset>
-        <div class="control">
+        <div role="group">
             {{ form.scale.label }}
             {{ form.scale(type="number", autocomplete="off") }}
         </div>
 
-        <div class="control">
+        <div role="group">
             {{ form.coefficient.label }}
             {{ form.coefficient(type="number", autocomplete="off") }}
         </div>
     </fieldset>
 
-    <div class="control">
+    <div role="group">
         {{ form.precision.label }}
         {{ form.precision(type="number", autocomplete="off") }}
     </div>

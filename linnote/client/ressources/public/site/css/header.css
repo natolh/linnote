@@ -29,17 +29,29 @@ header > *:not(:last-child) {
     }
 }
 
+header a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsla(0, 100%, 100%, 80%);
+    transition: color 100ms ease-out;
+}
+
+header a:hover, header a:focus, header a:active {
+    color: white;
+    transition: color 100ms ease-in;
+}
+
 #brand {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.2rem;
+    font-weight: bolder;
+    color: white;
     text-transform: uppercase;
-    text-decoration: none;
 }
 
-#brand:hover {
-    color: rgb(255, 255, 255);
+nav {
+    font-family: 400;
 }
-
 
 nav ul {
     display: flex;
@@ -48,17 +60,10 @@ nav ul {
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
+    font-size: 0.9rem;
     text-transform: uppercase;
-    font-weight: 200;
 }
 
 nav ul li:not(:last-child) {
     margin-right: 0.7rem;
-}
-
-nav a:hover {
-    border-radius: 0.2rem;
-    background-color: rgba(255, 255, 255, 0.33);
 }

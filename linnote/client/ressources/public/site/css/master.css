@@ -19,10 +19,11 @@ html {
 
 body {
     display: grid;
+    background-color: hsl(0, 0%, 98%);
     grid-template: min-content 1fr min-content / 1fr;
 }
 
-body header, body main, body footer {
+header, main, footer {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
 }
@@ -76,15 +77,15 @@ menu a:hover {
     background-color: rgb(180, 180, 180);
 }
 
-a[type="button"]:hover, input[type="submit"]:hover, button:hover {
+a[type="button"]:hover, button:hover {
     background-color: var(--color-main-light);
 }
 
-a, input[type="submit"], button {
+a, button {
     cursor: pointer;
 }
 
-[type="button"], [type="submit"], [type="reset"], button {
+[type="button"], button {
     text-align: center;
     text-decoration: none;
     box-sizing: border-box;
