@@ -4,6 +4,6 @@
 u"""
 Core of the project.
 
-Author: Anatole Hanniet, Tutorat Santé Lyon Sud (2014-2017).
+Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
