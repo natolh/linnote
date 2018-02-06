@@ -1,30 +1,30 @@
-{% extends "base.html" %}
+{% extends "admin/base.html" %}
 
 {% block title %}
     Epreuves | {{ super() }}
 {% endblock %}
 
 {% block content %}
-<h1>Groupes d'étudiants</h1>
+<h1>Épreuves</h1>
 
 <menu type="toolbar">
     <li>
-        <a href="{{ url_for('admin.group') }}">
+        <a href="{{ url_for('admin.assessment') }}">
             Créer
         </a>
     </li>
 </menu>
 
 <ul class="cards">
-    {% for group in groups %}
+    {% for assessment in assessments %}
     <li>
         <div class="flex header">
             <p>
-                {{ group.name }}
+                {{ assessment.stem }}
             </p>
         </div>
         <div class="footer">
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', identifier=group.name) }}')">
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', identifier=assessment.stem) }}')">
                 Supprimer
             </button>
         </div>

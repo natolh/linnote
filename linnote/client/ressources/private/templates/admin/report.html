@@ -1,13 +1,13 @@
-{% extends "base.html" %}
+{% extends "admin/base.html" %}
 
 {% block title %}
-    Nouveau groupe | {{ super() }}
+    Nouveau classement | {{ super() }}
 {% endblock %}
 
 {% block content %}
-<h1>Nouveau groupe d'étudiants</h1>
+<h1>Nouveau rapport de classement</h1>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post">
 
     {{ form.csrf_token }}
 
@@ -17,8 +17,13 @@
     </div>
 
     <div role="group">
-        {{ form.students.label }}
-        {{ form.students() }}
+        {{ form.assessments.label }}
+        {{ form.assessments() }}
+    </div>
+
+    <div role="group">
+        {{ form.subgroups.label }}
+        {{ form.subgroups() }}
     </div>
 
     <input type="submit" value="Créer">

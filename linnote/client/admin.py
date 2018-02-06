@@ -30,7 +30,7 @@ def home():
 @login_required
 def assessments():
     """List of assessments."""
-    return render_template('assessments.html', assessments=Assessment.fetch())
+    return render_template('admin/assessments.html', assessments=Assessment.fetch())
 
 @BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
 @login_required
@@ -48,13 +48,13 @@ def assessment():
         item.rescale()
         item.save(form.title.data)
 
-    return render_template('assessment.html', form=form)
+    return render_template('admin/assessment.html', form=form)
 
 @BLUEPRINT.route('/reports')
 @login_required
 def reports():
     """List of reports."""
-    return render_template('reports.html', reports=Report.fetch())
+    return render_template('admin/reports.html', reports=Report.fetch())
 
 @BLUEPRINT.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
 @BLUEPRINT.route('/report/<name>')
@@ -63,7 +63,7 @@ def report(name=None):
     """A report."""
     if name:
         rep = Report.fetch(name)
-        return render_template('ranking.html', rep=rep)
+        return render_template('admin/ranking.html', rep=rep)
 
     form = ReportForm()
     form.assessments.choices = [(a.stem, a.stem) for a in Assessment.fetch()]
@@ -88,12 +88,12 @@ def report(name=None):
         rep.build()
         rep.save(form.title.data)
 
-    return render_template('report.html', form=form)
+    return render_template('admin/report.html', form=form)
 
 @BLUEPRINT.route('/students/groups')
 @login_required
 def groups():
-    return render_template('groups.html', groups=Group.fetch())
+    return render_template('admin/groups.html', groups=Group.fetch())
 
 @BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
 @login_required
@@ -102,4 +102,4 @@ def group():
     if request.method == 'POST' and form.validate():
         g = Group.load(request.files['students'], form.title.data)
         g.save(form.title.data)
-    return render_template('group.html', form=form)
+    return render_template('admin/group.html', form=form)
