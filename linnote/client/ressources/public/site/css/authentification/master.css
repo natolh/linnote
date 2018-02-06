@@ -2,10 +2,17 @@
 
 @import url('../normalize.css');
 @import url('../reset.css');
-@import url('../colors.css');
 @import url('../fonts.css');
+@import url('../colors.css');
 @import url('../forms.css');
 @import url('../footer.css');
+
+html {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 100%;
+}
 
 body {
     display: grid;
