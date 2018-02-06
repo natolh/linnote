@@ -15,6 +15,7 @@ from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.student import Group
 from .forms import AssessmentForm, ReportForm, GroupForm
+from .utils import session
 
 
 BLUEPRINT = Blueprint('admin', __name__, url_prefix='/admin')
@@ -30,7 +31,8 @@ def home():
 @login_required
 def assessments():
     """List of assessments."""
-    return render_template('assessments.html', assessments=Assessment.fetch())
+    items = session.query(Assessment).all()
+    return render_template('admin/assessments.html', assessments=items)
 
 @BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
 @login_required
@@ -39,22 +41,23 @@ def assessment():
     form = AssessmentForm()
 
     if request.method == 'POST' and form.validate():
+        title = form.title.data
         scale = form.scale.data
         coefficient = form.coefficient.data
         precision = form.precision.data
         results = request.files['results']
 
-        item = Assessment(scale, coefficient, precision, results)
-        item.rescale()
-        item.save(form.title.data)
+        item = Assessment(title, scale, coefficient, precision, results)
+        session.merge(item)
+        session.commit()
 
-    return render_template('assessment.html', form=form)
+    return render_template('admin/assessment.html', form=form)
 
 @BLUEPRINT.route('/reports')
 @login_required
 def reports():
     """List of reports."""
-    return render_template('reports.html', reports=Report.fetch())
+    return render_template('admin/reports.html', reports=Report.fetch())
 
 @BLUEPRINT.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
 @BLUEPRINT.route('/report/<name>')
@@ -63,15 +66,15 @@ def report(name=None):
     """A report."""
     if name:
         rep = Report.fetch(name)
-        return render_template('ranking.html', rep=rep)
+        return render_template('admin/ranking.html', rep=rep)
 
     form = ReportForm()
-    form.assessments.choices = [(a.stem, a.stem) for a in Assessment.fetch()]
-    form.subgroups.choices = [(g.stem, g.stem) for g in Group.fetch()]
+    form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
+    form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
 
     if request.method == 'POST' and form.validate():
         if len(form.assessments.data) > 1:
-            assessments = [Assessment.fetch(assessment) for assessment in form.assessments.data]
+            assessments = [session.query(Assessment).get(assessment_id) for assessment_id in form.assessments.data]
             scale = sum(assessment.scale for assessment in assessments)
             coefficient = sum(assessment.coefficient for assessment in assessments)
             precision = min(assessment.precision for assessment in assessments)
@@ -80,20 +83,21 @@ def report(name=None):
             assessment.aggregate(assessments)
 
         else:
-            assessment = Assessment.fetch(form.assessments.data[0])
+            assessment = session.query(Assessment).get(form.assessments.data[0])
 
-        groups = [Group.fetch(group_def) for group_def in form.subgroups.data]
+        groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
 
         rep = Report(form.title.data, assessment, groups)
         rep.build()
         rep.save(form.title.data)
 
-    return render_template('report.html', form=form)
+    return render_template('admin/report.html', form=form)
 
 @BLUEPRINT.route('/students/groups')
 @login_required
 def groups():
-    return render_template('groups.html', groups=Group.fetch())
+    items = session.query(Group).all()
+    return render_template('admin/groups.html', groups=items)
 
 @BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
 @login_required
@@ -101,5 +105,6 @@ def group():
     form = GroupForm()
     if request.method == 'POST' and form.validate():
         g = Group.load(request.files['students'], form.title.data)
-        g.save(form.title.data)
-    return render_template('group.html', form=form)
+        session.merge(g)
+        session.commit()
+    return render_template('admin/group.html', form=form)

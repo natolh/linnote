@@ -13,6 +13,7 @@ from flask.views import MethodView
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.student import Group
+from .utils import session
 
 
 BLUEPRINT = Blueprint('api', __name__, url_prefix='/api')
@@ -24,8 +25,9 @@ class AssessmentView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an assessment ressource."""
-        assessment = Assessment.fetch(identifier)
-        assessment.delete(identifier)
+        assessment = session.query(Assessment).get(identifier)
+        session.delete(assessment)
+        session.commit()
         return "DELETED"
 
 class ReportView(MethodView):
@@ -44,8 +46,9 @@ class GroupView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an group ressource."""
-        group = Group.fetch(identifier)
-        group.delete(identifier)
+        group = session.query(Group).get(identifier)
+        session.delete(group)
+        session.commit()
         return "DELETED"
 
 
