@@ -20,11 +20,11 @@
     <li>
         <div class="flex header">
             <p>
-                {{ assessment.stem }}
+                {{ assessment.title }}
             </p>
         </div>
         <div class="footer">
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', identifier=assessment.stem) }}')">
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', identifier=assessment.identifier) }}')">
                 Supprimer
             </button>
         </div>

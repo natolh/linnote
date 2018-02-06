@@ -11,19 +11,28 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from functools import reduce
 from itertools import groupby
 from operator import add, attrgetter
-from os import remove
-from pickle import dump, load
 from pandas import read_excel
+from sqlalchemy import Column
+from sqlalchemy import Integer, Float, ForeignKey, String
+from sqlalchemy.orm import relationship
 from werkzeug.utils import secure_filename
-from linnote import APP_DIR
 from .student import Student
+from .utils.database import Base
 
 
-STORAGE = APP_DIR.parent.joinpath('storage', 'results')
-
-
-class Mark(object):
+class Mark(Base):
     """Student's mark to an assessment."""
+
+    __tablename__ = 'marks'
+
+    identifier = Column(Integer, primary_key=True)
+    student = relationship('Student')
+    student_id = Column(Integer, ForeignKey('students.identifier'))
+    coefficient = Column(Integer, nullable=False)
+    _raw = Column(Float)
+    _bonus = Column(Float)
+
+    assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
 
     def __init__(self, student, coefficient, score, scale=1, bonus=0):
         """Initialize a new mark."""
@@ -84,6 +93,9 @@ class Mark(object):
         else:
             raise NotImplemented # pylint: disable = E0702, E0711
 
+    def __hash__(self):
+        return hash(self.identifier)
+
     @property
     def raw(self):
         return self._raw * self.coefficient
@@ -98,13 +110,27 @@ class Mark(object):
         return (self._raw + self._bonus) * self.coefficient
 
 
-class Assessment(object):
-    """Evaluation of students knowledge."""
+class Assessment(Base):
+    """
+    Evaluation of students knowledge.
 
-    def __init__(self, scale, coefficient, precision, results=None):
+    - scale:        Float. Actual scale in results file.
+    - coefficient:  Integer. Desired scale for output.
+    - precision:    Integer. Number of decimals for outputing marks.
+    """
+
+    __tablename__ = 'assessments'
+
+    identifier = Column(Integer, primary_key=True)
+    title = Column(String(250), nullable=False, unique=True, index=True)
+    scale = Column(Float, nullable=False)
+    coefficient = Column(Integer, nullable=False)
+    precision = Column(Integer, nullable=False, default=3)
+    results = relationship('Mark')
+
+    def __init__(self, title, scale, coefficient, precision, results=None):
         """
         Initialize a new assessment.
-
         - scale:        Float. Actual scale in results file.
         - coefficient:  Float. Desired scale for output.
         - precision:    Integer. Number of decimals for outputing marks.
@@ -113,6 +139,7 @@ class Assessment(object):
         Return: None.
         """
         super().__init__()
+        self.title = title
         self.scale = scale
         self.coefficient = coefficient
         self.precision = precision
@@ -159,20 +186,3 @@ class Assessment(object):
             if len(marks) == len(tests):
                 mark = reduce(add, marks)
                 self.results.append(mark)
-
-    def save(self, filename=None):
-        """Save the assessment to the filesystem."""
-        dump(self, STORAGE.joinpath(secure_filename(filename)).open('wb'), -1)
-
-    def delete(self, filename):
-        """Delete the assessment from the filesystem."""
-        remove(STORAGE.joinpath(filename))
-
-    @staticmethod
-    def fetch(filename=None):
-        """Fetch assessment(s) from the filesystem."""
-        if not filename:
-            return STORAGE.glob('*')
-
-        assessment = STORAGE.joinpath(filename).open('rb')
-        return load(assessment)

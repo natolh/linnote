@@ -31,7 +31,8 @@ def home():
 @login_required
 def assessments():
     """List of assessments."""
-    return render_template('admin/assessments.html', assessments=Assessment.fetch())
+    items = session.query(Assessment).all()
+    return render_template('admin/assessments.html', assessments=items)
 
 @BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
 @login_required
@@ -40,14 +41,15 @@ def assessment():
     form = AssessmentForm()
 
     if request.method == 'POST' and form.validate():
+        title = form.title.data
         scale = form.scale.data
         coefficient = form.coefficient.data
         precision = form.precision.data
         results = request.files['results']
 
-        item = Assessment(scale, coefficient, precision, results)
-        item.rescale()
-        item.save(form.title.data)
+        item = Assessment(title, scale, coefficient, precision, results)
+        session.merge(item)
+        session.commit()
 
     return render_template('admin/assessment.html', form=form)
 
@@ -67,12 +69,12 @@ def report(name=None):
         return render_template('admin/ranking.html', rep=rep)
 
     form = ReportForm()
-    form.assessments.choices = [(a.stem, a.stem) for a in Assessment.fetch()]
+    form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
     form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
 
     if request.method == 'POST' and form.validate():
         if len(form.assessments.data) > 1:
-            assessments = [Assessment.fetch(assessment) for assessment in form.assessments.data]
+            assessments = [session.query(Assessment).get(assessment_id) for assessment_id in form.assessments.data]
             scale = sum(assessment.scale for assessment in assessments)
             coefficient = sum(assessment.coefficient for assessment in assessments)
             precision = min(assessment.precision for assessment in assessments)
@@ -81,7 +83,7 @@ def report(name=None):
             assessment.aggregate(assessments)
 
         else:
-            assessment = Assessment.fetch(form.assessments.data[0])
+            assessment = session.query(Assessment).get(form.assessments.data[0])
 
         groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
 
