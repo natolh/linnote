@@ -134,7 +134,7 @@ class Assessment(object):
 
         stack = list()
         for result in results.to_dict('records'):
-            student = Student(int(result['anonymat']))
+            student = Student(identifier=int(result['anonymat']))
             mark = Mark(student, self.coefficient, float(result['note']), self.scale)
             stack.append(mark)
 

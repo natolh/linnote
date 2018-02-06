@@ -22,6 +22,7 @@ path.append(getcwd())
 
 from linnote.core.utils.database import Base
 from linnote.core.user import User
+from linnote.core.student import Student, Group, STUDENTS_GROUPS
 
 target_metadata = Base.metadata
 

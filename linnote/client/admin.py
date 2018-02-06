@@ -15,6 +15,7 @@ from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.student import Group
 from .forms import AssessmentForm, ReportForm, GroupForm
+from .utils import session
 
 
 BLUEPRINT = Blueprint('admin', __name__, url_prefix='/admin')
@@ -67,7 +68,7 @@ def report(name=None):
 
     form = ReportForm()
     form.assessments.choices = [(a.stem, a.stem) for a in Assessment.fetch()]
-    form.subgroups.choices = [(g.stem, g.stem) for g in Group.fetch()]
+    form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
 
     if request.method == 'POST' and form.validate():
         if len(form.assessments.data) > 1:
@@ -82,7 +83,7 @@ def report(name=None):
         else:
             assessment = Assessment.fetch(form.assessments.data[0])
 
-        groups = [Group.fetch(group_def) for group_def in form.subgroups.data]
+        groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
 
         rep = Report(form.title.data, assessment, groups)
         rep.build()
@@ -93,7 +94,8 @@ def report(name=None):
 @BLUEPRINT.route('/students/groups')
 @login_required
 def groups():
-    return render_template('admin/groups.html', groups=Group.fetch())
+    items = session.query(Group).all()
+    return render_template('admin/groups.html', groups=items)
 
 @BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
 @login_required
@@ -101,5 +103,6 @@ def group():
     form = GroupForm()
     if request.method == 'POST' and form.validate():
         g = Group.load(request.files['students'], form.title.data)
-        g.save(form.title.data)
+        session.merge(g)
+        session.commit()
     return render_template('admin/group.html', form=form)

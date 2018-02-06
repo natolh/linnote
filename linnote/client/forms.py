@@ -25,7 +25,7 @@ class AssessmentForm(Form): # pylint: disable=R0903
 class ReportForm(Form): # pylint: disable=R0903
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     assessments = SelectMultipleField('Épreuves', coerce=str, validators=[DataRequired()])
-    subgroups = SelectMultipleField('Groupes', coerce=str, validators=[Optional()])
+    subgroups = SelectMultipleField('Groupes', coerce=int, validators=[Optional()])
 
 class GroupForm(Form): # pylint: disable=R0903
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
