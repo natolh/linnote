@@ -33,7 +33,7 @@ header a {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: hsla(0, 100%, 100%, 80%);
+    color: hsla(0, 100%, 100%, 0.8);
     transition: color 100ms ease-out;
 }
 
