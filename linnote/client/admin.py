@@ -79,7 +79,7 @@ def report(name=None):
             coefficient = sum(assessment.coefficient for assessment in assessments)
             precision = min(assessment.precision for assessment in assessments)
 
-            assessment = Assessment(scale, coefficient, precision)
+            assessment = Assessment(None, scale, coefficient, precision)
             assessment.aggregate(assessments)
 
         else:
