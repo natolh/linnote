@@ -39,9 +39,6 @@ form {
 
     main {
         border-radius: 0.2rem;
-        height: min-content;
-        width: min-content;
-        align-items: center;
     }
 
     form {
