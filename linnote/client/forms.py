@@ -12,7 +12,8 @@ from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileField, FileRequired
 from wtforms.fields import (StringField, FloatField, IntegerField,
                             SelectMultipleField, PasswordField)
-from wtforms.validators import DataRequired, Length, Optional, NumberRange
+from wtforms.validators import (DataRequired, Length, Optional, NumberRange,
+                                EqualTo)
 
 
 class AssessmentForm(Form): # pylint: disable=R0903
@@ -34,3 +35,12 @@ class GroupForm(Form): # pylint: disable=R0903
 class LoginForm(Form):
     identifier = StringField('Identifiant', validators=[DataRequired()])
     password = PasswordField('Mot de passe', validators=[DataRequired()])
+
+class UserForm(Form):
+    firstname = StringField('Prénom', validators=[DataRequired()])
+    lastname = StringField('Nom', validators=[DataRequired()])
+    email = StringField('Adresse email', validators=[DataRequired()])
+
+class UpdatePasswordForm(Form):
+    password = PasswordField('Nouveau mot de passe', validators=[DataRequired(), EqualTo('password_confirm')])
+    password_confirm = PasswordField('Confirmer')

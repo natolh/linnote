@@ -10,6 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from sqlalchemy import Column
 from sqlalchemy import Integer, String, Text, Boolean
+from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 from .utils.database import Base
 
@@ -20,7 +21,8 @@ class User(Base):
     __tablename__ = 'users'
 
     identifier = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False, unique=True, index=True)
+    firstname = Column(String(250))
+    lastname = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True, index=True)
     password_hash = Column(Text, nullable=True)
     is_verified = Column(Boolean)
@@ -28,6 +30,11 @@ class User(Base):
 
     def __repr__(self):
         return '<User: {}>'.format(self.name)
+
+    @hybrid_property
+    def username(self):
+        """Alias name for 'self.email' property."""
+        return self.email
 
     def get_id(self):
         """
