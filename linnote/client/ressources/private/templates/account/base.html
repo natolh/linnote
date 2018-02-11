@@ -8,6 +8,7 @@
 
     <!-- Animation -->
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/master.js') }}" defer></script>
+</head>
 {% endblock %}
 
 {% block body %}
@@ -36,4 +37,27 @@
         </nav>
     </header>
     {{ super() }}
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <h1>Mon compte</h1>
+
+    <ul class="secondary" role="navigation">
+        <li>
+            <a href="{{ url_for('account.profile') }}">
+                Paramètres
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('account.password') }}">
+                Mot de passe
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('auth.logout') }}">
+                Déconnexion
+            </a>
+        </li>
+    </ul>
 {% endblock %}

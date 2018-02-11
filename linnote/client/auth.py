@@ -28,7 +28,7 @@ def login():
         return redirect(url_for('admin.home'))
 
     if request.method == 'POST' and form.validate():
-        user = session.query(User).filter(User.name == form.identifier.data).one_or_none()
+        user = session.query(User).filter(User.username == form.identifier.data).one_or_none()
 
         if user and user.is_authentic(form.password.data):
             login_user(user)
