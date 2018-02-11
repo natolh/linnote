@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from flask import render_template, request
-from flask_login import fresh_login_required, current_user
+from flask_login import login_required, current_user
 from .forms import UserForm, UpdatePasswordForm
 from .utils import session
 
