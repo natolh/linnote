@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+
+        <title>{{ title|default('linnote') }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer>
+            {% block footer %}
+            <p class="copyright">
+                A. HANNIET © 2018, <a href="https://www.mozilla.org/en-US/MPL/2.0/">Mozilla Public License</a>.
+            </p>
+            {% endblock %}
+        </footer>
+        {% endblock %}
+    </body>
+</html>

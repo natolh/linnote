@@ -1,49 +1,39 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    {% block header %}
-        <meta charset="utf-8">
+{% extends 'base.html' %}
 
-        <title>{% block title %}linnote{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block head %}
+    {{ super() }}
 
-        <!-- Style -->
-        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/master.css') }}">
+    <!-- Style -->
+    <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/master.css') }}">
 
-        <!-- Animation -->
-        <script type="text/javascript" src="{{ url_for('static', filename='scripts/master.js') }}" defer></script>
-    {% endblock %}
-    </head>
-    <body>
-        <header>
-            <a id="brand" href="/">
-                linnote
-            </a>
+    <!-- Animation -->
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/master.js') }}" defer></script>
+{% endblock %}
 
-            <nav>
-                <ul>
-                    <li>
-                        <a href="{{ url_for('admin.groups') }}">Étudiants</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('admin.assessments') }}">Épreuves</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('admin.reports') }}">Rapports</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-        {% block content %}
-            Hello The World !
-        {% endblock %}
-        </main>
-        <footer>
-            {% include 'footer.html' %}
-        </footer>
-    </body>
-</html>
+{% block body %}
+    <header>
+        <a id="brand" href="/">
+            linnote
+        </a>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ url_for('admin.groups') }}">Étudiants</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.assessments') }}">Épreuves</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.reports') }}">Rapports</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('account.profile') }}">
+                        {{ current_user.firstname }}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    {{ super() }}
+{% endblock %}
