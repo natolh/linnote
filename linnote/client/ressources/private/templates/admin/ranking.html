@@ -1,10 +1,6 @@
 {% extends "admin/base.html" %}
 
-{% block title %}
-    {{ rep.title }} | {{ super() }}
-{% endblock %}
-
-{% block header %}
+{% block head %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='css/ranking.css') }}">
 {% endblock %}
@@ -40,7 +36,7 @@
             </tbody>
         </table>
 
-        <svg width="100%" height="50%" preserveAspectRatio="X432Y288" viewBox="0 0 432 288">
+        <svg viewBox="0 0 432 288">
         {% autoescape false %}
             {{ data.histogram }}
         {% endautoescape %}

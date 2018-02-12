@@ -42,5 +42,6 @@ class UserForm(Form):
     email = StringField('Adresse email', validators=[DataRequired()])
 
 class UpdatePasswordForm(Form):
+    old_password = PasswordField('Ancien mot de passe', validators=[DataRequired()])
     password = PasswordField('Nouveau mot de passe', validators=[DataRequired(), EqualTo('password_confirm')])
     password_confirm = PasswordField('Confirmer')
