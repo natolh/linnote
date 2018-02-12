@@ -38,7 +38,7 @@ def password():
     form = UpdatePasswordForm()
 
     if request.method == 'POST' and form.validate():
-        if form.password.data == form.password_confirm.data:
+        if form.password.data == form.password_confirm.data and current_user.is_authentic(form.old_password.data):
             current_user.set_password(form.password.data)
             session.commit()
 
