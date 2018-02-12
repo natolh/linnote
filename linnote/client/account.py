@@ -9,13 +9,19 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import Blueprint
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from .forms import UserForm, UpdatePasswordForm
 from .utils import session
 
 
 BLUEPRINT = Blueprint('account', __name__, url_prefix='/account')
+
+
+@BLUEPRINT.route('/')
+def index():
+    """Index for account views."""
+    return redirect(url_for('.profile'))
 
 
 @BLUEPRINT.route('/profile', methods=['GET', 'POST'])
