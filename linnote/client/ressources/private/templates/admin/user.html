@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+    Nouveau groupe | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Nouvel utilisateur</h1>
+
+<form method="post" enctype="multipart/form-data">
+
+    {{ form.csrf_token }}
+
+    <fieldset>
+        <div role="group">
+            {{ form.firstname.label }}
+            {{ form.firstname(autofocus="on") }}
+        </div>
+
+        <div role="group">
+            {{ form.lastname.label }}
+            {{ form.lastname() }}
+        </div>
+    </fieldset>
+
+    <div role="group">
+        {{ form.email.label }}
+        {{ form.email() }}
+    </div>
+
+    <div role="group">
+        {{ form.password.label }}
+        {{ form.password() }}
+    </div>
+
+    <input type="submit" value="Créer">
+</form>
+{% endblock %}

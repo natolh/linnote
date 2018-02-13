@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<h1>Utilisateurs</h1>
+
+<menu type="toolbar">
+    <li>
+        <a href="{{ url_for('admin.user') }}">
+            Créer
+        </a>
+    </li>
+</menu>
+
+<ul class="cards">
+    {% for user in users %}
+    <li>
+        <div class="header">
+            <p>
+                {{ user.fullname }}
+            </p>
+        </div>
+        <div class="content">
+            <em>Email</em> : {{ user.email }}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

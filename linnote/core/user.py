@@ -28,6 +28,15 @@ class User(Base):
     is_verified = Column(Boolean)
     is_active = Column(Boolean)
 
+    def __init__(self, firstname, lastname, email, password=None):
+        super().__init__()
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+
+        if password:
+            self.set_password(password)
+
     def __repr__(self):
         return '<User: {}>'.format(self.name)
 
@@ -35,6 +44,10 @@ class User(Base):
     def username(self):
         """Alias name for 'self.email' property."""
         return self.email
+
+    @hybrid_property
+    def fullname(self):
+        return f'{self.firstname} {self.lastname}'
 
     def get_id(self):
         """
