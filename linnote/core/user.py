@@ -47,7 +47,7 @@ class User(Base):
 
     @hybrid_property
     def fullname(self):
-        return f'{self.firstname} {self.lastname}'
+        return '{} {}'.format(self.firstname, self.lastname)
 
     def get_id(self):
         """
