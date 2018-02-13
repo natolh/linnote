@@ -40,7 +40,7 @@ class StrictTransport(object):
     @property
     def policy(self):
         """Strict Transport Policy."""
-        policy = 'max_age={}'.format(self.max_age)
+        policy = 'max-age={}'.format(self.max_age)
 
         if self.include_subdomains:
             policy += ' ; includeSubDomains'
