@@ -29,14 +29,13 @@ class StrictTransport(object):
 
     def _check_request(self):
         """Check if URL was requested using a secure scheme."""
-        if not any([request.is_secure, current_app.debug]):
-            self._upgrade_request(request.url)
+        if not request.is_secure:
+            return self._upgrade_request(request.url)
 
     @staticmethod
     def _upgrade_request(url, code=301):
         """Upgrade scheme of the requested URL and redirect to it."""
-        upgraded_url = url.replace('http', 'https', 1)
-        return redirect(upgraded_url, code)
+        return redirect(url.replace('http', 'https', 1), code)
 
     @property
     def policy(self):
