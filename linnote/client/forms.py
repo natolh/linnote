@@ -40,6 +40,7 @@ class UserForm(Form):
     firstname = StringField('Prénom', validators=[DataRequired()])
     lastname = StringField('Nom', validators=[DataRequired()])
     email = StringField('Adresse email', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[DataRequired()])
 
 class UpdatePasswordForm(Form):
     old_password = PasswordField('Ancien mot de passe', validators=[DataRequired()])

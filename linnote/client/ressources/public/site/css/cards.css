@@ -3,7 +3,7 @@
 .cards {
     display: grid;
     grid-template: min-content / 1fr;
-    grid-gap: 0.5rem;
+    grid-gap: 1rem;
 }
 
 @media screen and (min-width: 600px) {
@@ -31,8 +31,9 @@
 .cards > li {
     display: flex;
     flex-direction: column;
-    border: 0.1rem solid var(--color-neutral-deep);
-    border-radius: 0.2rem;
+    border-radius: 3px;
+    background-color: hsl(0, 0%, 90%);
+    transition: all 200ms ease-out;
 }
 
 .cards > li > * {
@@ -44,11 +45,19 @@
 }
 
 .cards > li .header {
-    background-color: var(--color-neutral);
+    border-bottom: 1px solid hsl(0, 0%, 85%);
     font-weight: bolder;
-    border-bottom: 0.15rem solid var(--color-neutral-deep);
 }
 
-.cards li:hover {
-    box-shadow: 0px 0px 2px 0px #B5B5B5;
+.cards > li > *:last-child {
+    border: none;
+}
+
+.cards li:hover, li:active, li:focus {
+    transition: all 100ms ease-in;
+    background-color: hsl(0, 0%, 85%);
+}
+
+.cards > li > :not(:last-child) {
+    border-bottom-color: hsl(0, 0%, 80%);
 }
