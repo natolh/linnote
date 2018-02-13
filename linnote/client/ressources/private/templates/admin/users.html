@@ -22,6 +22,11 @@
         <div class="content">
             <em>Email</em> : {{ user.email }}
         </div>
+        <div class="footer">
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.user', identifier=user.identifier) }}')">
+                Supprimer
+            </button>
+        </div>
     </li>
     {% endfor %}
 </ul>

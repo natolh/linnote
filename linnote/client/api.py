@@ -14,6 +14,7 @@ from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.student import Group
+from linnote.core.user import User
 from .utils import session
 
 
@@ -58,8 +59,22 @@ class GroupView(MethodView):
         session.commit()
         return "DELETED"
 
+class UserView(MethodView):
+    """API for user ressources."""
+
+    decorators = [login_required]
+
+    @staticmethod
+    def delete(identifier):
+        """Delete a user ressource."""
+        user = session.query(User).get(identifier)
+        session.delete(user)
+        session.commit()
+        return 'DELETED'
+
 
 # Routes.
 BLUEPRINT.add_url_rule('/assessments/<int:identifier>', view_func=AssessmentView.as_view('assessment'))
 BLUEPRINT.add_url_rule('/reports/<int:identifier>', view_func=ReportView.as_view('report'))
 BLUEPRINT.add_url_rule('/students/groups/<int:identifier>', view_func=GroupView.as_view('group'))
+BLUEPRINT.add_url_rule('/users/<int:identifier>', view_func=UserView.as_view('user'))
