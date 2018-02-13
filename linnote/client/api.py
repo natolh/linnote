@@ -75,6 +75,6 @@ class UserView(MethodView):
 
 # Routes.
 BLUEPRINT.add_url_rule('/assessments/<int:identifier>', view_func=AssessmentView.as_view('assessment'))
-BLUEPRINT.add_url_rule('/reports/<int:identifier>', view_func=ReportView.as_view('report'))
+BLUEPRINT.add_url_rule('/reports/<identifier>', view_func=ReportView.as_view('report'))
 BLUEPRINT.add_url_rule('/students/groups/<int:identifier>', view_func=GroupView.as_view('group'))
 BLUEPRINT.add_url_rule('/users/<int:identifier>', view_func=UserView.as_view('user'))
