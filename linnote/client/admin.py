@@ -58,16 +58,17 @@ def assessment():
 @login_required
 def reports():
     """List of reports."""
-    return render_template('admin/reports.html', reports=Report.fetch())
+    collection = session.query(Report).all()
+    return render_template('admin/reports.html', reports=collection)
 
-@BLUEPRINT.route('/report', defaults={'name': None}, methods=['GET', 'POST'])
-@BLUEPRINT.route('/report/<name>')
+@BLUEPRINT.route('/report', defaults={'identifier': None}, methods=['GET', 'POST'])
+@BLUEPRINT.route('/report/<int:identifier>')
 @login_required
-def report(name=None):
+def report(identifier=None):
     """A report."""
-    if name:
-        rep = Report.fetch(name)
-        return render_template('admin/ranking.html', rep=rep)
+    if identifier:
+        item = session.query(Report).get(identifier)
+        return render_template('admin/ranking.html', rep=item)
 
     form = ReportForm()
     form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
@@ -90,7 +91,8 @@ def report(name=None):
 
         rep = Report(form.title.data, assessment, groups)
         rep.build()
-        rep.save(form.title.data)
+        session.add(rep)
+        session.commit()
 
     return render_template('admin/report.html', form=form)
 

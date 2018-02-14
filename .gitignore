@@ -13,7 +13,6 @@ dist
 *.egg-info
 
 # Others
-storage/**
 linnote/ressources/public/media/**
 
 # Configuration

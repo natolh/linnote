@@ -10,22 +10,23 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from io import StringIO
 from operator import attrgetter
-from os import remove
-from pickle import dump, load
 from statistics import mean, median
-from re import sub
+from sqlalchemy import Column
+from sqlalchemy import Integer, String, PickleType
 from matplotlib import pyplot
-from linnote import APP_DIR
 from .ranking import Ranking
+from .utils.database import Base
 
 
-STORAGE = APP_DIR.parent.joinpath('storage', 'rankings')
-
-
-class Report(object):
+class Report(Base):
     """Report for an assessment."""
 
-    composers = {'statistics', 'histogram', 'ranking'}
+    __tablename__ = 'reports'
+
+    identifier = Column(Integer, primary_key=True)
+    title = Column(String(250), nullable=False, index=True)
+    assessment = Column(PickleType)
+    data = Column(PickleType)
 
     def __init__(self, title, assessment, groups=None, **kwargs):
         """
@@ -41,6 +42,7 @@ class Report(object):
 
         Return: None.
         """
+        self.composers = {'statistics', 'histogram', 'ranking'}
         self.title = title
         self.assessment = assessment
         self.groups = groups
@@ -68,24 +70,6 @@ class Report(object):
                 group_data.update({composer: compose(group)})
 
             self.data.append(group_data)
-
-    @staticmethod
-    def sanitize_filename(filename, substitute='-'):
-        """
-        Sanitize filename so it would be valid on multiple platforms.
-
-        REGEXP is build to sanitize filenames on macOS, windows and UNIX.
-        Unallowed characters have been defined using the following references :
-        https://msdn.microsoft.com/en-us/library/aa365247#naming_conventions,
-        https://en.wikipedia.org/wiki/Filename.
-
-        - filename:     String. The filename to sanitize.
-        - substitute:   String. Character or string for replacing unallowed
-                        characters in the filename.
-
-        Return: String. The sanitized filename.
-        """
-        return sub(r'[/\.\\\?<>\|\*:]+', substitute, filename)
 
     def marks(self, group=None):
         """
@@ -139,20 +123,3 @@ class Report(object):
         """Ranking of the group's marks."""
         value = attrgetter('value')
         return Ranking(self.marks(group), key=value)
-
-    def save(self, filename=None):
-        """Save the assessment to the filesystem."""
-        filename = self.sanitize_filename(filename)
-        dump(self, STORAGE.joinpath(filename).open('wb'), -1)
-
-    def delete(self, filename):
-        remove(STORAGE.joinpath(filename))
-
-    @staticmethod
-    def fetch(filename=None):
-        """Fetch assessment(s) from the filesystem."""
-        if not filename:
-            return STORAGE.glob('*') # pylint: disable=E1101
-
-        report = STORAGE.joinpath(filename).open('rb')
-        return load(report)
