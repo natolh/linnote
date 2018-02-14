@@ -29,7 +29,7 @@ class StrictTransport(object):
 
     def _check_request(self):
         """Check if URL was requested using a secure scheme."""
-        if not request.is_secure:
+        if not any([request.is_secure, current_app.debug]):
             return self._upgrade_request(request.url)
 
     @staticmethod
