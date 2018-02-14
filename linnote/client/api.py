@@ -42,8 +42,9 @@ class ReportView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an report ressource."""
-        report = Report.fetch(identifier)
-        report.delete(identifier)
+        report = session.query(Report).get(identifier)
+        session.delete(report)
+        session.commit()
         return "DELETED"
 
 class GroupView(MethodView):

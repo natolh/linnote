@@ -20,14 +20,14 @@
     <li>
         <div class="header">
             <p>
-                {{ report.stem }}
+                {{ report.title }}
             </p>
         </div>
         <div class="footer">
-            <a href="{{ url_for('admin.report', name=report.stem) }}" type="button">
+            <a href="{{ url_for('admin.report', identifier=report.identifier) }}" type="button">
                 Afficher
             </a>
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', identifier=report.stem) }}')">
+            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', identifier=report.identifier) }}')">
                 Supprimer
             </button>
         </div>
