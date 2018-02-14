@@ -13,7 +13,7 @@ from flask import Flask
 from linnote import APP_DIR
 from linnote.core.utils.configuration import load
 from linnote.core.user import User
-from .utils import configure_session, LOGIN_MANAGER
+from .utils import configure_session, LOGIN_MANAGER, STRICT_TRANSPORT
 
 
 def create_app(name=None, config_path='configuration.ini', blueprints=None):
@@ -30,6 +30,7 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
     # Configure app.
     configure_app(app, config_path)
     LOGIN_MANAGER.init_app(app)
+    STRICT_TRANSPORT.init_app(app)
 
     # Register blueprints to the app.
     if blueprints:
