@@ -106,13 +106,7 @@ class Mark(Base):
 
 
 class Assessment(Base):
-    """
-    Evaluation of students knowledge.
-
-    - scale:        Float. Actual scale in results file.
-    - coefficient:  Integer. Desired scale for output.
-    - precision:    Integer. Number of decimals for outputing marks.
-    """
+    """Evaluation of students knowledge."""
 
     __tablename__ = 'assessments'
 
