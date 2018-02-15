@@ -22,14 +22,13 @@ class Mark(Base):
     """Student's mark to an assessment."""
 
     __tablename__ = 'marks'
-
     identifier = Column(Integer, primary_key=True)
     student = relationship('Student')
-    student_id = Column(Integer, ForeignKey('students.identifier'))
     coefficient = Column(Integer, nullable=False)
     _raw = Column(Float)
     _bonus = Column(Float)
 
+    student_id = Column(Integer, ForeignKey('students.identifier'))
     assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
 
     def __init__(self, student, coefficient, score, scale=1, bonus=0):
