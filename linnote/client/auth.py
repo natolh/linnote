@@ -36,6 +36,7 @@ def login():
 
     return render_template('authentification/login.html', form=form)
 
+
 @BLUEPRINT.route('/logout')
 def logout():
     """Logout endpoint for the application."""

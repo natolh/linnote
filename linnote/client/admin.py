@@ -28,12 +28,14 @@ def home():
     """Home page."""
     return redirect(url_for('admin.assessments'), code=303)
 
+
 @BLUEPRINT.route('/assessments')
 @login_required
 def assessments():
     """List of assessments."""
     items = session.query(Assessment).all()
     return render_template('admin/assessments.html', assessments=items)
+
 
 @BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
 @login_required
@@ -55,12 +57,14 @@ def assessment():
 
     return render_template('admin/assessment.html', form=form)
 
+
 @BLUEPRINT.route('/reports')
 @login_required
 def reports():
     """List of reports."""
     collection = session.query(Report).all()
     return render_template('admin/reports.html', reports=collection)
+
 
 @BLUEPRINT.route('/report', defaults={'identifier': None}, methods=['GET', 'POST'])
 @BLUEPRINT.route('/report/<int:identifier>')
@@ -98,11 +102,13 @@ def report(identifier=None):
 
     return render_template('admin/report.html', form=form)
 
+
 @BLUEPRINT.route('/students/groups')
 @login_required
 def groups():
     items = session.query(Group).all()
     return render_template('admin/groups.html', groups=items)
+
 
 @BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
 @login_required

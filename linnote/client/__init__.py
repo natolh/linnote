@@ -21,7 +21,8 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
     Create a new instance of the application.
 
     - name:     String. The name of the application instance.
-    - config:   A path-like object. Path to the config file for the application.
+    - config:   A path-like object. Path to the config file for the
+                application.
 
     Return: A new 'flask.Flask' object.
     """
@@ -41,6 +42,7 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
 
     return app
 
+
 def configure_app(app, config_path):
     """Configure an application instance."""
     # Load and set configuration.
@@ -51,6 +53,7 @@ def configure_app(app, config_path):
     # Fix configuration for some special parameters.
     app.template_folder = app.config['TEMPLATE_FOLDER']
     app.static_folder = app.config['STATIC_FOLDER']
+
 
 def register_blueprints(app, blueprints):
     """Register blueprints to the application instance."""

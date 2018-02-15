@@ -19,6 +19,7 @@ LOGIN_MANAGER.session_protection = 'strong'
 LOGIN_MANAGER.login_view = 'auth.login'
 LOGIN_MANAGER.refresh_view = 'auth.login'
 
+
 @LOGIN_MANAGER.user_loader
 def load_user(identifier):
     """Load user."""
