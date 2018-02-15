@@ -15,7 +15,7 @@ from sqlalchemy.orm import relationship
 from .utils.database import Base
 
 
-class Student(Base): # pylint: disable=R0903
+class Student(Base):
     """
     Someone seeking to learn about life, the universe and everything.
 

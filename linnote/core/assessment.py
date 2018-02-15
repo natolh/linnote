@@ -50,7 +50,7 @@ class Mark(Base):
             return self.value == other.value
 
         else:
-            raise NotImplemented # pylint: disable = E0702, E0711
+            raise NotImplemented
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -60,28 +60,28 @@ class Mark(Base):
             return self.value > other.value
 
         else:
-            raise NotImplemented # pylint: disable = E0702, E0711
+            raise NotImplemented
 
     def __lt__(self, other):
         if isinstance(other, Mark):
             return self.value < other.value
 
         else:
-            raise NotImplemented # pylint: disable = E0702, E0711
+            raise NotImplemented
 
     def __ge__(self, other):
         if isinstance(other, Mark):
             return self.value >= other.value
 
         else:
-            raise NotImplemented # pylint: disable = E0702, E0711
+            raise NotImplemented
 
     def __le__(self, other):
         if isinstance(other, Mark):
             return self.value <= other.value
 
         else:
-            raise NotImplemented # pylint: disable = E0702, E0711
+            raise NotImplemented
 
     def __add__(self, other):
         if isinstance(other, Mark) and self.student == other.student:
@@ -91,7 +91,7 @@ class Mark(Base):
             return Mark(self.student, coefficient, score, coefficient, bonus)
 
         else:
-            raise NotImplemented # pylint: disable = E0702, E0711
+            raise NotImplemented
 
     def __hash__(self):
         return hash(self.identifier)
