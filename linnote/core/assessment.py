@@ -109,7 +109,6 @@ class Assessment(Base):
     """Evaluation of students knowledge."""
 
     __tablename__ = 'assessments'
-
     identifier = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False, unique=True, index=True)
     scale = Column(Float, nullable=False)
