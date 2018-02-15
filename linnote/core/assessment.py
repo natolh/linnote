@@ -120,7 +120,7 @@ class Assessment(Base):
     precision = Column(Integer, nullable=False, default=3)
     results = relationship('Mark')
 
-    def __init__(self, title, scale, coefficient, precision, results=None):
+    def __init__(self, title, scale, coefficient, **kwargs):
         """
         Initialize a new assessment.
         - scale:        Float. Actual scale in results file.
@@ -134,8 +134,13 @@ class Assessment(Base):
         self.title = title
         self.scale = scale
         self.coefficient = coefficient
-        self.precision = precision
-        self.results = self.load(results) if results else list()
+
+        self.precision = kwargs.get('precision', 3)
+        self.results = kwargs.get('results', [])
+
+        if self.results != []:
+            self.results = self.load(self.results)
+
 
     def __repr__(self):
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)

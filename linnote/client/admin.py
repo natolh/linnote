@@ -50,7 +50,7 @@ def assessment():
         precision = form.precision.data
         results = request.files['results']
 
-        item = Assessment(title, scale, coefficient, precision, results)
+        item = Assessment(title, scale, coefficient, precision=precision, results=results)
         item.rescale()
         session.merge(item)
         session.commit()
