@@ -8,9 +8,8 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from functools import reduce
 from itertools import groupby
-from operator import add, attrgetter
+from operator import attrgetter
 from pandas import read_excel
 from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String
@@ -83,6 +82,12 @@ class Mark(Base):
             bonus = self.bonus + other.bonus
             coefficient = self.coefficient + other.coefficient
             return Mark(self.student, coefficient, score, coefficient, bonus)
+
+        return NotImplemented
+
+    def __radd__(self, other):
+        if other is 0:
+            return self
 
         return NotImplemented
 
@@ -166,7 +171,7 @@ class Assessment(Base):
             marks = list(marks)
 
             if len(marks) == len(assessments):
-                yield reduce(add, marks)
+                yield sum(marks)
 
     def load(self, file):
         """
