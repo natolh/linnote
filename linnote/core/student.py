@@ -31,7 +31,10 @@ class Student(Base):
         return '<Student #{}>'.format(self.identifier)
 
     def __eq__(self, other):
-        return self.identifier == other.identifier
+        if isinstance(other, Student):
+            return self.identifier == other.identifier
+
+        return NotImplemented
 
     def __ne__(self, other):
         return not self.__eq__(other)
