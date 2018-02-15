@@ -82,12 +82,7 @@ def report(identifier=None):
     if request.method == 'POST' and form.validate():
         if len(form.assessments.data) > 1:
             assessments = [session.query(Assessment).get(assessment_id) for assessment_id in form.assessments.data]
-            scale = sum(assessment.scale for assessment in assessments)
-            coefficient = sum(assessment.coefficient for assessment in assessments)
-            precision = min(assessment.precision for assessment in assessments)
-
-            assessment = Assessment(None, scale, coefficient, precision)
-            assessment.aggregate(assessments)
+            assessment = sum(assessments)
             assessment.rescale()
 
         else:

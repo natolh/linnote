@@ -136,6 +136,38 @@ class Assessment(Base):
     def __repr__(self):
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
 
+    def __add__(self, other):
+        if isinstance(other, Assessment):
+            assessments = [self, other]
+            assessment = Assessment(
+                title=None,
+                scale=self.scale + other.scale,
+                coefficient=self.coefficient + other.coefficient,
+                precision=min([self.precision, other.precision]))
+            assessment.results = list(self._aggregate(assessments))
+            return assessment
+
+        return NotImplemented
+
+    def __radd__(self, other):
+        if other is 0:
+            return self
+
+        return NotImplemented
+
+    @staticmethod
+    def _aggregate(assessments):
+        """Aggregate students results of multiple assessments."""
+        by_student = attrgetter('student.identifier')
+        results = [mark for a in assessments for mark in a.results]
+        results.sort(key=by_student)
+
+        for _, marks in groupby(results, by_student):
+            marks = list(marks)
+
+            if len(marks) == len(assessments):
+                yield reduce(add, marks)
+
     def load(self, file):
         """
         Load students results from an excel file.
@@ -160,17 +192,3 @@ class Assessment(Base):
         maximum = max(self.results)._raw
         for mark in self.results:
             mark._bonus = (mark._raw / maximum) - mark._raw
-
-    def aggregate(self, tests):
-        """Aggregate students results to assessments."""
-        by_student = attrgetter('student.identifier')
-
-        results = [mark for test in tests for mark in test.results]
-        results.sort(key=by_student)
-
-        for _, marks in groupby(results, by_student):
-            marks = list(marks)
-
-            if len(marks) == len(tests):
-                mark = reduce(add, marks)
-                self.results.append(mark)
