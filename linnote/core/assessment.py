@@ -15,7 +15,6 @@ from pandas import read_excel
 from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
-from werkzeug.utils import secure_filename
 from .student import Student
 from .utils.database import Base
 
@@ -49,8 +48,7 @@ class Mark(Base):
         if isinstance(other, Mark):
             return self.value == other.value
 
-        else:
-            raise NotImplemented
+        return NotImplemented
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -59,29 +57,25 @@ class Mark(Base):
         if isinstance(other, Mark):
             return self.value > other.value
 
-        else:
-            raise NotImplemented
+        return NotImplemented
 
     def __lt__(self, other):
         if isinstance(other, Mark):
             return self.value < other.value
 
-        else:
-            raise NotImplemented
+        return NotImplemented
 
     def __ge__(self, other):
         if isinstance(other, Mark):
             return self.value >= other.value
 
-        else:
-            raise NotImplemented
+        return NotImplemented
 
     def __le__(self, other):
         if isinstance(other, Mark):
             return self.value <= other.value
 
-        else:
-            raise NotImplemented
+        return NotImplemented
 
     def __add__(self, other):
         if isinstance(other, Mark) and self.student == other.student:
@@ -90,8 +84,7 @@ class Mark(Base):
             coefficient = self.coefficient + other.coefficient
             return Mark(self.student, coefficient, score, coefficient, bonus)
 
-        else:
-            raise NotImplemented
+        return NotImplemented
 
     def __hash__(self):
         return hash(self.identifier)
