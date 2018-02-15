@@ -16,8 +16,7 @@ from .session import session
 # Login manager.
 LOGIN_MANAGER = LoginManager()
 LOGIN_MANAGER.session_protection = 'strong'
-LOGIN_MANAGER.login_view = 'auth.login'
-LOGIN_MANAGER.refresh_view = 'auth.login'
+LOGIN_MANAGER.login_view = 'account.login'
 
 
 @LOGIN_MANAGER.user_loader
