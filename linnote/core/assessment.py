@@ -31,13 +31,13 @@ class Mark(Base):
     student_id = Column(Integer, ForeignKey('students.identifier'))
     assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
 
-    def __init__(self, student, coefficient, score, scale=1, bonus=0):
+    def __init__(self, student, score, scale, **kwargs):
         """Initialize a new mark."""
         super().__init__()
         self.student = student
-        self.coefficient = coefficient
+        self.coefficient = kwargs.get('coefficient', scale)
         self._raw = score / scale
-        self._bonus = bonus / scale
+        self._bonus = kwargs.get('bonus', 0) / scale
 
     def __repr__(self):
         return '<Mark of {}: {}>'.format(self.student, self.value)
@@ -77,10 +77,9 @@ class Mark(Base):
 
     def __add__(self, other):
         if isinstance(other, Mark) and self.student == other.student:
-            score = self.raw + other.raw
-            bonus = self.bonus + other.bonus
-            coefficient = self.coefficient + other.coefficient
-            return Mark(self.student, coefficient, score, coefficient, bonus)
+            return Mark(self.student, self.raw + other.raw, 1,
+                        coefficient=self.coefficient + other.coefficient,
+                        bonus=self.bonus + other.bonus)
 
         return NotImplemented
 
@@ -191,7 +190,8 @@ class Assessment(Base):
         stack = list()
         for result in results.to_dict('records'):
             student = Student(identifier=int(result['anonymat']))
-            mark = Mark(student, self.coefficient, float(result['note']), self.scale)
+            mark = Mark(student, float(result['note']), self.scale,
+                        coefficient=self.coefficient)
             stack.append(mark)
 
         return stack
