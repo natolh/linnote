@@ -91,10 +91,12 @@ class Mark(Base):
 
     @property
     def raw(self):
+        """Mark raw value."""
         return self._raw * self.coefficient
 
     @property
     def bonus(self):
+        """Mark bonus value."""
         return self._bonus * self.coefficient
 
     @property
