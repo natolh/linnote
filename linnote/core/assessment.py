@@ -135,7 +135,7 @@ class Assessment(Base):
         self.results = self.load(results) if results else list()
 
     def __repr__(self):
-        return '<Assessment>'
+        return '<Assessment #{}: {}>'.format(self.identifier, self.title)
 
     def load(self, file):
         """
