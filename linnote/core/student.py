@@ -49,7 +49,6 @@ class Group(Base):
     """
 
     __tablename__ = 'groups'
-
     identifier = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False, unique=True, index=True)
     students = relationship('Student', secondary='students_groups', back_populates='groups')
