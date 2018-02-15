@@ -49,6 +49,7 @@ def assessment():
         results = request.files['results']
 
         item = Assessment(title, scale, coefficient, precision, results)
+        item.rescale()
         session.merge(item)
         session.commit()
 
@@ -83,6 +84,7 @@ def report(identifier=None):
 
             assessment = Assessment(None, scale, coefficient, precision)
             assessment.aggregate(assessments)
+            assessment.rescale()
 
         else:
             assessment = session.query(Assessment).get(form.assessments.data[0])
