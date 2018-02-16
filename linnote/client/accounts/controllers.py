@@ -38,7 +38,7 @@ class Login(Controller):
 
             if user and user.is_authentic(form.password.data):
                 login_user(user)
-                return redirect(request.args.get('next') or url_for('admin.home'))
+                return redirect(url_for('admin.home'))
 
         return self.get()
 
