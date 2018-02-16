@@ -15,7 +15,7 @@ from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.client.utils import session
 from linnote.core.user import User
-from .forms import *
+from .forms import LoginForm, PasswordForm, ProfileForm
 
 
 class Login(MethodView):

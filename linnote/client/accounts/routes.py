@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 __all__ = ['ROUTES']
 
 from flask import Blueprint
-from .controllers import *
+from .controllers import Login, Logout, Profile, Password
 
 
 ROUTES = Blueprint('account', __name__, url_prefix='/account')
