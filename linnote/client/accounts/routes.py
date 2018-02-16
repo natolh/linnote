@@ -14,6 +14,7 @@ from .controllers import Login, Logout, Profile, Password
 
 ROUTES = Blueprint('account', __name__, url_prefix='/account')
 
+
 Login.register_to(ROUTES)
 Logout.register_to(ROUTES)
 Profile.register_to(ROUTES)
