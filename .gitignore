@@ -18,3 +18,7 @@ linnote/ressources/public/media/**
 # Configuration
 *.cfg
 *.ini
+
+# TLS
+*crt*
+*key*

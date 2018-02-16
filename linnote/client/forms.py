@@ -16,19 +16,19 @@ from wtforms.validators import (DataRequired, Length, Optional, NumberRange,
                                 EqualTo)
 
 
-class AssessmentForm(Form): # pylint: disable=R0903
+class AssessmentForm(Form):
     title = StringField('Libellé', validators=[DataRequired(), Length(min=2)])
     results = FileField('Notes', validators=[FileRequired()])
     scale = FloatField('Barème', default=20, validators=[DataRequired(), NumberRange(min=0)])
     coefficient = IntegerField('Coefficient', default=20, validators=[DataRequired(), NumberRange(min=0)])
     precision = IntegerField('Précision', default=3, validators=[DataRequired(), NumberRange(min=0, max=10)])
 
-class ReportForm(Form): # pylint: disable=R0903
+class ReportForm(Form):
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     assessments = SelectMultipleField('Épreuves', coerce=int, validators=[DataRequired()])
     subgroups = SelectMultipleField('Groupes', coerce=int, validators=[Optional()])
 
-class GroupForm(Form): # pylint: disable=R0903
+class GroupForm(Form):
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     students = FileField('Listing', validators=[FileRequired()])
 

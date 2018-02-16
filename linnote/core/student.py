@@ -15,7 +15,7 @@ from sqlalchemy.orm import relationship
 from .utils.database import Base
 
 
-class Student(Base): # pylint: disable=R0903
+class Student(Base):
     """
     Someone seeking to learn about life, the universe and everything.
 
@@ -31,7 +31,10 @@ class Student(Base): # pylint: disable=R0903
         return '<Student #{}>'.format(self.identifier)
 
     def __eq__(self, other):
-        return self.identifier == other.identifier
+        if isinstance(other, Student):
+            return self.identifier == other.identifier
+
+        return NotImplemented
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -49,7 +52,6 @@ class Group(Base):
     """
 
     __tablename__ = 'groups'
-
     identifier = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False, unique=True, index=True)
     students = relationship('Student', secondary='students_groups', back_populates='groups')

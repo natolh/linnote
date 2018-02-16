@@ -17,8 +17,8 @@ def load(config_path):
     """
     Load configuration from INI file.
 
-    - configfile:   A pathlike object. Path to the configuration file default to
-                    the file named 'configuration.ini' in the app directory.
+    - configfile:   A pathlike object. Path to the configuration file default
+                    to the file named 'configuration.ini' in the app directory.
 
     Return: A config object.
     """

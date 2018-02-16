@@ -18,4 +18,4 @@ BLUEPRINT = Blueprint('site', __name__)
 @BLUEPRINT.route('/')
 def home():
     """Home of the web application."""
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('account.login'))

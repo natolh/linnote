@@ -34,6 +34,7 @@ class AssessmentView(MethodView):
         session.commit()
         return "DELETED"
 
+
 class ReportView(MethodView):
     """API for report ressources."""
 
@@ -47,6 +48,7 @@ class ReportView(MethodView):
         session.commit()
         return "DELETED"
 
+
 class GroupView(MethodView):
     """API for group ressources."""
 
@@ -59,6 +61,7 @@ class GroupView(MethodView):
         session.delete(group)
         session.commit()
         return "DELETED"
+
 
 class UserView(MethodView):
     """API for user ressources."""

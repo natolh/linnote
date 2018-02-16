@@ -28,12 +28,14 @@ def home():
     """Home page."""
     return redirect(url_for('admin.assessments'), code=303)
 
+
 @BLUEPRINT.route('/assessments')
 @login_required
 def assessments():
     """List of assessments."""
     items = session.query(Assessment).all()
     return render_template('admin/assessments.html', assessments=items)
+
 
 @BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
 @login_required
@@ -42,18 +44,18 @@ def assessment():
     form = AssessmentForm()
 
     if request.method == 'POST' and form.validate():
-        title = form.title.data
-        scale = form.scale.data
-        coefficient = form.coefficient.data
-        precision = form.precision.data
-        results = request.files['results']
-
-        item = Assessment(title, scale, coefficient, precision, results)
+        item = Assessment(
+            form.title.data,
+            form.scale.data,
+            form.coefficient.data,
+            precision=form.precision.data,
+            results=request.files['results'])
         item.rescale()
         session.merge(item)
         session.commit()
 
     return render_template('admin/assessment.html', form=form)
+
 
 @BLUEPRINT.route('/reports')
 @login_required
@@ -61,6 +63,7 @@ def reports():
     """List of reports."""
     collection = session.query(Report).all()
     return render_template('admin/reports.html', reports=collection)
+
 
 @BLUEPRINT.route('/report', defaults={'identifier': None}, methods=['GET', 'POST'])
 @BLUEPRINT.route('/report/<int:identifier>')
@@ -78,12 +81,7 @@ def report(identifier=None):
     if request.method == 'POST' and form.validate():
         if len(form.assessments.data) > 1:
             assessments = [session.query(Assessment).get(assessment_id) for assessment_id in form.assessments.data]
-            scale = sum(assessment.scale for assessment in assessments)
-            coefficient = sum(assessment.coefficient for assessment in assessments)
-            precision = min(assessment.precision for assessment in assessments)
-
-            assessment = Assessment(None, scale, coefficient, precision)
-            assessment.aggregate(assessments)
+            assessment = sum(assessments)
             assessment.rescale()
 
         else:
@@ -98,11 +96,13 @@ def report(identifier=None):
 
     return render_template('admin/report.html', form=form)
 
+
 @BLUEPRINT.route('/students/groups')
 @login_required
 def groups():
     items = session.query(Group).all()
     return render_template('admin/groups.html', groups=items)
+
 
 @BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
 @login_required
