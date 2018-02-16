@@ -14,6 +14,7 @@ from pandas import read_excel
 from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
+from werkzeug.datastructures import FileStorage
 from .student import Student
 from .utils.database import Base
 
@@ -77,9 +78,9 @@ class Mark(Base):
 
     def __add__(self, other):
         if isinstance(other, Mark) and self.student == other.student:
-            return Mark(self.student, self.raw + other.raw, 1,
+            return Mark(self.student, self._raw + other._raw, 2,
                         coefficient=self.coefficient + other.coefficient,
-                        bonus=self.bonus + other.bonus)
+                        bonus=self._bonus + other._bonus)
 
         return NotImplemented
 
@@ -135,11 +136,8 @@ class Assessment(Base):
         self.coefficient = coefficient
 
         self.precision = kwargs.get('precision', 3)
-        self.results = kwargs.get('results', [])
-
-        if self.results != []:
-            self.results = self.load(self.results)
-
+        if isinstance(kwargs.get('results'), FileStorage):
+            self.results = self.load(kwargs.get('results'))
 
     def __repr__(self):
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
