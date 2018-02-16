@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 __all__ = ['Login', 'Logout', 'Profile', 'Password']
 
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.client.utils import session
 from linnote.client.utils.controller import Controller
