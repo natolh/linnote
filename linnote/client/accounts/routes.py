@@ -16,8 +16,7 @@ from .controllers import Login, Logout, Profile, Password
 
 ROUTES = Blueprint('account', __name__, url_prefix='/account')
 
-
-ROUTES.add_url_rule('/login', view_func=Login.as_view('login'))
-ROUTES.add_url_rule('/logout', view_func=Logout.as_view('logout'))
-ROUTES.add_url_rule('/profile', view_func=Profile.as_view('profile'))
-ROUTES.add_url_rule('/password', view_func=Password.as_view('password'))
+Login.register_to(ROUTES)
+Logout.register_to(ROUTES)
+Profile.register_to(ROUTES)
+Password.register_to(ROUTES)
