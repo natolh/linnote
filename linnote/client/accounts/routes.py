@@ -8,8 +8,6 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-__all__ = ['ROUTES']
-
 from flask import Blueprint
 from .controllers import Login, Logout, Profile, Password
 

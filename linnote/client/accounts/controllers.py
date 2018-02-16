@@ -8,8 +8,6 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-__all__ = ['Login', 'Logout', 'Profile', 'Password']
-
 from flask import redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.client.utils import session

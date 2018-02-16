@@ -8,8 +8,6 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-__all__ = ['LoginForm', 'PasswordForm', 'ProfileForm']
-
 from flask_wtf import FlaskForm as Form
 from wtforms.fields import PasswordField, StringField
 from wtforms.validators import DataRequired, EqualTo
