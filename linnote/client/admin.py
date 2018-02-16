@@ -44,13 +44,12 @@ def assessment():
     form = AssessmentForm()
 
     if request.method == 'POST' and form.validate():
-        title = form.title.data
-        scale = form.scale.data
-        coefficient = form.coefficient.data
-        precision = form.precision.data
-        results = request.files['results']
-
-        item = Assessment(title, scale, coefficient, precision=precision, results=results)
+        item = Assessment(
+            form.title.data,
+            form.scale.data,
+            form.coefficient.data,
+            precision=form.precision.data,
+            results=request.files['results'])
         item.rescale()
         session.merge(item)
         session.commit()
