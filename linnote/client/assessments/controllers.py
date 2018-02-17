@@ -17,30 +17,30 @@ from linnote.core.assessment import Assessment
 
 
 class Collection(MethodView):
-    """Assessments collection."""
+    """Controller for managing assessments collection."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Endpoint for assessments collection."""
+        """Display the assessments collection."""
         assessments = session.query(Assessment).all()
         return render_template('admin/assessments.html', assessments=assessments)
 
 
 class Ressource(MethodView):
-    """Assessment ressource."""
+    """Controller for managing an assessment ressource."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Endpoint for assessment ressource."""
+        """Display a form for creating a new assessment."""
         form = AssessmentForm()
         return render_template('admin/assessment.html', form=form)
 
     def post(self):
-        """Endpoint for assessment ressource."""
+        """Create a new assessment."""
         form = AssessmentForm()
         if form.validate():
             item = Assessment(
@@ -54,13 +54,3 @@ class Ressource(MethodView):
             session.commit()
 
         return self.get()
-
-
-class AssessmentResults(MethodView):
-    """Assessment's results."""
-
-    decorators = [login_required]
-
-    @staticmethod
-    def get():
-        """Display assessment's results."""

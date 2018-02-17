@@ -20,25 +20,25 @@ from .forms import ReportForm
 
 
 class Collection(MethodView):
-    """Groups collection."""
+    """Controller for managing reports collection."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Endpoint for assessments collection."""
+        """Display the collection of reports."""
         reports = session.query(Report).all()
         return render_template('admin/reports.html', reports=reports)
 
 
 class Ressource(MethodView):
-    """Assessment ressource."""
+    """Controller for managing a report ressource."""
 
     decorators = [login_required]
 
     @staticmethod
     def get(identifier):
-        """Endpoint for assessment ressource."""
+        """Display a report or a form for creating a new report."""
         if identifier:
             report = session.query(Report).get(identifier)
             return render_template('admin/ranking.html', rep=report)
@@ -50,7 +50,7 @@ class Ressource(MethodView):
         return render_template('admin/report.html', form=form)
 
     def post(self, identifier):
-        """Endpoint for assessment ressource."""
+        """Create a new report."""
         form = ReportForm()
         form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
         form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]

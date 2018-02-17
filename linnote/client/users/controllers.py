@@ -17,30 +17,30 @@ from linnote.core.user import Group, User
 
 
 class GroupCollection(MethodView):
-    """Groups collection."""
+    """Controller for managing user groups collection."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Endpoint for assessments collection."""
+        """Display the collection of user groups."""
         groups = session.query(Group).all()
         return render_template('admin/groups.html', groups=groups)
 
 
 class GroupRessource(MethodView):
-    """Assessment ressource."""
+    """Controller for managing a user group ressource."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Endpoint for assessment ressource."""
+        """Display a form for creating a new user group."""
         form = GroupForm()
         return render_template('admin/group.html', form=form)
 
     def post(self):
-        """Endpoint for assessment ressource."""
+        """Create a new user group."""
         form = GroupForm()
         if form.validate():
             group = Group.load(request.files['students'], form.title.data)
@@ -51,30 +51,30 @@ class GroupRessource(MethodView):
 
 
 class UserCollection(MethodView):
-    """Assessments collection."""
+    """Controller for managing users collection."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Endpoint for assessments collection."""
+        """Display the collection of users."""
         users = session.query(User).all()
         return render_template('admin/users.html', users=users)
 
 
 class UserRessource(MethodView):
-    """Assessment ressource."""
+    """Controller for managing a user ressource."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Endpoint for assessment ressource."""
+        """Display a form for creating a new user."""
         form = UserForm()
         return render_template('admin/user.html', form=form)
 
     def post(self):
-        """Endpoint for assessment ressource."""
+        """Create a new user."""
         form = UserForm()
         if form.validate():
             user = User(

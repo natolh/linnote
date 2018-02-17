@@ -17,7 +17,7 @@ from .forms import LoginForm, PasswordForm, ProfileForm
 
 
 class Login(MethodView):
-    """Login endpoint. This endpoint support the login mechanism."""
+    """Controller for managing user login task."""
 
     @staticmethod
     def get():
@@ -42,7 +42,7 @@ class Login(MethodView):
 
 
 class Logout(MethodView):
-    """Logout endpoint. This endpoint support the logout mechanism."""
+    """Controller for managing user logout task."""
 
     decorators = [login_required]
 
@@ -54,13 +54,7 @@ class Logout(MethodView):
 
 
 class Password(MethodView):
-    """
-    User's password endpoint.
-
-    This endpoint is design to allow the user to modify his account password.
-    It is impossible to vizualize the actual account password as they're not
-    stored in plain text.
-    """
+    """Controller for managing the user's account password."""
 
     decorators = [login_required]
 
@@ -83,13 +77,7 @@ class Password(MethodView):
 
 
 class Profile(MethodView):
-    """
-    User's profile endpoint.
-
-    This endpoint is design to allow the user to view and modify some of his
-    account property. Currently this properties are available : user's
-    firstname, lastname and email.
-    """
+    """Controller for managing the user's profile."""
 
     decorators = [login_required]
 
