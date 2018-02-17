@@ -26,31 +26,35 @@ class User(Base):
     lastname = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True, index=True)
     password_hash = Column(Text, nullable=True)
-    is_verified = Column(Boolean)
-    is_active = Column(Boolean)
+    is_verified = Column(Boolean, default=False)
+    is_staff = Column(Boolean, default=False)
+    is_superuser = Column(Boolean, default=False)
 
-    def __init__(self, firstname, lastname, email, password=None) -> None:
+    def __init__(self, firstname, lastname, email, **kwargs) -> None:
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
+        self.is_active = kwargs.get('is_active', False)
+        self.is_staff = kwargs.get('is_staff', False)
+        self.is_superuser = kwargs.get('is_superuser', False)
 
-        if password:
-            self.set_password(password)
+        if kwargs.get('password'):
+            self.set_password(kwargs.get('password'))
 
     def __repr__(self) -> str:
-        return '<User: {}>'.format(self.name)
+        return '<User #{}: {}>'.format(self.identifier, self.fullname)
 
     @hybrid_property
-    def username(self) -> str:
-        """Alias name for 'self.email' property."""
+    def username(self):
+        """Alias for 'self.email'."""
         return self.email
 
     @hybrid_property
-    def fullname(self) -> str:
+    def fullname(self):
         return '{} {}'.format(self.firstname, self.lastname)
 
-    def get_id(self) -> str:
+    def get_id(self):
         """
         Return the user identifier as a string for login.
 
