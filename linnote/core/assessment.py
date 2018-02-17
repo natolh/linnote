@@ -15,7 +15,7 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
 from werkzeug.datastructures import FileStorage
-from linnote.core.student import Student
+from linnote.core.user import Student
 from linnote.core.utils.database import Base
 
 
