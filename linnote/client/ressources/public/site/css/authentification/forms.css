@@ -3,13 +3,13 @@
 
 form fieldset {
     display: grid;
-    grid-gap: 0 1rem;
     border: none;
 }
 
 @media screen and (min-width: 500px) {
     form fieldset {
         grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0 1rem;
     }
 }
 
