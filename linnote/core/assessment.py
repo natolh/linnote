@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Implement assessments and related tools.
+Assessments models and related.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -15,8 +15,8 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
 from werkzeug.datastructures import FileStorage
-from .student import Student
-from .utils.database import Base
+from linnote.core.user import Student
+from linnote.core.utils.database import Base
 
 
 class Mark(Base):
@@ -178,7 +178,7 @@ class Assessment(Base):
         """
         Load students results from an excel file.
 
-        - file: A path-like object. Path poiting to the file holding the
+        - file: A path-like object. Path pointing to the file holding the
                 results.
 
         Return: A list of 'Mark' objects.

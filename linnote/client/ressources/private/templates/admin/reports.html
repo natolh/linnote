@@ -9,7 +9,7 @@
 
 <menu type="toolbar">
     <li>
-        <a href="{{ url_for('admin.report') }}">
+        <a href="{{ url_for('reports.report') }}">
             Créer
         </a>
     </li>
@@ -24,7 +24,7 @@
             </p>
         </div>
         <div class="footer">
-            <a href="{{ url_for('admin.report', identifier=report.identifier) }}" type="button">
+            <a href="{{ url_for('reports.report', identifier=report.identifier) }}" type="button">
                 Afficher
             </a>
             <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', identifier=report.identifier) }}')">

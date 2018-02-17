@@ -2,24 +2,22 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Accounts controllers.
+Controllers for the 'accounts' application module.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-__all__ = ['Login', 'Logout', 'Profile', 'Password']
-
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, url_for
+from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.client.utils import session
-from linnote.client.utils.controller import Controller
 from linnote.core.user import User
 from .forms import LoginForm, PasswordForm, ProfileForm
 
 
-class Login(Controller):
-    """Login endpoint. This endpoint support the login mechanism."""
+class Login(MethodView):
+    """Controller for managing user login task."""
 
     @staticmethod
     def get():
@@ -38,13 +36,13 @@ class Login(Controller):
 
             if user and user.is_authentic(form.password.data):
                 login_user(user)
-                return redirect(url_for('admin.home'))
+                return redirect(url_for('assessments.assessments'))
 
         return self.get()
 
 
-class Logout(Controller):
-    """Logout endpoint. This endpoint support the logout mechanism."""
+class Logout(MethodView):
+    """Controller for managing user logout task."""
 
     decorators = [login_required]
 
@@ -55,14 +53,8 @@ class Logout(Controller):
         return redirect(url_for('account.login'))
 
 
-class Password(Controller):
-    """
-    User's password endpoint.
-
-    This endpoint is design to allow the user to modify his account password.
-    It is impossible to vizualize the actual account password as they're not
-    stored in plain text.
-    """
+class Password(MethodView):
+    """Controller for managing the user's account password."""
 
     decorators = [login_required]
 
@@ -83,14 +75,9 @@ class Password(Controller):
 
         return self.get()
 
-class Profile(Controller):
-    """
-    User's profile endpoint.
 
-    This endpoint is design to allow the user to view and modify some of his
-    account property. Currently this properties are available : user's
-    firstname, lastname and email.
-    """
+class Profile(MethodView):
+    """Controller for managing the user's profile."""
 
     decorators = [login_required]
 

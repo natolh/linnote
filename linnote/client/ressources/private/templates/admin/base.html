@@ -12,25 +12,31 @@
 
 {% block body %}
     <header>
-        <a id="brand" href="/">
+        <a id="brand" href="#">
             linnote
         </a>
 
         <nav>
             <ul>
                 <li>
-                    <a href="{{ url_for('admin.users') }}">
+                    <a href="{{ url_for('users.users') }}">
                         Utilisateurs
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('admin.groups') }}">Étudiants</a>
+                    <a href="{{ url_for('users.groups') }}">
+                        Étudiants
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('admin.assessments') }}">Épreuves</a>
+                    <a href="{{ url_for('assessments.assessments') }}">
+                        Épreuves
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('admin.reports') }}">Rapports</a>
+                    <a href="{{ url_for('reports.reports') }}">
+                        Rapports
+                    </a>
                 </li>
                 <li>
                     <a href="{{ url_for('account.profile') }}">

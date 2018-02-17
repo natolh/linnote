@@ -18,7 +18,7 @@ header > *:not(:last-child) {
     margin-bottom: 0.5rem;
 }
 
-@media screen and (min-width: 510px) {
+@media screen and (min-width: 550px) {
     header {
         flex-flow: row nowrap;
         padding: 0.4rem;

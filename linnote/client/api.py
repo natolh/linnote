@@ -13,8 +13,7 @@ from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
-from linnote.core.student import Group
-from linnote.core.user import User
+from linnote.core.user import User, Group
 from .utils import session
 
 

@@ -21,8 +21,7 @@ from sys import path
 path.append(getcwd())
 
 from linnote.core.utils.database import Base
-from linnote.core.user import User
-from linnote.core.student import Student, Group, STUDENTS_GROUPS
+from linnote.core.user import User, Student, Group, STUDENTS_GROUPS
 from linnote.core.assessment import Assessment, Mark
 from linnote.core.report import Report
 
