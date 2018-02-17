@@ -9,14 +9,14 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import redirect, render_template, url_for
+from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.client.utils import session
-from linnote.client.utils.controller import Controller
 from linnote.core.user import User
 from .forms import LoginForm, PasswordForm, ProfileForm
 
 
-class Login(Controller):
+class Login(MethodView):
     """Login endpoint. This endpoint support the login mechanism."""
 
     @staticmethod
@@ -36,12 +36,12 @@ class Login(Controller):
 
             if user and user.is_authentic(form.password.data):
                 login_user(user)
-                return redirect(url_for('admin.home'))
+                return redirect(url_for('assessments.assessments'))
 
         return self.get()
 
 
-class Logout(Controller):
+class Logout(MethodView):
     """Logout endpoint. This endpoint support the logout mechanism."""
 
     decorators = [login_required]
@@ -53,7 +53,7 @@ class Logout(Controller):
         return redirect(url_for('account.login'))
 
 
-class Password(Controller):
+class Password(MethodView):
     """
     User's password endpoint.
 
@@ -81,7 +81,8 @@ class Password(Controller):
 
         return self.get()
 
-class Profile(Controller):
+
+class Profile(MethodView):
     """
     User's profile endpoint.
 

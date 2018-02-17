@@ -9,14 +9,14 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import render_template, request
+from flask.views import MethodView
 from flask_login import login_required
 from linnote.client.utils import session
-from linnote.client.utils.controller import Controller
 from .forms import GroupForm, UserForm
 from linnote.core.user import Group, User
 
 
-class GroupCollection(Controller):
+class GroupCollection(MethodView):
     """Groups collection."""
 
     decorators = [login_required]
@@ -28,7 +28,7 @@ class GroupCollection(Controller):
         return render_template('admin/groups.html', groups=groups)
 
 
-class GroupRessource(Controller):
+class GroupRessource(MethodView):
     """Assessment ressource."""
 
     decorators = [login_required]
@@ -50,7 +50,7 @@ class GroupRessource(Controller):
         return self.get()
 
 
-class UserCollection(Controller):
+class UserCollection(MethodView):
     """Assessments collection."""
 
     decorators = [login_required]
@@ -62,7 +62,7 @@ class UserCollection(Controller):
         return render_template('admin/users.html', users=users)
 
 
-class UserRessource(Controller):
+class UserRessource(MethodView):
     """Assessment ressource."""
 
     decorators = [login_required]

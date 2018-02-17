@@ -9,14 +9,14 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import render_template, request
+from flask.views import MethodView
 from flask_login import login_required
 from linnote.client.utils import session
-from linnote.client.utils.controller import Controller
 from .forms import AssessmentForm
 from linnote.core.assessment import Assessment
 
 
-class Collection(Controller):
+class Collection(MethodView):
     """Assessments collection."""
 
     decorators = [login_required]
@@ -28,7 +28,7 @@ class Collection(Controller):
         return render_template('admin/assessments.html', assessments=assessments)
 
 
-class Ressource(Controller):
+class Ressource(MethodView):
     """Assessment ressource."""
 
     decorators = [login_required]

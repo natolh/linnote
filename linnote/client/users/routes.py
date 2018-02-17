@@ -12,10 +12,14 @@ from flask import Blueprint
 from .controllers import GroupCollection, GroupRessource, UserCollection, UserRessource
 
 
+groups_view = GroupCollection.as_view('groups')
+group_view = GroupRessource.as_view('group')
+users_view = UserCollection.as_view('users')
+user_view = UserRessource.as_view('user')
+
+
 ROUTES = Blueprint('users', __name__, url_prefix='/admin')
-
-
-GroupCollection.register_to(ROUTES, name='groups')
-GroupRessource.register_to(ROUTES, name='group')
-UserCollection.register_to(ROUTES, name='users')
-UserRessource.register_to(ROUTES, name='user')
+ROUTES.add_url_rule('/groups', view_func=groups_view)
+ROUTES.add_url_rule('/group', view_func=group_view)
+ROUTES.add_url_rule('/users', view_func=users_view)
+ROUTES.add_url_rule('/user', view_func=user_view)

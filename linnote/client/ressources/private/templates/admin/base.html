@@ -12,7 +12,7 @@
 
 {% block body %}
     <header>
-        <a id="brand" href="/">
+        <a id="brand" href="#">
             linnote
         </a>
 
@@ -29,12 +29,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('assessments.collection') }}">
+                    <a href="{{ url_for('assessments.assessments') }}">
                         Épreuves
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('admin.reports') }}">Rapports</a>
+                    <a href="{{ url_for('reports.reports') }}">
+                        Rapports
+                    </a>
                 </li>
                 <li>
                     <a href="{{ url_for('account.profile') }}">

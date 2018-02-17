@@ -12,8 +12,10 @@ from flask import Blueprint
 from .controllers import Collection, Ressource
 
 
+collection_view = Collection.as_view('assessments')
+ressource_view = Ressource.as_view('assessment')
+
+
 ROUTES = Blueprint('assessments', __name__, url_prefix='/admin')
-
-
-Collection.register_to(ROUTES, name='collection', url='/assessments')
-Ressource.register_to(ROUTES, name='ressource', url='/assessment')
+ROUTES.add_url_rule('/assessments', view_func=collection_view)
+ROUTES.add_url_rule('/assessment', view_func=ressource_view)
