@@ -8,12 +8,46 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import render_template
+from flask import render_template, request
 from flask_login import login_required
 from linnote.client.utils import session
 from linnote.client.utils.controller import Controller
-from .forms import UserForm
-from linnote.core.user import User
+from .forms import GroupForm, UserForm
+from linnote.core.user import Group, User
+
+
+class GroupCollection(Controller):
+    """Groups collection."""
+
+    decorators = [login_required]
+
+    @staticmethod
+    def get():
+        """Endpoint for assessments collection."""
+        groups = session.query(Group).all()
+        return render_template('admin/groups.html', groups=groups)
+
+
+class GroupRessource(Controller):
+    """Assessment ressource."""
+
+    decorators = [login_required]
+
+    @staticmethod
+    def get():
+        """Endpoint for assessment ressource."""
+        form = GroupForm()
+        return render_template('admin/group.html', form=form)
+
+    def post(self):
+        """Endpoint for assessment ressource."""
+        form = GroupForm()
+        if form.validate():
+            group = Group.load(request.files['students'], form.title.data)
+            session.merge(group)
+            session.commit()
+
+        return self.get()
 
 
 class UserCollection(Controller):

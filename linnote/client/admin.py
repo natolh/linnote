@@ -14,7 +14,7 @@ from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.user import User, Group
-from .forms import ReportForm, GroupForm, UserForm
+from .forms import ReportForm, UserForm
 from .utils import session
 
 
@@ -66,21 +66,3 @@ def report(identifier=None):
         session.commit()
 
     return render_template('admin/report.html', form=form)
-
-
-@BLUEPRINT.route('/students/groups')
-@login_required
-def groups():
-    items = session.query(Group).all()
-    return render_template('admin/groups.html', groups=items)
-
-
-@BLUEPRINT.route('/students/group', methods=['GET', 'POST'])
-@login_required
-def group():
-    form = GroupForm()
-    if request.method == 'POST' and form.validate():
-        g = Group.load(request.files['students'], form.title.data)
-        session.merge(g)
-        session.commit()
-    return render_template('admin/group.html', form=form)
