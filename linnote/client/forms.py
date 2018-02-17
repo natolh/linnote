@@ -23,17 +23,8 @@ class GroupForm(Form):
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     students = FileField('Listing', validators=[FileRequired()])
 
-class LoginForm(Form):
-    identifier = StringField('Identifiant', validators=[DataRequired()])
-    password = PasswordField('Mot de passe', validators=[DataRequired()])
-
 class UserForm(Form):
     firstname = StringField('Prénom', validators=[DataRequired()])
     lastname = StringField('Nom', validators=[DataRequired()])
     email = StringField('Adresse email', validators=[DataRequired()])
     password = PasswordField('Mot de passe', validators=[DataRequired()])
-
-class UpdatePasswordForm(Form):
-    old_password = PasswordField('Ancien mot de passe', validators=[DataRequired()])
-    password = PasswordField('Nouveau mot de passe', validators=[DataRequired(), EqualTo('password_confirm')])
-    password_confirm = PasswordField('Confirmer')
