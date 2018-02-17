@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Forms for 'reports' application module.
+Forms for the 'reports' application module.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.

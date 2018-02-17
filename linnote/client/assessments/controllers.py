@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Assessments controllers.
+Controllers for the 'assessments' application module.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -54,3 +54,13 @@ class Ressource(MethodView):
             session.commit()
 
         return self.get()
+
+
+class AssessmentResults(MethodView):
+    """Assessment's results."""
+
+    decorators = [login_required]
+
+    @staticmethod
+    def get():
+        """Display assessment's results."""
