@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Implement assessments and related tools.
+Assessments models and related.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -15,8 +15,8 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
 from werkzeug.datastructures import FileStorage
-from .student import Student
-from .utils.database import Base
+from linnote.core.student import Student
+from linnote.core.utils.database import Base
 
 
 class Mark(Base):

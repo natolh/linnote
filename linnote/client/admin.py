@@ -15,7 +15,7 @@ from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.student import Group
 from linnote.core.user import User
-from .forms import AssessmentForm, ReportForm, GroupForm, UserForm
+from .forms import ReportForm, GroupForm, UserForm
 from .utils import session
 
 
@@ -26,35 +26,7 @@ BLUEPRINT = Blueprint('admin', __name__, url_prefix='/admin')
 @login_required
 def home():
     """Home page."""
-    return redirect(url_for('admin.assessments'), code=303)
-
-
-@BLUEPRINT.route('/assessments')
-@login_required
-def assessments():
-    """List of assessments."""
-    items = session.query(Assessment).all()
-    return render_template('admin/assessments.html', assessments=items)
-
-
-@BLUEPRINT.route('/assessment', methods=['GET', 'POST'])
-@login_required
-def assessment():
-    """An assessment."""
-    form = AssessmentForm()
-
-    if request.method == 'POST' and form.validate():
-        item = Assessment(
-            form.title.data,
-            form.scale.data,
-            form.coefficient.data,
-            precision=form.precision.data,
-            results=request.files['results'])
-        item.rescale()
-        session.merge(item)
-        session.commit()
-
-    return render_template('admin/assessment.html', form=form)
+    return redirect(url_for('assessments.collection'), code=303)
 
 
 @BLUEPRINT.route('/reports')

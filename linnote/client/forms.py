@@ -10,18 +10,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileField, FileRequired
-from wtforms.fields import (StringField, FloatField, IntegerField,
-                            SelectMultipleField, PasswordField)
-from wtforms.validators import (DataRequired, Length, Optional, NumberRange,
-                                EqualTo)
+from wtforms.fields import StringField, SelectMultipleField, PasswordField
+from wtforms.validators import DataRequired, Length, Optional, EqualTo
 
-
-class AssessmentForm(Form):
-    title = StringField('Libellé', validators=[DataRequired(), Length(min=2)])
-    results = FileField('Notes', validators=[FileRequired()])
-    scale = FloatField('Barème', default=20, validators=[DataRequired(), NumberRange(min=0)])
-    coefficient = IntegerField('Coefficient', default=20, validators=[DataRequired(), NumberRange(min=0)])
-    precision = IntegerField('Précision', default=3, validators=[DataRequired(), NumberRange(min=0, max=10)])
 
 class ReportForm(Form):
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
