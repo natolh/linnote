@@ -15,5 +15,5 @@ from .controllers import Collection, Ressource
 ROUTES = Blueprint('assessments', __name__, url_prefix='/admin')
 
 
-Collection.register_to(ROUTES, name='collection')
-Ressource.register_to(ROUTES, name='ressource')
+Collection.register_to(ROUTES, name='collection', url='/assessments')
+Ressource.register_to(ROUTES, name='ressource', url='/assessment')
