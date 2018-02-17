@@ -85,22 +85,3 @@ def group():
         session.merge(g)
         session.commit()
     return render_template('admin/group.html', form=form)
-
-
-@BLUEPRINT.route('/users')
-@login_required
-def users():
-    objs = session.query(User).all()
-    return render_template('admin/users.html', users=objs)
-
-
-@BLUEPRINT.route('/user', methods=['GET', 'POST'])
-@login_required
-def user():
-    form = UserForm()
-    if request.method == 'POST' and form.validate():
-        u = User(form.firstname.data, form.lastname.data, form.email.data, form.password.data)
-        session.merge(u)
-        session.commit()
-
-    return render_template('admin/user.html', form=form)
