@@ -8,12 +8,10 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from pathlib import Path
 from flask import Flask
-from linnote import APP_DIR
+from linnote.client.accounts.utils import LOGIN_MANAGER
 from linnote.core.utils.configuration import load
-from linnote.core.user import User
-from .utils import configure_session, LOGIN_MANAGER, STRICT_TRANSPORT
+from .utils import configure_session, STRICT_TRANSPORT
 
 
 def create_app(name=None, config_path='configuration.ini', blueprints=None):
