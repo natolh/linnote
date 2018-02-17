@@ -29,7 +29,7 @@ class User(Base):
     is_verified = Column(Boolean)
     is_active = Column(Boolean)
 
-    def __init__(self, firstname, lastname, email, password=None):
+    def __init__(self, firstname, lastname, email, password=None) -> None:
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
@@ -38,19 +38,19 @@ class User(Base):
         if password:
             self.set_password(password)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<User: {}>'.format(self.name)
 
     @hybrid_property
-    def username(self):
+    def username(self) -> str:
         """Alias name for 'self.email' property."""
         return self.email
 
     @hybrid_property
-    def fullname(self):
+    def fullname(self) -> str:
         return '{} {}'.format(self.firstname, self.lastname)
 
-    def get_id(self):
+    def get_id(self) -> str:
         """
         Return the user identifier as a string for login.
 
@@ -58,7 +58,7 @@ class User(Base):
         """
         return str(self.identifier)
 
-    def set_password(self, password):
+    def set_password(self, password) -> str:
         """
         Set the user password.
 
@@ -69,21 +69,21 @@ class User(Base):
         self.password_hash = generate_password_hash(password)
         return self.password_hash
 
-    def is_authentic(self, password):
+    def is_authentic(self, password) -> bool:
         """Check if the provided password match the user registred password."""
         return check_password_hash(self.password_hash, password)
 
     @staticmethod
-    def is_authenticated():
+    def is_authenticated() -> bool:
         """Boolean showing if the current user is authenticated or not."""
         return True
 
-    def is_anonymous(self):
+    def is_anonymous(self) -> bool:
         """Boolean showing if the current user is anonymous or not."""
         return not self.is_authenticated()
 
-    def is_active(self):
-        return self.is_active
+    def is_active(self) -> bool:
+        return True
 
 
 class Student(Base):
@@ -98,19 +98,19 @@ class Student(Base):
     identifier = Column(Integer, primary_key=True)
     groups = relationship('Group', secondary='students_groups', back_populates='students')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<Student #{}>'.format(self.identifier)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if isinstance(other, Student):
             return self.identifier == other.identifier
 
         return NotImplemented
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self.__eq__(other)
 
-    def __hash__(self):
+    def __hash__(self) -> hash:
         return hash(self.identifier)
 
 
@@ -127,16 +127,16 @@ class Group(Base):
     name = Column(String(250), nullable=False, unique=True, index=True)
     students = relationship('Student', secondary='students_groups', back_populates='groups')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<Group of students: {}>'.format(self.name)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.students)
 
     def __iter__(self):
         return iter(self.students)
 
-    def __contains__(self, item):
+    def __contains__(self, item) -> bool:
         if not isinstance(item, Student):
             raise TypeError
 
