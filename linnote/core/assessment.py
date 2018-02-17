@@ -178,7 +178,7 @@ class Assessment(Base):
         """
         Load students results from an excel file.
 
-        - file: A path-like object. Path poiting to the file holding the
+        - file: A path-like object. Path pointing to the file holding the
                 results.
 
         Return: A list of 'Mark' objects.
