@@ -17,13 +17,13 @@ from linnote.core.utils import configure_session
 
 def create_app(name=None, config_path='configuration.ini', blueprints=None):
     """
-    Create a new instance of the application.
+    Create a new application instance.
 
-    - name:     String. The name of the application instance.
-    - config:   A path-like object. Path to the config file for the
-                application.
+    - name:         String. The instance name.
+    - config_path:  Path-like object. Path to the file holding the      
+                    configuration.
 
-    Return: A new 'flask.Flask' object.
+    Return: A <flask.Flask> object.
     """
     app = Flask(name)
 
