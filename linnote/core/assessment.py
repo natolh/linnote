@@ -187,16 +187,15 @@ class Assessment(Base):
             if len(marks) == len(assessments):
                 yield sum(marks)
 
-    def load(self, file):
+    def load(self, path):
         """
-        Load students results from an excel file.
+        Load assessment's results from a tabular file.
 
-        - file: A path-like object. Path pointing to the file holding the
-                results.
+        - path: Path-like object. Path to the file holding the results.
 
-        Return: A list of 'Mark' objects.
+        Return: List of <Mark> objects.
         """
-        results = read_excel(file, names=['anonymat', 'note'], usecols=1)
+        results = read_excel(path, names=['anonymat', 'note'], usecols=1)
 
         stack = list()
         for result in results.to_dict('records'):
