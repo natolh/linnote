@@ -133,10 +133,13 @@ class Assessment(Base):
     def __init__(self, title, scale, coefficient, **kwargs):
         """
         Initialize a new assessment.
-        - scale:        Float. Actual scale in results file.
-        - coefficient:  Float. Desired scale for output.
-        - precision:    Integer. Number of decimals for outputing marks.
-        - results:      Path-like object. Path pointing to the results file.
+
+        - title:        String. Assessment's title.
+        - scale:        Float. Input scale.
+        - coefficient:  Float. Output scale.
+        * precision:    Integer. Number of decimal places for displaying marks.
+        * results:      Path-like object. Path to the file holding results to 
+                        import.
 
         Return: None.
         """
