@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Web client.
+Client for the application (web).
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
