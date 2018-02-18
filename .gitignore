@@ -12,6 +12,7 @@ dist
 *.egg
 *.egg-info
 .idea
+.vscode
 
 # Others
 linnote/ressources/public/media/**
