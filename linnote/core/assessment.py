@@ -132,7 +132,7 @@ class Assessment(Base):
 
     def __init__(self, title, scale, coefficient, **kwargs):
         """
-        Initialize a new assessment.
+        Create a new assessment.
 
         - title:        String. Assessment's title.
         - scale:        Float. Input scale.
