@@ -150,7 +150,7 @@ class Assessment(Base):
         self.precision = kwargs.get('precision', 3)
 
         if isinstance(kwargs.get('results'), FileStorage):
-            self.results = self.load(kwargs.get('results'))
+            self.load(kwargs.get('results'))
 
     def __repr__(self):
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
@@ -193,18 +193,14 @@ class Assessment(Base):
 
         - path: Path-like object. Path to the file holding the results.
 
-        Return: List of <Mark> objects.
+        Return: None.
         """
         results = read_excel(path, names=['anonymat', 'note'], usecols=1)
 
-        stack = list()
         for result in results.to_dict('records'):
             student = Student(identifier=int(result['anonymat']))
-            mark = Mark(student, float(result['note']), self.scale,
-                        coefficient=self.coefficient)
-            stack.append(mark)
-
-        return stack
+            self.results += Mark(student, float(result['note']), self.scale,
+                                 coefficient=self.coefficient)
 
     def rescale(self):
         """Rescale assessment's results."""
