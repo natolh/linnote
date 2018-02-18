@@ -10,8 +10,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Flask
 from linnote.client.accounts.utils import LOGIN_MANAGER
+from linnote.client.utils import STRICT_TRANSPORT
 from linnote.core.utils.configuration import load
-from .utils import configure_session, STRICT_TRANSPORT
+from linnote.core.utils import configure_session
 
 
 def create_app(name=None, config_path='configuration.ini', blueprints=None):

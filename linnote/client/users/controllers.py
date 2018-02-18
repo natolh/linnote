@@ -11,9 +11,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import render_template, request
 from flask.views import MethodView
 from flask_login import login_required
-from linnote.client.utils import session
-from .forms import GroupForm, UserForm
 from linnote.core.user import Group, User
+from linnote.core.utils import session
+from .forms import GroupForm, UserForm
 
 
 class GroupCollection(MethodView):

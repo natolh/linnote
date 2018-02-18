@@ -11,10 +11,10 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import render_template
 from flask.views import MethodView
 from flask_login import login_required
-from linnote.client.utils import session
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.user import Group
+from linnote.core.utils import session
 from .forms import ReportForm
 
 
