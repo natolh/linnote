@@ -28,7 +28,7 @@ class Collection(MethodView):
     def get():
         """Display the collection of reports."""
         reports = session.query(Report).all()
-        return render_template('admin/reports.html', reports=reports)
+        return render_template('reports/collection.html', reports=reports)
 
 
 class Ressource(MethodView):
@@ -47,7 +47,7 @@ class Ressource(MethodView):
         form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
         form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
 
-        return render_template('admin/report.html', form=form)
+        return render_template('reports/ressource.html', form=form)
 
     def post(self, identifier):
         """Create a new report."""

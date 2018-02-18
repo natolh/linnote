@@ -25,7 +25,7 @@ class GroupCollection(MethodView):
     def get():
         """Display the collection of user groups."""
         groups = session.query(Group).all()
-        return render_template('admin/groups.html', groups=groups)
+        return render_template('users/groups/collection.html', groups=groups)
 
 
 class GroupRessource(MethodView):
@@ -37,7 +37,7 @@ class GroupRessource(MethodView):
     def get():
         """Display a form for creating a new user group."""
         form = GroupForm()
-        return render_template('admin/group.html', form=form)
+        return render_template('users/groups/ressource.html', form=form)
 
     def post(self):
         """Create a new user group."""
@@ -59,7 +59,7 @@ class UserCollection(MethodView):
     def get():
         """Display the collection of users."""
         users = session.query(User).all()
-        return render_template('admin/users.html', users=users)
+        return render_template('users/collection.html', users=users)
 
 
 class UserRessource(MethodView):
@@ -71,7 +71,7 @@ class UserRessource(MethodView):
     def get():
         """Display a form for creating a new user."""
         form = UserForm()
-        return render_template('admin/user.html', form=form)
+        return render_template('users/ressource.html', form=form)
 
     def post(self):
         """Create a new user."""
@@ -81,7 +81,7 @@ class UserRessource(MethodView):
                 form.firstname.data,
                 form.lastname.data,
                 form.email.data,
-                form.password.data)
+                password=form.password.data)
             session.merge(user)
             session.commit()
 

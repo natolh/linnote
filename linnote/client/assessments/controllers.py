@@ -25,7 +25,8 @@ class Collection(MethodView):
     def get():
         """Display the assessments collection."""
         assessments = session.query(Assessment).all()
-        return render_template('admin/assessments.html', assessments=assessments)
+        return render_template('assessments/collection.html',
+                               assessments=assessments)
 
 
 class Ressource(MethodView):
@@ -37,7 +38,7 @@ class Ressource(MethodView):
     def get():
         """Display a form for creating a new assessment."""
         form = AssessmentForm()
-        return render_template('admin/assessment.html', form=form)
+        return render_template('assessments/ressource.html', form=form)
 
     def post(self):
         """Create a new assessment."""
