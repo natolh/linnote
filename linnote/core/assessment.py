@@ -33,7 +33,17 @@ class Mark(Base):
     assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
 
     def __init__(self, student, score, scale, **kwargs):
-        """Initialize a new mark."""
+        """
+        Create a new mark.
+        
+        - student:      <Student> object. The student that has obtain the mark.
+        - score:        Float. Student's score for the assessment.
+        - scale:        Numeric. Maximal possible score for the assessment.
+        * bonus:        Float. Student's bonus points for the assessment.
+        * coefficient:  Numeric. Coefficient of the assessment.
+
+        Return: None.
+        """
         super().__init__()
         self.student = student
         self.coefficient = kwargs.get('coefficient', scale)
