@@ -147,8 +147,8 @@ class Assessment(Base):
         self.title = title
         self.scale = scale
         self.coefficient = coefficient
-
         self.precision = kwargs.get('precision', 3)
+
         if isinstance(kwargs.get('results'), FileStorage):
             self.results = self.load(kwargs.get('results'))
 
