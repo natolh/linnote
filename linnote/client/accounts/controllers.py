@@ -23,7 +23,7 @@ class Login(MethodView):
     def get():
         """Get the login formular or skip is user is already authentificated."""
         if current_user.is_authenticated:
-            return redirect(url_for('admin.home'))
+            return redirect(url_for('assessments.assessment'))
 
         form = LoginForm()
         return render_template('account/authentification/login.html', form=form)
