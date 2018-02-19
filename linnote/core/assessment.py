@@ -127,7 +127,7 @@ class Assessment(Base):
     title = Column(String(250), nullable=False, unique=True, index=True)
     coefficient = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
-    results = relationship('Mark')
+    results = relationship('Mark', cascade="all")
     reports = relationship('Report', back_populates="assessment", cascade="all")
 
     def __init__(self, title, coefficient, **kwargs):
