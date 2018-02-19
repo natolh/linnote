@@ -199,8 +199,9 @@ class Assessment(Base):
 
         for result in results.to_dict('records'):
             student = Student(identifier=int(result['anonymat']))
-            self.results += Mark(student, float(result['note']), self.scale,
+            mark = Mark(student, float(result['note']), self.scale,
                                  coefficient=self.coefficient)
+            self.results.append(mark)
 
     def rescale(self):
         """Rescale assessment's results."""
