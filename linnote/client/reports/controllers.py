@@ -64,6 +64,7 @@ class Ressource(MethodView):
 
             else:
                 assessment = session.query(Assessment).get(form.assessments.data[0])
+                assessment.rescale()
 
             groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
 

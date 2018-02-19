@@ -67,7 +67,6 @@ class Ressource(MethodView):
                                     results=request.files['results'],
                                     scale=form.scale.data)
         
-        assessment.rescale()
         session.merge(assessment)
         session.commit()
         return self.get(identifier)
