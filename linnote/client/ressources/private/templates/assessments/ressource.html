@@ -1,7 +1,12 @@
-{% extends "workspaces/admin.html" %}
+{% extends "base.html" %}
 
 {% block title %}
     Nouvelle épreuve | {{ super() }}
+{% endblock %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
 {% endblock %}
 
 {% block content %}

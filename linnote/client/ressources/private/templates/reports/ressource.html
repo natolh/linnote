@@ -1,7 +1,12 @@
-{% extends "workspaces/admin.html" %}
+{% extends "base.html" %}
 
 {% block title %}
     Nouveau classement | {{ super() }}
+{% endblock %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
 {% endblock %}
 
 {% block content %}

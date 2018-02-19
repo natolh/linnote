@@ -1,4 +1,9 @@
-{% extends "workspaces/admin.html" %}
+{% extends "base.html" %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
+{% endblock %}
 
 {% block content %}
 <h1>Utilisateurs</h1>

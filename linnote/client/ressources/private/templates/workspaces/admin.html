@@ -1,50 +1,37 @@
-{% extends 'base.html' %}
+<header>
+    <!-- Brand -->
+    <a id="brand" href="#">
+        linnote
+    </a>
 
-{% block head %}
-    {{ super() }}
-
-    <!-- Style -->
-    <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/master.css') }}">
-
-    <!-- Animation -->
-    <script type="text/javascript" src="{{ url_for('static', filename='scripts/master.js') }}" defer></script>
-{% endblock %}
-
-{% block body %}
-    <header>
-        <a id="brand" href="#">
-            linnote
-        </a>
-
-        <nav>
-            <ul>
-                <li>
-                    <a href="{{ url_for('users.users') }}">
-                        Utilisateurs
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('users.groups') }}">
-                        Étudiants
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('assessments.assessments') }}">
-                        Épreuves
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('reports.reports') }}">
-                        Rapports
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('account.profile') }}">
-                        Compte
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    {{ super() }}
-{% endblock %}
+    <!-- Main menu -->
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ url_for('users.users') }}">
+                    Utilisateurs
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('users.groups') }}">
+                    Étudiants
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('assessments.assessments') }}">
+                    Épreuves
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('reports.reports') }}">
+                    Rapports
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('account.profile') }}">
+                    Compte
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>

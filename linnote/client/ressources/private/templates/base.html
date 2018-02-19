@@ -6,6 +6,12 @@
 
         <title>{{ title|default('linnote') }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Style -->
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/master.css') }}">
+
+        <!-- Animation -->
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/master.js') }}" defer></script>
         {% endblock %}
     </head>
     <body>
