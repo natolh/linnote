@@ -1,7 +1,10 @@
-{% extends "admin/base.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    Epreuves | {{ super() }}
+{% set title = 'Groupes' %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
 {% endblock %}
 
 {% block content %}

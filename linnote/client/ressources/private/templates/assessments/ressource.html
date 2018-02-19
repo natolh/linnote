@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% set title = 'Nouvelle épreuve' %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Nouvelle épreuve</h1>
+
+<form method="post" enctype="multipart/form-data">
+
+    {{ form.csrf_token }}
+
+    <div role="group">
+        {{ form.title.label }}
+        {{ form.title(autocomplete="off", autofocus="on") }}
+    </div>
+
+    <fieldset>
+        <div role="group">
+            {{ form.scale.label }}
+            {% if assessment%}
+                {{ form.scale(type="number", autocomplete="off", disabled="disabled") }}
+            {% else %}
+                {{ form.scale(type="number", autocomplete="off") }}
+            {% endif %}
+        </div>
+
+        <div role="group" {% if assessment %}disabled{% endif %}>
+            {{ form.coefficient.label }}
+            {% if assessment%}
+                {{ form.coefficient(type="number", autocomplete="off", disabled="disabled") }}
+            {% else %}
+                {{ form.coefficient(type="number", autocomplete="off") }}
+            {% endif %}
+        </div>
+    </fieldset>
+
+    <div role="group">
+        {{ form.precision.label }}
+        {{ form.precision(type="number", autocomplete="off") }}
+    </div>
+
+    <fieldset>
+        <div role="group">
+            {{ form.results.label }}
+            {{ form.results() }}
+        </div>
+    </fieldset>
+
+    <input type="submit" value="Créer">
+</form>
+{% endblock %}

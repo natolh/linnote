@@ -33,7 +33,17 @@ class Mark(Base):
     assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
 
     def __init__(self, student, score, scale, **kwargs):
-        """Initialize a new mark."""
+        """
+        Create a new mark.
+        
+        - student:      <Student> object. The student that has obtain the mark.
+        - score:        Float. Student's score for the assessment.
+        - scale:        Numeric. Maximal possible score for the assessment.
+        * bonus:        Float. Student's bonus points for the assessment.
+        * coefficient:  Numeric. Coefficient of the assessment.
+
+        Return: None.
+        """
         super().__init__()
         self.student = student
         self.coefficient = kwargs.get('coefficient', scale)
@@ -122,11 +132,14 @@ class Assessment(Base):
 
     def __init__(self, title, scale, coefficient, **kwargs):
         """
-        Initialize a new assessment.
-        - scale:        Float. Actual scale in results file.
-        - coefficient:  Float. Desired scale for output.
-        - precision:    Integer. Number of decimals for outputing marks.
-        - results:      Path-like object. Path pointing to the results file.
+        Create a new assessment.
+
+        - title:        String. Assessment's title.
+        - scale:        Float. Input scale.
+        - coefficient:  Float. Output scale.
+        * precision:    Integer. Number of decimal places for displaying marks.
+        * results:      Path-like object. Path to the file holding results to 
+                        import.
 
         Return: None.
         """
@@ -134,10 +147,10 @@ class Assessment(Base):
         self.title = title
         self.scale = scale
         self.coefficient = coefficient
-
         self.precision = kwargs.get('precision', 3)
+
         if isinstance(kwargs.get('results'), FileStorage):
-            self.results = self.load(kwargs.get('results'))
+            self.load(kwargs.get('results'))
 
     def __repr__(self):
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
@@ -174,25 +187,20 @@ class Assessment(Base):
             if len(marks) == len(assessments):
                 yield sum(marks)
 
-    def load(self, file):
+    def load(self, path):
         """
-        Load students results from an excel file.
+        Load assessment's results from a tabular file.
 
-        - file: A path-like object. Path pointing to the file holding the
-                results.
+        - path: Path-like object. Path to the file holding the results.
 
-        Return: A list of 'Mark' objects.
+        Return: None.
         """
-        results = read_excel(file, names=['anonymat', 'note'], usecols=1)
+        results = read_excel(path, names=['anonymat', 'note'], usecols=1)
 
-        stack = list()
         for result in results.to_dict('records'):
             student = Student(identifier=int(result['anonymat']))
-            mark = Mark(student, float(result['note']), self.scale,
-                        coefficient=self.coefficient)
-            stack.append(mark)
-
-        return stack
+            self.results += Mark(student, float(result['note']), self.scale,
+                                 coefficient=self.coefficient)
 
     def rescale(self):
         """Rescale assessment's results."""

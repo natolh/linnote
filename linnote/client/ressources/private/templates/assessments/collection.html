@@ -1,7 +1,10 @@
-{% extends "admin/base.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    Epreuves | {{ super() }}
+{% set title = 'Épreuves' %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
 {% endblock %}
 
 {% block content %}
@@ -24,6 +27,9 @@
             </p>
         </div>
         <div class="footer">
+            <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}" type="button">
+                Afficher
+            </a>
             <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', identifier=assessment.identifier) }}')">
                 Supprimer
             </button>

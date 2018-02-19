@@ -1,7 +1,10 @@
-{% extends "admin/base.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    Nouveau groupe | {{ super() }}
+{% set title = 'Nouveau groupe' %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
 {% endblock %}
 
 {% block content %}

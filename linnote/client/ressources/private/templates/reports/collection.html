@@ -1,7 +1,10 @@
-{% extends "admin/base.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    Classements | {{ super() }}
+{% set title = 'Rapports' %}
+
+{% block body %}
+    {% include 'workspaces/admin.html' %}
+    {{ super() }}
 {% endblock %}
 
 {% block content %}

@@ -11,10 +11,10 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import render_template
 from flask.views import MethodView
 from flask_login import login_required
-from linnote.client.utils import session
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.user import Group
+from linnote.core.utils import session
 from .forms import ReportForm
 
 
@@ -28,7 +28,7 @@ class Collection(MethodView):
     def get():
         """Display the collection of reports."""
         reports = session.query(Report).all()
-        return render_template('admin/reports.html', reports=reports)
+        return render_template('reports/collection.html', reports=reports)
 
 
 class Ressource(MethodView):
@@ -41,13 +41,13 @@ class Ressource(MethodView):
         """Display a report or a form for creating a new report."""
         if identifier:
             report = session.query(Report).get(identifier)
-            return render_template('admin/ranking.html', rep=report)
+            return render_template('reports/ranking.html', rep=report)
 
         form = ReportForm()
         form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
         form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
 
-        return render_template('admin/report.html', form=form)
+        return render_template('reports/ressource.html', form=form)
 
     def post(self, identifier):
         """Create a new report."""

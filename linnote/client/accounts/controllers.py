@@ -11,8 +11,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
-from linnote.client.utils import session
 from linnote.core.user import User
+from linnote.core.utils import session
 from .forms import LoginForm, PasswordForm, ProfileForm
 
 

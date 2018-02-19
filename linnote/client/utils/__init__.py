@@ -9,4 +9,3 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from .security import STRICT_TRANSPORT
-from .session import configure_session, session

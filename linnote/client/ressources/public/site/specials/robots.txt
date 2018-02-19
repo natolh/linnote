@@ -1,0 +1,4 @@
+User-agent: *
+Sitemap: https://natolh.pythonanywhere.com/sitemap.xml
+Disallow: /static/
+Disallow: /*?
