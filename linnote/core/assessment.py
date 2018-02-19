@@ -157,7 +157,7 @@ class Assessment(Base):
         if isinstance(other, Assessment):
             assessments = [self, other]
             assessment = Assessment(
-                title=None,
+                title='[{} {}]'.format(self.title, other.title),
                 coefficient=self.coefficient + other.coefficient,
                 precision=min([self.precision, other.precision]))
             assessment.results = list(self._aggregate(assessments))

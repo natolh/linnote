@@ -60,6 +60,7 @@ class Ressource(MethodView):
             if len(form.assessments.data) > 1:
                 assessments = [session.query(Assessment).get(assessment_id) for assessment_id in form.assessments.data]
                 assessment = sum(assessments)
+                session.add(assessment)
                 assessment.rescale()
 
             else:
