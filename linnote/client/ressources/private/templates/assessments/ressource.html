@@ -19,20 +19,23 @@
         {{ form.title(autocomplete="off", autofocus="on") }}
     </div>
 
-    <div role="group">
-        {{ form.results.label }}
-        {{ form.results() }}
-    </div>
-
     <fieldset>
         <div role="group">
             {{ form.scale.label }}
-            {{ form.scale(type="number", autocomplete="off") }}
+            {% if assessment%}
+                {{ form.scale(type="number", autocomplete="off", disabled="disabled") }}
+            {% else %}
+                {{ form.scale(type="number", autocomplete="off") }}
+            {% endif %}
         </div>
 
-        <div role="group">
+        <div role="group" {% if assessment %}disabled{% endif %}>
             {{ form.coefficient.label }}
-            {{ form.coefficient(type="number", autocomplete="off") }}
+            {% if assessment%}
+                {{ form.coefficient(type="number", autocomplete="off", disabled="disabled") }}
+            {% else %}
+                {{ form.coefficient(type="number", autocomplete="off") }}
+            {% endif %}
         </div>
     </fieldset>
 
@@ -40,6 +43,13 @@
         {{ form.precision.label }}
         {{ form.precision(type="number", autocomplete="off") }}
     </div>
+
+    <fieldset>
+        <div role="group">
+            {{ form.results.label }}
+            {{ form.results() }}
+        </div>
+    </fieldset>
 
     <input type="submit" value="Créer">
 </form>

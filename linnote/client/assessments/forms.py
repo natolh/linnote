@@ -9,9 +9,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask_wtf import FlaskForm as Form
-from flask_wtf.file import FileField, FileRequired
+from flask_wtf.file import FileField
 from wtforms.fields import StringField, FloatField, IntegerField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms.validators import DataRequired, NumberRange, Optional
 
 
 class AssessmentForm(Form):
@@ -20,9 +20,6 @@ class AssessmentForm(Form):
     title = StringField(
         'Libellé',
         validators=[DataRequired()])
-    results = FileField(
-        'Notes',
-        validators=[FileRequired()])
     scale = FloatField(
         'Barème',
         default=20,
@@ -35,3 +32,6 @@ class AssessmentForm(Form):
         'Précision',
         default=3,
         validators=[DataRequired(), NumberRange(min=0, max=10)])
+    results = FileField(
+        'Importer des notes',
+        validators=[Optional()])

@@ -18,4 +18,5 @@ ressource_view = Ressource.as_view('assessment')
 
 ROUTES = Blueprint('assessments', __name__, url_prefix='/admin')
 ROUTES.add_url_rule('/assessments', view_func=collection_view)
-ROUTES.add_url_rule('/assessment', view_func=ressource_view)
+ROUTES.add_url_rule('/assessment', view_func=ressource_view, defaults={'identifier': None})
+ROUTES.add_url_rule('/assessment/<int:identifier>', view_func=ressource_view)
