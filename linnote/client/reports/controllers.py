@@ -41,7 +41,7 @@ class Ressource(MethodView):
         """Display a report or a form for creating a new report."""
         if identifier:
             report = session.query(Report).get(identifier)
-            return render_template('admin/ranking.html', rep=report)
+            return render_template('reports/ranking.html', rep=report)
 
         form = ReportForm()
         form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
