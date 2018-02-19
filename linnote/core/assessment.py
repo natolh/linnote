@@ -125,32 +125,30 @@ class Assessment(Base):
     __tablename__ = 'assessments'
     identifier = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False, unique=True, index=True)
-    scale = Column(Float, nullable=False)
     coefficient = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
     results = relationship('Mark')
 
-    def __init__(self, title, scale, coefficient, **kwargs):
+    def __init__(self, title, coefficient, **kwargs):
         """
         Create a new assessment.
 
         - title:        String. Assessment's title.
-        - scale:        Float. Input scale.
         - coefficient:  Float. Output scale.
         * precision:    Integer. Number of decimal places for displaying marks.
         * results:      Path-like object. Path to the file holding results to 
                         import.
+        * scale:        Integer. Scale used in 'results'.
 
         Return: None.
         """
         super().__init__()
         self.title = title
-        self.scale = scale
         self.coefficient = coefficient
         self.precision = kwargs.get('precision', 3)
 
         if isinstance(kwargs.get('results'), FileStorage):
-            self.load(kwargs.get('results'))
+            self.load(kwargs.get('results'), scale=kwargs.get('scale'))
 
     def __repr__(self):
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
@@ -160,7 +158,6 @@ class Assessment(Base):
             assessments = [self, other]
             assessment = Assessment(
                 title=None,
-                scale=self.scale + other.scale,
                 coefficient=self.coefficient + other.coefficient,
                 precision=min([self.precision, other.precision]))
             assessment.results = list(self._aggregate(assessments))
@@ -183,11 +180,9 @@ class Assessment(Base):
 
         for _, marks in groupby(results, by_student):
             marks = list(marks)
+            yield sum(marks)
 
-            if len(marks) == len(assessments):
-                yield sum(marks)
-
-    def load(self, path):
+    def load(self, path, scale):
         """
         Load assessment's results from a tabular file.
 
@@ -199,8 +194,8 @@ class Assessment(Base):
 
         for result in results.to_dict('records'):
             student = Student(identifier=int(result['anonymat']))
-            mark = Mark(student, float(result['note']), self.scale,
-                                 coefficient=self.coefficient)
+            mark = Mark(student, float(result['note']), scale,
+                        coefficient=self.coefficient)
             self.results.append(mark)
 
     def rescale(self):
