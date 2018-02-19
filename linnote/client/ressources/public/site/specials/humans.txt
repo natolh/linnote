@@ -1,12 +1,12 @@
 /* TEAM */
 
-Main developer : Mon nom
+Main developer : Anatole Hanniet
 Twitter: @natolh
 Location: FRANCE
 
 /* SITE */
 
-Last update:  2018/01/18
+Last update:  2018/02/19
 Standards: HTML5, CSS3, SVG, PEP
-Components: Python3 with Flask, Matplotlib, Pandas
-Software: Atom, Pylint, Firefox
+Components: Python3 with Flask, Matplotlib, Pandas, SQLAlchemy
+Software: VSCode (IDE), Pylint (Code checking), Alembic (Database migrations), Firefox (Browser), Sequel Pro (MySQL management), Fork (GIT management)

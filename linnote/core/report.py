@@ -12,7 +12,8 @@ from io import StringIO
 from operator import attrgetter
 from statistics import mean, median
 from sqlalchemy import Column
-from sqlalchemy import Integer, String, PickleType
+from sqlalchemy import Integer, ForeignKey, String, PickleType
+from sqlalchemy.orm import relationship
 from matplotlib import pyplot
 from .ranking import Ranking
 from .utils.database import Base
@@ -25,8 +26,10 @@ class Report(Base):
 
     identifier = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False, index=True)
-    assessment = Column(PickleType)
+    assessment = relationship('Assessment')
     data = Column(PickleType)
+
+    assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
 
     def __init__(self, title, assessment, groups=None, **kwargs):
         """

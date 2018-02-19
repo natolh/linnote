@@ -127,7 +127,8 @@ class Assessment(Base):
     title = Column(String(250), nullable=False, unique=True, index=True)
     coefficient = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
-    results = relationship('Mark')
+    results = relationship('Mark', cascade="all")
+    reports = relationship('Report', back_populates="assessment", cascade="all")
 
     def __init__(self, title, coefficient, **kwargs):
         """
@@ -157,7 +158,7 @@ class Assessment(Base):
         if isinstance(other, Assessment):
             assessments = [self, other]
             assessment = Assessment(
-                title=None,
+                title='[{} {}]'.format(self.title, other.title),
                 coefficient=self.coefficient + other.coefficient,
                 precision=min([self.precision, other.precision]))
             assessment.results = list(self._aggregate(assessments))
