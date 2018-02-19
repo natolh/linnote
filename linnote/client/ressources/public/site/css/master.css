@@ -129,7 +129,6 @@ a, button {
     border-radius: 0.15rem;
     color: white;
     background-color: var(--color-main);
-    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     vertical-align: middle;
