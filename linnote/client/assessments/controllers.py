@@ -55,18 +55,17 @@ class Ressource(MethodView):
         if form.validate() and identifier:
             assessment = session.query(Assessment).get(identifier)
             assessment.title = form.title.data
-            assessment.scale = form.scale.data
             assessment.coefficient = form.coefficient.data
             assessment.precision = form.precision.data
 
             if form.results.data:
-                assessment.load(request.files['results'])
+                assessment.load(request.files['results'], scale=form.scale.data)
 
         elif form.validate():
-            assessment = Assessment(form.title.data, form.scale.data, 
-                                    form.coefficient.data,
+            assessment = Assessment(form.title.data, form.coefficient.data,
                                     precision=form.precision.data,
-                                    results=request.files['results'])
+                                    results=request.files['results'],
+                                    scale=form.scale.data)
         
         assessment.rescale()
         session.merge(assessment)

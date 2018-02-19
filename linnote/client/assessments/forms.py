@@ -20,10 +20,6 @@ class AssessmentForm(Form):
     title = StringField(
         'Libellé',
         validators=[DataRequired()])
-    scale = FloatField(
-        'Barème',
-        default=20,
-        validators=[DataRequired(), NumberRange(min=0)])
     coefficient = IntegerField(
         'Coefficient',
         default=20,
@@ -33,5 +29,9 @@ class AssessmentForm(Form):
         default=3,
         validators=[DataRequired(), NumberRange(min=0, max=10)])
     results = FileField(
-        'Importer des notes',
+        'Fichier',
         validators=[Optional()])
+    scale = FloatField(
+        'Barème du fichier',
+        default=20,
+        validators=[Optional(), NumberRange(min=0)])

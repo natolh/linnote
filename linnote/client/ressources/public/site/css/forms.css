@@ -1,13 +1,24 @@
 @charset "UTF-8";
 
 
-form fieldset {
-    display: grid;
+fieldset {
+    display: grid !important;
     grid-gap: 1rem;
     border: none;
     border-radius: 0.15rem;
     margin-bottom: 1rem;
-    align-items: center;
+}
+
+fieldset > legend {
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.5rem;
+    grid-column: 1 / -1;
+    display: block;
+    width: 100%;
+    color: inherit;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 form fieldset > [role="group"] {
@@ -32,7 +43,6 @@ label {
 }
 
 input {
-    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     outline: none;

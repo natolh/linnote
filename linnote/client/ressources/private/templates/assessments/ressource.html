@@ -21,33 +21,29 @@
 
     <fieldset>
         <div role="group">
-            {{ form.scale.label }}
-            {% if assessment%}
-                {{ form.scale(type="number", autocomplete="off", disabled="disabled") }}
-            {% else %}
-                {{ form.scale(type="number", autocomplete="off") }}
-            {% endif %}
-        </div>
-
-        <div role="group" {% if assessment %}disabled{% endif %}>
             {{ form.coefficient.label }}
             {% if assessment%}
                 {{ form.coefficient(type="number", autocomplete="off", disabled="disabled") }}
             {% else %}
                 {{ form.coefficient(type="number", autocomplete="off") }}
             {% endif %}
+         </div>
+         <div role="group">
+            {{ form.precision.label }}
+            {{ form.precision(type="number", autocomplete="off") }}
         </div>
     </fieldset>
-
-    <div role="group">
-        {{ form.precision.label }}
-        {{ form.precision(type="number", autocomplete="off") }}
-    </div>
-
+    
     <fieldset>
+        <legend>Importer des notes</legend>
+
         <div role="group">
             {{ form.results.label }}
             {{ form.results() }}
+        </div>
+        <div role="group">
+            {{ form.scale.label }}
+            {{ form.scale(type="number", autocomplete="off") }}
         </div>
     </fieldset>
 
