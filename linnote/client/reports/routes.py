@@ -12,11 +12,22 @@ from flask import Blueprint
 from .controllers import Collection, Ressource
 
 
-collection_view = Collection.as_view('reports')
-ressource_view = Ressource.as_view('report')
+# Build controllers functions.
+REPORTS = Collection.as_view('reports')
+REPORT = Ressource.as_view('report')
 
 
+# Register routes to controllers.
 ROUTES = Blueprint('reports', __name__, url_prefix='/admin')
-ROUTES.add_url_rule('/reports', view_func=collection_view)
-ROUTES.add_url_rule('/report', view_func=ressource_view, defaults={'identifier': None})
-ROUTES.add_url_rule('/report/<int:identifier>', view_func=ressource_view)
+
+
+ROUTES.add_url_rule(
+    '/reports',
+    view_func=REPORTS)
+ROUTES.add_url_rule(
+    '/report',
+    view_func=REPORT,
+    defaults={'identifier': None})
+ROUTES.add_url_rule(
+    '/report/<int:identifier>',
+    view_func=REPORT)

@@ -12,14 +12,18 @@ from flask import Blueprint
 from .controllers import GroupCollection, GroupRessource, UserCollection, UserRessource
 
 
-groups_view = GroupCollection.as_view('groups')
-group_view = GroupRessource.as_view('group')
-users_view = UserCollection.as_view('users')
-user_view = UserRessource.as_view('user')
+# Build controllers functions.
+GROUPS = GroupCollection.as_view('groups')
+GROUP = GroupRessource.as_view('group')
+USERS = UserCollection.as_view('users')
+USER = UserRessource.as_view('user')
 
 
+# Register routes to controllers.
 ROUTES = Blueprint('users', __name__, url_prefix='/admin')
-ROUTES.add_url_rule('/groups', view_func=groups_view)
-ROUTES.add_url_rule('/group', view_func=group_view)
-ROUTES.add_url_rule('/users', view_func=users_view)
-ROUTES.add_url_rule('/user', view_func=user_view)
+
+
+ROUTES.add_url_rule('/groups', view_func=GROUPS)
+ROUTES.add_url_rule('/group', view_func=GROUP)
+ROUTES.add_url_rule('/users', view_func=USERS)
+ROUTES.add_url_rule('/user', view_func=USER)

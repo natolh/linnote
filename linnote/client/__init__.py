@@ -20,7 +20,7 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
     Create a new application instance.
 
     - name:         String. The instance name.
-    - config_path:  Path-like object. Path to the file holding the      
+    - config_path:  Path-like object. Path to the file holding the
                     configuration.
 
     Return: A <flask.Flask> object.
