@@ -93,19 +93,17 @@ def sequential(position, size):
 class Ranking(object):
     """A ranked sequence of things."""
 
-    def __init__(self, items, key=None, reverse=True, start=1, handle=high):
+    def __init__(self, items, key=None, **kwargs):
         """
         Create a new ranking.
 
         - items:    An interable. Items to rank.
-        - key:      A callable. When call upon 'item' return a sortable object.
-        - label:    A callable. When call upon 'item' return a unique
-                    identifier.
-        - reverse:  Boolean. If set to True, items are ranked by decreasing
+        * key:      A callable. When call upon 'item' return a sortable object.
+        * reverse:  Boolean. If set to True, items are ranked by decreasing
                     order ; if set to False items are ranked by increasing
                     order.
-        - start:    Integer. Starting rank.
-        - handle:   Callable. A callable to determine rank for tied values and
+        * start:    Integer. Starting rank.
+        * handle:   Callable. A callable to determine rank for tied values and
                     the next rank.
 
         Return: None.
@@ -113,11 +111,11 @@ class Ranking(object):
         super(Ranking, self).__init__()
         self.ranks = [Rank(item, key(item)) for item in items]
         self.key = attrgetter('score')
-        self.start = start
-        self.handle = handle
+        self.start = kwargs.get('start', 1)
+        self.handle = kwargs.get('handle', high)
 
         # Establish ranking.
-        self.ranks.sort(key=self.key, reverse=reverse)
+        self.ranks.sort(key=self.key, reverse=kwargs.get('reverse', True))
         for rank, item in self.rank():
             item.position = rank
 
