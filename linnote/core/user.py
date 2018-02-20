@@ -35,7 +35,6 @@ class User(Base):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
-        self.is_active = kwargs.get('is_active', False)
         self.is_staff = kwargs.get('is_staff', False)
         self.is_superuser = kwargs.get('is_superuser', False)
 
@@ -52,6 +51,7 @@ class User(Base):
 
     @hybrid_property
     def fullname(self):
+        """User's fullname (concatenation of first and last names)."""
         return '{} {}'.format(self.firstname, self.lastname)
 
     def get_id(self):
@@ -86,7 +86,9 @@ class User(Base):
         """Boolean showing if the current user is anonymous or not."""
         return not self.is_authenticated()
 
-    def is_active(self) -> bool:
+    @staticmethod
+    def is_active() -> bool:
+        """Boolean showing if the current user account is active or not."""
         return True
 
 

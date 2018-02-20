@@ -14,6 +14,7 @@ from wtforms.validators import DataRequired, Length, Optional
 
 
 class ReportForm(Form):
+    """For for creating a report."""
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     assessments = SelectMultipleField('Épreuves', coerce=int, validators=[DataRequired()])
     subgroups = SelectMultipleField('Groupes', coerce=int, validators=[Optional()])

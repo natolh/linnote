@@ -15,11 +15,13 @@ from wtforms.validators import DataRequired, Length
 
 
 class GroupForm(Form):
+    """Form for creating a group of students."""
     title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     students = FileField('Listing', validators=[FileRequired()])
 
 
 class UserForm(Form):
+    """Form for creating a user."""
     firstname = StringField('Prénom', validators=[DataRequired()])
     lastname = StringField('Nom', validators=[DataRequired()])
     email = StringField('Adresse email', validators=[DataRequired()])

@@ -35,7 +35,7 @@ class Mark(Base):
     def __init__(self, student, score, scale, **kwargs):
         """
         Create a new mark.
-        
+
         - student:      <Student> object. The student that has obtain the mark.
         - score:        Float. Student's score for the assessment.
         - scale:        Numeric. Maximal possible score for the assessment.
@@ -137,7 +137,7 @@ class Assessment(Base):
         - title:        String. Assessment's title.
         - coefficient:  Float. Output scale.
         * precision:    Integer. Number of decimal places for displaying marks.
-        * results:      Path-like object. Path to the file holding results to 
+        * results:      Path-like object. Path to the file holding results to
                         import.
         * scale:        Integer. Scale used in 'results'.
 

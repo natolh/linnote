@@ -33,6 +33,8 @@ class StrictTransport(object):
         if not any([request.is_secure, current_app.debug]):
             return self._upgrade_request(request.url)
 
+        return None
+
     @staticmethod
     def _upgrade_request(url, code=301):
         """Upgrade scheme of the requested URL and redirect to it."""

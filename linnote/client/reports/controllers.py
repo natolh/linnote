@@ -14,7 +14,7 @@ from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.user import Group
-from linnote.core.utils import session
+from linnote.core.utils import websession
 from .forms import ReportForm
 
 
@@ -27,6 +27,7 @@ class Collection(MethodView):
     @staticmethod
     def get():
         """Display the collection of reports."""
+        session = websession()
         reports = session.query(Report).all()
         return render_template('reports/collection.html', reports=reports)
 
@@ -39,6 +40,8 @@ class Ressource(MethodView):
     @staticmethod
     def get(identifier):
         """Display a report or a form for creating a new report."""
+        session = websession()
+
         if identifier:
             report = session.query(Report).get(identifier)
             return render_template('reports/ranking.html', rep=report)
@@ -51,6 +54,7 @@ class Ressource(MethodView):
 
     def post(self, identifier):
         """Create a new report."""
+        session = websession()
         form = ReportForm()
         form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
         form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]

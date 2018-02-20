@@ -12,7 +12,7 @@ from flask import Flask
 from linnote.client.accounts.utils import LOGIN_MANAGER
 from linnote.client.utils import STRICT_TRANSPORT
 from linnote.core.utils.configuration import load
-from linnote.core.utils import configure_session
+from linnote.core.utils import configure as configure_session
 
 
 def create_app(name=None, config_path='configuration.ini', blueprints=None):
@@ -20,7 +20,7 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
     Create a new application instance.
 
     - name:         String. The instance name.
-    - config_path:  Path-like object. Path to the file holding the      
+    - config_path:  Path-like object. Path to the file holding the
                     configuration.
 
     Return: A <flask.Flask> object.

@@ -14,7 +14,7 @@ from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.user import User, Group
-from linnote.core.utils import session
+from linnote.core.utils import websession
 
 
 BLUEPRINT = Blueprint('api', __name__, url_prefix='/api')
@@ -28,6 +28,7 @@ class AssessmentView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an assessment ressource."""
+        session = websession()
         assessment = session.query(Assessment).get(identifier)
         session.delete(assessment)
         session.commit()
@@ -42,6 +43,7 @@ class ReportView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an report ressource."""
+        session = websession()
         report = session.query(Report).get(identifier)
         session.delete(report)
         session.commit()
@@ -56,6 +58,7 @@ class GroupView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an group ressource."""
+        session = websession()
         group = session.query(Group).get(identifier)
         session.delete(group)
         session.commit()
@@ -70,14 +73,23 @@ class UserView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete a user ressource."""
+        session = websession()
         user = session.query(User).get(identifier)
         session.delete(user)
         session.commit()
         return 'DELETED'
 
 
-# Routes.
-BLUEPRINT.add_url_rule('/assessments/<int:identifier>', view_func=AssessmentView.as_view('assessment'))
-BLUEPRINT.add_url_rule('/reports/<identifier>', view_func=ReportView.as_view('report'))
-BLUEPRINT.add_url_rule('/students/groups/<int:identifier>', view_func=GroupView.as_view('group'))
-BLUEPRINT.add_url_rule('/users/<int:identifier>', view_func=UserView.as_view('user'))
+# Register routes to controllers.
+BLUEPRINT.add_url_rule(
+    '/assessments/<int:identifier>',
+    view_func=AssessmentView.as_view('assessment'))
+BLUEPRINT.add_url_rule(
+    '/reports/<identifier>',
+    view_func=ReportView.as_view('report'))
+BLUEPRINT.add_url_rule(
+    '/students/groups/<int:identifier>',
+    view_func=GroupView.as_view('group'))
+BLUEPRINT.add_url_rule(
+    '/users/<int:identifier>',
+    view_func=UserView.as_view('user'))
