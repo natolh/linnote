@@ -47,8 +47,10 @@ class Ressource(MethodView):
             return render_template('reports/ranking.html', rep=report)
 
         form = ReportForm()
-        form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
-        form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
+        form.assessments.choices = [(a.identifier, a.title)
+                                    for a in session.query(Assessment).all()]
+        form.subgroups.choices = [(g.identifier, g.name)
+                                  for g in session.query(Group).all()]
 
         return render_template('reports/ressource.html', form=form)
 
@@ -56,13 +58,16 @@ class Ressource(MethodView):
         """Create a new report."""
         session = WEBSESSION()
         form = ReportForm()
-        form.assessments.choices = [(a.identifier, a.title) for a in session.query(Assessment).all()]
-        form.subgroups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
+        form.assessments.choices = [(a.identifier, a.title)
+                                    for a in session.query(Assessment).all()]
+        form.subgroups.choices = [(g.identifier, g.name)
+                                  for g in session.query(Group).all()]
 
         if form.validate():
 
             if len(form.assessments.data) > 1:
-                assessments = [session.query(Assessment).get(assessment_id) for assessment_id in form.assessments.data]
+                assessments = [session.query(Assessment).get(
+                    assessment_id) for assessment_id in form.assessments.data]
                 assessment = sum(assessments)
                 session.add(assessment)
                 assessment.transform()
