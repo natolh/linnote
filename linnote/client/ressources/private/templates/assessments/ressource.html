@@ -22,18 +22,14 @@
     <fieldset>
         <div role="group">
             {{ form.coefficient.label }}
-            {% if assessment%}
-                {{ form.coefficient(type="number", autocomplete="off", disabled="disabled") }}
-            {% else %}
-                {{ form.coefficient(type="number", autocomplete="off") }}
-            {% endif %}
+            {{ form.coefficient(type="number", autocomplete="off") }}
          </div>
          <div role="group">
             {{ form.precision.label }}
             {{ form.precision(type="number", autocomplete="off") }}
         </div>
     </fieldset>
-    
+
     <fieldset>
         <legend>Importer des notes</legend>
 

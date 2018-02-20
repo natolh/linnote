@@ -12,7 +12,7 @@ from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.core.user import User
-from linnote.core.utils import websession
+from linnote.core.utils import WEBSESSION
 from .forms import LoginForm, PasswordForm, ProfileForm
 
 
@@ -30,7 +30,7 @@ class Login(MethodView):
 
     def post(self):
         """Process the login formular, login the user, redirect to his desk."""
-        session = websession()
+        session = WEBSESSION()
         form = LoginForm()
         if form.validate():
             user = session.query(User).filter(User.username == form.identifier.data).one_or_none()
@@ -67,7 +67,7 @@ class Password(MethodView):
 
     def post(self):
         """Process the password modification formular."""
-        session = websession()
+        session = WEBSESSION()
         form = PasswordForm()
         if all([form.validate(),
                 current_user.is_authentic(form.old_password.data),
@@ -91,7 +91,7 @@ class Profile(MethodView):
 
     def post(self):
         """Process the profile modification formular."""
-        session = websession()
+        session = WEBSESSION()
         form = ProfileForm()
         if form.validate():
             form.populate_obj(current_user)

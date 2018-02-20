@@ -23,17 +23,17 @@ from .configuration import load
 
 # Parent class for every class which objects need to be persist in the
 # database.
-Base = declarative_base()
+BASE = declarative_base()
 
 
 # Create a session factory
 CONFIG = load(APP_DIR.parent.joinpath('configuration.ini'))
 ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=280)
-Session = sessionmaker(bind=ENGINE)
+SESSION = sessionmaker(bind=ENGINE)
 
 
 # Create a scoped session for use in the application.
-websession = scoped_session(Session, _app_ctx_stack.__ident_func__)
+WEBSESSION = scoped_session(SESSION, _app_ctx_stack.__ident_func__)
 
 
 def configure(app):
@@ -46,5 +46,5 @@ def configure(app):
 
     Return: None.
     """
-    app.session = websession
+    app.session = WEBSESSION
     app.teardown_appcontext(lambda *args, **kwargs: app.session.remove())

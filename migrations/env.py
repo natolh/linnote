@@ -20,12 +20,12 @@ from sys import path
 
 path.append(getcwd())
 
-from linnote.core.utils.database import Base
+from linnote.core.utils.database import BASE
 from linnote.core.user import User, Student, Group, STUDENTS_GROUPS
 from linnote.core.assessment import Assessment, Mark
 from linnote.core.report import Report
 
-target_metadata = Base.metadata
+target_metadata = BASE.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

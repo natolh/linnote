@@ -16,18 +16,18 @@ from sqlalchemy import Integer, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
 from werkzeug.datastructures import FileStorage
 from linnote.core.user import Student
-from linnote.core.utils.database import Base
+from linnote.core.utils.database import BASE
 
 
-class Mark(Base):
+class Mark(BASE):
     """Student's mark to an assessment."""
 
     __tablename__ = 'marks'
     identifier = Column(Integer, primary_key=True)
     student = relationship('Student')
-    coefficient = Column(Integer, nullable=False)
-    _raw = Column(Float)
+    _score = Column(Float, nullable=False)
     _bonus = Column(Float)
+    _scale = Column(Integer, nullable=False)
 
     student_id = Column(Integer, ForeignKey('students.identifier'))
     assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
@@ -40,15 +40,14 @@ class Mark(Base):
         - score:        Float. Student's score for the assessment.
         - scale:        Numeric. Maximal possible score for the assessment.
         * bonus:        Float. Student's bonus points for the assessment.
-        * coefficient:  Numeric. Coefficient of the assessment.
 
         Return: None.
         """
         super().__init__()
         self.student = student
-        self.coefficient = kwargs.get('coefficient', scale)
-        self._raw = score / scale
-        self._bonus = kwargs.get('bonus', 0) / scale
+        self._scale = scale
+        self._score = score
+        self._bonus = kwargs.get('bonus', 0)
 
     def __repr__(self):
         return '<Mark of {}: {}>'.format(self.student, self.value)
@@ -88,9 +87,10 @@ class Mark(Base):
 
     def __add__(self, other):
         if isinstance(other, Mark) and self.student == other.student:
-            return Mark(self.student, self._raw + other._raw, 2,
-                        coefficient=self.coefficient + other.coefficient,
-                        bonus=self._bonus + other._bonus)
+            return Mark(self.student,
+                        self.score + other.score,
+                        self.scale + other.scale,
+                        bonus=self.bonus + other.bonus)
 
         return NotImplemented
 
@@ -104,22 +104,49 @@ class Mark(Base):
         return hash(self.identifier)
 
     @property
-    def raw(self):
-        """Mark raw value."""
-        return self._raw * self.coefficient
-
-    @property
     def bonus(self):
         """Mark bonus value."""
-        return self._bonus * self.coefficient
+        return self._bonus
+
+    @bonus.setter
+    def bonus(self, value):
+        """Change the score bonus."""
+        self._bonus = value
+
+    def rescale(self, scale):
+        """
+        Rescale the mark.
+
+        - scale:    Integer. The new desired scale.
+
+        Return: None.
+        """
+        self._score = (self._score / self._scale) * scale
+        self._bonus = (self._bonus / self._scale) * scale
+        self._scale = scale
+
+    @property
+    def scale(self):
+        """Mark scale."""
+        return self._scale
+
+    @property
+    def score(self):
+        """Mark raw value."""
+        return self._score
+
+    @score.setter
+    def score(self, value):
+        """Change the score value."""
+        self._score = value
 
     @property
     def value(self):
         """The processed mark, including bonus points."""
-        return (self._raw + self._bonus) * self.coefficient
+        return self._score + self._bonus
 
 
-class Assessment(Base):
+class Assessment(BASE):
     """Evaluation of students knowledge."""
 
     __tablename__ = 'assessments'
@@ -187,7 +214,8 @@ class Assessment(Base):
         """
         Load assessment's results from a tabular file.
 
-        - path: Path-like object. Path to the file holding the results.
+        - path:     Path-like object. Path to the file holding the results.
+        - scale:    Integer. Scale for marks in the result file.
 
         Return: None.
         """
@@ -195,12 +223,35 @@ class Assessment(Base):
 
         for result in results.to_dict('records'):
             student = Student(identifier=int(result['anonymat']))
-            mark = Mark(student, float(result['note']), scale,
-                        coefficient=self.coefficient)
+            mark = Mark(student, float(result['note']), scale)
+
+            if not scale == self.coefficient:
+                mark.rescale(self.coefficient)
+
             self.results.append(mark)
 
-    def rescale(self):
-        """Rescale assessment's results."""
-        maximum = max(self.results)._raw
+    def rescale(self, scale):
+        """
+        Mark post-process function.
+
+        Rescale results to a new scale.
+        Return : None.
+        """
         for mark in self.results:
-            mark._bonus = (mark._raw / maximum) - mark._raw
+            mark.rescale(scale)
+
+    def transform(self):
+        """
+        Mark post-process function.
+
+        Return: None.
+        """
+        maximum = max(self.results).value
+
+        for mark in self.results:
+            bonus = (mark.value / maximum) * (mark.scale - maximum)
+
+            if not mark.value + bonus > mark.scale:
+                mark.bonus += bonus
+            else:
+                mark.bonus = mark.scale - mark.value
