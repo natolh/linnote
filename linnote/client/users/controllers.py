@@ -12,7 +12,7 @@ from flask import render_template, request
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.user import Group, User
-from linnote.core.utils import websession as session
+from linnote.core.utils import websession
 from .forms import GroupForm, UserForm
 
 
@@ -24,6 +24,7 @@ class GroupCollection(MethodView):
     @staticmethod
     def get():
         """Display the collection of user groups."""
+        session = websession()
         groups = session.query(Group).all()
         return render_template('users/groups/collection.html', groups=groups)
 
@@ -41,6 +42,7 @@ class GroupRessource(MethodView):
 
     def post(self):
         """Create a new user group."""
+        session = websession()
         form = GroupForm()
         if form.validate():
             group = Group.load(request.files['students'], form.title.data)
@@ -58,6 +60,7 @@ class UserCollection(MethodView):
     @staticmethod
     def get():
         """Display the collection of users."""
+        session = websession()
         users = session.query(User).all()
         return render_template('users/collection.html', users=users)
 
@@ -75,6 +78,7 @@ class UserRessource(MethodView):
 
     def post(self):
         """Create a new user."""
+        session = websession()
         form = UserForm()
         if form.validate():
             user = User(
