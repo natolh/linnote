@@ -33,7 +33,7 @@ Session = sessionmaker(bind=ENGINE)
 
 
 # Create a scoped session for use in the application.
-websession = scoped_session(Session, _app_ctx_stack.__ident_func__)
+WEBSESSION = scoped_session(Session, _app_ctx_stack.__ident_func__)
 
 
 def configure(app):
@@ -46,5 +46,5 @@ def configure(app):
 
     Return: None.
     """
-    app.session = websession
+    app.session = WEBSESSION
     app.teardown_appcontext(lambda *args, **kwargs: app.session.remove())

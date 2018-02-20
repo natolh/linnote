@@ -12,7 +12,7 @@ from flask import render_template, request
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.assessment import Assessment
-from linnote.core.utils import websession
+from linnote.core.utils import WEBSESSION
 from .forms import AssessmentForm
 
 
@@ -24,7 +24,7 @@ class Collection(MethodView):
     @staticmethod
     def get():
         """Display the assessments collection."""
-        session = websession()
+        session = WEBSESSION()
         assessments = session.query(Assessment).all()
         return render_template('assessments/collection.html',
                                assessments=assessments)
@@ -39,7 +39,7 @@ class Ressource(MethodView):
     def get(identifier):
         """Display a form for creating a new assessment."""
         if identifier:
-            session = websession()
+            session = WEBSESSION()
             assessment = session.query(Assessment).get(identifier)
             form = AssessmentForm(obj=assessment)
             context = dict(assessment=assessment, form=form)
@@ -52,7 +52,7 @@ class Ressource(MethodView):
 
     def post(self, identifier):
         """Create a new assessment."""
-        session = websession()
+        session = WEBSESSION()
         form = AssessmentForm()
 
         if form.validate() and identifier:
