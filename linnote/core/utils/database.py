@@ -20,6 +20,6 @@ from .configuration import load
 Base = declarative_base()
 
 # Create a session factory
-config = load(APP_DIR.parent.joinpath('configuration.ini'))
-engine = create_engine(config.get('DATABASE', 'URL'))
-Session = sessionmaker(bind=engine)
+CONFIG = load(APP_DIR.parent.joinpath('configuration.ini'))
+ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=280)
+Session = sessionmaker(bind=ENGINE)
