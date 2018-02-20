@@ -16,10 +16,10 @@ from sqlalchemy import Integer, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
 from werkzeug.datastructures import FileStorage
 from linnote.core.user import Student
-from linnote.core.utils.database import Base
+from linnote.core.utils.database import BASE
 
 
-class Mark(Base):
+class Mark(BASE):
     """Student's mark to an assessment."""
 
     __tablename__ = 'marks'
@@ -119,7 +119,7 @@ class Mark(Base):
         return (self._raw + self._bonus) * self.coefficient
 
 
-class Assessment(Base):
+class Assessment(BASE):
     """Evaluation of students knowledge."""
 
     __tablename__ = 'assessments'

@@ -23,7 +23,7 @@ from .configuration import load
 
 # Parent class for every class which objects need to be persist in the
 # database.
-Base = declarative_base()
+BASE = declarative_base()
 
 
 # Create a session factory

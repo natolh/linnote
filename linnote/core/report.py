@@ -16,10 +16,10 @@ from sqlalchemy import Integer, ForeignKey, String, PickleType
 from sqlalchemy.orm import relationship
 from matplotlib import pyplot
 from .ranking import Ranking
-from .utils.database import Base
+from .utils.database import BASE
 
 
-class Report(Base):
+class Report(BASE):
     """Report for an assessment."""
 
     __tablename__ = 'reports'

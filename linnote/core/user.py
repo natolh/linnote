@@ -13,10 +13,10 @@ from sqlalchemy import Boolean, Column, Integer, String, Table, Text, ForeignKey
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
-from .utils.database import Base
+from .utils.database import BASE
 
 
-class User(Base):
+class User(BASE):
     """A user of the application."""
 
     __tablename__ = 'users'
@@ -92,7 +92,7 @@ class User(Base):
         return True
 
 
-class Student(Base):
+class Student(BASE):
     """
     Someone seeking to learn about life, the universe and everything.
 
@@ -120,7 +120,7 @@ class Student(Base):
         return hash(self.identifier)
 
 
-class Group(Base):
+class Group(BASE):
     """
     A group of students.
 
@@ -170,7 +170,7 @@ class Group(Base):
 
 STUDENTS_GROUPS = Table(
     'students_groups',
-    Base.metadata,
+    BASE.metadata,
     Column('group', Integer, ForeignKey('groups.identifier')),
     Column('student', Integer, ForeignKey('students.identifier'))
 )
