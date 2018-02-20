@@ -19,7 +19,11 @@ Plusieurs dépendances sont utilisées pour faire tourner l'application, essenti
 
 ## Côté développement
 
-[VSCode](https://code.visualstudio.com/) avec l'extension pour Python et [PyLint](https://www.pylint.org/) pour vérifier la qualité du code produit.
+Le code a été principalement écrit sous [VSCode](https://code.visualstudio.com/) avec l'extension pour Python et [PyLint](https://www.pylint.org/) pour vérifier la qualité du code produit.
+
+
+# Utilisation
+À venir...
 
 # Installation
 
