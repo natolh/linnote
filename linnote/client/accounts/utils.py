@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask_login import LoginManager
 from linnote.core.user import User
-from linnote.core.utils.session import session
+from linnote.core.utils import websession as session
 
 
 # Login manager.

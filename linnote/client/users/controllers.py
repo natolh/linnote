@@ -12,7 +12,7 @@ from flask import render_template, request
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.user import Group, User
-from linnote.core.utils import session
+from linnote.core.utils import websession as session
 from .forms import GroupForm, UserForm
 
 

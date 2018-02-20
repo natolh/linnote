@@ -14,7 +14,7 @@ from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.report import Report
 from linnote.core.user import User, Group
-from linnote.core.utils import session
+from linnote.core.utils import websession as session
 
 
 BLUEPRINT = Blueprint('api', __name__, url_prefix='/api')
