@@ -60,6 +60,8 @@ class Ressource(MethodView):
             assessment.title = form.title.data
             assessment.coefficient = form.coefficient.data
             assessment.precision = form.precision.data
+            assessment.rescale(assessment.coefficient)
+            session.commit()
 
             if form.results.data:
                 assessment.load(request.files['results'], scale=form.scale.data)
