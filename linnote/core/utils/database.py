@@ -29,11 +29,11 @@ BASE = declarative_base()
 # Create a session factory
 CONFIG = load(APP_DIR.parent.joinpath('configuration.ini'))
 ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=280)
-Session = sessionmaker(bind=ENGINE)
+SESSION = sessionmaker(bind=ENGINE)
 
 
 # Create a scoped session for use in the application.
-WEBSESSION = scoped_session(Session, _app_ctx_stack.__ident_func__)
+WEBSESSION = scoped_session(SESSION, _app_ctx_stack.__ident_func__)
 
 
 def configure(app):
