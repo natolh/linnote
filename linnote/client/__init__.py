@@ -9,8 +9,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import Flask
+from flask_talisman import Talisman
 from linnote.client.accounts.utils import LOGIN_MANAGER
-from linnote.client.utils import STRICT_TRANSPORT
 from linnote.core.utils.configuration import load
 from linnote.core.utils import configure as configure_session
 
@@ -30,7 +30,7 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
     # Configure app.
     configure_app(app, config_path)
     LOGIN_MANAGER.init_app(app)
-    STRICT_TRANSPORT.init_app(app)
+    Talisman(app)
 
     # Register blueprints to the app.
     if blueprints:
