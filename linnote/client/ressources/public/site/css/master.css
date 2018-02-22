@@ -102,10 +102,6 @@ main > * {
         text-align: left;
     }
 
-    .topping > :chil {
-        margin: 0;
-    }
-
     [role="navigation"].secondary {
         grid-column: 2 / 3;
         justify-content: flex-end;
