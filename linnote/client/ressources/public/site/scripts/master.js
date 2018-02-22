@@ -3,7 +3,7 @@ function xhr(METHOD, URL) {
     var req = new XMLHttpRequest();
 
     req.onreadystatechange = function() {
-        if (this.status == 200) {
+        if (this.status === 200) {
             window.location.reload();
         }
     };
