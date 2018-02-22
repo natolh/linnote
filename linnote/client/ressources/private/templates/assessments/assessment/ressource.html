@@ -52,6 +52,10 @@
         </div>
     </fieldset>
 
-    <input type="submit" value="Créer">
+    {% if assessment is defined %}
+        <input type="submit" value="Modifier">
+    {% else %}
+        <input type="submit" value="Créer">
+    {% endif %}
 </form>
 {% endblock %}
