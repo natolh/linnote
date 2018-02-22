@@ -108,11 +108,6 @@ class Mark(BASE):
         """Mark bonus value."""
         return self._bonus
 
-    @bonus.setter
-    def bonus(self, value):
-        """Change the score bonus."""
-        self._bonus = value
-
     def rescale(self, scale):
         """
         Rescale the mark.
@@ -135,10 +130,6 @@ class Mark(BASE):
         """Mark raw value."""
         return self._score
 
-    @score.setter
-    def score(self, value):
-        """Change the score value."""
-        self._score = value
 
     @property
     def value(self):
