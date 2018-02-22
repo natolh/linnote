@@ -1,4 +1,4 @@
-{% extends 'account/base.html' %}
+{% extends 'base.html' %}
 
 {% block body %}
     {% include 'workspaces/admin.html' %}
@@ -6,27 +6,31 @@
 {% endblock %}
 
 {% block content %}
-    {{ super() }}
-    <form method="post">
-        {{ form.csrf_token }}
+<div class="topping">
+    <h1>Mon compte</h1>
+    {% include 'account/menu.html' %}
+</div>
 
-        <fieldset>
-            <div role="group">
-                {{ form.firstname.label }}
-                {{ form.firstname() }}
-            </div>
+<form method="post">
+    {{ form.csrf_token }}
 
-            <div role="group">
-                {{ form.lastname.label }}
-                {{ form.lastname() }}
-            </div>
-        </fieldset>
-
+    <fieldset>
         <div role="group">
-            {{ form.email.label }}
-            {{ form.email() }}
+            {{ form.firstname.label }}
+            {{ form.firstname() }}
         </div>
 
-        <input type="submit" value="enregistrer">
-    </form>
+        <div role="group">
+            {{ form.lastname.label }}
+            {{ form.lastname() }}
+        </div>
+    </fieldset>
+
+    <div role="group">
+        {{ form.email.label }}
+        {{ form.email() }}
+    </div>
+
+    <input type="submit" value="enregistrer">
+</form>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "assessments/assessment/base.html" %}
+{% extends "base.html" %}
 
 {% set title = 'Résultats' %}
 
@@ -8,12 +8,10 @@
 {% endblock %}
 
 {% block content %}
-
-{{ super() }}
-
-<h1>{{ assessment.title }}</h1>
-
-<h2>Résultats de l'épreuve</h2>
+<div class="topping">
+    <h1>{{ assessment.title }}</h1>
+    {% include 'assessments/assessment/menu.html' %}
+</div>
 
 <table>
     <thead>

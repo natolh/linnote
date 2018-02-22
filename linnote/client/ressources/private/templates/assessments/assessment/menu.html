@@ -1,11 +1,13 @@
-{% extends 'base.html' %}
-
-{% block content %}
-{% if assessment %}
+<!-- Submenu for assessment module -->
 <ul class="secondary" role="navigation">
     <li>
         <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
-            Aperçu
+            Résumé
+        </a>
+    </li>
+    <li>
+        <a href="#" disabled>
+            Statistiques
         </a>
     </li>
     <li>
@@ -14,5 +16,3 @@
         </a>
     </li>
 </ul>
-{% endif %}
-{% endblock %}

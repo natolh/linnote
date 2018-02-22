@@ -1,4 +1,4 @@
-{% extends "assessments/assessment/base.html" %}
+{% extends "base.html" %}
 
 {% set title = 'Nouvelle épreuve' %}
 
@@ -8,9 +8,16 @@
 {% endblock %}
 
 {% block content %}
-<h1>Nouvelle épreuve</h1>
-
-{{ super() }}
+<div class="topping">
+    {% if assessment is defined %}
+        <h1>{{ assessment.title }}</h1>
+        {% include 'assessments/assessment/menu.html' %}
+    {% else %}
+        <h1>
+            Nouvelle épreuve
+        </h1>
+    {% endif %}
+</div>
 
 <form method="post" enctype="multipart/form-data">
 
