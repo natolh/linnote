@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if assessment %}
+<ul class="secondary" role="navigation">
+    <li>
+        <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
+            Aperçu
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('assessments.results', identifier=assessment.identifier) }}">
+            Résultats
+        </a>
+    </li>
+</ul>
+{% endif %}
+{% endblock %}

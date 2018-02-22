@@ -16,7 +16,7 @@ from linnote.core.utils import WEBSESSION
 from .forms import AssessmentForm
 
 
-class Collection(MethodView):
+class ListView(MethodView):
     """Controller for managing assessments collection."""
 
     decorators = [login_required]
@@ -30,7 +30,7 @@ class Collection(MethodView):
                                assessments=assessments)
 
 
-class Ressource(MethodView):
+class MainView(MethodView):
     """Controller for managing an assessment ressource."""
 
     decorators = [login_required]
@@ -48,7 +48,7 @@ class Ressource(MethodView):
             form = AssessmentForm()
             context = dict(form=form)
 
-        return render_template('assessments/ressource.html', **context)
+        return render_template('assessments/assessment/ressource.html', **context)
 
     def post(self, identifier):
         """Create a new assessment."""
@@ -80,3 +80,17 @@ class Ressource(MethodView):
 
         session.commit()
         return self.get(identifier)
+
+
+class ResultsView(MethodView):
+    """Controller for managing assessment's results."""
+
+    decorators = [login_required]
+
+    @staticmethod
+    def get(identifier):
+        """Display assessment's results."""
+        session = WEBSESSION()
+        assessment = session.query(Assessment).get(identifier)
+        return render_template('assessments/assessment/results.html',
+                               assessment=assessment)

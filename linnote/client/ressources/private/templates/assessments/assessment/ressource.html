@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "assessments/assessment/base.html" %}
 
 {% set title = 'Nouvelle épreuve' %}
 
@@ -9,6 +9,8 @@
 
 {% block content %}
 <h1>Nouvelle épreuve</h1>
+
+{{ super() }}
 
 <form method="post" enctype="multipart/form-data">
 
