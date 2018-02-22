@@ -1,0 +1,18 @@
+<!-- Submenu for assessment module -->
+<ul class="secondary" role="navigation">
+    <li>
+        <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
+            Résumé
+        </a>
+    </li>
+    <li>
+        <a href="#" disabled>
+            Statistiques
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('assessments.results', identifier=assessment.identifier) }}">
+            Résultats
+        </a>
+    </li>
+</ul>

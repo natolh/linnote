@@ -8,7 +8,16 @@
 {% endblock %}
 
 {% block content %}
-<h1>Nouvelle épreuve</h1>
+<div class="topping">
+    {% if assessment is defined %}
+        <h1>{{ assessment.title }}</h1>
+        {% include 'assessments/assessment/menu.html' %}
+    {% else %}
+        <h1>
+            Nouvelle épreuve
+        </h1>
+    {% endif %}
+</div>
 
 <form method="post" enctype="multipart/form-data">
 
@@ -43,6 +52,10 @@
         </div>
     </fieldset>
 
-    <input type="submit" value="Créer">
+    {% if assessment is defined %}
+        <input type="submit" value="Modifier">
+    {% else %}
+        <input type="submit" value="Créer">
+    {% endif %}
 </form>
 {% endblock %}

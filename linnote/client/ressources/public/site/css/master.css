@@ -30,15 +30,30 @@ header, main, footer {
 main {
     padding: 1rem;
     display: grid;
-    grid-template: min-content / 1fr;
+    grid-template: repeat(2, min-content) / 1fr;
     grid-auto-rows: min-content;
     grid-gap: 1rem 2rem;
+}
+
+.topping {
+    padding: 1.5rem 0;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template: repeat(2, min-content) / 1fr;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    border-top: 1px solid rgb(230, 230, 230);
+}
+
+.topping > :not(:first-child) {
+    margin-top: 1rem;
 }
 
 [role="navigation"].secondary {
     display: flex;
     flex-flow: row wrap;
-    grid-column: 1 / 2;
+    justify-content: center;
 }
 
 [role="navigation"].secondary > li {
@@ -46,17 +61,22 @@ main {
 }
 
 [role="navigation"].secondary a {
-    margin: 0.2rem;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 1.5rem;
     width: 100%;
+    font-weight: bold;
+    color: rgb(120, 120, 120);
     text-align: center;
-    border-radius: 1rem;
-    background-color: var(--color-neutral);
+    border-radius: 40px;
+    background-color: rgba(209, 209, 209, 0.671);
+}
+
+[role="navigation"].secondary li:not(:last-child) {
+    margin-right: 0.3rem;
 }
 
 [role="navigation"].secondary a:hover {
     color: white;
-    background-color: var(--color-main);
+    background-color: rgb(180, 180, 180);
 }
 
 main > * {
@@ -67,21 +87,28 @@ main > * {
     main {
         grid-template: min-content / repeat(3, 1fr);
     }
-
-    [role="navigation"].secondary {
-        display: flex;
-        flex-flow: column nowrap;
-        grid-column: 1 / 2;
-    }
-
-    [role="navigation"].secondary ~ * {
-        grid-column: 2 / -1;
-    }
 }
 
 @media screen and (min-width: 900px) {
     main {
         grid-template: min-content / repeat(4, 1fr);
+    }
+
+    .topping {
+        grid-template: 1fr / repeat(2, 1fr);
+    }
+
+    .topping:first-child {
+        text-align: left;
+    }
+
+    [role="navigation"].secondary {
+        grid-column: 2 / 3;
+        justify-content: flex-end;
+    }
+
+    .topping > :not(:first-child) {
+        margin-top: 0;
     }
 }
 
@@ -94,7 +121,7 @@ main > * {
 h1 {
     margin: 0;
     display: block;
-    color: rgb(20, 20, 20);
+    color: rgb(50, 50, 50);
 }
 
 menu a {
