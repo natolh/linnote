@@ -18,7 +18,6 @@ from linnote.core.utils import WEBSESSION
 from .forms import ReportForm
 
 
-
 class Collection(MethodView):
     """Controller for managing reports collection."""
 
@@ -70,11 +69,11 @@ class Ressource(MethodView):
                     assessment_id) for assessment_id in form.assessments.data]
                 assessment = sum(assessments)
                 session.add(assessment)
-                assessment.transform()
+                assessment.curve('ceil_proportional')
 
             else:
                 assessment = session.query(Assessment).get(form.assessments.data[0])
-                assessment.transform()
+                assessment.curve('ceil_proportional')
 
             groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
 
