@@ -64,3 +64,10 @@ class StrictTransport(object):
 
 
 STRICT_TRANSPORT = StrictTransport()
+CSP_POLICY = {
+    "default-src": [
+        "'self'",
+        "*.pythonanywhere.com",
+        "'unsafe-inline'",
+    ],
+}
