@@ -200,6 +200,90 @@ class Mark(BASE):
         return self._score + self._bonus
 
 
+class Curver(object):
+    """
+    Love machine, wanna some extra points ?
+
+    Curving marks / grades is applying a mathematical function to modify marks
+    after the assessment, so it's a post treatment of marks. There is several
+    reasons that can make someone to curve marks, you can make you mind by
+    reading the references bellow.
+
+    References:
+        - en.wikipedia.org/wiki/Grading_on_a_curve
+        - www.wikihow.com/Curve-Grades
+        - divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
+        - academia.stackexchange.com/questions/8261
+    """
+
+    def __init__(self, marks, method, restrain=True, overwrite=False):
+        """
+        Create a new curver.
+
+        - marks:        List of <Mark> objects. Marks to be curved.
+        - method:       String. One of the available method for curving
+                        marks.
+        * restrain:     Boolean. If set to True (default), no matter what
+                        the curved mark will be it's 'value' (score +
+                        bonus points) could not exceed the scale.
+        * overwrite:    Boolean. If set to False (default). The curved
+                        mark of the student is stored as the difference
+                        beetween the curved mark 'value' and the mark
+                        value in the 'bonus' attribute. Thus, the raw mark
+                        of the student is still accessible through the
+                        'score' attribute.
+
+        Return: None.
+        """
+        super().__init__()
+        self.marks = marks
+        self.method = getattr(self, method)
+        self.restrain = restrain
+        self.overwrite = overwrite
+
+    def curve(self, **kwargs):
+        """Apply the curving."""
+        for mark in self.marks:
+            # Calculate the curved mark.
+            new_value = self.method(mark, **kwargs)
+
+            # Modify the mark object.
+            if self.restrain and new_value > mark.scale:
+                new_value = mark.scale
+
+            if not self.overwrite:
+                mark.bonus += new_value - mark.value
+            else:
+                mark.score = new_value
+                mark.bonus = 0
+
+    # Basic, configurable, curving functions.
+    @staticmethod
+    def affine(mark, **kwargs):
+        """Affine curving method."""
+        slope = kwargs.get('slope')
+        intercept = kwargs.get('intercept')
+        return slope * mark.value + intercept
+
+    @staticmethod
+    def constant(mark, **kwargs):
+        """Constant curving method (subcase of affine method)."""
+        intercept = kwargs.get('intercept')
+        return mark.value + intercept
+
+    @staticmethod
+    def linear(mark, **kwargs):
+        """Linear curving method (subcase of affine method)."""
+        slope = kwargs.get('slope')
+        return slope * mark.value
+
+    # Predefined curving functions.
+    def top_linear(self, mark):
+        """Predefined curving function."""
+        slope = mark.scale / max(self.marks).value
+        return self.linear(mark, slope=slope)
+
+
 class Assessment(BASE):
     """
     Evaluation of students knowledge.
@@ -304,6 +388,34 @@ class Assessment(BASE):
         attendees = map(get_students, self.results)
         return list(attendees)
 
+    def curve(self, method, restrain=True, overwrite=False):
+        """
+        Curve assessment's marks.
+
+        - method:       String. Name of a valid curving function, available
+                        curving functions are listed in the 'Curver' class.
+        * restrain:     Boolean. If set to True (default), no matter what
+                        the curved mark will be it's 'value' (score +
+                        bonus points) could not exceed the scale.
+        * overwrite:    Boolean. If set to False (default). The curved
+                        mark of the student is stored as the difference
+                        beetween the curved mark 'value' and the mark
+                        value in the 'bonus' attribute. Thus, the raw mark
+                        of the student is still accessible through the
+                        'score' attribute.
+
+        References:
+        - en.wikipedia.org/wiki/Grading_on_a_curve
+        - www.wikihow.com/Curve-Grades
+        - divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
+        - academia.stackexchange.com/questions/8261
+
+        Return: None.
+        """
+        curver = Curver(self.results, method, restrain=restrain,
+                        overwrite=overwrite)
+        curver.curve()
+
     def expected(self) -> List[Student]:
         """Studends that must take the assessment."""
         raise NotImplementedError
@@ -319,15 +431,3 @@ class Assessment(BASE):
         """
         for mark in self.results:
             mark.rescale(new_scale)
-
-    def transform(self) -> None:
-        """Mark post-process function."""
-        maximum = max(self.results).value
-
-        for mark in self.results:
-            bonus = (mark.value / maximum) * (mark.scale - maximum)
-
-            if not mark.value + bonus > mark.scale:
-                mark.bonus += bonus
-            else:
-                mark.bonus = mark.scale - mark.value
