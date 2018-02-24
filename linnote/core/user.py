@@ -115,9 +115,10 @@ class Student(BASE):
 
     results = relationship('Mark', back_populates='student')
 
-    def __init__(self, identifier=None):
+    def __init__(self, identifier, **kwargs):
         super().__init__()
         self.identifier = identifier
+        self.groups = kwargs.get('groups', list())
 
     def __repr__(self) -> str:
         return '<Student #{}>'.format(self.identifier)
