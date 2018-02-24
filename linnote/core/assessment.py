@@ -178,7 +178,7 @@ class Assessment(BASE):
         if isinstance(kwargs.get('results'), FileStorage):
             self.load(kwargs.get('results'), scale=kwargs.get('scale'))
 
-        else:
+        if isinstance(kwargs.get('results'), list):
             self.results = kwargs.get('results')
 
     def __repr__(self):
