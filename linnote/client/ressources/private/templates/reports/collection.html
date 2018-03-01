@@ -24,14 +24,11 @@
     {% for report in reports %}
     <li>
         <div class="header">
-            <p>
+            <a href="{{url_for('reports.report',identifier=report.identifier)}}">
                 {{ report.title }}
-            </p>
-        </div>
-        <div class="footer">
-            <a href="{{ url_for('reports.report', identifier=report.identifier) }}" type="button">
-                Afficher
             </a>
+        </div>
+        <div class="footer quick-actions">
             <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', identifier=report.identifier) }}')">
                 Supprimer
             </button>

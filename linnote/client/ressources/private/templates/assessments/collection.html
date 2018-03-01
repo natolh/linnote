@@ -23,13 +23,11 @@
     {% for assessment in assessments %}
     <li>
         <div class="header">
-            <p>
-                {{ assessment.title }}
-            </p>
+            {{ assessment.title }}
         </div>
-        <div class="footer">
-            <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}" type="button">
-                Afficher
+        <div class="footer quick-actions">
+            <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
+                Ouvrir
             </a>
             <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.assessment', identifier=assessment.identifier) }}')">
                 Supprimer
