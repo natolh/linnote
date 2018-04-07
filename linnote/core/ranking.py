@@ -90,7 +90,7 @@ def sequential(position, size):
     return position, 1
 
 
-class Ranking(object):
+class Ranking:
     """A ranked sequence of things."""
 
     def __init__(self, items, key=None, **kwargs):
@@ -108,7 +108,7 @@ class Ranking(object):
 
         Return: None.
         """
-        super(Ranking, self).__init__()
+        super().__init__()
         self.ranks = [Rank(item, key(item)) for item in items]
         self.key = attrgetter('score')
         self.start = kwargs.get('start', 1)
@@ -135,7 +135,7 @@ class Ranking(object):
             yield from zip(ranks, group)
 
 
-class Rank(object):
+class Rank:
     """Ranking item."""
 
     def __init__(self, item, score, position=None):
@@ -149,7 +149,7 @@ class Rank(object):
 
         Return: None.
         """
-        super(Rank, self).__init__()
+        super().__init__()
         self.item = item
         self.score = score
         self.position = position
