@@ -151,7 +151,7 @@ class Assessment(BASE):
 
     __tablename__ = 'assessments'
     identifier = Column(Integer, primary_key=True)
-    title = Column(String(250), nullable=False, unique=True, index=True)
+    title = Column(String(250), nullable=False, index=True)
     coefficient = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
     results = relationship('Mark', cascade="all")
