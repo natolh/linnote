@@ -54,10 +54,12 @@ main {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    align-items: center;
 }
 
 [role="navigation"].secondary > li {
     display: flex;
+    margin: 0.15rem;
 }
 
 [role="navigation"].secondary a {
@@ -68,10 +70,6 @@ main {
     text-align: center;
     border-radius: 40px;
     background-color: rgba(209, 209, 209, 0.671);
-}
-
-[role="navigation"].secondary li:not(:last-child) {
-    margin-right: 0.3rem;
 }
 
 [role="navigation"].secondary a:hover {
@@ -102,13 +100,21 @@ main > * {
         text-align: left;
     }
 
+    .topping > :not(:first-child) {
+        margin-top: 0;
+    }
+
     [role="navigation"].secondary {
         grid-column: 2 / 3;
         justify-content: flex-end;
     }
 
-    .topping > :not(:first-child) {
-        margin-top: 0;
+    [role="navigation"].secondary > li {
+        margin: 0;
+    }
+
+    [role="navigation"].secondary li:not(:last-child) {
+        margin-right: 0.3rem;
     }
 }
 
@@ -159,4 +165,26 @@ a, button {
     -webkit-appearance: none;
     -moz-appearance: none;
     vertical-align: middle;
+}
+
+/* Flex tables */
+
+[role="table"].flex [role="row"] {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 3px;
+    background-color: rgb(240, 240, 240);
+    margin-bottom: 0.3rem;
+    padding: 1rem;
+}
+
+[role="table"].flex > [role="row"] > [role="cell"]:not(:last-child) {
+    margin-right: 0.5rem;
+}
+
+[role="table"].flex [role="row"] [role="cell"] .heading {
+    display: block;
+    font-weight: bold;
 }

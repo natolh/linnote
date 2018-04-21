@@ -13,28 +13,30 @@
     {% include 'assessments/assessment/menu.html' %}
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Identifiant</th>
-            <th>Note brute</th>
-            <th>Note ajustée</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for result in assessment.results %}
-        <tr>
-            <td>
-                {{ result.student.identifier }}
-            </td>
-            <td>
-                {{ result.score }}
-            </td>
-            <td>
-                {{ result.value|default(result.score) }}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div role="table" class="flex">
+{% for result in assessment.results %}
+    <ul role="row">
+        <li role="cell">
+            <span class="heading">
+                Identifiant
+            </span>
+            {{ result.student.identifier }}
+        </li>
+        <li role="cell">
+            <span class="heading">
+                Note brute
+            </span>
+            {{ result.score|round(assessment.precision) }}
+            / {{ result.scale }}
+        </li>
+        <li role="cell">
+            <span class="heading">
+                Note ajustée
+            </span>
+            {{ result.value|round(assessment.precision) }}
+            / {{ result.scale }}
+        </li>
+    </ul>
+{% endfor %}
+</div>
 {% endblock %}

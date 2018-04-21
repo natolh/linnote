@@ -178,18 +178,32 @@ class Assessment(BASE):
         if isinstance(kwargs.get('results'), FileStorage):
             self.load(kwargs.get('results'), scale=kwargs.get('scale'))
 
+        if isinstance(kwargs.get('results'), list):
+            self.results = kwargs.get('results')
+
     def __repr__(self):
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
 
     def __add__(self, other):
+
+        def merge_results(*args):
+            """
+            Merge students results of multiple assessments.
+
+            - args: <Assessment> objects. Assessments to merge.
+
+            Return: List of <Mark> objects. Merged marks for each student.
+            """
+            by_student = attrgetter('student.identifier')
+            results = [i for assessment in args for i in assessment.results]
+            results.sort(key=by_student)
+            return [sum(marks) for _, marks in groupby(results, by_student)]
+
         if isinstance(other, Assessment):
-            assessments = [self, other]
-            assessment = Assessment(
-                title='[{} {}]'.format(self.title, other.title),
-                coefficient=self.coefficient + other.coefficient,
-                precision=min([self.precision, other.precision]))
-            assessment.results = list(self._aggregate(assessments))
-            return assessment
+            return Assessment(title='[{} {}]'.format(self.title, other.title),
+                              coefficient=self.coefficient + other.coefficient,
+                              precision=min([self.precision, other.precision]),
+                              results=merge_results(self, other))
 
         return NotImplemented
 
@@ -198,17 +212,6 @@ class Assessment(BASE):
             return self
 
         return NotImplemented
-
-    @staticmethod
-    def _aggregate(assessments):
-        """Aggregate students results of multiple assessments."""
-        by_student = attrgetter('student.identifier')
-        results = [mark for a in assessments for mark in a.results]
-        results.sort(key=by_student)
-
-        for _, marks in groupby(results, by_student):
-            marks = list(marks)
-            yield sum(marks)
 
     def load(self, path, scale):
         """
