@@ -13,6 +13,7 @@ dist
 *.egg-info
 .idea
 .vscode
+.mypy_cache
 
 # Others
 linnote/ressources/public/media/**
