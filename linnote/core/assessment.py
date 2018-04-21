@@ -12,8 +12,9 @@ from itertools import groupby
 from operator import attrgetter
 from pandas import read_excel
 from sqlalchemy import Column
-from sqlalchemy import Integer, Float, ForeignKey, String
+from sqlalchemy import Integer, Float, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.functions import current_timestamp
 from werkzeug.datastructures import FileStorage
 from linnote.core.user import Student
 from linnote.core.utils.database import BASE
@@ -151,12 +152,15 @@ class Assessment(BASE):
 
     __tablename__ = 'assessments'
     identifier = Column(Integer, primary_key=True)
+    creator = relationship('User')
+    creation_date = Column(DateTime, nullable=False,server_default=current_timestamp())
     title = Column(String(250), nullable=False, index=True)
     coefficient = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
     results = relationship('Mark', cascade="all")
     reports = relationship('Report', back_populates="assessment", cascade="all")
 
+    creator_id = Column(Integer, ForeignKey('users.identifier'), nullable=False)
     def __init__(self, title, coefficient, **kwargs):
         """
         Create a new assessment.

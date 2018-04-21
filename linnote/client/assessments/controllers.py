@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import render_template, request
 from flask.views import MethodView
-from flask_login import login_required
+from flask_login import current_user, login_required
 from linnote.core.assessment import Assessment
 from linnote.core.utils import WEBSESSION
 from .forms import AssessmentForm
@@ -71,7 +71,7 @@ class MainView(MethodView):
 
         elif form.validate():
             assessment = Assessment(form.title.data, form.coefficient.data,
-                                    precision=form.precision.data)
+                                    precision=form.precision.data, creator=current_user)
 
             if form.results.data:
                 assessment.load(request.files['results'], scale=form.scale.data)
