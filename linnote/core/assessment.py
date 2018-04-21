@@ -153,7 +153,7 @@ class Assessment(BASE):
     __tablename__ = 'assessments'
     identifier = Column(Integer, primary_key=True)
     creator = relationship('User')
-    creation_date = Column(DateTime, nullable=False,server_default=current_timestamp())
+    creation_date = Column(DateTime, nullable=False, server_default=current_timestamp())
     title = Column(String(250), nullable=False, index=True)
     coefficient = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
