@@ -72,7 +72,6 @@ class MainView(MethodView):
         elif form.validate():
             assessment = Assessment(form.title.data, form.coefficient.data,
                                     precision = form.precision.data, creator=current_user)
-            print(assessment.creator)
 
             if form.results.data:
                 assessment.load(request.files['results'], scale=form.scale.data)
