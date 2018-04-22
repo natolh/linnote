@@ -8,7 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import render_template
+from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.assessment import Assessment
@@ -82,4 +82,4 @@ class Ressource(MethodView):
             session.add(report)
             session.commit()
 
-        return self.get(report.identifier)
+        return redirect(url_for('reports.report', identifier=report.identifier))
