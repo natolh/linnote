@@ -12,7 +12,7 @@
     {% if assessment is defined %}
         <div>
             <h1>{{ assessment.title }}</h1>
-            <p>Créé par {{ assessment.creator|default('un inconnu', True) }}, le {{ assessment.creation_date.strftime('%d/%m/%Y à %H:%M') }}</p>
+            <p>Créé par <em>{{ assessment.creator|default('un inconnu', True) }}</em>, le <em>{{ assessment.creation_date.strftime('%d/%m/%Y') }}</em></p>
         </div>
         {% include 'assessments/assessment/menu.html' %}
     {% else %}
