@@ -44,7 +44,7 @@ header a:hover, header a:focus, header a:active {
 
 #brand {
     font-size: 1.2rem;
-    font-weight: bolder;
+    font-weight: 300;
     color: white;
     text-transform: uppercase;
 }
