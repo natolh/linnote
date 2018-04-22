@@ -152,7 +152,7 @@ class Assessment(BASE):
 
     __tablename__ = 'assessments'
     identifier = Column(Integer, primary_key=True)
-    creator = relationship('User')
+    creator = relationship('User', uselist=False)
     creation_date = Column(DateTime, nullable=False, server_default=current_timestamp())
     title = Column(String(250), nullable=False, index=True)
     coefficient = Column(Integer, nullable=False)
@@ -160,7 +160,8 @@ class Assessment(BASE):
     results = relationship('Mark', cascade="all")
     reports = relationship('Report', back_populates="assessment", cascade="all")
 
-    creator_id = Column(Integer, ForeignKey('users.identifier'), nullable=False)
+    creator_id = Column(Integer, ForeignKey('users.identifier'))
+
     def __init__(self, title, coefficient, **kwargs):
         """
         Create a new assessment.
@@ -176,6 +177,7 @@ class Assessment(BASE):
         """
         super().__init__()
         self.title = title
+        self.creator = kwargs.get('creator', None)
         self.coefficient = coefficient
         self.precision = kwargs.get('precision', 3)
 
