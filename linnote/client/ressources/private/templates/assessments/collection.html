@@ -25,6 +25,16 @@
         <div class="header">
             {{ assessment.title }}
         </div>
+        <ul class="content">
+            <li>
+                <em>Date de création : </em>
+                {{ assessment.creation_date.strftime('%d/%m/%Y') }}
+            </li>
+            <li>
+                <em>Auteur : </em>
+                {{ assessment.creator }}
+            </li>
+        </ul>
         <div class="footer quick-actions">
             <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
                 Ouvrir
