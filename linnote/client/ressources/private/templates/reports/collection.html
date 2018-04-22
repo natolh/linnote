@@ -8,15 +8,17 @@
 {% endblock %}
 
 {% block content %}
-<h1>Rapports</h1>
+<div class="topping">
+    <h1>Rapports</h1>
 
-<menu type="toolbar">
-    <li>
-        <a href="{{ url_for('reports.report') }}">
-            Créer
-        </a>
-    </li>
-</menu>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('reports.report') }}">
+                + Ajouter
+            </a>
+        </li>
+    </menu>
+</div>
 
 <ul class="cards">
     {% for report in reports %}

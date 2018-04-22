@@ -8,15 +8,17 @@
 {% endblock %}
 
 {% block content %}
-<h1>Groupes d'étudiants</h1>
+<div class="topping">
+    <h1>Groupes d'étudiants</h1>
 
-<menu type="toolbar">
-    <li>
-        <a href="{{ url_for('users.group') }}">
-            Créer
-        </a>
-    </li>
-</menu>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('users.group') }}">
+                + Ajouter
+            </a>
+        </li>
+    </menu>
+</div>
 
 <ul class="cards">
     {% for group in groups %}

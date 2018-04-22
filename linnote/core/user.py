@@ -44,6 +44,9 @@ class User(BASE):
     def __repr__(self) -> str:
         return '<User #{}: {}>'.format(self.identifier, self.fullname)
 
+    def __str__(self) -> str:
+        return '{}'.format(self.fullname)
+
     @hybrid_property
     def username(self):
         """Alias for 'self.email'."""

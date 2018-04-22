@@ -8,15 +8,16 @@
 {% endblock %}
 
 {% block content %}
-<h1>Épreuves</h1>
-
-<menu type="toolbar">
-    <li>
-        <a href="{{ url_for('assessments.assessment') }}">
-            Créer
-        </a>
-    </li>
-</menu>
+<div class="topping">
+    <h1>Épreuves</h1>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('assessments.assessment') }}">
+                + Ajouter
+            </a>
+        </li>
+    </menu>
+</div>
 
 <ul class="cards">
     {% for assessment in assessments %}

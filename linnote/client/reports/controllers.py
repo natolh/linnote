@@ -8,7 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import render_template
+from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.assessment import Assessment
@@ -53,7 +53,8 @@ class Ressource(MethodView):
 
         return render_template('reports/ressource.html', form=form)
 
-    def post(self, identifier):
+    @staticmethod
+    def post(identifier):
         """Create a new report."""
         session = WEBSESSION()
         form = ReportForm()
@@ -82,4 +83,4 @@ class Ressource(MethodView):
             session.add(report)
             session.commit()
 
-        return self.get(identifier)
+        return redirect(url_for('reports.report', identifier=report.identifier))

@@ -8,9 +8,9 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
-from flask_login import login_required
+from flask_login import current_user, login_required
 from linnote.core.assessment import Assessment
 from linnote.core.utils import WEBSESSION
 from .forms import AssessmentForm
@@ -50,7 +50,8 @@ class MainView(MethodView):
 
         return render_template('assessments/assessment/ressource.html', **context)
 
-    def post(self, identifier):
+    @staticmethod
+    def post(identifier):
         """Create a new assessment."""
         session = WEBSESSION()
         form = AssessmentForm()
@@ -60,26 +61,20 @@ class MainView(MethodView):
             assessment.title = form.title.data
             assessment.coefficient = form.coefficient.data
             assessment.precision = form.precision.data
-            assessment.rescale(assessment.coefficient)
-            session.commit()
 
             if form.results.data:
-                assessment.load(request.files['results'], scale=form.scale.data)
+                assessment.load(request.files['results'],
+                                scale=form.scale.data)
 
-            session.expunge_all()
-            session.merge(assessment)
+            assessment = session.merge(assessment)
+            assessment.rescale(assessment.coefficient)
 
         elif form.validate():
-            assessment = Assessment(form.title.data, form.coefficient.data,
-                                    precision=form.precision.data)
-
-            if form.results.data:
-                assessment.load(request.files['results'], scale=form.scale.data)
-
-            session.merge(assessment)
+            assessment = Assessment(creator=current_user, **form.data)
+            assessment = session.merge(assessment)
 
         session.commit()
-        return self.get(identifier)
+        return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 
 
 class ResultsView(MethodView):
