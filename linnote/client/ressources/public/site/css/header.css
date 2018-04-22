@@ -14,14 +14,14 @@ header {
     background-color: var(--color-main);
 }
 
-header > *:not(:last-child) {
+header > :not(:last-child) {
     margin-bottom: 0.5rem;
 }
 
 @media screen and (min-width: 550px) {
     header {
         flex-flow: row nowrap;
-        padding: 0.4rem;
+        padding: 0.2rem;
     }
 
     header > * {
@@ -61,7 +61,7 @@ nav ul {
 
 nav a {
     font-size: 0.9rem;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 nav ul li:not(:last-child) {
