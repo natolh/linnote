@@ -11,7 +11,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import login_required
-from linnote.core.assessment import Assessment
+from sqlalchemy.orm import joinedload
+from linnote.core.assessment import Assessment, Mark
 from linnote.core.report import Report
 from linnote.core.user import Group
 from linnote.core.utils import WEBSESSION
@@ -73,7 +74,7 @@ class Ressource(MethodView):
                 assessment.transform()
 
             else:
-                assessment = session.query(Assessment).get(form.assessments.data[0])
+                assessment = session.query(Assessment).options(joinedload(Assessment.results).joinedload(Mark.student)).get(form.assessments.data[0])
                 assessment.transform()
 
             groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
