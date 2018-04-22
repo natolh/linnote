@@ -50,7 +50,8 @@ class MainView(MethodView):
 
         return render_template('assessments/assessment/ressource.html', **context)
 
-    def post(self, identifier):
+    @staticmethod
+    def post(identifier):
         """Create a new assessment."""
         session = WEBSESSION()
         form = AssessmentForm()

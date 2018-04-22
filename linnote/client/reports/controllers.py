@@ -53,7 +53,8 @@ class Ressource(MethodView):
 
         return render_template('reports/ressource.html', form=form)
 
-    def post(self, identifier):
+    @staticmethod
+    def post(identifier):
         """Create a new report."""
         session = WEBSESSION()
         form = ReportForm()
