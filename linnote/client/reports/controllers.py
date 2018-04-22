@@ -82,4 +82,4 @@ class Ressource(MethodView):
             session.add(report)
             session.commit()
 
-        return self.get(identifier)
+        return self.get(report.identifier)
