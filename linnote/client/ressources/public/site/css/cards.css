@@ -3,7 +3,7 @@
 .cards {
     display: grid;
     grid-template: min-content / 1fr;
-    grid-gap: 1rem;
+    grid-gap: 1.5rem .5rem;
 }
 
 @media screen and (min-width: 600px) {
