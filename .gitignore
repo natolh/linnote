@@ -6,14 +6,9 @@ __pycache__
 *.py[cod]
 
 # Packaging / Environment / Distribution
-env
-build
-dist
-*.egg
-*.egg-info
-.idea
 .vscode
 .mypy_cache
+.env
 
 # Others
 linnote/ressources/public/media/**
