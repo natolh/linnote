@@ -18,6 +18,7 @@ matplotlib = "*"
 [dev-packages]
 pylint = "*"
 mypy = "*"
+"autopep8" = "*"
 
 [requires]
 python_version = "3.6"
