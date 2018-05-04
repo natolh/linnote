@@ -3,7 +3,7 @@
 .cards {
     display: grid;
     grid-template: min-content / 1fr;
-    grid-gap: 1rem;
+    grid-gap: 1.5rem .5rem;
 }
 
 @media screen and (min-width: 600px) {
@@ -36,8 +36,13 @@
     transition: all 200ms ease-out;
 }
 
-.cards > li > * {
-    flex: 1 1 auto;
+.cards > li > :nth-child(n) {
+    flex: 0 0 auto;
+}
+
+.cards > li .content {
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 .cards > li .header, .cards > li .content, .cards > li .footer {
@@ -49,7 +54,7 @@
     font-weight: bolder;
 }
 
-.cards > li > *:last-child {
+.cards > li > :last-child {
     border: none;
 }
 
