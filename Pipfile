@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+flask-login = "*"
+flask-talisman = "*"
+flask-wtf = "*"
+sqlalchemy = "*"
+mysql-connector-python = "*"
+alembic = "*"
+pandas = "*"
+xlrd = "*"
+matplotlib = "*"
+
+[dev-packages]
+pylint = "*"
+mypy = "*"
+"autopep8" = "*"
+
+[requires]
+python_version = "3.6"
