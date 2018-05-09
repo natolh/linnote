@@ -192,6 +192,9 @@ class Assessment(BASE):
     def __repr__(self) -> str:
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
 
+    def __str__(self) -> str:
+        return self.title
+
     def __add__(self, other):
 
         def merge_results(*args):
