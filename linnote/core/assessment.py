@@ -148,7 +148,17 @@ class Mark(BASE):
 
 
 class Assessment(BASE):
-    """Evaluation of students knowledge."""
+    """
+    Evaluation of students knowledge.
+
+    - identifier:   Integer. A unique number to identify the assessment.
+    - title:        String. String for assessment identification by humans.
+    - coefficient:  Integer. Maximal possible score.
+    - precision:    Integer. Maximal number of decimals to keep for mark
+                    computations.
+    - results:      Collection of Mark. Students marks to the assessment.
+    - reports:      Collection of Report.
+    """
 
     __tablename__ = 'assessments'
     identifier = Column(Integer, primary_key=True)
