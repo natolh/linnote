@@ -256,12 +256,8 @@ class Assessment(BASE):
         for mark in self.results:
             mark.rescale(new_scale)
 
-    def transform(self):
-        """
-        Mark post-process function.
-
-        Return: None.
-        """
+    def transform(self) -> None:
+        """Mark post-process function."""
         maximum = max(self.results).value
 
         for mark in self.results:
