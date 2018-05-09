@@ -107,6 +107,8 @@ class Student(BASE):
     identifier = Column(Integer, primary_key=True)
     groups = relationship('Group', secondary='students_groups', back_populates='students')
 
+    results = relationship('Mark', back_populates='student')
+
     def __init__(self, identifier=None):
         super().__init__()
         self.identifier = identifier
