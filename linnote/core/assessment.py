@@ -24,14 +24,16 @@ class Mark(BASE):
     """Student's mark to an assessment."""
 
     __tablename__ = 'marks'
+
     identifier = Column(Integer, primary_key=True)
-    student = relationship('Student')
+    assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
+    student_id = Column(Integer, ForeignKey('students.identifier'))
     _score = Column(Float, nullable=False)
     _bonus = Column(Float)
     _scale = Column(Integer, nullable=False)
 
-    student_id = Column(Integer, ForeignKey('students.identifier'))
-    assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
+    assessment = relationship('Assessment', back_populates='results')
+    student = relationship('Student', back_populates='results', cascade='all')
 
     def __init__(self, student, score, scale, **kwargs):
         """
