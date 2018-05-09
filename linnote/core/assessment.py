@@ -161,35 +161,25 @@ class Assessment(BASE):
     """
 
     __tablename__ = 'assessments'
+
     identifier = Column(Integer, primary_key=True)
-    creator = relationship('User', uselist=False)
-    creation_date = Column(DateTime, nullable=False, server_default=current_timestamp())
     title = Column(String(250), nullable=False, index=True)
     coefficient = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
-    results = relationship('Mark', cascade="all")
-    reports = relationship('Report', back_populates="assessment", cascade="all")
-
     creator_id = Column(Integer, ForeignKey('users.identifier'))
+    creation_date = Column(
+        DateTime, nullable=False, server_default=current_timestamp())
 
-    def __init__(self, title, coefficient, **kwargs):
-        """
-        Create a new assessment.
+    creator = relationship('User', uselist=False)
+    results = relationship('Mark', back_populates='assessment', cascade='all')
+    reports = relationship('Report', back_populates='assessment')
 
-        - title:        String. Assessment's title.
-        - coefficient:  Float. Output scale.
-        * precision:    Integer. Number of decimal places for displaying marks.
-        * results:      Path-like object. Path to the file holding results to
-                        import.
-        * scale:        Integer. Scale used in 'results'.
-
-        Return: None.
-        """
+    def __init__(self, title: str, coefficient: int, **kwargs) -> None:
         super().__init__()
         self.title = title
-        self.creator = kwargs.get('creator', None)
         self.coefficient = coefficient
         self.precision = kwargs.get('precision', 3)
+        self.creator = kwargs.get('creator', None)
 
         if isinstance(kwargs.get('results'), FileStorage):
             self.load(kwargs.get('results'), scale=kwargs.get('scale'))
