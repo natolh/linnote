@@ -239,15 +239,17 @@ class Assessment(BASE):
 
             self.results.append(mark)
 
-    def rescale(self, scale):
+    def rescale(self, new_scale: int) -> None:
         """
-        Mark post-process function.
+        Rescale assessment's results.
 
-        Rescale results to a new scale.
-        Return : None.
+        Change the assessment 'scale' and recompute students scores for the
+        new 'scale'.
+
+        - new_scale: Integer. The desired scale.
         """
         for mark in self.results:
-            mark.rescale(scale)
+            mark.rescale(new_scale)
 
     def transform(self):
         """
