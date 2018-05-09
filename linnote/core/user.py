@@ -119,7 +119,7 @@ class Student(BASE):
     def __ne__(self, other) -> bool:
         return not self.__eq__(other)
 
-    def __hash__(self) -> hash:
+    def __hash__(self) -> int:
         return hash(self.identifier)
 
 
