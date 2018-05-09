@@ -187,7 +187,7 @@ class Assessment(BASE):
         if isinstance(kwargs.get('results'), list):
             self.results = kwargs.get('results')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
 
     def __add__(self, other):
