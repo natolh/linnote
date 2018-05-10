@@ -8,6 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from copy import copy
 from itertools import groupby
 from operator import attrgetter
 from pandas import read_excel
@@ -90,18 +91,24 @@ class Mark(BASE):
 
     def __add__(self, other):
         if isinstance(other, Mark) and self.student == other.student:
-            return Mark(self.student,
-                        self.score + other.score,
-                        self.scale + other.scale,
-                        bonus=self.bonus + other.bonus)
+            result = copy(self)
+            result._score += other.score
+            result._bonus += other.bonus
+            result._scale += other.scale
+            return result
+
+        if other is None or other == 0:
+            result = copy(self)
+            return result
 
         return NotImplemented
+
+    def __copy__(self):
+        # Reimplement copy to copy the object, not the record.
+        return Mark(self.student, self.score, self.scale, bonus=self.bonus)
 
     def __radd__(self, other):
-        if other is 0:
-            return self
-
-        return NotImplemented
+        return self.__add__(other)
 
     def __hash__(self) -> int:
         return hash(self.identifier)
