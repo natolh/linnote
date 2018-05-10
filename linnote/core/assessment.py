@@ -162,6 +162,10 @@ class Assessment(BASE):
     - reports:      Collection of Report.
     """
 
+    # Change name of 'coefficient' attribute to 'scale'. Make this
+    # attribute private (_scale) and make a setter that automatically call the
+    # 'rescale' method on modification.
+
     __tablename__ = 'assessments'
 
     identifier = Column(Integer, primary_key=True)
