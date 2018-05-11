@@ -11,6 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required
+from sqlalchemy.orm.session import make_transient
 from linnote.core.assessment import Assessment, Mark
 from linnote.core.utils import WEBSESSION
 from .forms import AssessmentForm
@@ -58,6 +59,7 @@ class MainView(MethodView):
 
         if form.validate() and identifier is not None:
             assessment = session.query(Assessment).get(identifier)
+            make_transient(assessment)
             assessment.title = form.title.data
             assessment.coefficient = form.coefficient.data
             assessment.precision = form.precision.data
@@ -67,7 +69,6 @@ class MainView(MethodView):
                 assessment.add_results(marks)
 
             assessment.rescale(assessment.coefficient)
-            assessment = session.merge(assessment)
 
         elif form.validate():
             title = form.title.data
@@ -81,8 +82,7 @@ class MainView(MethodView):
                 marks = Mark.load(request.files['results'], form.scale.data)
                 assessment.add_results(marks)
 
-            assessment = session.merge(assessment)
-
+        assessment = session.merge(assessment)
         session.commit()
         return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 
