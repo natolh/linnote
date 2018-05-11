@@ -3,7 +3,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c9d4a74280bb4613963a53bfe1b80576)](https://www.codacy.com/app/natolh/linnote?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=natolh/linnote&amp;utm_campaign=Badge_Grade)
 ![GitHub release](https://img.shields.io/github/release/natolh/linnote.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/natolh/linnote.svg)
-![Python Badge](https://img.shields.io/badge/python-3.5%2C%203.6-brightgreen.svg)
+![Python Badge](https://img.shields.io/badge/python-3.6-brightgreen.svg)
 ![license](https://img.shields.io/github/license/natolh/linnote.svg)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/natolh/linnote.svg)
 
