@@ -11,12 +11,13 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from copy import copy
 from itertools import groupby
 from operator import attrgetter
+from pathlib import Path
+from typing import List
 from pandas import read_excel
 from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
-from werkzeug.datastructures import FileStorage
 from linnote.core.user import Student
 from linnote.core.utils.database import BASE
 
@@ -123,6 +124,30 @@ class Mark(BASE):
         """Change the score bonus."""
         self._bonus = value
 
+    @classmethod
+    def load(cls, filepath: Path, scale: int) -> List['Mark']:
+        """
+        Load results from tabular file.
+
+        Currently, only Excel files are supported. The file should follow a
+        predefined, non customizable layout: (1) student identifier, (2)
+        score. Further columns are ignored.
+
+        - filepath: Path object. Path pointing to the file to load.
+        - scale:    Integer. Scale used to compute marks from scores.
+        """
+        records = read_excel(
+            filepath, names=['student_id', 'score'],
+            usecols=[0, 1], converters={'student_id': int, 'score': float})
+        records = records.to_dict(orient='list')
+
+        results = list()
+        for student_id, score in zip(records['student_id'], records['score']):
+            student = Student(student_id)
+            mark = cls(student, score, scale)
+            results.append(mark)
+        return results
+
     @staticmethod
     def merge(*args: List['Mark']) -> List['Mark']:
         """
@@ -209,12 +234,6 @@ class Assessment(BASE):
         self.precision = kwargs.get('precision', 3)
         self.creator = kwargs.get('creator', None)
 
-        if isinstance(kwargs.get('results'), FileStorage):
-            self.load(kwargs.get('results'), scale=kwargs.get('scale'))
-
-        if isinstance(kwargs.get('results'), list):
-            self.results = kwargs.get('results')
-
     def __repr__(self) -> str:
         return '<Assessment #{}: {}>'.format(self.identifier, self.title)
 
@@ -241,25 +260,49 @@ class Assessment(BASE):
 
         return NotImplemented
 
-    def load(self, path, scale):
+    def add_result(self, mark: Mark) -> None:
         """
-        Load assessment's results from a tabular file.
+        Add a new result to the assessment.
 
-        - path:     Path-like object. Path to the file holding the results.
-        - scale:    Integer. Scale for marks in the result file.
+        - mark: Mark object. The mark to add.
 
-        Return: None.
+        Ensure that there is not an assessment's result for the student, if so
+        raise an AttributeError. If the mark scale is not equal to the
+        assessment coefficient, the mark is automatically rescale before being
+        added.
         """
-        results = read_excel(path, names=['anonymat', 'note'], usecols=1)
-
-        for result in results.to_dict('records'):
-            student = Student(identifier=int(result['anonymat']))
-            mark = Mark(student, float(result['note']), scale)
-
-            if not scale == self.coefficient:
+        if mark.student not in self.attendees():
+            if mark.scale is not self.coefficient:
                 mark.rescale(self.coefficient)
-
             self.results.append(mark)
+        raise AttributeError('a result is already known for this student')
+
+    def add_results(self, marks: List[Mark]) -> None:
+        """
+        Add a collection of results to the assessment.
+
+        - marks:    Collection of Mark objects. The marks to add.
+
+        Ensure that there is not an assessment's result for the student. If
+        the mark scale is not equal to the assessment coefficient, the mark is
+        automatically rescale before being added.
+        """
+        attendees = self.attendees()
+        marks = [mark for mark in marks if mark.student not in attendees]
+        if marks[0].scale is not self.coefficient:
+            for mark in marks:
+                mark.rescale(self.coefficient)
+        self.results.extend(marks)
+
+    def attendees(self) -> List[Student]:
+        """Students that have taken the assessment."""
+        get_students = attrgetter('student')
+        attendees = map(get_students, self.results)
+        return list(attendees)
+
+    def expected(self) -> List[Student]:
+        """Studends that must take the assessment."""
+        raise NotImplementedError
 
     def rescale(self, new_scale: int) -> None:
         """
