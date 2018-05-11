@@ -23,7 +23,13 @@ from linnote.core.utils.database import BASE
 
 
 class Mark(BASE):
-    """Student's mark to an assessment."""
+    """
+    A mark.
+
+    A mark is composed of a 'score' which represent the performance and a
+    'scale' which represent the maximal performance achievable. The score
+    never exceed the scale. Sometimes bonus points can be given.
+    """
 
     __tablename__ = 'marks'
 
