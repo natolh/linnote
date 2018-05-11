@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 
 u"""
-Assessments models and related.
+Implement assessment and related objects.
+
+Assessment evaluates students knowledge. The performance of a student to an
+assessment is rated as a mark.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
