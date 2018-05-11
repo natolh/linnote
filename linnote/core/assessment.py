@@ -69,7 +69,6 @@ class Mark(BASE):
     def __eq__(self, other):
         if isinstance(other, Mark):
             return self.value == other.value
-
         return NotImplemented
 
     def __ne__(self, other):
@@ -78,25 +77,21 @@ class Mark(BASE):
     def __gt__(self, other):
         if isinstance(other, Mark):
             return self.value > other.value
-
         return NotImplemented
 
     def __lt__(self, other):
         if isinstance(other, Mark):
             return self.value < other.value
-
         return NotImplemented
 
     def __ge__(self, other):
         if isinstance(other, Mark):
             return self.value >= other.value
-
         return NotImplemented
 
     def __le__(self, other):
         if isinstance(other, Mark):
             return self.value <= other.value
-
         return NotImplemented
 
     def __add__(self, other):
