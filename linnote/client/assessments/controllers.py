@@ -63,8 +63,7 @@ class MainView(MethodView):
             assessment.precision = form.precision.data
 
             if form.results.data:
-                marks = Mark.load(
-                    request.files['results'], scale=form.scale.data)
+                marks = Mark.load(request.files['results'], form.scale.data)
                 assessment.add_results(marks)
 
             assessment.rescale(assessment.coefficient)
@@ -79,7 +78,8 @@ class MainView(MethodView):
                 title, coefficient, precision=precision, creator=current_user)
 
             if form.results.data:
-                assessment.add_results(Mark.load(request.files['results'], form.scale.data))
+                marks = Mark.load(request.files['results'], form.scale.data)
+                assessment.add_results(marks)
 
             assessment = session.merge(assessment)
 
