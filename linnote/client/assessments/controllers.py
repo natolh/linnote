@@ -11,7 +11,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required
-from linnote.core.assessment import Assessment
+from sqlalchemy.orm.session import make_transient
+from linnote.core.assessment import Assessment, Mark
 from linnote.core.utils import WEBSESSION
 from .forms import AssessmentForm
 
@@ -56,23 +57,32 @@ class MainView(MethodView):
         session = WEBSESSION()
         form = AssessmentForm()
 
-        if form.validate() and identifier:
+        if form.validate() and identifier is not None:
             assessment = session.query(Assessment).get(identifier)
+            make_transient(assessment)
             assessment.title = form.title.data
             assessment.coefficient = form.coefficient.data
             assessment.precision = form.precision.data
 
             if form.results.data:
-                assessment.load(request.files['results'],
-                                scale=form.scale.data)
+                marks = Mark.load(request.files['results'], form.scale.data)
+                assessment.add_results(marks)
 
-            assessment = session.merge(assessment)
             assessment.rescale(assessment.coefficient)
 
         elif form.validate():
-            assessment = Assessment(creator=current_user, **form.data)
-            assessment = session.merge(assessment)
+            title = form.title.data
+            coefficient = form.coefficient.data
+            precision = form.precision.data
 
+            assessment = Assessment(
+                title, coefficient, precision=precision, creator=current_user)
+
+            if form.results.data:
+                marks = Mark.load(request.files['results'], form.scale.data)
+                assessment.add_results(marks)
+
+        assessment = session.merge(assessment)
         session.commit()
         return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 

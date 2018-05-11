@@ -74,7 +74,11 @@ class Ressource(MethodView):
                 assessment.transform()
 
             else:
-                assessment = session.query(Assessment).options(joinedload(Assessment.results).joinedload(Mark.student)).get(form.assessments.data[0])
+                query = session.query(Assessment)
+                query.options(joinedload(Assessment.results))
+                query.options(joinedload(Mark.student))
+
+                assessment = query.get(form.assessments.data[0])
                 assessment.transform()
 
             groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
@@ -84,4 +88,5 @@ class Ressource(MethodView):
             session.add(report)
             session.commit()
 
-        return redirect(url_for('reports.report', identifier=report.identifier))
+        return redirect(url_for('reports.report',
+                                identifier=report.identifier))

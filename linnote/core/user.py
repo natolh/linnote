@@ -107,6 +107,12 @@ class Student(BASE):
     identifier = Column(Integer, primary_key=True)
     groups = relationship('Group', secondary='students_groups', back_populates='students')
 
+    results = relationship('Mark', back_populates='student')
+
+    def __init__(self, identifier=None):
+        super().__init__()
+        self.identifier = identifier
+
     def __repr__(self) -> str:
         return '<Student #{}>'.format(self.identifier)
 
@@ -119,7 +125,7 @@ class Student(BASE):
     def __ne__(self, other) -> bool:
         return not self.__eq__(other)
 
-    def __hash__(self) -> hash:
+    def __hash__(self) -> int:
         return hash(self.identifier)
 
 
