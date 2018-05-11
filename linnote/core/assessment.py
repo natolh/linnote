@@ -123,6 +123,21 @@ class Mark(BASE):
         """Change the score bonus."""
         self._bonus = value
 
+    @staticmethod
+    def merge(*args: List['Mark']) -> List['Mark']:
+        """
+        Merge student results for each students.
+
+        - args: List of Mark list. Results list to merge.
+        """
+        student = attrgetter('student.identifier')
+
+        results = [result for results in args for result in results]
+        results.sort(key=student)
+        results = [sum(marks) for _, marks in groupby(results, student)]
+
+        return results
+
     def rescale(self, scale):
         """
         Rescale the mark.
@@ -207,25 +222,16 @@ class Assessment(BASE):
         return self.title
 
     def __add__(self, other):
-
-        def merge_results(*args):
-            """
-            Merge students results of multiple assessments.
-
-            - args: <Assessment> objects. Assessments to merge.
-
-            Return: List of <Mark> objects. Merged marks for each student.
-            """
-            by_student = attrgetter('student.identifier')
-            results = [i for assessment in args for i in assessment.results]
-            results.sort(key=by_student)
-            return [sum(marks) for _, marks in groupby(results, by_student)]
-
         if isinstance(other, Assessment):
-            return Assessment(title='[{} {}]'.format(self.title, other.title),
-                              coefficient=self.coefficient + other.coefficient,
-                              precision=min([self.precision, other.precision]),
-                              results=merge_results(self, other))
+            title = f'{self.title} & {other.title}'
+            coefficient = self.coefficient + other.coefficient
+            precision = min([self.precision, other.precision])
+
+            assessment = Assessment(title, coefficient, precision=precision)
+            results = Mark.merge(self.results, other.results)
+            assessment.add_results(results)
+
+            return assessment
 
         return NotImplemented
 
