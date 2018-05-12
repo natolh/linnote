@@ -136,7 +136,7 @@ class Ranking:
 
 
 class Rank:
-    """Ranking item."""
+    """Base element of a ranking."""
 
     def __init__(self, item, score, position=None):
         """
