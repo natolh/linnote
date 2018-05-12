@@ -91,7 +91,7 @@ def sequential(position, size):
 
 
 class Ranking:
-    """A ranked sequence of things."""
+    """A list of students ordered by their performance to an assessment."""
 
     def __init__(self, items, key=None, **kwargs):
         """
