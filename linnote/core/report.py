@@ -20,7 +20,7 @@ from .utils.database import BASE
 
 
 class Report(BASE):
-    """Report for an assessment."""
+    """Assessment analysis."""
 
     __tablename__ = 'reports'
 
