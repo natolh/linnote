@@ -155,4 +155,4 @@ class Rank:
         self.position = position
 
     def __repr__(self):
-        return '<Rank #{}: {}>'.format(self.position, self.score)
+        return f'<Rank #{self.position}: {self.score}>'
