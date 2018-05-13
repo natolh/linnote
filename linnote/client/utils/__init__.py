@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Miscellaneaous tools for the client.
 
 Author: Anatole Hanniet, 2016-2018.

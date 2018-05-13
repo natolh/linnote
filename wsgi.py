@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 WSGI connector.
 
 Author: Anatole Hanniet, 2016-2018.

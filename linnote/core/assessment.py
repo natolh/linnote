@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Implement assessment and related objects.
 
 Assessment evaluates students knowledge. The performance of a student to an
