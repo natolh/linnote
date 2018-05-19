@@ -200,7 +200,7 @@ class Mark(BASE):
         return self._score + self._bonus
 
 
-class Curver(object):
+class Curver:
     """
     Love machine, wanna some extra points ?
 
