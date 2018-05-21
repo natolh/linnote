@@ -202,12 +202,12 @@ class Mark(BASE):
 
 class Curver:
     """
-    Love machine, wanna some extra points ?
+    Curve a set of marks.
 
     Curving marks / grades is applying a mathematical function to modify marks
-    after the assessment, so it's a post treatment of marks. There is several
-    reasons that can make someone to curve marks, you can make you mind by
-    reading the references bellow.
+    after the assessment. There are several situations where curving marks
+    could be needed. You can learn about these situations by reading the
+    references bellow.
 
     References:
         - en.wikipedia.org/wiki/Grading_on_a_curve
