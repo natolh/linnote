@@ -68,6 +68,42 @@ main > * {
     grid-column: 1 / -1;
 }
 
+/* Dirty section */
+
+.action-box.sensitive .information {
+    font-size: 1rem;
+}
+
+.action-box.sensitive .title {
+    margin-bottom: .5rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.action-box.sensitive button {
+    margin-top: .5rem;
+    max-width: none;
+    height: min-content;
+    font-size: 1rem;
+    font-weight: 200;
+    padding: 0.8rem 1rem;
+    background-color: rgb(212, 38, 46);
+}
+
+.action-box.sensitive button:hover {
+    background-color: rgb(192, 38, 46)
+}
+
+.action-box.sensitive {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    background-color: rgb(223, 201, 201);
+    padding: 1rem 1.5rem;
+    border-radius: 3px;
+}
+
 @media screen and (min-width: 600px) {
     main {
         grid-template: min-content / repeat(3, 1fr);
@@ -90,6 +126,20 @@ main > * {
 
     [role="navigation"].secondary li:not(:last-child) {
         margin-right: 0.3rem;
+    }
+
+    .action-box.sensitive {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .action-box.sensitive .description {
+        margin-right: 5rem;
+    }
+
+    .action-box.sensitive button {
+        white-space: nowrap;
     }
 }
 

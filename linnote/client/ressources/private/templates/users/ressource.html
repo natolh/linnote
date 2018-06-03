@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set title = 'Nouvel utilisateur' %}
+{% set title = user.fullname or 'Nouvel utilisateur' %}
 {% set active_page = 'utilisateurs' %}
 
 {% block body %}
@@ -10,35 +10,50 @@
 
 {% block content %}
 <div class="topping">
-    <h1>Nouvel utilisateur</h1>
+    <h1>{{ title }}</h1>
+    <menu role="toolbar">
+        <input form="identity" type="submit" value="enregistrer">
+    </menu>
 </div>
+<section>
+    <h2>Identité</h2>
+    <form id="identity" method="post" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <fieldset>
+            <div role="group">
+                {{ form.firstname.label }}
+                {{ form.firstname(autofocus="on") }}
+            </div>
 
-<form method="post" enctype="multipart/form-data">
+            <div role="group">
+                {{ form.lastname.label }}
+                {{ form.lastname() }}
+            </div>
+        </fieldset>
 
-    {{ form.csrf_token }}
-
-    <fieldset>
         <div role="group">
-            {{ form.firstname.label }}
-            {{ form.firstname(autofocus="on") }}
+            {{ form.email.label }}
+            {{ form.email() }}
         </div>
-
-        <div role="group">
-            {{ form.lastname.label }}
-            {{ form.lastname() }}
+    </form>
+</section>
+{% if user %}
+<section>
+    <h2>Confidentialité</h2>
+    <div class="action-box sensitive">
+        <div class="description">
+            <p class="title">
+                Supprimer le compte
+            </p>
+            <p class="informations">
+                <em>La suppression du compte est définitive, les données de l'utilisateur ne pourront pas être restaurées</em>.
+                Veuillez noter et informer l'utilisateur que certaines données associées à son compte seront conservées de manière anonyme pour le bon fonctionnement de la plateforme. De plus, veuillez noter et informer l'utilisateur que ses données persisteront quelques temps au sein des copies de sauvegarde de la plateforme mais seront à terme (délai imprévisible) également supprimées.
+            </p>
         </div>
-    </fieldset>
-
-    <div role="group">
-        {{ form.email.label }}
-        {{ form.email() }}
+        <button type="button" class="xhr" data-action="{{ url_for('api.user', identifier=user.identifier) }}" data-method="delete">
+            Supprimer le compte de {{ user.fullname }}
+        </button>
     </div>
-
-    <div role="group">
-        {{ form.password.label }}
-        {{ form.password() }}
-    </div>
-
-    <input type="submit" value="Créer">
-</form>
+</section>
+{% endif %}
 {% endblock %}

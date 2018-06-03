@@ -17,6 +17,11 @@
                 + Ajouter
             </a>
         </li>
+        <li>
+            <a href="{{ url_for('users.groups') }}">
+                Groupes
+            </a>
+        </li>
     </menu>
 </div>
 
@@ -25,6 +30,7 @@
     <li>
         <div class="header">
             <p>
+                {% if user.is_staff %}🎖{% endif %}
                 {{ user.fullname }}
             </p>
         </div>
@@ -32,9 +38,9 @@
             <em>Email</em> : {{ user.email }}
         </div>
         <div class="footer quick-actions">
-            <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.user', identifier=user.identifier) }}">
-                Supprimer
-            </button>
+            <a href="{{ url_for('users.user', identifier=user.identifier) }}">
+                Détails
+            </a>
         </div>
     </li>
     {% endfor %}

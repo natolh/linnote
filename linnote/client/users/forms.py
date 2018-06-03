@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileField, FileRequired
-from wtforms.fields import StringField, PasswordField
+from wtforms.fields import StringField
 from wtforms.validators import DataRequired, Length
 
 
@@ -25,4 +25,3 @@ class UserForm(Form):
     firstname = StringField('Prénom', validators=[DataRequired()])
     lastname = StringField('Nom', validators=[DataRequired()])
     email = StringField('Adresse email', validators=[DataRequired()])
-    password = PasswordField('Mot de passe', validators=[DataRequired()])
