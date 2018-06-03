@@ -284,10 +284,10 @@
         },
         "sqlalchemy": {
             "hashes": [
-                "sha256:d6cda03b0187d6ed796ff70e87c9a7dce2c2c9650a7bc3c022cd331416853c31"
+                "sha256:2d5f08f714a886a1382c18be501e614bce50d362384dc089474019ce0768151c"
             ],
             "index": "pypi",
-            "version": "==1.2.7"
+            "version": "==1.2.8"
         },
         "werkzeug": {
             "hashes": [
@@ -298,9 +298,10 @@
         },
         "wtforms": {
             "hashes": [
-                "sha256:ffdf10bd1fa565b8233380cb77a304cd36fd55c73023e91d4b803c96bc11d46f"
+                "sha256:49c6dc46a188db98be7582046db35bae3e4701b71a2e8f4212873289cd51553a",
+                "sha256:88e9c32e37d7eae1bd032fd1771a88f17c7b7e671465705acd217fabdfbb1794"
             ],
-            "version": "==2.1"
+            "version": "==2.2"
         },
         "xlrd": {
             "hashes": [
