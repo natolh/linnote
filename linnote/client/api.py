@@ -8,7 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import Blueprint
+from flask import Blueprint, jsonify, url_for
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.assessment import Assessment
@@ -32,7 +32,7 @@ class AssessmentView(MethodView):
         assessment = session.query(Assessment).get(identifier)
         session.delete(assessment)
         session.commit()
-        return "DELETED"
+        return jsonify(redirect=url_for('assessments.assessments'))
 
 
 class ReportView(MethodView):
@@ -47,7 +47,7 @@ class ReportView(MethodView):
         report = session.query(Report).get(identifier)
         session.delete(report)
         session.commit()
-        return "DELETED"
+        return jsonify(redirect=url_for('reports.reports'))
 
 
 class GroupView(MethodView):
@@ -62,7 +62,7 @@ class GroupView(MethodView):
         group = session.query(Group).get(identifier)
         session.delete(group)
         session.commit()
-        return "DELETED"
+        return jsonify(redirect=url_for('users.groups'))
 
 
 class UserView(MethodView):
@@ -77,7 +77,7 @@ class UserView(MethodView):
         user = session.query(User).get(identifier)
         session.delete(user)
         session.commit()
-        return 'DELETED'
+        return jsonify(redirect=url_for('users.users'))
 
 
 # Register routes to controllers.

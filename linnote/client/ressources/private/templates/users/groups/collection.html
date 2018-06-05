@@ -29,7 +29,7 @@
             </p>
         </div>
         <div class="footer quick-actions">
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', identifier=group.identifier) }}')">
+            <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.group', identifier=group.identifier) }}">
                 Supprimer
             </button>
         </div>

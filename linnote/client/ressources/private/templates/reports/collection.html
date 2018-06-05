@@ -30,7 +30,7 @@
             <a href="{{url_for('reports.report',identifier=report.identifier)}}">
                 Ouvrir
             </a>
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.report', identifier=report.identifier) }}')">
+            <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.report', identifier=report.identifier) }}">
                 Supprimer
             </button>
         </div>
