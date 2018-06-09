@@ -26,7 +26,7 @@ header > :not(:last-child) {
 @media screen and (min-width: 550px) {
     header {
         flex-flow: row nowrap;
-        padding: 0.2rem;
+        padding: 0.3rem;
     }
 
     header > * {
