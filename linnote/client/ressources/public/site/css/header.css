@@ -19,17 +19,6 @@ header {
     background-color: var(--color-main);
 }
 
-@media screen and (min-width: 550px) {
-    header {
-        flex-flow: row nowrap;
-        padding: 0.3rem;
-    }
-
-    #brand {
-        margin: 0;
-    }
-}
-
 header a {
     display: flex;
     align-items: center;
@@ -70,4 +59,15 @@ nav a {
 
 nav ul li:not(:last-child) {
     margin-right: 0.7rem;
+}
+
+@media screen and (min-width: 550px) {
+    header {
+        flex-flow: row nowrap;
+        padding: 0.3rem;
+    }
+
+    #brand {
+        margin: 0;
+    }
 }
