@@ -64,13 +64,13 @@ nav ul {
     overflow-y: hidden;
 }
 
+nav ul li:not(:last-child) {
+    margin-right: 0.7rem;
+}
+
 nav a {
     font-size: 0.8rem;
     font-weight: 400;
     letter-spacing: 0.03rem;
     text-transform: capitalize;
-}
-
-nav ul li:not(:last-child) {
-    margin-right: 0.7rem;
 }
