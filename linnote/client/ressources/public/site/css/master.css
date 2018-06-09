@@ -37,24 +37,6 @@ main > :nth-child(n) {
     padding: 1rem;
 }
 
-.topping {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    padding: 1.5rem 0;
-    background-color: rgb(240, 240, 240);
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template: repeat(2, min-content) / 1fr;
-    text-align: center;
-    justify-content: center;
-    border-bottom: 1px solid rgb(230, 230, 230);
-}
-
-.topping > :not(:first-child) {
-    margin-top: 1rem;
-}
-
 [role="navigation"].secondary, menu {
     display: flex;
     flex-flow: row wrap;
@@ -97,18 +79,6 @@ main > * {
         grid-template: min-content / repeat(4, 1fr);
     }
 
-    .topping {
-        grid-template: 1fr / repeat(2, 1fr);
-    }
-
-    .topping:first-child {
-        text-align: left;
-    }
-
-    .topping > :not(:first-child) {
-        margin-top: 0;
-    }
-
     [role="navigation"].secondary, menu {
         grid-column: 2 / 3;
         justify-content: flex-end;
@@ -127,12 +97,6 @@ main > * {
     main {
         grid-template: min-content / repeat(6, 1fr);
     }
-}
-
-h1 {
-    margin: 0;
-    display: block;
-    color: rgb(50, 50, 50);
 }
 
 a[type="button"]:hover, button:hover {
