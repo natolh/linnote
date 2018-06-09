@@ -38,7 +38,7 @@ header a {
     transition: color 100ms ease-out;
 }
 
-header a:hover, header a:focus, header a:active {
+header a:hover, header a:focus, header a:active, a.active {
     color: white !important;
     transition: color 100ms ease-in;
 }

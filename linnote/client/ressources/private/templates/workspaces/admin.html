@@ -1,3 +1,11 @@
+{% set menu = [
+    ('utilisateurs', url_for('users.users')),
+    ('étudiants', url_for('users.groups')),
+    ('épreuves', url_for('assessments.assessments')),
+    ('rapports', url_for('reports.reports')),
+    ('compte', url_for('account.profile'))]
+%}
+
 <header>
     <!-- Brand -->
     <a id="brand" href="/">
@@ -7,31 +15,13 @@
     <!-- Main menu -->
     <nav>
         <ul>
+            {% for id, href in menu %}
             <li>
-                <a href="{{ url_for('users.users') }}">
-                    Utilisateurs
+                <a class="{%if id == active_page %}active{% endif %}" href="{{ href }}">
+                    {{ id }}
                 </a>
             </li>
-            <li>
-                <a href="{{ url_for('users.groups') }}">
-                    Étudiants
-                </a>
-            </li>
-            <li>
-                <a href="{{ url_for('assessments.assessments') }}">
-                    Épreuves
-                </a>
-            </li>
-            <li>
-                <a href="{{ url_for('reports.reports') }}">
-                    Rapports
-                </a>
-            </li>
-            <li>
-                <a href="{{ url_for('account.profile') }}">
-                    Compte
-                </a>
-            </li>
+            {% endfor %}
         </ul>
     </nav>
 </header>
