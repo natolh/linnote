@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Reports application module.
 
 Author: Anatole Hanniet, 2016-2018.

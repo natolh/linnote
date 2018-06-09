@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Controllers for the 'users' application module.
 
 Author: Anatole Hanniet, 2016-2018.
@@ -71,22 +71,39 @@ class UserRessource(MethodView):
     decorators = [login_required]
 
     @staticmethod
-    def get():
-        """Display a form for creating a new user."""
-        form = UserForm()
-        return render_template('users/ressource.html', form=form)
+    def render(**kwargs):
+        return render_template('users/ressource.html', **kwargs)
 
-    def post(self):
+    @staticmethod
+    def load(identifier=None):
+        session = WEBSESSION()
+        return session.query(User).get(identifier)
+
+    def get(self, identifier=None):
+        """Display a form for creating a new user."""
+        if identifier:
+            user = self.load(identifier)
+            form = UserForm(obj=user)
+            context = dict(form=form, user=user)
+
+        else:
+            form = UserForm()
+            context = dict(form=form, user=None)
+
+        return self.render(**context)
+
+    def post(self, identifier=None):
         """Create a new user."""
         session = WEBSESSION()
         form = UserForm()
-        if form.validate():
-            user = User(
-                form.firstname.data,
-                form.lastname.data,
-                form.email.data,
-                password=form.password.data)
-            session.merge(user)
-            session.commit()
 
-        return self.get()
+        if form.validate() and identifier is not None:
+            user = self.load(identifier)
+            form.populate_obj(user)
+
+        elif form.validate():
+            user = User(**form.data)
+
+        session.merge(user)
+        session.commit()
+        return self.get(user.identifier)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Implement users.
 
 Author: Anatole Hanniet, 2016-2018.
@@ -93,6 +93,12 @@ class User(BASE):
     def is_active() -> bool:
         """Boolean showing if the current user account is active or not."""
         return True
+
+    def update(self, data):
+        """Update user's attribute using dict values."""
+        for key, value in data.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
 
 
 class Student(BASE):

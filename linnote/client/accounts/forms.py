@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Forms for the 'accounts' application module.
 
 Author: Anatole Hanniet, 2016-2018.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Script to build the SECRET_KEY needed in the config.
 
 Author: Anatole Hanniet, 2016-2018.

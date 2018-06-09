@@ -52,3 +52,7 @@ form {
         width: calc(350px - 2rem);
     }
 }
+
+input[type="submit"] {
+    width: 100%;
+}

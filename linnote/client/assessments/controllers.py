@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Controllers for the 'assessments' application module.
 
 Author: Anatole Hanniet, 2016-2018.

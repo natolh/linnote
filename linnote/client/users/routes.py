@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Routes for the 'users' application module.
 
 Author: Anatole Hanniet, 2016-2018.
@@ -23,7 +23,8 @@ USER = UserRessource.as_view('user')
 ROUTES = Blueprint('users', __name__, url_prefix='/admin')
 
 
-ROUTES.add_url_rule('/groups', view_func=GROUPS)
-ROUTES.add_url_rule('/group', view_func=GROUP)
+ROUTES.add_url_rule('/users/groups', view_func=GROUPS)
+ROUTES.add_url_rule('/users/group', view_func=GROUP)
 ROUTES.add_url_rule('/users', view_func=USERS)
-ROUTES.add_url_rule('/user', view_func=USER)
+ROUTES.add_url_rule('/user', defaults={'identifier': None}, view_func=USER)
+ROUTES.add_url_rule('/user/<int:identifier>', view_func=USER)

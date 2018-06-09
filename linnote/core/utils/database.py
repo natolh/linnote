@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-u"""
+"""
 Implement database related tools.
 
 Define a 'Base' class that sould be inherited by every class to persist in the

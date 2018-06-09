@@ -1,75 +1,139 @@
 @charset "UTF-8";
 /*
-CSS for the header.
+Styling for header section.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 */
 
 header {
-    position: sticky;
     position: -webkit-sticky;
+    position: sticky;
     top: 0;
-    padding: 1.4rem;
     width: 100vw;
+    padding: 1.4rem;
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
     background-color: var(--color-main);
 }
 
-header > :not(:last-child) {
-    margin-bottom: 0.5rem;
-}
-
-@media screen and (min-width: 550px) {
+@media screen and (min-width: 450px) {
     header {
-        flex-flow: row nowrap;
-        padding: 0.2rem;
-    }
-
-    header > * {
-        margin: 0 !important;
+        flex-direction: row;
+        padding: 0.3rem;
     }
 }
 
 header a {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: hsla(0, 100%, 100%, 0.8);
+    font-size: 0.8rem;
+    font-weight: normal;
+    letter-spacing: 0.03rem;
+    text-transform: capitalize;
+    color: rgba(255, 255, 255, 0.75);
     transition: color 100ms ease-out;
 }
 
-header a:hover, header a:focus, header a:active {
-    color: white;
+header a:hover, header a:focus, header a:active, a.active {
+    color: white !important;
     transition: color 100ms ease-in;
 }
 
-#brand {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: white;
-    text-transform: uppercase;
-}
-
-nav {
-    font-family: 400;
-}
-
-nav ul {
-    display: flex;
+header nav {
+    height: 100%;
     max-width: calc(100vw - 2rem);
+}
+
+@media screen and (min-width: 450px) {
+    header nav {
+        max-width: none;
+    }
+}
+
+header nav ul {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
     overflow-x: scroll;
     overflow-y: hidden;
 }
 
-nav a {
-    font-size: 0.9rem;
-    text-transform: capitalize;
+@media screen and (min-width: 450px) {
+    header nav ul {
+        overflow: none;
+    }
 }
 
-nav ul li:not(:last-child) {
+header nav li {
+    display: flex;
+    align-items: strech;
+}
+
+header nav li:not(:last-child) {
     margin-right: 0.7rem;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: rgb(50, 50, 50);
+}
+
+@media screen and (min-width: 900px) {
+    h1 {
+        justify-content: flex-start;
+    }
+}
+
+.topping {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 1.5rem 0;
+    background-color: rgb(240, 240, 240);
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template: repeat(2, min-content) / 1fr;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.topping > :not(:first-child) {
+    margin-top: 1rem;
+}
+
+@media screen and (min-width: 900px) {
+    .topping {
+        grid-template: 1fr / repeat(2, 1fr);
+    }
+
+    .topping:first-child {
+        text-align: left;
+    }
+
+    .topping > :not(:first-child) {
+        margin-top: 0;
+    }
+}
+
+#brand {
+    font-size: 1rem;
+    font-weight: lighter;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.5rem;
+}
+
+@media screen and (min-width: 450px) {
+    #brand {
+        margin: 0;
+    }
 }

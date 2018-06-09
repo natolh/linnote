@@ -91,7 +91,7 @@ def sequential(position, size):
 
 
 class Ranking:
-    """A ranked sequence of things."""
+    """A list of students ordered by their performance to an assessment."""
 
     def __init__(self, items, key=None, **kwargs):
         """
@@ -136,7 +136,7 @@ class Ranking:
 
 
 class Rank:
-    """Ranking item."""
+    """Base element of a ranking."""
 
     def __init__(self, item, score, position=None):
         """
@@ -155,4 +155,4 @@ class Rank:
         self.position = position
 
     def __repr__(self):
-        return '<Rank #{}: {}>'.format(self.position, self.score)
+        return f'<Rank #{self.position}: {self.score}>'

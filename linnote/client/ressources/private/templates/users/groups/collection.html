@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% set title = 'Groupes' %}
+{% set active_page = 'utilisateurs' %}
 
 {% block body %}
     {% include 'workspaces/admin.html' %}
@@ -9,12 +10,17 @@
 
 {% block content %}
 <div class="topping">
-    <h1>Groupes d'étudiants</h1>
+    <h1>Groupes</h1>
 
     <menu type="toolbar">
         <li>
             <a href="{{ url_for('users.group') }}">
                 + Ajouter
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('users.users') }}">
+                Utilisateurs
             </a>
         </li>
     </menu>
@@ -29,7 +35,7 @@
             </p>
         </div>
         <div class="footer quick-actions">
-            <button type="button" name="button" onclick="xhr('DELETE', '{{ url_for('api.group', identifier=group.identifier) }}')">
+            <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.group', identifier=group.identifier) }}">
                 Supprimer
             </button>
         </div>
