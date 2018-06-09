@@ -27,19 +27,6 @@ header {
     }
 }
 
-header a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: hsla(0, 100%, 100%, 0.8);
-    transition: color 100ms ease-out;
-}
-
-header a:hover, header a:focus, header a:active {
-    color: white;
-    transition: color 100ms ease-in;
-}
-
 #brand {
     font-size: 1rem;
     color: white;
@@ -51,6 +38,19 @@ header a:hover, header a:focus, header a:active {
     #brand {
         margin: 0;
     }
+}
+
+header a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsla(0, 100%, 100%, 0.8);
+    transition: color 100ms ease-out;
+}
+
+header a:hover, header a:focus, header a:active {
+    color: white;
+    transition: color 100ms ease-in;
 }
 
 nav {
