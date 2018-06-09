@@ -48,7 +48,7 @@ header a {
 }
 
 header a:hover, header a:focus, header a:active {
-    color: white;
+    color: white !important;
     transition: color 100ms ease-in;
 }
 
