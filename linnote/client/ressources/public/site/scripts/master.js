@@ -1,4 +1,4 @@
-function xhr(METHOD, URL) {
+function xhr(METHOD, ENDPOINT) {
     let req = new XMLHttpRequest();
     req.responseType = "json";
     req.onreadystatechange = function() {
@@ -15,5 +15,5 @@ for (var index = 0; index < xhrButtons.length; index++) {
     let button = xhrButtons[index];
     let endpoint = button.getAttribute("data-action");
     let method = button.getAttribute("data-method");
-    button.addEventListener("click", function() {xhr(method, endpoint)}),;
+    button.addEventListener("click", function() {xhr(method, endpoint)});
 };
