@@ -52,10 +52,6 @@ header a:hover, header a:focus, header a:active {
     transition: color 100ms ease-in;
 }
 
-header nav {
-    font-family: 400;
-}
-
 header nav ul {
     display: flex;
     max-width: calc(100vw - 2rem);
