@@ -10,10 +10,11 @@ header {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
-    padding: 1.4rem;
     width: 100vw;
+    padding: 1.4rem;
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
     background-color: var(--color-main);
@@ -63,7 +64,7 @@ nav ul li:not(:last-child) {
 
 @media screen and (min-width: 450px) {
     header {
-        flex-flow: row nowrap;
+        flex-direction: row;
         padding: 0.3rem;
     }
 
