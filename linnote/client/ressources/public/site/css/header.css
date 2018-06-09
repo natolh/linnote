@@ -78,9 +78,17 @@ header nav li:not(:last-child) {
 }
 
 h1 {
-    margin: 0;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
     color: rgb(50, 50, 50);
+}
+
+@media screen and (min-width: 900px) {
+    h1 {
+        justify-content: flex-start;
+    }
 }
 
 .topping {
