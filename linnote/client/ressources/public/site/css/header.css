@@ -53,22 +53,22 @@ header a:hover, header a:focus, header a:active {
     transition: color 100ms ease-in;
 }
 
-nav {
+header nav {
     font-family: 400;
 }
 
-nav ul {
+header nav ul {
     display: flex;
     max-width: calc(100vw - 2rem);
     overflow-x: scroll;
     overflow-y: hidden;
 }
 
-nav ul li:not(:last-child) {
+header nav ul li:not(:last-child) {
     margin-right: 0.7rem;
 }
 
-nav a {
+header nav a {
     font-size: 0.8rem;
     font-weight: 400;
     letter-spacing: 0.03rem;
