@@ -7,8 +7,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 */
 
 header {
-    position: sticky;
     position: -webkit-sticky;
+    position: sticky;
     top: 0;
     width: 100vw;
     padding: 1.4rem;
