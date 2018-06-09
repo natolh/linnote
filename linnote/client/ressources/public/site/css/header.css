@@ -28,6 +28,8 @@ header {
 }
 
 header a {
+    display: flex;
+    align-items: center;
     font-size: 0.8rem;
     font-weight: normal;
     letter-spacing: 0.03rem;
@@ -41,11 +43,34 @@ header a:hover, header a:focus, header a:active {
     transition: color 100ms ease-in;
 }
 
-header nav ul {
-    display: flex;
+header nav {
+    height: 100%;
     max-width: calc(100vw - 2rem);
+}
+
+@media screen and (min-width: 450px) {
+    header nav {
+        max-width: none;
+    }
+}
+
+header nav ul {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
     overflow-x: scroll;
     overflow-y: hidden;
+}
+
+@media screen and (min-width: 450px) {
+    header nav ul {
+        overflow: none;
+    }
+}
+
+header nav li {
+    display: flex;
+    align-items: strech;
 }
 
 header nav li:not(:last-child) {
