@@ -20,6 +20,13 @@ header {
     background-color: var(--color-main);
 }
 
+@media screen and (min-width: 450px) {
+    header {
+        flex-direction: row;
+        padding: 0.3rem;
+    }
+}
+
 header a {
     display: flex;
     align-items: center;
@@ -38,6 +45,12 @@ header a:hover, header a:focus, header a:active {
     color: white;
     opacity: 0.5;
     margin-bottom: 0.5rem;
+}
+
+@media screen and (min-width: 450px) {
+    #brand {
+        margin: 0;
+    }
 }
 
 nav {
@@ -60,15 +73,4 @@ nav a {
 
 nav ul li:not(:last-child) {
     margin-right: 0.7rem;
-}
-
-@media screen and (min-width: 450px) {
-    header {
-        flex-direction: row;
-        padding: 0.3rem;
-    }
-
-    #brand {
-        margin: 0;
-    }
 }
