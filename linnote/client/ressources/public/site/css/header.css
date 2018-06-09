@@ -19,10 +19,6 @@ header {
     background-color: var(--color-main);
 }
 
-header > :not(:last-child) {
-    margin-bottom: 0.5rem;
-}
-
 @media screen and (min-width: 550px) {
     header {
         flex-flow: row nowrap;
@@ -51,6 +47,7 @@ header a:hover, header a:focus, header a:active {
     font-size: 1rem;
     color: white;
     opacity: 0.5;
+    margin-bottom: 0.5rem;
 }
 
 nav {
