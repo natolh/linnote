@@ -1,33 +1,51 @@
 @charset "UTF-8";
+/*
+Styling for footer section.
+
+Author: Anatole Hanniet, 2016-2018.
+License: Mozilla Public License, see 'LICENSE.txt' for details.
+*/
 
 footer {
     --footer-color-text: hsl(0, 0%, 70%);
     --footer-color-text-highlight: hsl(0, 0%, 90%);
 
-    padding: 0.6rem;
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 0.6rem;
     color: var(--footer-color-text);
     background-color: hsl(0, 0%, 12%);
     font-size: 0.8rem;
     line-height: 1.4rem;
-    text-align: center;
+}
+
+@media screen and (min-width: 590px) {
+    footer {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 footer a {
     border-bottom: 0.1rem solid var(--footer-color-text);
 }
 
-footer a:hover {
+footer a:hover, footer a:active, footer a:focus {
     border-bottom: 0.15rem solid var(--footer-color-text-highlight);
     color: var(--footer-color-text-highlight);
     background-color: hsla(0, 0%, 100%, 0.08);
 }
 
-@media screen and (min-width: 590px) {
-    footer {
-        flex-flow: row nowrap;
-    }
+
+footer ul.links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+footer ul.links li:not(:last-child) {
+    margin-right: 0.7rem;
 }
