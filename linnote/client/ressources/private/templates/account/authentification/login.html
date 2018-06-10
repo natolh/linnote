@@ -14,24 +14,41 @@
 
             <form method="post">
                 {{ form.csrf_token }}
-            
+
                 <div role="group">
                     {{ form.identifier.label }}
                     {{ form.identifier(autofocus="on") }}
                 </div>
-            
+
                 <div role="group">
                     {{ form.password.label }}
                     {{ form.password() }}
                 </div>
-            
+
                 <input type="submit" value="connexion">
             </form>
         </main>
         <footer>
             <p class="copyright">
-                A. HANNIET © 2018, <a href="https://www.mozilla.org/en-US/MPL/2.0/">Mozilla Public License</a>.
+                Préparé par <a href="https://twitter.com/natolh">Anatole Hanniet</a>
             </p>
+            <ul class="links">
+                <li>
+                    <a href="/legal.html">
+                        Mentions Légales
+                    </a>
+                </li>
+                <li>
+                    <a href="/privacy.html">
+                        Données Personnelles
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/natolh/linnote">
+                        Code Source
+                    </a>
+                </li>
+            </ul>
         </footer>
     </body>
 </html>
