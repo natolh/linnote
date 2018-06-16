@@ -17,8 +17,15 @@
     {% include 'assessments/assessment/menu.html' %}
 </div>
 
+<div role="toolbar">
+    <ul>
+        <button class='xhr' data-method='post' data-action="{{ url_for('api.curve', identifier=assessment.identifier, curve='top_linear') }}">
+            Lisser
+        </button>
+    </ul>
+</div>
+
 <div role="table" class="flex">
-    <button class='xhr' data-method='post' data-action="{{ url_for('api.curve', identifier=assessment.identifier, curve='top_linear') }}">Lisser</button>
 {% for result in assessment.results %}
     <ul role="row">
         <li role="cell">
