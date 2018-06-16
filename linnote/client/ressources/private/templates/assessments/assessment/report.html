@@ -3,6 +3,7 @@
 {% set title = assessment.title %}
 
 {% block head %}
+    <meta name="author" content="{{ current_user.fullname }}">
     <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='css/ranking.css') }}">
 {% endblock %}
 
@@ -39,5 +40,6 @@
 
 <script type="text/javascript" defer>
     window.print();
+    window.onafterprint = window.close();
 </script>
 {% endblock %}
