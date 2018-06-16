@@ -234,6 +234,7 @@ class TopLinear(Curve):
         new_score = self.slope * mark.value
         return self._set(mark, new_score)
 
+
 class Assessment(BASE):
     """
     Evaluation of students knowledge.
