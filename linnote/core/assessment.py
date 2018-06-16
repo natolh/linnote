@@ -11,6 +11,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from abc import ABC, abstractmethod
 from copy import copy
 from itertools import groupby
 from operator import attrgetter
@@ -200,89 +201,38 @@ class Mark(BASE):
         return self._score + self._bonus
 
 
-class Curver:
-    """
-    Curve a set of marks.
+class Curve:
 
-    Curving marks / grades is applying a mathematical function to modify marks
-    after the assessment. There are several situations where curving marks
-    could be needed. You can learn about these situations by reading the
-    references bellow.
-
-    References:
-        - en.wikipedia.org/wiki/Grading_on_a_curve
-        - www.wikihow.com/Curve-Grades
-        - divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
-        - academia.stackexchange.com/questions/8261
-    """
-
-    def __init__(self, marks, method, restrain=True, overwrite=False):
-        """
-        Create a new curver.
-
-        - marks:        List of <Mark> objects. Marks to be curved.
-        - method:       String. One of the available method for curving
-                        marks.
-        * restrain:     Boolean. If set to True (default), no matter what
-                        the curved mark will be it's 'value' (score +
-                        bonus points) could not exceed the scale.
-        * overwrite:    Boolean. If set to False (default). The curved
-                        mark of the student is stored as the difference
-                        beetween the curved mark 'value' and the mark
-                        value in the 'bonus' attribute. Thus, the raw mark
-                        of the student is still accessible through the
-                        'score' attribute.
-
-        Return: None.
-        """
+    @abstractmethod
+    def __init__(self):
         super().__init__()
-        self.marks = marks
-        self.method = getattr(self, method)
-        self.restrain = restrain
-        self.overwrite = overwrite
 
-    def curve(self, **kwargs):
-        """Apply the curving."""
-        for mark in self.marks:
-            # Calculate the curved mark.
-            new_value = self.method(mark, **kwargs)
+    @abstractmethod
+    def __call__(self, mark):
+        return mark
 
-            # Modify the mark object.
-            if self.restrain and new_value > mark.scale:
-                new_value = mark.scale
-
-            if not self.overwrite:
-                mark.bonus += new_value - mark.value
-            else:
-                mark.score = new_value
-                mark.bonus = 0
-
-    # Basic, configurable, curving functions.
-    @staticmethod
-    def affine(mark, **kwargs):
-        """Affine curving method."""
-        slope = kwargs.get('slope')
-        intercept = kwargs.get('intercept')
-        return slope * mark.value + intercept
+    def apply(self, sequence):
+        marks = map(self, sequence)
+        return list(marks)
 
     @staticmethod
-    def constant(mark, **kwargs):
-        """Constant curving method (subcase of affine method)."""
-        intercept = kwargs.get('intercept')
-        return mark.value + intercept
+    def _set(mark, new):
+        if new > mark.scale:
+            mark.bonus = mark.scale - mark.value
+        else:
+            mark.bonus = new - mark.value
+        return mark
 
-    @staticmethod
-    def linear(mark, **kwargs):
-        """Linear curving method (subcase of affine method)."""
-        slope = kwargs.get('slope')
-        return slope * mark.value
 
-    # Predefined curving functions.
-    def top_linear(self, mark):
-        """Predefined curving function."""
-        slope = mark.scale / max(self.marks).value
-        return self.linear(mark, slope=slope)
+class TopLinear(Curve):
 
+    def __init__(self, marks):
+        super().__init__()
+        self.slope = marks[0].scale / max(marks).value
+
+    def __call__(self, mark):
+        new_score = self.slope * mark.value
+        return self._set(mark, new_score)
 
 class Assessment(BASE):
     """
@@ -388,21 +338,12 @@ class Assessment(BASE):
         attendees = map(get_students, self.results)
         return list(attendees)
 
-    def curve(self, method, restrain=True, overwrite=False):
+    def curve(self, curve):
         """
         Curve assessment's marks.
 
-        - method:       String. Name of a valid curving function, available
-                        curving functions are listed in the 'Curver' class.
-        * restrain:     Boolean. If set to True (default), no matter what
-                        the curved mark will be it's 'value' (score +
-                        bonus points) could not exceed the scale.
-        * overwrite:    Boolean. If set to False (default). The curved
-                        mark of the student is stored as the difference
-                        beetween the curved mark 'value' and the mark
-                        value in the 'bonus' attribute. Thus, the raw mark
-                        of the student is still accessible through the
-                        'score' attribute.
+        - curve:    String. Name of a valid curving function, available
+                    curving functions are listed in the 'Curver' class.
 
         References:
         - en.wikipedia.org/wiki/Grading_on_a_curve
@@ -412,9 +353,12 @@ class Assessment(BASE):
 
         Return: None.
         """
-        curver = Curver(self.results, method, restrain=restrain,
-                        overwrite=overwrite)
-        curver.curve()
+        curves = {'top_linear': TopLinear}
+
+        Curve = getattr(curves, curve, TopLinear)
+        curve = Curve(self.results)
+        curve.apply(self.results)
+
 
     def expected(self) -> List[Student]:
         """Studends that must take the assessment."""

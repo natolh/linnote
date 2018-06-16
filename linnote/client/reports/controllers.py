@@ -74,12 +74,10 @@ class Ressource(MethodView):
                 assessment.curve(method='top_linear')
 
             else:
-                query = session.query(Assessment)
-                query.options(joinedload(Assessment.results))
-                query.options(joinedload(Mark.student))
+                query = session.query(Assessment).options(joinedload(Assessment.results).joinedload(Mark.student))
 
                 assessment = query.get(form.assessments.data[0])
-                assessment.curve(method='top_linear')
+                assessment.curve('top_linear')
 
             groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
 
