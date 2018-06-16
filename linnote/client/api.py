@@ -35,6 +35,18 @@ class AssessmentView(MethodView):
         return jsonify(redirect=url_for('assessments.assessments'))
 
 
+class CurverController(MethodView):
+
+    decorators = [login_required]
+
+    def post(self, identifier, curve):
+        session = WEBSESSION()
+        assessment = session.query(Assessment).get(identifier)
+        assessment.curve(curve)
+        session.commit()
+        return jsonify(redirect=url_for('assessments.results', identifier=identifier))
+
+
 class ReportView(MethodView):
     """API for report ressources."""
 
@@ -84,6 +96,9 @@ class UserView(MethodView):
 BLUEPRINT.add_url_rule(
     '/assessments/<int:identifier>',
     view_func=AssessmentView.as_view('assessment'))
+BLUEPRINT.add_url_rule(
+    '/assessments/<int:identifier>/marks/curver/<curve>',
+    view_func=CurverController.as_view('curve'))
 BLUEPRINT.add_url_rule(
     '/reports/<identifier>',
     view_func=ReportView.as_view('report'))

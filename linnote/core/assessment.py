@@ -338,7 +338,7 @@ class Assessment(BASE):
         attendees = map(get_students, self.results)
         return list(attendees)
 
-    def curve(self, curve):
+    def curve(self, curve: str) -> None:
         """
         Curve assessment's marks.
 
