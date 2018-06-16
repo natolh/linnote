@@ -218,7 +218,7 @@ class Curve(ABC):
     @staticmethod
     def _set(mark, new):
         if new > mark.scale:
-            mark.bonus = mark.scale - mark.value
+            mark.bonus = mark.scale - mark.score
         else:
             mark.bonus = new - mark.value
         return mark
