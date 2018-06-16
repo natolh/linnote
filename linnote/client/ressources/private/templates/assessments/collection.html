@@ -43,7 +43,10 @@
         </ul>
         <div class="footer quick-actions">
             <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
-                Ouvrir
+                Détails
+            </a>
+            <a href="{{ url_for('assessments.report', id=assessment.identifier) }}" target="_blank">
+                Rapport
             </a>
         </div>
     </li>
