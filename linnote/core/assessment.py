@@ -201,7 +201,7 @@ class Mark(BASE):
         return self._score + self._bonus
 
 
-class Curve:
+class Curve(ABC):
 
     @abstractmethod
     def __init__(self):
