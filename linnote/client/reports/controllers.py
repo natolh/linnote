@@ -47,10 +47,10 @@ class Ressource(MethodView):
             return render_template('reports/ranking.html', rep=report)
 
         form = ReportForm()
-        form.assessments.choices = [(a.identifier, a.title)
-                                    for a in session.query(Assessment).all()]
-        form.subgroups.choices = [(g.identifier, g.name)
-                                  for g in session.query(Group).all()]
+        form.assessment.choices = [
+            (a.identifier, a.title) for a in session.query(Assessment).all()]
+        form.subgroups.choices = [
+            (g.identifier, g.name) for g in session.query(Group).all()]
 
         return render_template('reports/ressource.html', form=form)
 
@@ -59,25 +59,18 @@ class Ressource(MethodView):
         """Create a new report."""
         session = WEBSESSION()
         form = ReportForm()
-        form.assessments.choices = [(a.identifier, a.title)
-                                    for a in session.query(Assessment).all()]
-        form.subgroups.choices = [(g.identifier, g.name)
-                                  for g in session.query(Group).all()]
+        form.assessment.choices = [
+            (a.identifier, a.title) for a in session.query(Assessment).all()]
+        form.subgroups.choices = [
+            (g.identifier, g.name) for g in session.query(Group).all()]
 
         if form.validate():
+            assessments = session.query(Assessment)
+            assessments.options(joinedload(Assessment.results).joinedload(Mark.student))
+            assessment = assessments.get(form.assessment.data)
 
-            if len(form.assessments.data) > 1:
-                assessments = [session.query(Assessment).get(
-                    assessment_id) for assessment_id in form.assessments.data]
-                assessment = sum(assessments)
-                session.add(assessment)
-
-            else:
-                query = session.query(Assessment).options(joinedload(Assessment.results).joinedload(Mark.student))
-
-                assessment = query.get(form.assessments.data[0])
-
-            groups = [session.query(Group).get(group_id) for group_id in form.subgroups.data]
+            groups = [session.query(Group).get(group_id)
+                      for group_id in form.subgroups.data]
 
             report = Report(form.title.data, assessment, groups)
             report.build()
