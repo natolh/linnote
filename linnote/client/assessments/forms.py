@@ -10,7 +10,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileField
-from wtforms.fields import StringField, FloatField, IntegerField
+from wtforms.fields import (StringField, FloatField, IntegerField,
+                            SelectMultipleField)
 from wtforms.validators import DataRequired, NumberRange, Optional
 
 
@@ -35,3 +36,15 @@ class AssessmentForm(Form):
         'Barème du fichier',
         default=20,
         validators=[Optional(), NumberRange(min=0)])
+
+
+class MergeForm(Form):
+    """Assessment merging form."""
+
+    title = StringField(
+        'Libellé',
+        validators=[DataRequired()])
+    assessments = SelectMultipleField(
+        'Épreuves',
+        coerce=int,
+        validators=[DataRequired()])

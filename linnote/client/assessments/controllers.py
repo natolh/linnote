@@ -14,7 +14,7 @@ from flask_login import current_user, login_required
 from sqlalchemy.orm.session import make_transient
 from linnote.core.assessment import Assessment, Mark
 from linnote.core.utils import WEBSESSION
-from .forms import AssessmentForm
+from .forms import AssessmentForm, MergeForm
 
 
 class ListView(MethodView):
@@ -99,3 +99,41 @@ class ResultsView(MethodView):
         assessment = session.query(Assessment).get(identifier)
         return render_template('assessments/assessment/results.html',
                                assessment=assessment)
+
+
+class MergeController(MethodView):
+    """Controller for merging assessments."""
+
+    decorators = [login_required]
+    template = 'assessments/merge.html'
+
+    @staticmethod
+    def load(id=None):
+        session = WEBSESSION()
+        if not id:
+            return session.query(Assessment).all()
+        return session.query(Assessment).get(id)
+
+    def render(self, **kwargs):
+        return render_template(self.template, **kwargs)
+
+    def get(self):
+        assessments = self.load()
+        form = MergeForm()
+        form.assessments.choices = [
+            (a.identifier, a.title) for a in assessments]
+        return self.render(form=form)
+
+    def post(self):
+        assessments = self.load()
+        form = MergeForm()
+        form.assessments.choices = [
+            (a.identifier, a.title) for a in assessments]
+
+        if form.validate() and len(form.assessments.data) > 1:
+            assessments = [self.load(a) for a in form.assessments.data]
+            assessment = sum(assessments)
+            session = WEBSESSION()
+            session.add(assessment)
+            session.commit()
+        return redirect(url_for('assessments.assessments'))
