@@ -13,6 +13,11 @@
     <h1>Épreuves</h1>
     <menu type="toolbar">
         <li>
+            <a href="#">
+                Fusionner
+            </a>
+        </li>
+        <li>
             <a href="{{ url_for('assessments.assessment') }}">
                 + Ajouter
             </a>
@@ -40,9 +45,6 @@
             <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
                 Ouvrir
             </a>
-            <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.assessment', identifier=assessment.identifier) }}">
-                Supprimer
-            </button>
         </div>
     </li>
     {% endfor %}
