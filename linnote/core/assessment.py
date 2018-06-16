@@ -44,7 +44,7 @@ class Mark(BASE):
     _scale = Column(Integer, nullable=False)
 
     assessment = relationship('Assessment', back_populates='results')
-    student = relationship('Student', back_populates='results', cascade='all')
+    student = relationship('Student', back_populates='results')
 
     def __init__(self, student, score, scale, **kwargs):
         """
