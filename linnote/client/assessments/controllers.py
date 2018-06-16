@@ -139,3 +139,21 @@ class MergeController(MethodView):
             session.add(assessment)
             session.commit()
         return redirect(url_for('assessments.assessments'))
+
+
+class ReportController(MethodView):
+
+    decorators = [login_required]
+    template = 'assessments/assessment/report.html'
+
+    def get(self, id):
+        assessment = self.load(id)
+        return self.render(assessment=assessment)
+
+    @staticmethod
+    def load(id):
+        session = WEBSESSION()
+        return session.query(Assessment).get(id)
+
+    def render(self, **kwargs):
+        return render_template(self.template, **kwargs)

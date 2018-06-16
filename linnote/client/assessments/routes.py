@@ -10,6 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from .controllers import ListView, MainView, ResultsView, MergeController
+from .controllers import ReportController
 
 
 # Build controllers functions.
@@ -17,6 +18,7 @@ LIST_VIEW = ListView.as_view('assessments')
 MAIN_VIEW = MainView.as_view('assessment')
 RESULTS_VIEW = ResultsView.as_view('results')
 MERGER_VIEW = MergeController.as_view('merger')
+REPORT_VIEW = ReportController.as_view('report')
 
 
 # Register routes to controllers.
@@ -39,3 +41,6 @@ ROUTES.add_url_rule(
 ROUTES.add_url_rule(
     '/assessments/merge',
     view_func=MERGER_VIEW)
+ROUTES.add_url_rule(
+    '/assessment/<int:id>/report',
+    view_func=REPORT_VIEW)

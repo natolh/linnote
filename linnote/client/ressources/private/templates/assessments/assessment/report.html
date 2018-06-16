@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% set title = assessment.title %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='css/ranking.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>
+    {{ title }}
+</h1>
+<table class="results">
+    <thead>
+        <tr>
+            <th class="left-align">Anonymat</th>
+            <th class="left-align">Note brute</th>
+            <th class="left-align">Note</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in assessment.results %}
+        <tr>
+            <td class="left-align">
+                <strong>
+                    {{ result.student.identifier }}
+                </strong>
+            </td>
+            <td class="left-align">
+                {{ result.score|round(assessment.precision) }}
+            </td>
+            <td class="left-align">
+                {{ result.value|round(assessment.precision) }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script type="text/javascript" defer>
+    window.print();
+</script>
+{% endblock %}
