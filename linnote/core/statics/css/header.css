@@ -83,7 +83,7 @@ h1 {
     align-items: center;
     justify-content: center;
     font-family: "Droid Sans";
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: rgb(40, 40, 40);
 }
@@ -91,38 +91,6 @@ h1 {
 @media screen and (min-width: 900px) {
     h1 {
         justify-content: flex-start;
-    }
-}
-
-.topping {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    padding: 1.5rem 0;
-    background-color: rgb(240, 240, 240);
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template: repeat(2, min-content) / 1fr;
-    text-align: center;
-    justify-content: center;
-    border-bottom: 1px solid rgb(230, 230, 230);
-}
-
-.topping > :not(:first-child) {
-    margin-top: 1rem;
-}
-
-@media screen and (min-width: 900px) {
-    .topping {
-        grid-template: 1fr / repeat(2, 1fr);
-    }
-
-    .topping:first-child {
-        text-align: left;
-    }
-
-    .topping > :not(:first-child) {
-        margin-top: 0;
     }
 }
 
@@ -139,4 +107,61 @@ h1 {
     #brand {
         margin: 0;
     }
+}
+
+/* Main heading */
+main [role="heading"] {
+    display: flex;
+    justify-content: space-between;
+}
+
+main [role="heading"] [role="navigation"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main [role="heading"] [role="navigation"] ul {
+    display: flex;
+}
+
+main [role="heading"] [role="navigation"] li {
+    display: flex;
+}
+
+main [role="heading"] [role="navigation"] li:not(:last-of-type) {
+    margin-right: 10px;
+}
+
+main [role="heading"] [role="navigation"] a {
+    font-size: 1rem;
+}
+
+main [role="heading"] [role="navigation"] a:hover, main [role="heading"] [role="navigation"] a:active, main [role="heading"] [role="navigation"] a:focus, main [role="heading"] [role="navigation"] a.selected {
+    font-weight: bold;
+}
+
+main [role="heading"] [role="toolbar"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main [role="heading"] [role="toolbar"] menu {
+    display: flex;
+}
+
+main [role="heading"] [role="toolbar"] li {
+    display: flex;
+}
+
+main [role="heading"] [role="toolbar"] menu a {
+    display: flex;
+    height: 2rem;
+    border-radius: 2px;
+    padding: 0 10px;
+    justify-content: center;
+    align-items: center;
+    color: rgb(120, 120, 120);
+    background-color: rgb(200, 200, 200);
 }

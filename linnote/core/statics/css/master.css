@@ -53,33 +53,6 @@ main > :nth-child(n) {
     padding: 1rem;
 }
 
-[role="navigation"].secondary, menu {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-[role="navigation"].secondary > li, menu > li {
-    display: flex;
-    margin: 0.15rem;
-}
-
-[role="navigation"].secondary a, menu a {
-    padding: 0.5rem 1.5rem;
-    width: 100%;
-    font-weight: bold;
-    color: rgb(120, 120, 120);
-    text-align: center;
-    border-radius: 40px;
-    background-color: rgba(209, 209, 209, 0.671);
-}
-
-[role="navigation"].secondary a:hover, menu a:hover {
-    color: white;
-    background-color: rgb(180, 180, 180);
-}
-
 /* Dirty section */
 
 .action-box.sensitive .information {
@@ -119,18 +92,6 @@ main > :nth-child(n) {
 
 
 @media screen and (min-width: 900px) {
-    [role="navigation"].secondary, menu {
-        grid-column: 2 / 3;
-        justify-content: flex-end;
-    }
-
-    [role="navigation"].secondary > li {
-        margin: 0;
-    }
-
-    [role="navigation"].secondary li:not(:last-child) {
-        margin-right: 0.3rem;
-    }
 
     .action-box.sensitive {
         flex-direction: row;
@@ -196,58 +157,4 @@ a, button {
 em {
     font-weight: bolder;
     font-style: normal;
-}
-
-/* Toolbar */
-div[role="toolbar"].group {
-    grid-column: 1 / auto;
-    display: flex;
-}
-
-div[role="toolbar"].group > :not(:last-child) {
-    margin-right: 1rem;
-}
-
-menu[role="toolbar"].secondary {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    border: 1px solid rgb(200, 200, 200);
-    background-color: transparent;
-    border-radius: 2px;
-    height: 2rem;
-    width: fit-content;
-    padding: 0;
-}
-
-menu[role="toolbar"].secondary > ul {
-    display: flex;
-    flex-wrap: nowrap;
-    height: 100%;
-    width: auto;
-    padding: 0;
-    margin: 0;
-}
-
-menu[role="toolbar"].secondary button, menu[role="toolbar"].secondary a {
-    display: flex;
-    flex-wrap: nowrap;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8rem;
-    padding: 0 0.4rem;
-    background-color: transparent;
-    border-radius: 0;
-    color: grey;
-    font-weight: 400;
-    white-space: nowrap;
-}
-
-menu[role="toolbar"].secondary button:hover, menu[role="toolbar"].secondary a:hover {
-    background-color: rgb(240, 240, 240);
-}
-
-menu[role="toolbar"].secondary > ul:not(:last-child) {
-    border-right: 1px solid rgb(200, 200, 200);
 }
