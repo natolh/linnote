@@ -29,6 +29,7 @@ header, footer {
 main {
     display: grid;
     grid-template: min-content / 1fr;
+    grid-auto-rows: min-content;
 }
 
 @media screen and (min-width: 600px) {
