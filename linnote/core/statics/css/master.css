@@ -32,6 +32,24 @@ main {
     grid-auto-rows: min-content;
 }
 
+@media screen and (min-width: 600px) {
+    main {
+        grid-template: min-content / repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 900px) {
+    main {
+        grid-template: min-content / repeat(4, 1fr);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    main {
+        grid-template: min-content / repeat(6, 1fr);
+    }
+}
+
 main > :nth-child(n) {
     grid-column: 1 / -1;
     padding: 1rem;
@@ -100,17 +118,9 @@ main > :nth-child(n) {
     border-radius: 3px;
 }
 
-@media screen and (min-width: 600px) {
-    main {
-        grid-template: min-content / repeat(3, 1fr);
-    }
-}
+
 
 @media screen and (min-width: 900px) {
-    main {
-        grid-template: min-content / repeat(4, 1fr);
-    }
-
     [role="navigation"].secondary, menu {
         grid-column: 2 / 3;
         justify-content: flex-end;
@@ -136,12 +146,6 @@ main > :nth-child(n) {
 
     .action-box.sensitive button {
         white-space: nowrap;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    main {
-        grid-template: min-content / repeat(6, 1fr);
     }
 }
 
