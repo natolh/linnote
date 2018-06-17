@@ -30,10 +30,10 @@ main {
     display: grid;
     grid-template: repeat(2, min-content) / 1fr;
     grid-auto-rows: min-content;
-    grid-gap: 1rem 2rem;
 }
 
 main > :nth-child(n) {
+    grid-column: 1 / -1;
     padding: 1rem;
 }
 
@@ -62,10 +62,6 @@ main > :nth-child(n) {
 [role="navigation"].secondary a:hover, menu a:hover {
     color: white;
     background-color: rgb(180, 180, 180);
-}
-
-main > * {
-    grid-column: 1 / -1;
 }
 
 /* Dirty section */
@@ -198,4 +194,58 @@ a, button {
 em {
     font-weight: bolder;
     font-style: normal;
+}
+
+/* Toolbar */
+div[role="toolbar"].group {
+    grid-column: 1 / auto;
+    display: flex;
+}
+
+div[role="toolbar"].group > :not(:last-child) {
+    margin-right: 1rem;
+}
+
+menu[role="toolbar"].secondary {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    border: 1px solid rgb(200, 200, 200);
+    background-color: transparent;
+    border-radius: 2px;
+    height: 2rem;
+    width: fit-content;
+    padding: 0;
+}
+
+menu[role="toolbar"].secondary > ul {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100%;
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
+
+menu[role="toolbar"].secondary button, menu[role="toolbar"].secondary a {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    padding: 0 0.4rem;
+    background-color: transparent;
+    border-radius: 0;
+    color: grey;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+menu[role="toolbar"].secondary button:hover, menu[role="toolbar"].secondary a:hover {
+    background-color: rgb(240, 240, 240);
+}
+
+menu[role="toolbar"].secondary > ul:not(:last-child) {
+    border-right: 1px solid rgb(200, 200, 200);
 }
