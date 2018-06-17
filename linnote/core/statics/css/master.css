@@ -10,10 +10,8 @@
 @import url('messages.css');
 
 html {
-    font-family: "Lato", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-    font-size: 100%;
+    font-size: 16px;
+    font-family: "Droid Sans";
 }
 
 body {
