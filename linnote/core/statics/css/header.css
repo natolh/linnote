@@ -11,20 +11,11 @@ header {
     position: sticky;
     top: 0;
     width: 100vw;
-    padding: 1.4rem;
+    padding: .5rem;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
     background-color: var(--color-main);
-}
-
-@media screen and (min-width: 450px) {
-    header {
-        flex-direction: row;
-        padding: 0.3rem;
-    }
 }
 
 header a {
@@ -45,28 +36,15 @@ header a:hover, header a:focus, header a:active, a.active {
 
 header nav {
     height: 100%;
-    max-width: calc(100vw - 2rem);
-}
-
-@media screen and (min-width: 450px) {
-    header nav {
-        max-width: none;
-    }
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 header nav ul {
     height: 100%;
     display: flex;
     align-items: stretch;
-    overflow-x: scroll;
-    overflow-y: hidden;
-}
-
-@media screen and (min-width: 450px) {
-    header nav ul {
-        overflow: none;
     }
-}
 
 header nav li {
     display: flex;
@@ -95,18 +73,12 @@ h1 {
 }
 
 #brand {
+    margin-right: 50px;
     font-size: 1rem;
     font-weight: lighter;
     letter-spacing: 0;
     text-transform: lowercase;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 0.5rem;
-}
-
-@media screen and (min-width: 450px) {
-    #brand {
-        margin: 0;
-    }
 }
 
 /* Main heading */
