@@ -362,7 +362,9 @@ class Assessment(BASE):
 
     @property
     def expected(self) -> List[Student]:
-        """Students called for the assessment."""
+        """
+        Students called for the assessment.
+        """
         raise NotImplementedError
 
     def rescale(self, scale: int) -> None:
