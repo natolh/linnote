@@ -298,7 +298,6 @@ class Assessment(BASE):
             assessment.add_results(results)
 
             return assessment
-
         return NotImplemented
 
     def __radd__(self, other):
