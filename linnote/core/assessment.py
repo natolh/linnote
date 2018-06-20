@@ -361,8 +361,9 @@ class Assessment(BASE):
         curve.apply(self.results)
 
 
+    @property
     def expected(self) -> List[Student]:
-        """Studends that must take the assessment."""
+        """Students called for the assessment."""
         raise NotImplementedError
 
     def rescale(self, scale: int) -> None:
