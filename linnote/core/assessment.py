@@ -304,7 +304,6 @@ class Assessment(BASE):
     def __radd__(self, other):
         if other is 0:
             return self
-
         return NotImplemented
 
     def add_result(self, mark: Mark) -> None:
