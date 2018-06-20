@@ -22,7 +22,7 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
-from linnote.core.user import Group, Student
+from linnote.core.user import Student
 from linnote.core.utils.database import BASE
 
 
@@ -376,20 +376,3 @@ class Assessment(BASE):
         """
         for mark in self.results:
             mark.rescale(new_scale)
-
-    def sample(self, *args, group=None):
-        """
-        Get a sample of the assessment's results.
-
-        * group:    A <Group> object. Students from wich to gather marks.
-        * args:     A collection of <Student> objects.
-
-        Return: A list of <Mark> objects.
-        """
-        if not group and not args:
-            return self.results
-
-        if args and not group:
-            group = Group(name='temp', students=list(args))
-
-        return [mark for mark in self.results if mark.student in group]
