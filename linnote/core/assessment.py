@@ -287,6 +287,7 @@ class Assessment(BASE):
     def __str__(self) -> str:
         return self.title
 
+    # Should disappear in favor of a merge method (more customizable).
     def __add__(self, other):
         if isinstance(other, Assessment):
             title = f'{self.title} & {other.title}'
