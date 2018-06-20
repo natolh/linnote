@@ -355,7 +355,7 @@ class Assessment(BASE):
         'title' as title. Assessments involved in the merge are preserved.
         """
         # Merge data of assessments.
-        scale = sum(attrgetter('scale'), args)
+        scale = sum(map(attrgetter('scale'), args))
         precision = min(map(attrgetter('precision'), args))
         results = Mark.merge(*list(map(attrgetter('results'), args)))
         # Create the assessment.
