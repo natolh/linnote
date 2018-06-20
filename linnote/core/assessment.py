@@ -318,7 +318,7 @@ class Assessment(BASE):
         assessment coefficient, the mark is automatically rescale before being
         added.
         """
-        if mark.student not in self.attendees():
+        if mark.student not in self.attendees:
             if mark.scale is not self.coefficient:
                 mark.rescale(self.coefficient)
             self.results.append(mark)
@@ -334,17 +334,20 @@ class Assessment(BASE):
         the mark scale is not equal to the assessment coefficient, the mark is
         automatically rescale before being added.
         """
-        attendees = self.attendees()
+        attendees = self.attendees
         marks = [mark for mark in marks if mark.student not in attendees]
         if marks[0].scale is not self.coefficient:
             for mark in marks:
                 mark.rescale(self.coefficient)
         self.results.extend(marks)
 
+    @property
     def attendees(self) -> List[Student]:
-        """Students that have taken the assessment."""
-        get_students = attrgetter('student')
-        attendees = map(get_students, self.results)
+        """
+        Students that have taken the assessment.
+        """
+        get_student = attrgetter('student')
+        attendees = map(get_student, self.results)
         return list(attendees)
 
     def curve(self, name: str) -> None:
