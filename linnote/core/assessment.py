@@ -239,8 +239,8 @@ class TopLinear(Curve):
         self.slope = marks[0].scale / max(marks).value
 
     def __call__(self, mark):
-        new_score = self.slope * mark.value
-        return self._set(mark, new_score)
+        score = self.slope * mark.value
+        return self._set(mark, score)
 
 
 class Assessment(BASE):
