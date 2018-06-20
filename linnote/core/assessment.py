@@ -233,6 +233,12 @@ class Curve(ABC):
 
 
 class TopLinear(Curve):
+    """
+    A curve.
+
+    Transform the best mark of the assessment to reach the top of the scale.
+    Transform following marks proportionnaly.
+    """
 
     def __init__(self, marks):
         super().__init__()
