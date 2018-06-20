@@ -360,7 +360,6 @@ class Assessment(BASE):
         curve = Curve(self.results)
         curve.apply(self.results)
 
-
     @property
     def expected(self) -> List[Student]:
         """Students called for the assessment."""
