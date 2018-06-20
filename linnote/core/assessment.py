@@ -339,25 +339,17 @@ class Assessment(BASE):
         attendees = map(get_students, self.results)
         return list(attendees)
 
-    def curve(self, curve: str) -> None:
+    def curve(self, name: str) -> None:
         """
         Curve assessment's marks.
 
-        - curve:    String. Name of a valid curving function, available
-                    curving functions are listed in the 'Curver' class.
-
-        References:
-        - en.wikipedia.org/wiki/Grading_on_a_curve
-        - www.wikihow.com/Curve-Grades
-        - divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
-        - academia.stackexchange.com/questions/8261
-
-        Return: None.
+        Apply a curve to assessment's marks. The adequate curve is selected by
+        it's name.
+        To learn about curving read the Curve documentation.
         """
         curves = {'top_linear': TopLinear}
-
-        Curve = getattr(curves, curve, TopLinear)
-        curve = Curve(self.results)
+        curve = getattr(curves, name, TopLinear)
+        curve = curve(self.results)
         curve.apply(self.results)
 
     @property
