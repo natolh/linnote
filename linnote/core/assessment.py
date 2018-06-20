@@ -219,6 +219,7 @@ class Curve(ABC):
         return mark
 
     def apply(self, sequence):
+        """Apply the curve to a sequence of marks."""
         marks = map(self, sequence)
         return list(marks)
 
