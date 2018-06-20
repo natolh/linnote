@@ -216,10 +216,6 @@ class Curve(ABC):
     """
 
     @abstractmethod
-    def __init__(self):
-        super().__init__()
-
-    @abstractmethod
     def __call__(self, mark):
         return mark
 
