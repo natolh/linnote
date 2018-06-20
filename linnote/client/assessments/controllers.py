@@ -132,8 +132,7 @@ class MergeController(MethodView):
 
         if form.validate() and len(form.assessments.data) > 1:
             assessments = [self.load(a) for a in form.assessments.data]
-            assessment = sum(assessments)
-            assessment.title = form.title.data
+            assessment = Assessment.merge(form.title.data, *assessments)
             assessment.creator = current_user
             session = WEBSESSION()
             session.add(assessment)

@@ -287,25 +287,6 @@ class Assessment(BASE):
     def __str__(self) -> str:
         return self.title
 
-    # Should disappear in favor of a merge method (more customizable).
-    def __add__(self, other):
-        if isinstance(other, Assessment):
-            title = f'{self.title} & {other.title}'
-            coefficient = self.coefficient + other.coefficient
-            precision = min([self.precision, other.precision])
-
-            assessment = Assessment(title, coefficient, precision=precision)
-            results = Mark.merge(self.results, other.results)
-            assessment.add_results(results)
-
-            return assessment
-        return NotImplemented
-
-    def __radd__(self, other):
-        if other is 0:
-            return self
-        return NotImplemented
-
     def add_result(self, mark: Mark) -> None:
         """
         Add a new result to the assessment.
