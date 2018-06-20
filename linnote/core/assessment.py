@@ -365,14 +365,12 @@ class Assessment(BASE):
         """Studends that must take the assessment."""
         raise NotImplementedError
 
-    def rescale(self, new_scale: int) -> None:
+    def rescale(self, scale: int) -> None:
         """
-        Rescale assessment's results.
+        Rescale assessment's marks.
 
-        Change the assessment 'scale' and recompute students scores for the
-        new 'scale'.
-
-        - new_scale: Integer. The desired scale.
+        Change the assessment scale to 'scale' and recompute students' marks
+        accordingly.
         """
         for mark in self.results:
-            mark.rescale(new_scale)
+            mark.rescale(scale)
