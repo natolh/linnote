@@ -61,22 +61,22 @@ class MainView(MethodView):
             assessment = session.query(Assessment).get(identifier)
             make_transient(assessment)
             assessment.title = form.title.data
-            assessment.coefficient = form.coefficient.data
+            assessment.scale = form.coefficient.data
             assessment.precision = form.precision.data
 
             if form.results.data:
                 marks = Mark.load(request.files['results'], form.scale.data)
                 assessment.add_results(marks)
 
-            assessment.rescale(assessment.coefficient)
+            assessment.rescale(assessment.scale)
 
         elif form.validate():
             title = form.title.data
-            coefficient = form.coefficient.data
+            scale = form.coefficient.data
             precision = form.precision.data
 
             assessment = Assessment(
-                title, coefficient, precision=precision, creator=current_user)
+                title, scale, precision=precision, creator=current_user)
 
             if form.results.data:
                 marks = Mark.load(request.files['results'], form.scale.data)

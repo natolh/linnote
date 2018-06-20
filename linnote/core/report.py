@@ -111,7 +111,7 @@ class Report(BASE):
         """Distribution of the group's marks as an histogram."""
         value = attrgetter('value')
         document = StringIO()
-        coefficient = self.assessment.coefficient
+        coefficient = self.assessment.scale
         marks = [value(mark) for mark in self.marks(group)]
 
         pyplot.figure(figsize=(6, 4))

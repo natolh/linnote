@@ -249,22 +249,18 @@ class Assessment(BASE):
 
     - identifier:   Integer. A unique number to identify the assessment.
     - title:        String. String for assessment identification by humans.
-    - coefficient:  Integer. Maximal possible score.
+    - scale:        Integer. Maximal possible score.
     - precision:    Integer. Maximal number of decimals to keep for mark
                     computations.
     - results:      Collection of Mark. Students marks to the assessment.
     - reports:      Collection of Report.
     """
 
-    # Change name of 'coefficient' attribute to 'scale'. Make this
-    # attribute private (_scale) and make a setter that automatically call the
-    # 'rescale' method on modification.
-
     __tablename__ = 'assessments'
 
     identifier = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False, index=True)
-    coefficient = Column(Integer, nullable=False)
+    scale = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
     creator_id = Column(Integer, ForeignKey('users.identifier'))
     creation_date = Column(
@@ -274,10 +270,10 @@ class Assessment(BASE):
     results = relationship('Mark', back_populates='assessment', cascade='all')
     reports = relationship('Report', back_populates='assessment')
 
-    def __init__(self, title: str, coefficient: int, **kwargs) -> None:
+    def __init__(self, title: str, scale: int, **kwargs) -> None:
         super().__init__()
         self.title = title
-        self.coefficient = coefficient
+        self.scale = scale
         self.precision = kwargs.get('precision', 3)
         self.creator = kwargs.get('creator', None)
 
@@ -295,12 +291,12 @@ class Assessment(BASE):
 
         Ensure that there is not an assessment's result for the student, if so
         raise an AttributeError. If the mark scale is not equal to the
-        assessment coefficient, the mark is automatically rescale before being
+        assessment scale, the mark is automatically rescale before being
         added.
         """
         if mark.student not in self.attendees:
-            if mark.scale is not self.coefficient:
-                mark.rescale(self.coefficient)
+            if mark.scale is not self.scale:
+                mark.rescale(self.scale)
             self.results.append(mark)
         raise AttributeError('a result is already known for this student')
 
@@ -311,14 +307,14 @@ class Assessment(BASE):
         - marks:    Collection of Mark objects. The marks to add.
 
         Ensure that there is not an assessment's result for the student. If
-        the mark scale is not equal to the assessment coefficient, the mark is
+        the mark scale is not equal to the assessment scale, the mark is
         automatically rescale before being added.
         """
         attendees = self.attendees
         marks = [mark for mark in marks if mark.student not in attendees]
-        if marks[0].scale is not self.coefficient:
+        if marks[0].scale is not self.scale:
             for mark in marks:
-                mark.rescale(self.coefficient)
+                mark.rescale(self.scale)
         self.results.extend(marks)
 
     @property
@@ -359,11 +355,11 @@ class Assessment(BASE):
         'title' as title. Assessments involved in the merge are preserved.
         """
         # Merge data of assessments.
-        coefficient = sum(attrgetter('coefficient'), args)
+        scale = sum(attrgetter('scale'), args)
         precision = min(map(attrgetter('precision'), args))
         results = Mark.merge(*list(map(attrgetter('results'), args)))
         # Create the assessment.
-        assessment = cls(title, coefficient, precision=precision)
+        assessment = cls(title, scale, precision=precision)
         assessment.add_results(results)
         return assessment
 
