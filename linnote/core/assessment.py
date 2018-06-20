@@ -224,7 +224,7 @@ class Curve(ABC):
         return list(marks)
 
     @staticmethod
-    def _set(mark, new):
+    def _set(mark: Mark, new: float) -> Mark:
         if new > mark.scale:
             mark.bonus = mark.scale - mark.score
         else:
@@ -238,7 +238,7 @@ class TopLinear(Curve):
         super().__init__()
         self.slope = marks[0].scale / max(marks).value
 
-    def __call__(self, mark):
+    def __call__(self, mark: Mark) -> Mark:
         score = self.slope * mark.value
         return self._set(mark, score)
 
