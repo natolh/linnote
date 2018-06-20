@@ -202,6 +202,18 @@ class Mark(BASE):
 
 
 class Curve(ABC):
+    """
+    Abstract Base Class for curves.
+
+    A curve transforms marks by applying a function to them. Parameters of the
+    function can be either defined by the user or auto-defined?
+
+    About curving:
+    - en.wikipedia.org/wiki/Grading_on_a_curve
+    - www.wikihow.com/Curve-Grades
+    - divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
+    - academia.stackexchange.com/questions/8261
+    """
 
     @abstractmethod
     def __init__(self):
