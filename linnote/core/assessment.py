@@ -113,7 +113,6 @@ class Mark(BASE):
         return self.__add__(other)
 
     def __copy__(self):
-        # Reimplement copy to copy the object, not the record.
         return Mark(self.student, self.score, self.scale, bonus=self.bonus)
 
     def __hash__(self) -> int:
