@@ -75,24 +75,24 @@ class Mark(BASE):
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def __gt__(self, other):
-        if isinstance(other, Mark):
-            return self.value > other.value
-        return NotImplemented
-
     def __lt__(self, other):
         if isinstance(other, Mark):
             return self.value < other.value
         return NotImplemented
 
-    def __ge__(self, other):
+    def __gt__(self, other):
         if isinstance(other, Mark):
-            return self.value >= other.value
+            return self.value > other.value
         return NotImplemented
 
     def __le__(self, other):
         if isinstance(other, Mark):
             return self.value <= other.value
+        return NotImplemented
+
+    def __ge__(self, other):
+        if isinstance(other, Mark):
+            return self.value >= other.value
         return NotImplemented
 
     def __add__(self, other):
@@ -109,12 +109,12 @@ class Mark(BASE):
 
         return NotImplemented
 
+    def __radd__(self, other):
+        return self.__add__(other)
+
     def __copy__(self):
         # Reimplement copy to copy the object, not the record.
         return Mark(self.student, self.score, self.scale, bonus=self.bonus)
-
-    def __radd__(self, other):
-        return self.__add__(other)
 
     def __hash__(self) -> int:
         return hash(self.identifier)
