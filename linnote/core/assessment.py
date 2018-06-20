@@ -369,6 +369,23 @@ class Assessment(BASE):
         """
         raise NotImplementedError
 
+    @classmethod
+    def merge(cls, title: str, *args) -> 'Assessment':
+        """
+        Merge assessments into one assessment.
+
+        The product of merging multiple assessments is a new assessment with
+        'title' as title. Assessments involved in the merge are preserved.
+        """
+        # Merge data of assessments.
+        coefficient = sum(attrgetter('coefficient'), args)
+        precision = min(map(attrgetter('precision'), args))
+        results = Mark.merge(*list(map(attrgetter('results'), args)))
+        # Create the assessment.
+        assessment = cls(title, coefficient, precision=precision)
+        assessment.add_results(results)
+        return assessment
+
     def rescale(self, scale: int) -> None:
         """
         Rescale assessment's marks.
