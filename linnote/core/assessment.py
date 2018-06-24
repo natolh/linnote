@@ -208,10 +208,10 @@ class Curve(ABC):
     function can be either defined by the user or auto-defined?
 
     About curving:
-    - en.wikipedia.org/wiki/Grading_on_a_curve
-    - www.wikihow.com/Curve-Grades
-    - divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
-    - academia.stackexchange.com/questions/8261
+    - https://en.wikipedia.org/wiki/Grading_on_a_curve
+    - https://www.wikihow.com/Curve-Grades
+    - https://divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
+    - https://academia.stackexchange.com/questions/8261
     """
 
     @abstractmethod
