@@ -35,14 +35,14 @@ class AssessmentView(MethodView):
         return jsonify(redirect=url_for('assessments.assessments'))
 
 
-class CurverController(MethodView):
+class GraderController(MethodView):
 
     decorators = [login_required]
 
-    def post(self, identifier, curve):
+    def post(self, identifier, grader):
         session = WEBSESSION()
         assessment = session.query(Assessment).get(identifier)
-        assessment.curve(curve)
+        assessment.grade(grader)
         session.commit()
         return jsonify(redirect=url_for('assessments.results', identifier=identifier))
 
@@ -97,8 +97,8 @@ BLUEPRINT.add_url_rule(
     '/assessments/<int:identifier>',
     view_func=AssessmentView.as_view('assessment'))
 BLUEPRINT.add_url_rule(
-    '/assessments/<int:identifier>/marks/curver/<curve>',
-    view_func=CurverController.as_view('curve'))
+    '/assessments/<int:identifier>/marks/grader/<grader>',
+    view_func=GraderController.as_view('grade'))
 BLUEPRINT.add_url_rule(
     '/reports/<identifier>',
     view_func=ReportView.as_view('report'))

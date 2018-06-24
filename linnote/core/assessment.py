@@ -200,14 +200,15 @@ class Mark(BASE):
         return self._score + self._bonus
 
 
-class Curve(ABC):
+class Grader(ABC):
     """
-    Abstract Base Class for curves.
+    Abstract Base Class for graders.
 
-    A curve transforms marks by applying a function to them. Parameters of the
-    function can be either defined by the user or auto-defined?
+    Automatically assign a grade based on student's score according to a
+    formula. The formula can auto-adjust it's parameters or parameters can be
+    defined by the user.
 
-    About curving:
+    About grading:
     - https://en.wikipedia.org/wiki/Grading_on_a_curve
     - https://www.wikihow.com/Curve-Grades
     - https://divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
@@ -232,9 +233,9 @@ class Curve(ABC):
         return mark
 
 
-class TopLinear(Curve):
+class TopLinear(Grader):
     """
-    A curve.
+    Top-Linear grader.
 
     Transform the best mark of the assessment to reach the top of the scale.
     Transform following marks proportionnaly.
@@ -332,18 +333,12 @@ class Assessment(BASE):
         attendees = map(get_student, self.results)
         return list(attendees)
 
-    def curve(self, name: str) -> None:
-        """
-        Curve assessment's marks.
-
-        Apply a curve to assessment's marks. The adequate curve is selected by
-        it's name.
-        To learn about curving read the Curve documentation.
-        """
-        curves = {'top_linear': TopLinear}
-        curve = getattr(curves, name, TopLinear)
-        curve = curve(self.results)
-        curve.apply(self.results)
+    def grade(self, name: str) -> None:
+        """Grade the assessment."""
+        graders = {'top_linear': TopLinear}
+        grader = getattr(graders, name, TopLinear)
+        grader = grader(self.results)
+        grader.apply(self.results)
 
     @property
     def expected(self) -> List[Student]:
