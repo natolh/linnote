@@ -26,7 +26,7 @@ class Login(MethodView):
             return redirect(url_for('assessments.assessment'))
 
         form = LoginForm()
-        return render_template('account/authentification/login.html', form=form)
+        return render_template('authentification/login.html', form=form)
 
     def post(self):
         """Process the login formular, login the user, redirect to his desk."""
@@ -63,7 +63,7 @@ class Password(MethodView):
     def get():
         """Get the password modification formular."""
         form = PasswordForm()
-        return render_template('account/password.html', form=form)
+        return render_template('password.html', form=form)
 
     def post(self):
         """Process the password modification formular."""
@@ -87,7 +87,7 @@ class Profile(MethodView):
     def get():
         """Get the profile modification formular."""
         form = ProfileForm(obj=current_user)
-        return render_template('account/profile.html', form=form)
+        return render_template('profile.html', form=form)
 
     def post(self):
         """Process the profile modification formular."""

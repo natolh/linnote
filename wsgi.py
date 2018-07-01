@@ -9,7 +9,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from linnote.client import create_app
-from linnote.client import api, site, accounts, assessments, reports, users
+from linnote import accounts
+from linnote.client import api, site, assessments, reports, users
 
 
 BLUEPRINTS = [api, site, accounts, assessments, reports, users]

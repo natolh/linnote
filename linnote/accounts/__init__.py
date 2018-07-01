@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Routes for the 'accounts' application module..
+Accounts application module.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -20,10 +20,10 @@ PASSWORD = Password.as_view('password')
 
 
 # Register routes to controllers.
-ROUTES = Blueprint('account', __name__, url_prefix='/account')
+BLUEPRINT = Blueprint('account', __name__, url_prefix='/account', template_folder='templates')
 
 
-ROUTES.add_url_rule('/login', view_func=LOGIN)
-ROUTES.add_url_rule('/logout', view_func=LOGOUT)
-ROUTES.add_url_rule('/profile', view_func=PROFILE)
-ROUTES.add_url_rule('/password', view_func=PASSWORD)
+BLUEPRINT.add_url_rule('/login', view_func=LOGIN)
+BLUEPRINT.add_url_rule('/logout', view_func=LOGOUT)
+BLUEPRINT.add_url_rule('/profile', view_func=PROFILE)
+BLUEPRINT.add_url_rule('/password', view_func=PASSWORD)
