@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Routes for the 'users' application module.
+Users application module.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -20,11 +19,11 @@ USER = UserRessource.as_view('user')
 
 
 # Register routes to controllers.
-ROUTES = Blueprint('users', __name__, url_prefix='/admin')
+BLUEPRINT = Blueprint('users', __name__, url_prefix='/admin', template_folder='templates')
 
 
-ROUTES.add_url_rule('/users/groups', view_func=GROUPS)
-ROUTES.add_url_rule('/users/group', view_func=GROUP)
-ROUTES.add_url_rule('/users', view_func=USERS)
-ROUTES.add_url_rule('/user', defaults={'identifier': None}, view_func=USER)
-ROUTES.add_url_rule('/user/<int:identifier>', view_func=USER)
+BLUEPRINT.add_url_rule('/users/groups', view_func=GROUPS)
+BLUEPRINT.add_url_rule('/users/group', view_func=GROUP)
+BLUEPRINT.add_url_rule('/users', view_func=USERS)
+BLUEPRINT.add_url_rule('/user', defaults={'identifier': None}, view_func=USER)
+BLUEPRINT.add_url_rule('/user/<int:identifier>', view_func=USER)
