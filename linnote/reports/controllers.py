@@ -29,7 +29,7 @@ class Collection(MethodView):
         """Display the collection of reports."""
         session = WEBSESSION()
         reports = session.query(Report).all()
-        return render_template('reports/collection.html', reports=reports)
+        return render_template('reports.html', reports=reports)
 
 
 class Ressource(MethodView):
@@ -44,7 +44,7 @@ class Ressource(MethodView):
 
         if identifier:
             report = session.query(Report).get(identifier)
-            return render_template('reports/ranking.html', rep=report)
+            return render_template('ranking.html', rep=report)
 
         form = ReportForm()
         form.assessment.choices = [
@@ -52,7 +52,7 @@ class Ressource(MethodView):
         form.subgroups.choices = [
             (g.identifier, g.name) for g in session.query(Group).all()]
 
-        return render_template('reports/ressource.html', form=form)
+        return render_template('report.html', form=form)
 
     @staticmethod
     def post(identifier):
