@@ -14,7 +14,7 @@
         <h1>{{ assessment.title }}</h1>
         <p>Créé par <em>{{ assessment.creator|default('un inconnu', True) }}</em>, le <em>{{ assessment.creation_date.strftime('%d/%m/%Y') }}</em></p>
     </div>
-    {% include 'assessments/assessment/menu.html' %}
+    {% include 'assessment/menu.html' %}
 </div>
 
 <div role="toolbar">

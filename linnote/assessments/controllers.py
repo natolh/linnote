@@ -27,8 +27,7 @@ class ListView(MethodView):
         """Display the assessments collection."""
         session = WEBSESSION()
         assessments = session.query(Assessment).all()
-        return render_template('assessments/collection.html',
-                               assessments=assessments)
+        return render_template('collection.html', assessments=assessments)
 
 
 class MainView(MethodView):
@@ -49,7 +48,7 @@ class MainView(MethodView):
             form = AssessmentForm()
             context = dict(form=form)
 
-        return render_template('assessments/assessment/ressource.html', **context)
+        return render_template('assessment/ressource.html', **context)
 
     @staticmethod
     def post(identifier):
@@ -97,15 +96,15 @@ class ResultsView(MethodView):
         """Display assessment's results."""
         session = WEBSESSION()
         assessment = session.query(Assessment).get(identifier)
-        return render_template('assessments/assessment/results.html',
-                               assessment=assessment)
+        return render_template('assessment/results.html',
+                                assessment=assessment)
 
 
 class MergeController(MethodView):
     """Controller for merging assessments."""
 
     decorators = [login_required]
-    template = 'assessments/merge.html'
+    template = 'merge.html'
 
     @staticmethod
     def load(id=None):
@@ -143,7 +142,7 @@ class MergeController(MethodView):
 class ReportController(MethodView):
 
     decorators = [login_required]
-    template = 'assessments/assessment/report.html'
+    template = 'assessment/report.html'
 
     def get(self, id):
         assessment = self.load(id)
