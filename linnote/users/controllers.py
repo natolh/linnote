@@ -26,7 +26,7 @@ class GroupCollection(MethodView):
         """Display the collection of user groups."""
         session = WEBSESSION()
         groups = session.query(Group).all()
-        return render_template('groups/collection.html', groups=groups)
+        return render_template('groups/groups.html', groups=groups)
 
 
 class GroupRessource(MethodView):
@@ -38,7 +38,7 @@ class GroupRessource(MethodView):
     def get():
         """Display a form for creating a new user group."""
         form = GroupForm()
-        return render_template('groups/ressource.html', form=form)
+        return render_template('groups/group.html', form=form)
 
     def post(self):
         """Create a new user group."""
@@ -62,7 +62,7 @@ class UserCollection(MethodView):
         """Display the collection of users."""
         session = WEBSESSION()
         users = session.query(User).all()
-        return render_template('users.html', users=users)
+        return render_template('users/users.html', users=users)
 
 
 class UserRessource(MethodView):
@@ -72,7 +72,7 @@ class UserRessource(MethodView):
 
     @staticmethod
     def render(**kwargs):
-        return render_template('user.html', **kwargs)
+        return render_template('users/user.html', **kwargs)
 
     @staticmethod
     def load(identifier=None):

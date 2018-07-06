@@ -27,7 +27,7 @@ class ListView(MethodView):
         """Display the assessments collection."""
         session = WEBSESSION()
         assessments = session.query(Assessment).all()
-        return render_template('collection.html', assessments=assessments)
+        return render_template('assessments.html', assessments=assessments)
 
 
 class MainView(MethodView):
@@ -104,7 +104,7 @@ class MergeController(MethodView):
     """Controller for merging assessments."""
 
     decorators = [login_required]
-    template = 'merge.html'
+    template = 'merger.html'
 
     @staticmethod
     def load(id=None):
