@@ -1,7 +1,5 @@
 [FLASK]
 SECRET_KEY = my-super-secret-key
-TEMPLATE_FOLDER = client/ressources/private/templates
-STATIC_FOLDER = client/ressources/public/site
 
 [DATABASE]
 URL = type+driver://username:password@host/databasename

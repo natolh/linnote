@@ -51,8 +51,8 @@ def configure_app(app, config_path):
     app.config.from_mapping(config)
 
     # Fix configuration for some special parameters.
-    app.template_folder = app.config['TEMPLATE_FOLDER']
-    app.static_folder = app.config['STATIC_FOLDER']
+    app.template_folder = 'core/templates'
+    app.static_folder = 'core/statics'
 
 
 def register_blueprints(app, blueprints):
