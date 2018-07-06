@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-API for the project.
+Web services module.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
