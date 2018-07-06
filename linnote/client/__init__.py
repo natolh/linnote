@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import Flask
 from flask_talisman import Talisman
 from linnote.accounts.utils import LOGIN_MANAGER
-from linnote.client.utils.security import CSP_POLICY
+from linnote.core.utils import CSP_POLICY
 from linnote.core.utils.configuration import load
 from linnote.core.utils import configure as configure_session
 
