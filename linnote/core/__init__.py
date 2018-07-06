@@ -12,6 +12,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Flask
 from flask_talisman import Talisman
+from linnote.accounts import LOGIN
 from linnote.accounts.utils import LOGIN_MANAGER
 from .utils import CSP_POLICY
 from .utils.configuration import load
@@ -44,6 +45,9 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
 
     # Session.
     configure_session(app)
+
+    # Set home.
+    app.add_url_rule('/', 'home', LOGIN)
 
     return app
 
