@@ -8,7 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from linnote.client import create_app
+from linnote.core import create_app
 from linnote import accounts, assessments, reports, users
 from linnote.client import api, site
 
