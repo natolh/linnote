@@ -11,7 +11,7 @@ header {
     position: sticky;
     top: 0;
     width: 100vw;
-    padding: .5rem;
+    padding: .5rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

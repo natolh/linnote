@@ -21,11 +21,6 @@ body {
           / 1fr;
 }
 
-header, footer {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
 main {
     display: grid;
     grid: min-content / 1fr;

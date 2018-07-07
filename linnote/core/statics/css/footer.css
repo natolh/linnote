@@ -14,7 +14,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0.6rem;
+    padding: .6rem 1rem;
     color: var(--footer-color-text);
     background-color: hsl(0, 0%, 12%);
     font-size: 0.8rem;
