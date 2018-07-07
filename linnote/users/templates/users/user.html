@@ -3,18 +3,21 @@
 {% set title = user.fullname or 'Nouvel utilisateur' %}
 {% set active_page = 'utilisateurs' %}
 
-{% block body %}
+{% block header %}
     {% include 'workspaces/admin.html' %}
-    {{ super() }}
+    <div class="module">
+        <div>
+            <h1>{{ title }}</h1>
+        </div>
+        <div role="toolbar">
+            <menu type="toolbar">
+                <input form="identity" type="submit" value="enregistrer">
+            </menu>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-<div class="topping">
-    <h1>{{ title }}</h1>
-    <menu role="toolbar">
-        <input form="identity" type="submit" value="enregistrer">
-    </menu>
-</div>
 <section>
     <h2>Identité</h2>
     <form id="identity" method="post" enctype="multipart/form-data">

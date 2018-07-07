@@ -3,33 +3,32 @@
 {% set title = 'Résultats' %}
 {% set active_page = 'épreuves' %}
 
-{% block body %}
+{% block header %}
     {% include 'workspaces/admin.html' %}
-    {{ super() }}
+    <div class="module">
+        <div>
+            <h1>{{ assessment.title }}</h1>
+            {% include 'assessment/menu.html' %}
+        </div>
+        <div role="toolbar">
+            <menu type="toolbar">
+                <li>
+                    <button class='xhr' data-method='post' data-action="{{ url_for('api.grade', identifier=assessment.identifier, grader='top_linear') }}">
+                        Lisser
+                    </button>
+                </li>
+                <li>
+                    <a href="{{ url_for('assessments.report', id=assessment.identifier) }}" target="_blank">
+                        Rapport
+                    </a>
+                </li>
+            </menu>
+
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-<div class="topping">
-    <div>
-        <h1>{{ assessment.title }}</h1>
-        <p>Créé par <em>{{ assessment.creator|default('un inconnu', True) }}</em>, le <em>{{ assessment.creation_date.strftime('%d/%m/%Y') }}</em></p>
-    </div>
-    {% include 'assessment/menu.html' %}
-</div>
-
-<div role="toolbar">
-    <ul>
-        <button class='xhr' data-method='post' data-action="{{ url_for('api.grade', identifier=assessment.identifier, grader='top_linear') }}">
-            Lisser
-        </button>
-    </ul>
-    <ul>
-        <a href="{{ url_for('assessments.report', id=assessment.identifier) }}" target="_blank">
-            Rapport
-        </a>
-    </ul>
-</div>
-
 <div role="table" class="flex">
 {% for result in assessment.results %}
     <ul role="row">

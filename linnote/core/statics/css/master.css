@@ -50,6 +50,24 @@ main > :nth-child(n) {
     padding: 1rem;
 }
 
+/* Typography */
+h1 {
+    display: flex;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    font-family: "Droid Sans";
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+@media screen and (min-width: 900px) {
+    h1 {
+        justify-content: flex-start;
+    }
+}
+
 /* Dirty section */
 
 .action-box.sensitive .information {

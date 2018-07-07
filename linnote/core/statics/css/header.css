@@ -5,12 +5,14 @@ Styling for header section.
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 */
-
 header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     width: 100vw;
+}
+
+header .site {
     padding: .5rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -18,7 +20,7 @@ header {
     background-color: var(--color-main);
 }
 
-header a {
+header .site a {
     display: flex;
     align-items: center;
     font-size: 0.8rem;
@@ -29,47 +31,30 @@ header a {
     transition: color 100ms ease-out;
 }
 
-header a:hover, header a:focus, header a:active, a.active {
+header .site a:hover, header .site a:focus, header .site a:active, header .site a.active {
     color: white !important;
     transition: color 100ms ease-in;
 }
 
-header nav {
+header .site nav {
     height: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
 }
 
-header nav ul {
+header .site nav ul {
     height: 100%;
     display: flex;
     align-items: stretch;
     }
 
-header nav li {
+header .site nav li {
     display: flex;
     align-items: strech;
 }
 
-header nav li:not(:last-child) {
+header .site nav li:not(:last-child) {
     margin-right: 0.7rem;
-}
-
-h1 {
-    display: flex;
-    margin: 0;
-    align-items: center;
-    justify-content: center;
-    font-family: "Droid Sans";
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: rgb(40, 40, 40);
-}
-
-@media screen and (min-width: 900px) {
-    h1 {
-        justify-content: flex-start;
-    }
 }
 
 #brand {
@@ -81,59 +66,65 @@ h1 {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* Main heading */
-main [role="heading"] {
+/* Module header */
+header .module {
     display: flex;
     justify-content: space-between;
+    padding: 1.2rem 1rem;
+    background-color: hsl(338, 52%, 40%);
 }
 
-main [role="heading"] [role="navigation"] {
+/* Module navigation */
+header .module [role="navigation"] {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-main [role="heading"] [role="navigation"] ul {
+header .module [role="navigation"] ul {
     display: flex;
 }
 
-main [role="heading"] [role="navigation"] li {
+header .module [role="navigation"] li {
     display: flex;
 }
 
-main [role="heading"] [role="navigation"] li:not(:last-of-type) {
+header .module [role="navigation"] li:not(:last-of-type) {
     margin-right: 10px;
 }
 
-main [role="heading"] [role="navigation"] a {
+header .module [role="navigation"] a {
     font-size: 1rem;
 }
 
-main [role="heading"] [role="navigation"] a:hover, main [role="heading"] [role="navigation"] a:active, main [role="heading"] [role="navigation"] a:focus, main [role="heading"] [role="navigation"] a.selected {
+header .module [role="navigation"] a:hover, header .module [role="navigation"] a:active, header .module [role="navigation"] a:focus,header .module [role="navigation"] a.selected {
     font-weight: bold;
 }
 
-main [role="heading"] [role="toolbar"] {
+/* Module menu */
+header .module [role="toolbar"] {
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
-main [role="heading"] [role="toolbar"] menu {
+header .module [role="toolbar"] menu {
     display: flex;
 }
 
-main [role="heading"] [role="toolbar"] li {
-    display: flex;
+header .module [role="toolbar"] li {
+    display: contents;
 }
 
-main [role="heading"] [role="toolbar"] menu a {
+header .module [role="toolbar"] li:not(:last-of-type) {
+    margin-right: .2rem;
+}
+
+header .module [role="toolbar"] a {
     display: flex;
     height: 2rem;
     border-radius: 2px;
     padding: 0 10px;
     justify-content: center;
     align-items: center;
-    color: rgb(120, 120, 120);
-    background-color: rgb(200, 200, 200);
+    color: white;
 }

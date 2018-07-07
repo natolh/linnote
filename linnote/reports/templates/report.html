@@ -3,16 +3,16 @@
 {% set title = 'Nouveau rapport' %}
 {% set active_page = 'rapports' %}
 
-{% block body %}
+{% block header %}
     {% include 'workspaces/admin.html' %}
-    {{ super() }}
+    <div class="module">
+        <div>
+            <h1>Nouveau rapport de classement</h1>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-<div class="topping">
-    <h1>Nouveau rapport de classement</h1>
-</div>
-
 <form method="post">
 
     {{ form.csrf_token }}

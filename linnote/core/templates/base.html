@@ -16,6 +16,10 @@
     </head>
     <body>
         {% block body %}
+        <header>
+            {% block header %}
+            {% endblock %}
+        </header>
         <main>
             {% block content %}
             {% endblock %}

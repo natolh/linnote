@@ -3,26 +3,25 @@
 {% set title = 'Nouvelle épreuve' %}
 {% set active_page = 'épreuves' %}
 
-{% block body %}
+{% block header %}
     {% include 'workspaces/admin.html' %}
-    {{ super() }}
-{% endblock %}
-
-{% block content %}
-<div class="topping">
+    <div class="module">
     {% if assessment is defined %}
         <div>
             <h1>{{ assessment.title }}</h1>
-            <p>Créé par <em>{{ assessment.creator|default('un inconnu', True) }}</em>, le <em>{{ assessment.creation_date.strftime('%d/%m/%Y') }}</em></p>
+            {% include 'assessment/menu.html' %}
         </div>
-        {% include 'assessment/menu.html' %}
     {% else %}
-        <h1>
-            Nouvelle épreuve
-        </h1>
+        <div>
+            <h1>
+                Nouvelle épreuve
+            </h1>
+        </div>
     {% endif %}
-</div>
+    </div>
+{% endblock %}
 
+{% block content %}
 <form method="post" enctype="multipart/form-data">
 
     {{ form.csrf_token }}

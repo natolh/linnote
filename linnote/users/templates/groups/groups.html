@@ -3,29 +3,32 @@
 {% set title = 'Groupes' %}
 {% set active_page = 'utilisateurs' %}
 
-{% block body %}
+{% block header %}
     {% include 'workspaces/admin.html' %}
-    {{ super() }}
+    <div class="module">
+        <div>
+            <h1>Groupes</h1>
+            <ul>
+                <li>
+                    <a href="{{ url_for('users.users') }}">
+                        Utilisateurs
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div role="toolbar">
+            <menu type="toolbar">
+                <li>
+                    <a href="{{ url_for('users.group') }}">
+                        Ajouter
+                    </a>
+                </li>
+            </menu>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-<div class="topping">
-    <h1>Groupes</h1>
-
-    <menu type="toolbar">
-        <li>
-            <a href="{{ url_for('users.group') }}">
-                + Ajouter
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('users.users') }}">
-                Utilisateurs
-            </a>
-        </li>
-    </menu>
-</div>
-
 <ul class="cards">
     {% for group in groups %}
     <li>

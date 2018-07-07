@@ -2,17 +2,26 @@
 
 {% set active_page = 'compte' %}
 
-{% block body %}
+{% block header %}
     {% include 'workspaces/admin.html' %}
-    {{ super() }}
+    <div class="module">
+        <div>
+            <h1>Mon compte</h1>
+            {% include 'menu.html' %}
+        </div>
+        <div role="toolbar">
+            <menu type="toolbar">
+                <li>
+                    <a href="{{ url_for('account.logout') }}">
+                        Déconnexion
+                    </a>
+                </li>
+            </menu>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-<div class="topping">
-    <h1>Mon compte</h1>
-    {% include 'menu.html' %}
-</div>
-
 <form method="post">
     {{ form.csrf_token }}
 
