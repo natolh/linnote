@@ -6,18 +6,16 @@
 {% block header %}
     {% include 'workspaces/admin.html' %}
     <div class="module">
-    {% if assessment is defined %}
-        <div>
+        <div role="navigation">
+        {% if assessment is defined %}
             <h1>{{ assessment.title }}</h1>
             {% include 'assessment/menu.html' %}
+        {% else %}
+        <h1>
+            Nouvelle épreuve
+        </h1>
+        {% endif %}
         </div>
-    {% else %}
-        <div>
-            <h1>
-                Nouvelle épreuve
-            </h1>
-        </div>
-    {% endif %}
     </div>
 {% endblock %}
 

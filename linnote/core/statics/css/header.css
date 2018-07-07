@@ -70,7 +70,7 @@ header .site nav li:not(:last-child) {
 header .module {
     display: flex;
     justify-content: space-between;
-    padding: 1.2rem 1rem;
+    padding: 0 1rem;
     background-color: hsl(338, 52%, 40%);
 }
 
@@ -78,10 +78,9 @@ header .module {
 header .module [role="navigation"] {
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
-header .module [role="navigation"] ul {
+header .module [role="navigation"] menu {
     display: flex;
 }
 
@@ -89,22 +88,22 @@ header .module [role="navigation"] li {
     display: flex;
 }
 
-header .module [role="navigation"] li:not(:last-of-type) {
-    margin-right: 10px;
-}
-
 header .module [role="navigation"] a {
+    padding: .5rem;
     font-size: 1rem;
+    color: white;
+    border-bottom: 5px solid transparent;
 }
 
 header .module [role="navigation"] a:hover, header .module [role="navigation"] a:active, header .module [role="navigation"] a:focus,header .module [role="navigation"] a.selected {
-    font-weight: bold;
+    border-bottom: 5px solid white;
 }
 
 /* Module menu */
 header .module [role="toolbar"] {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 header .module [role="toolbar"] menu {
@@ -127,4 +126,8 @@ header .module [role="toolbar"] a {
     justify-content: center;
     align-items: center;
     color: white;
+}
+
+header .module [role="toolbar"] a:active, header .module [role="toolbar"] a:hover, header .module [role="toolbar"] a:focus {
+    background-color: rgba(255, 255, 255, 0.1);
 }

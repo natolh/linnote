@@ -6,15 +6,20 @@
 {% block header %}
     {% include 'workspaces/admin.html' %}
     <div class="module">
-        <div>
+        <div role="navigation">
             <h1>Utilisateurs</h1>
-            <ul>
+            <menu type="navigation">
+                <li>
+                    <a href="{{ url_for('users.users') }}">
+                        Utilisateurs
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url_for('users.groups') }}">
                         Groupes
                     </a>
                 </li>
-            </ul>
+            </menu>
         </div>
         <div role="toolbar">
             <menu type="toolbar">
