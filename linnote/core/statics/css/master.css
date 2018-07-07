@@ -16,9 +16,9 @@ html {
 
 body {
     display: grid;
-    grid-template: "header" min-content
-                   "main" auto
-                   / 1fr;
+    grid: "header" min-content
+          "main" auto
+          / 1fr;
 }
 
 header, footer {
