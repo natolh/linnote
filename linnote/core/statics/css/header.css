@@ -95,6 +95,10 @@ header .module [role="navigation"] a {
     border-bottom: 5px solid transparent;
 }
 
+header .module [role="navigation"] menu :first-child a {
+    padding-left: 0;
+}
+
 header .module [role="navigation"] a:hover, header .module [role="navigation"] a:active, header .module [role="navigation"] a:focus,header .module [role="navigation"] a.selected {
     border-bottom: 5px solid white;
 }
