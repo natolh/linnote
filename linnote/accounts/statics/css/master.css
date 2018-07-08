@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+/*
+Main styles for the accounts application
+
+Author: Anatole Hanniet, 2016-2018.
+License: Mozilla Public License, see 'LICENSE.txt' for details.
+*/
+
 html {
     font-family: "Lato", sans-serif;
     font-weight: 400;
