@@ -16,31 +16,43 @@ html {
 
 body {
     display: grid;
-    grid: 1fr min-content / 1fr;
-    background-color: hsl(0, 0%, 95%);
+    grid: "main" auto
+          "footer" min-content
+          / 1fr;
+    background-color: hsl(340, 5%, 95%);
 }
 
 main {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
+    grid-area: main;
+    justify-self: center;
+    align-self: center;
     padding: 1rem;
+    width: 100vw;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#brand {
+    font-family: 'Open Sans';
+    font-weight: 100;
+    letter-spacing: -0.1rem;
+    text-transform: uppercase;
+    text-align: center;
+    color: hsla(0, 0%, 0%, 0.33);
+}
+
+hr {
+    height: 1px;
+    width: 3rem;
+    background-color: hsla(0, 0%, 0%, 0.1);
+    border: none;
+    margin: .75rem 0 1.5rem 0;
 }
 
 form {
     width: 100%;
-}
-
-@media screen and (min-width: 350px) {
-
-    main {
-        border-radius: 0.2rem;
-    }
-
-    form {
-        width: calc(350px - 2rem);
-    }
 }
 
 input[type="submit"] {

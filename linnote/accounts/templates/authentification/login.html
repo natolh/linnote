@@ -12,12 +12,14 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/forms.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('account.static', filename='css/footer.css') }}">
     </head>
     <body>
         <main>
-            <h1>linnote</h1>
-
+            <h1 id="brand">
+                linnote
+            </h1>
+            <hr>
             <form method="post">
                 {{ form.csrf_token }}
 

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /*
 Styling for footer section.
 
@@ -7,8 +8,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 */
 
 footer {
-    --footer-color-text: hsl(0, 0%, 70%);
-    --footer-color-text-highlight: hsl(0, 0%, 90%);
+    --footer-color-text: hsl(0, 0%, 60%);
+    --footer-color-text-highlight: hsl(0, 0%, 40%);
 
     display: flex;
     flex-direction: column;
@@ -16,7 +17,7 @@ footer {
     align-items: center;
     padding: .6rem 1rem;
     color: var(--footer-color-text);
-    background-color: hsl(0, 0%, 12%);
+    background-color: hsla(0, 0%, 0%, 0.06);
     font-size: 0.8rem;
     line-height: 1.4rem;
 }
