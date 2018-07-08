@@ -16,7 +16,7 @@ html {
 
 body {
     display: grid;
-    grid-template: 1fr min-content / 1fr;
+    grid: 1fr min-content / 1fr;
     background-color: hsl(0, 0%, 95%);
 }
 
