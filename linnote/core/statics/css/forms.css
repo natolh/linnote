@@ -80,8 +80,9 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="submit"]:focu
     background-color: var(--color-main-light);
 }
 
-input::-moz-focus-inner /*Remove button padding in FF*/
+input:-moz-focus-inner /*Remove button padding in FF*/
 { 
+    box-shadow: none;
     border: 0;
     padding: 0;
 }
