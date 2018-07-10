@@ -62,10 +62,6 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:foc
     border: 0.15rem solid rgb(100, 100, 100);
 }
 
-input[type="text"]:invalid, input[type="password"]:invalid, input[type="number"]:invalid, input[type="email"]:invalid, input[type="tel"]:invalid, input[type="url"]:invalid {
-    border: 0.15rem solid #B02726;
-}
-
 input[type="submit"], input[type="reset"] {
     cursor: pointer;
     padding: 0.4rem 0.5rem;
@@ -81,7 +77,7 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="submit"]:focu
 }
 
 input:-moz-focus-inner /*Remove button padding in FF*/
-{ 
+{
     box-shadow: none;
     border: 0;
     padding: 0;
