@@ -58,3 +58,7 @@ form {
 input[type="submit"] {
     width: 100%;
 }
+
+input {
+    border-width: 1px 1px 2px 1px !important;
+}
