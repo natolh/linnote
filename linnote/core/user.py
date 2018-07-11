@@ -9,7 +9,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from pandas import read_excel
-from sqlalchemy import Boolean, Column, Integer, String, Table, Text, ForeignKey
+from sqlalchemy import Column, Table
+from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
