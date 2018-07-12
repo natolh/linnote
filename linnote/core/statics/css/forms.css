@@ -54,12 +54,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     box-sizing: border-box;
     width: 100%;
     padding: 0.4rem 0.5rem;
-    border: 0.15rem solid rgb(200, 200, 200);
+    border: 1px solid rgb(200, 200, 200);
+    border-bottom-width: 2px;
     border-radius: 0.15rem;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="url"]:focus {
-    border: 0.15rem solid rgb(100, 100, 100);
+    border-color: rgb(100, 100, 100);
 }
 
 input[type="submit"], input[type="reset"] {
