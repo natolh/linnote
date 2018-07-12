@@ -62,3 +62,12 @@ input[type="submit"] {
 input {
     border-width: 1px 1px 2px 1px;
 }
+
+label {
+    font-weight: 300;
+    color: rgb(200, 200, 200);
+}
+
+form div[role="group"]:focus-within label {
+    color: rgb(100, 100, 100);
+}
