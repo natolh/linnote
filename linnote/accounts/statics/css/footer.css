@@ -8,8 +8,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 */
 
 footer {
-    --footer-color-text: hsl(0, 0%, 60%);
-    --footer-color-text-highlight: hsl(0, 0%, 40%);
+    --footer-color-text: hsla(0, 0%, 100%, 0.5);
+    --footer-color-text-highlight: hsl(0, 0%, 100%);
 
     display: flex;
     flex-direction: column;
@@ -17,7 +17,6 @@ footer {
     align-items: center;
     padding: .6rem 1rem;
     color: var(--footer-color-text);
-    background-color: hsla(0, 0%, 0%, 0.06);
     font-size: 0.8rem;
     line-height: 1.4rem;
 }
@@ -25,18 +24,18 @@ footer {
 @media screen and (min-width: 590px) {
     footer {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
 }
 
 footer a {
-    border-bottom: 0.1rem solid var(--footer-color-text);
+    font-weight: lighter;
+    border-bottom: 1px solid var(--footer-color-text);
 }
 
 footer a:hover, footer a:active, footer a:focus {
     border-bottom: 0.15rem solid var(--footer-color-text-highlight);
     color: var(--footer-color-text-highlight);
-    background-color: hsla(0, 0%, 100%, 0.08);
 }
 
 
