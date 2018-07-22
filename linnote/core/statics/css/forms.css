@@ -55,8 +55,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 100%;
     padding: 0.4rem 0.5rem;
     border: 1px solid rgb(200, 200, 200);
-    border-bottom-width: 2px;
-    border-radius: 0.15rem;
+    border-radius: 4px;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="url"]:focus {
