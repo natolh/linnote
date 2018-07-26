@@ -119,7 +119,6 @@ class Student(BASE):
     def __eq__(self, other) -> bool:
         if isinstance(other, Student):
             return self.identifier == other.identifier
-
         return NotImplemented
 
     def __ne__(self, other) -> bool:
