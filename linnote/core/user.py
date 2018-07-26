@@ -40,7 +40,7 @@ class User(BASE):
         self.is_superuser = kwargs.get('is_superuser', False)
 
         if kwargs.get('password'):
-            self.set_password(kwargs.get('password'))
+            self.set_password_hash(kwargs.get('password'))
 
     def __repr__(self) -> str:
         return '<User #{}: {}>'.format(self.identifier, self.fullname)
@@ -66,7 +66,7 @@ class User(BASE):
         """
         return str(self.identifier)
 
-    def set_password(self, password) -> str:
+    def set_password_hash(self, password) -> str:
         """
         Set the user password.
 
