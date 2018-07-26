@@ -20,8 +20,8 @@ from .utils.database import BASE
 class User(BASE):
     """Someone that use the application."""
 
+    # Model definition.
     __tablename__ = 'users'
-
     identifier = Column(Integer(), primary_key=True)
     firstname = Column(String(250))
     lastname = Column(String(250), nullable=False)
