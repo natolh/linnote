@@ -39,7 +39,7 @@ class Mark(BASE):
 
     identifier = Column(Integer, primary_key=True)
     assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
-    student_id = Column(Integer, ForeignKey('students.identifier'))
+    student_id = Column(Integer, ForeignKey('profiles__students.identifier'))
     _score = Column(Float, nullable=False)
     _bonus = Column(Float)
     _scale = Column(Integer, nullable=False)
@@ -127,30 +127,6 @@ class Mark(BASE):
     def bonus(self, value):
         """Change the score bonus."""
         self._bonus = value
-
-    @classmethod
-    def load(cls, filepath: Path, scale: int) -> List['Mark']:
-        """
-        Load results from tabular file.
-
-        Currently, only Excel files are supported. The file should follow a
-        predefined, non customizable layout: (1) student identifier, (2)
-        score. Further columns are ignored.
-
-        - filepath: Path object. Path pointing to the file to load.
-        - scale:    Integer. Scale used to compute marks from scores.
-        """
-        records = read_excel(
-            filepath, names=['student_id', 'score'],
-            usecols=[0, 1], converters={'student_id': int, 'score': float})
-        records = records.to_dict(orient='list')
-
-        results = list()
-        for student_id, score in zip(records['student_id'], records['score']):
-            student = Student(student_id)
-            mark = cls(student, score, scale)
-            results.append(mark)
-        return results
 
     @staticmethod
     def merge(*args: List['Mark']) -> List['Mark']:

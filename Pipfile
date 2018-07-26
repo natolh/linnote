@@ -18,7 +18,7 @@ matplotlib = "*"
 [dev-packages]
 pylint = "*"
 mypy = "*"
-"autopep8" = "*"
+autopep8 = "*"
 rope = "*"
 
 [requires]

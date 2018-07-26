@@ -14,6 +14,7 @@ from flask_login import login_required
 from linnote.core.user import Group, User, Administrator
 from linnote.core.utils import WEBSESSION
 from .forms import GroupForm, UserForm
+from .logic import load_group
 
 
 class GroupCollection(MethodView):
@@ -45,7 +46,7 @@ class GroupRessource(MethodView):
         session = WEBSESSION()
         form = GroupForm()
         if form.validate():
-            group = Group.load(request.files['students'], form.title.data)
+            group = load_group(request.files['students'], form.title.data)
             session.merge(group)
             session.commit()
 

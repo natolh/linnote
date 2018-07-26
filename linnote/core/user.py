@@ -121,12 +121,15 @@ class Administrator(Profile):
                           default=False)
 
 
-class Student(BASE):
+class Student(Profile):
     """Someone seeking to learn about life, the universe and everything."""
 
     # Model definition.
-    __tablename__ = 'students'
-    identifier = Column(Integer, primary_key=True)
+    __tablename__ = 'profiles__students'
+    __mapper_args__ = {'polymorphic_identity': 'student'}
+    identifier = Column(Integer(),
+                        ForeignKey('profiles.identifier'), primary_key=True)
+    aid = Column(Integer())
     groups = relationship(
                 'Group',
                 secondary='students_groups',
@@ -134,11 +137,6 @@ class Student(BASE):
     results = relationship(
                 'Mark',
                 back_populates='student')
-
-    def __init__(self, identifier, **kwargs):
-        super().__init__()
-        self.identifier = identifier
-        self.groups = kwargs.get('groups', list())
 
     def __repr__(self) -> str:
         return f'<Student {self.identifier}>'
@@ -180,32 +178,12 @@ class Group(BASE):
     def __contains__(self, item) -> bool:
         if not isinstance(item, Student):
             raise TypeError
-
         return item in self.students
-
-    @staticmethod
-    def load(file, name=None):
-        """
-        Load a student group from an excel file.
-
-        - file: A path-like object. The path to the file.
-        - name: String. The group's name.
-
-        Return: A 'Group' object.
-        """
-        group = Group(name=name)
-
-        students = read_excel(file, names=['identifier']).to_dict('records')
-        for student in students:
-            student = Student(identifier=int(student['identifier']))
-            group.students.append(student)
-
-        return group
 
 
 STUDENTS_GROUPS = Table(
     'students_groups',
     BASE.metadata,
     Column('group', Integer, ForeignKey('groups.identifier')),
-    Column('student', Integer, ForeignKey('students.identifier'))
+    Column('student', Integer, ForeignKey('profiles__students.identifier'))
 )

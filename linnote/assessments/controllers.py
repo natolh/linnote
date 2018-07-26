@@ -14,6 +14,7 @@ from flask_login import current_user, login_required
 from sqlalchemy.orm.session import make_transient
 from linnote.core.assessment import Assessment, Mark
 from linnote.core.utils import WEBSESSION
+from .logic import load_results
 from .forms import AssessmentForm, MergeForm
 
 
@@ -78,7 +79,7 @@ class MainView(MethodView):
                 title, scale, precision=precision, creator=current_user)
 
             if form.results.data:
-                marks = Mark.load(request.files['results'], form.scale.data)
+                marks = load_results(request.files['results'], form.scale.data)
                 assessment.add_results(marks)
 
         assessment = session.merge(assessment)
