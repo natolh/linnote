@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import render_template, request
 from flask.views import MethodView
 from flask_login import login_required
-from linnote.core.user import Group, User
+from linnote.core.user import Group, User, Administrator
 from linnote.core.utils import WEBSESSION
 from .forms import GroupForm, UserForm
 
@@ -103,6 +103,8 @@ class UserRessource(MethodView):
 
         elif form.validate():
             user = User(**form.data)
+            profile = Administrator(user=user)
+            session.add(profile)
 
         session.merge(user)
         session.commit()

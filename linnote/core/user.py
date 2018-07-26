@@ -28,14 +28,15 @@ class User(BASE):
     email = Column(String(250), nullable=False, unique=True, index=True)
     password_hash = Column(Text())
     is_verified = Column(Boolean(), default=False)
-    is_superuser = Column(Boolean(), default=False)
+
+    profile = relationship('Profile', back_populates='user',
+                           uselist=False, cascade='all')
 
     def __init__(self, firstname, lastname, email, **kwargs) -> None:
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
-        self.is_superuser = kwargs.get('is_superuser', False)
 
         if kwargs.get('password'):
             self.set_password_hash(kwargs.get('password'))
@@ -92,6 +93,32 @@ class User(BASE):
         for key, value in data.items():
             if hasattr(self, key):
                 setattr(self, key, value)
+
+
+class Profile(BASE):
+    """User's details not related to his identity in the application."""
+
+    # Model definition.
+    __tablename__ = 'profiles'
+    identifier = Column(Integer(), primary_key=True)
+    user_id = Column(Integer(), ForeignKey('users.identifier'))
+    role = Column(String(250), nullable=False)
+    user = relationship('User', back_populates='profile', uselist=False)
+
+    __mapper_args__ = {'polymorphic_on': role, 'polymorphic_identity': '*'}
+
+
+class Administrator(Profile):
+    """Someone that loves to keep students busy."""
+
+    # Model definition.
+    __tablename__ = 'profiles__administrators'
+    __mapper_args__ = {'polymorphic_identity': 'administrator'}
+    identifier = Column(Integer(),
+                        ForeignKey('profiles.identifier'),
+                        primary_key=True)
+    is_superuser = Column(Boolean(),
+                          default=False)
 
 
 class Student(BASE):
