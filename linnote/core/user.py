@@ -18,7 +18,7 @@ from .utils.database import BASE
 
 
 class User(BASE):
-    """A user of the application."""
+    """Someone that use the application."""
 
     __tablename__ = 'users'
 
