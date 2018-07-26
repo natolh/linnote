@@ -22,14 +22,14 @@ class User(BASE):
 
     __tablename__ = 'users'
 
-    identifier = Column(Integer, primary_key=True)
+    identifier = Column(Integer(), primary_key=True)
     firstname = Column(String(250))
     lastname = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True, index=True)
-    password_hash = Column(Text)
-    is_verified = Column(Boolean, default=False)
-    is_staff = Column(Boolean, default=False)
-    is_superuser = Column(Boolean, default=False)
+    password_hash = Column(Text())
+    is_verified = Column(Boolean(), default=False)
+    is_staff = Column(Boolean(), default=False)
+    is_superuser = Column(Boolean(), default=False)
 
     def __init__(self, firstname, lastname, email, **kwargs) -> None:
         super().__init__()
