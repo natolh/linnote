@@ -66,14 +66,8 @@ class User(BASE):
         """
         return str(self.identifier)
 
-    def set_password_hash(self, password) -> str:
-        """
-        Set the user password.
-
-        - password: String. The password for the user.
-
-        Return: String. The password hash.
-        """
+    def set_password_hash(self, password: str) -> str:
+        """Set user's password."""
         self.password_hash = generate_password_hash(password)
         return self.password_hash
 
