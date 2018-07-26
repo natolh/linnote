@@ -95,12 +95,7 @@ class User(BASE):
 
 
 class Student(BASE):
-    """
-    Someone seeking to learn about life, the universe and everything.
-
-    - identifier:   An integer. A unique, anonymous, identifier for the
-                    student to use during assessments.
-    """
+    """Someone seeking to learn about life, the universe and everything."""
 
     __tablename__ = 'students'
     identifier = Column(Integer, primary_key=True)
