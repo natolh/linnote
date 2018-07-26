@@ -101,9 +101,12 @@ class Student(BASE):
     __tablename__ = 'students'
     identifier = Column(Integer, primary_key=True)
     groups = relationship(
-        'Group', secondary='students_groups', back_populates='students')
+                'Group',
+                secondary='students_groups',
+                back_populates='students')
     results = relationship(
-        'Mark', back_populates='student')
+                'Mark',
+                back_populates='student')
 
     def __init__(self, identifier, **kwargs):
         super().__init__()
@@ -111,7 +114,7 @@ class Student(BASE):
         self.groups = kwargs.get('groups', list())
 
     def __repr__(self) -> str:
-        return '<Student #{}>'.format(self.identifier)
+        return f'<Student {self.identifier}>'
 
     def __eq__(self, other) -> bool:
         if isinstance(other, Student):
