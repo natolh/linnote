@@ -97,11 +97,13 @@ class User(BASE):
 class Student(BASE):
     """Someone seeking to learn about life, the universe and everything."""
 
+    # Model definition.
     __tablename__ = 'students'
     identifier = Column(Integer, primary_key=True)
-    groups = relationship('Group', secondary='students_groups', back_populates='students')
-
-    results = relationship('Mark', back_populates='student')
+    groups = relationship(
+        'Group', secondary='students_groups', back_populates='students')
+    results = relationship(
+        'Mark', back_populates='student')
 
     def __init__(self, identifier, **kwargs):
         super().__init__()
