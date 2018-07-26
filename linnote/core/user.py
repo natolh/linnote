@@ -69,7 +69,7 @@ class User(BASE):
         self.password_hash = generate_password_hash(password)
         return self.password_hash
 
-    def is_authentic(self, password) -> bool:
+    def is_authentic(self, password: str) -> bool:
         """Check if the provided password match the user registred password."""
         return check_password_hash(self.password_hash, password)
 
