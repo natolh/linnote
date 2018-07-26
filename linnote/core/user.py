@@ -52,9 +52,9 @@ class User(BASE):
         return self.email
 
     @hybrid_property
-    def fullname(self):
+    def fullname(self) -> str:
         """User's fullname (concatenation of first and last names)."""
-        return '{} {}'.format(self.firstname, self.lastname)
+        return f'{self.firstname} {self.lastname}'
 
     def get_id(self):
         """
