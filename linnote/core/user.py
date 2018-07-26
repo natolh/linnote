@@ -46,7 +46,7 @@ class User(BASE):
         return f'<User {self.identifier}: {self.fullname}>'
 
     def __str__(self) -> str:
-        return '{}'.format(self.fullname)
+        return self.fullname
 
     @hybrid_property
     def username(self):
