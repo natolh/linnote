@@ -129,13 +129,10 @@ class Student(Profile):
     identifier = Column(Integer(),
                         ForeignKey('profiles.identifier'), primary_key=True)
     aid = Column(Integer())
-    groups = relationship(
-                'Group',
-                secondary='students_groups',
-                back_populates='students')
-    results = relationship(
-                'Mark',
-                back_populates='student')
+    groups = relationship('Group',
+                          secondary='students_groups',
+                          back_populates='students')
+    results = relationship('Mark', back_populates='student')
 
     def __repr__(self) -> str:
         return f'<Student {self.identifier}>'
