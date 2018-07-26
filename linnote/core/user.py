@@ -26,7 +26,7 @@ class User(BASE):
     firstname = Column(String(250))
     lastname = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False, unique=True, index=True)
-    password_hash = Column(Text, nullable=True)
+    password_hash = Column(Text)
     is_verified = Column(Boolean, default=False)
     is_staff = Column(Boolean, default=False)
     is_superuser = Column(Boolean, default=False)
