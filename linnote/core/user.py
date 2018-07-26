@@ -8,7 +8,6 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from pandas import read_excel
 from sqlalchemy import Column, Table
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.hybrid import hybrid_property
