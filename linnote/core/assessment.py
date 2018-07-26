@@ -15,9 +15,7 @@ from abc import ABC, abstractmethod
 from copy import copy
 from itertools import groupby
 from operator import attrgetter
-from pathlib import Path
 from typing import List
-from pandas import read_excel
 from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
