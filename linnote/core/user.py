@@ -56,7 +56,7 @@ class User(BASE):
         """User's fullname (concatenation of first and last names)."""
         return f'{self.firstname} {self.lastname}'
 
-    def get_id(self):
+    def get_id(self) -> str:
         """
         Return the user identifier as a string for login.
 
