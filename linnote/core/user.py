@@ -28,7 +28,6 @@ class User(BASE):
     email = Column(String(250), nullable=False, unique=True, index=True)
     password_hash = Column(Text())
     is_verified = Column(Boolean(), default=False)
-    is_staff = Column(Boolean(), default=False)
     is_superuser = Column(Boolean(), default=False)
 
     def __init__(self, firstname, lastname, email, **kwargs) -> None:
@@ -36,7 +35,6 @@ class User(BASE):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
-        self.is_staff = kwargs.get('is_staff', False)
         self.is_superuser = kwargs.get('is_superuser', False)
 
         if kwargs.get('password'):
