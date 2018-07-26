@@ -60,7 +60,7 @@ class User(BASE):
         """
         Return the user identifier as a string for login.
 
-        This method is required for the use of flask_login extension.
+        This method is required to use flask_login extension.
         """
         return str(self.identifier)
 
