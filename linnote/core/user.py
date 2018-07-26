@@ -43,7 +43,7 @@ class User(BASE):
             self.set_password_hash(kwargs.get('password'))
 
     def __repr__(self) -> str:
-        return '<User #{}: {}>'.format(self.identifier, self.fullname)
+        return f'<User {self.identifier}: {self.fullname}>'
 
     def __str__(self) -> str:
         return '{}'.format(self.fullname)
