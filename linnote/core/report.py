@@ -89,9 +89,8 @@ class Report(BASE):
 
         marks = list()
         for mark in self.assessment.results:
-            if mark.student in group:
+            if mark.student.identity in group:
                 marks.append(mark)
-
         return marks
 
     # Methods for composing the report.

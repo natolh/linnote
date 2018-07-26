@@ -28,8 +28,10 @@ class User(BASE):
     password_hash = Column(Text())
     is_verified = Column(Boolean(), default=False)
 
-    profile = relationship('Profile', back_populates='user',
-                           uselist=False, cascade='all')
+    profile = relationship(
+        'Profile', back_populates='identity', uselist=False, cascade='all')
+    groups = relationship(
+        'Group', secondary='users_groups', back_populates='members')
 
     def __init__(self, firstname, lastname, email, **kwargs) -> None:
         super().__init__()
@@ -102,9 +104,9 @@ class Profile(BASE):
     identifier = Column(Integer(), primary_key=True)
     user_id = Column(Integer(), ForeignKey('users.identifier'))
     role = Column(String(250), nullable=False)
-    user = relationship('User', back_populates='profile', uselist=False)
+    identity = relationship('User', back_populates='profile', uselist=False)
 
-    __mapper_args__ = {'polymorphic_on': role, 'polymorphic_identity': '*'}
+    __mapper_args__ = {'polymorphic_on': role, 'polymorphic_identity': '*', 'with_polymorphic': '*'}
 
 
 class Administrator(Profile):
@@ -129,9 +131,6 @@ class Student(Profile):
     identifier = Column(Integer(),
                         ForeignKey('profiles.identifier'), primary_key=True)
     aid = Column(Integer())
-    groups = relationship('Group',
-                          secondary='students_groups',
-                          back_populates='students')
     results = relationship('Mark', back_populates='student')
 
     def __repr__(self) -> str:
@@ -150,36 +149,35 @@ class Student(Profile):
 
 
 class Group(BASE):
-    """
-    A group of students.
+    """A bunch of users that are somewhat related."""
 
-    - name:     String. The name of the group.
-    - students: List of 'Student' objects. Members of the group.
-    """
-
+    # Model definition.
     __tablename__ = 'groups'
-    identifier = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False, unique=True, index=True)
-    students = relationship('Student', secondary='students_groups', back_populates='groups')
+    identifier = Column(
+        Integer(), primary_key=True)
+    name = Column(
+        String(250), nullable=False, unique=True, index=True)
+    members = relationship(
+        'User', secondary='users_groups', back_populates='groups')
 
     def __repr__(self) -> str:
-        return '<Group of students: {}>'.format(self.name)
+        return f'<Group of students: {self.name}>'
 
     def __len__(self) -> int:
-        return len(self.students)
+        return len(self.members)
 
     def __iter__(self):
-        return iter(self.students)
+        return iter(self.members)
 
     def __contains__(self, item) -> bool:
-        if not isinstance(item, Student):
+        if not isinstance(item, User):
             raise TypeError
-        return item in self.students
+        return item in self.members
 
 
-STUDENTS_GROUPS = Table(
-    'students_groups',
+USERS_GROUPS = Table(
+    'users_groups',
     BASE.metadata,
     Column('group', Integer, ForeignKey('groups.identifier')),
-    Column('student', Integer, ForeignKey('profiles__students.identifier'))
+    Column('user', Integer, ForeignKey('users.identifier'))
 )
