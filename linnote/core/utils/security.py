@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import current_app, request, redirect
 
 
-class StrictTransport(object):
+class StrictTransport:
     """Enforce HSTS policy and redirect insecure requests."""
 
     def __init__(self, max_age=31536000, app=None, **kwargs):

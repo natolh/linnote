@@ -3,7 +3,7 @@ from pandas import read_excel
 from linnote.core.user import Group, Student, User
 
 
-def load_group(file: Path, name: str=None) -> Group:
+def load_group(file: Path, name: str = None) -> Group:
     """
     Load a student group from an excel file.
 
@@ -14,7 +14,9 @@ def load_group(file: Path, name: str=None) -> Group:
     """
     group = Group(name=name)
 
-    students = read_excel(file, names=['identifier', 'first_name', 'last_name', 'email']).to_dict('records')
+    students = read_excel(
+        file, names=['identifier', 'first_name', 'last_name', 'email'])
+    students = students.to_dict('records')
     for student in students:
         user = User(student['first_name'], student['last_name'], student['email'])
         student = Student(user=user, aid=int(student['identifier']))

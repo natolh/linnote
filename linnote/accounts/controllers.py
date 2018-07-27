@@ -12,7 +12,7 @@ from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.core.user import User
-from linnote.core.utils import WEBSESSION
+from linnote.core.utils import DATA
 from .forms import LoginForm, PasswordForm, ProfileForm
 
 

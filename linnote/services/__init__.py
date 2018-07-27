@@ -13,7 +13,7 @@ from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.assessment import Assessment
 from linnote.core.user import User, Group
-from linnote.core.utils import WEBSESSION
+from linnote.core.utils import DATA
 
 
 BLUEPRINT = Blueprint('api', __name__, url_prefix='/api')
@@ -27,10 +27,9 @@ class AssessmentView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an assessment ressource."""
-        session = WEBSESSION()
-        assessment = session.query(Assessment).get(identifier)
-        session.delete(assessment)
-        session.commit()
+        assessment = DATA.query(Assessment).get(identifier)
+        DATA.delete(assessment)
+        DATA.commit()
         return jsonify(redirect=url_for('assessments.assessments'))
 
 
@@ -38,11 +37,11 @@ class GraderController(MethodView):
 
     decorators = [login_required]
 
-    def post(self, identifier, grader):
-        session = WEBSESSION()
-        assessment = session.query(Assessment).get(identifier)
+    @staticmethod
+    def post(identifier, grader):
+        assessment = DATA.query(Assessment).get(identifier)
         assessment.grade(grader)
-        session.commit()
+        DATA.commit()
         return jsonify(redirect=url_for('assessments.results', identifier=identifier))
 
 
@@ -54,10 +53,9 @@ class GroupView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an group ressource."""
-        session = WEBSESSION()
-        group = session.query(Group).get(identifier)
-        session.delete(group)
-        session.commit()
+        group = DATA.query(Group).get(identifier)
+        DATA.delete(group)
+        DATA.commit()
         return jsonify(redirect=url_for('users.groups'))
 
 
@@ -69,10 +67,9 @@ class UserView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete a user ressource."""
-        session = WEBSESSION()
-        user = session.query(User).get(identifier)
-        session.delete(user)
-        session.commit()
+        user = DATA.query(User).get(identifier)
+        DATA.delete(user)
+        DATA.commit()
         return jsonify(redirect=url_for('users.users'))
 
 
