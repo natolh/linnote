@@ -12,7 +12,7 @@ from flask import render_template, request
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.user import Group, User, Administrator
-from linnote.core.utils import WEBSESSION
+from linnote.core.utils import DATA
 from .forms import GroupForm, UserForm
 from .logic import load_group
 
@@ -25,8 +25,7 @@ class GroupCollection(MethodView):
     @staticmethod
     def get():
         """Display the collection of user groups."""
-        session = WEBSESSION()
-        groups = session.query(Group).all()
+        groups = DATA.query(Group).all()
         return render_template('groups/groups.html', groups=groups)
 
 
@@ -34,24 +33,26 @@ class GroupRessource(MethodView):
     """Controller for managing a user group ressource."""
 
     decorators = [login_required]
+    template = 'groups/group.html'
 
-    @staticmethod
-    def get():
+    def get(self):
         """Display a form for creating a new user group."""
         form = GroupForm()
-        return render_template('groups/group.html', form=form)
+        return self.render(form=form)
 
     def post(self):
         """Create a new user group."""
-        session = WEBSESSION()
         form = GroupForm()
         if form.validate():
             group = load_group(request.files['students'], form.title.data)
-            session.merge(group)
-            session.commit()
+            DATA.merge(group)
+            DATA.commit()
 
         return self.get()
 
+    @classmethod
+    def render(cls, **kwargs):
+        return render_template(cls.template, **kwargs)
 
 class UserCollection(MethodView):
     """Controller for managing users collection."""
@@ -61,8 +62,7 @@ class UserCollection(MethodView):
     @staticmethod
     def get():
         """Display the collection of users."""
-        session = WEBSESSION()
-        users = session.query(User).all()
+        users = DATA.query(User).all()
         return render_template('users/users.html', users=users)
 
 
@@ -77,8 +77,7 @@ class UserRessource(MethodView):
 
     @staticmethod
     def load(identifier=None):
-        session = WEBSESSION()
-        return session.query(User).get(identifier)
+        return DATA.query(User).get(identifier)
 
     def get(self, identifier=None):
         """Display a form for creating a new user."""
@@ -95,7 +94,6 @@ class UserRessource(MethodView):
 
     def post(self, identifier=None):
         """Create a new user."""
-        session = WEBSESSION()
         form = UserForm()
 
         if form.validate() and identifier is not None:
@@ -105,7 +103,8 @@ class UserRessource(MethodView):
         elif form.validate():
             user = User(**form.data)
             profile = Administrator(identity=user)
+            DATA.add(profile)
 
-        session.merge(user)
-        session.commit()
+        DATA.merge(user)
+        DATA.commit()
         return self.get(user.identifier)

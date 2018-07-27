@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask_login import LoginManager
 from linnote.core.user import User
-from linnote.core.utils import WEBSESSION
+from linnote.core.utils import DATA
 
 
 # Login manager.
@@ -22,5 +22,4 @@ LOGIN_MANAGER.login_view = 'account.login'
 @LOGIN_MANAGER.user_loader
 def load_user(identifier):
     """Load user."""
-    session = WEBSESSION()
-    return session.query(User).filter(User.identifier == identifier).one_or_none()
+    return DATA.query(User).filter(User.identifier == identifier).one_or_none()

@@ -30,10 +30,9 @@ class Login(MethodView):
 
     def post(self):
         """Process the login formular, login the user, redirect to his desk."""
-        session = WEBSESSION()
         form = LoginForm()
         if form.validate():
-            user = session.query(User).filter(User.username == form.identifier.data).one_or_none()
+            user = DATA.query(User).filter(User.username == form.identifier.data).one_or_none()
 
             if user and user.is_authentic(form.password.data):
                 login_user(user)
@@ -67,13 +66,12 @@ class Password(MethodView):
 
     def post(self):
         """Process the password modification formular."""
-        session = WEBSESSION()
         form = PasswordForm()
         if all([form.validate(),
                 current_user.is_authentic(form.old_password.data),
                 form.password.data == form.password_confirm.data]):
             current_user.set_password_hash(form.password.data)
-            session.commit()
+            DATA.commit()
 
         return self.get()
 
@@ -91,10 +89,8 @@ class Profile(MethodView):
 
     def post(self):
         """Process the profile modification formular."""
-        session = WEBSESSION()
         form = ProfileForm()
         if form.validate():
             form.populate_obj(current_user)
-            session.commit()
-
+            DATA.commit()
         return self.get()

@@ -34,6 +34,7 @@ SESSION = sessionmaker(bind=ENGINE)
 
 # Create a scoped session for use in the application.
 WEBSESSION = scoped_session(SESSION, _app_ctx_stack.__ident_func__)
+DATA = WEBSESSION()
 
 
 def configure(app):

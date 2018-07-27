@@ -12,5 +12,5 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from .configuration import load as load_configuration
-from .database import configure, SESSION, WEBSESSION
+from .database import configure, SESSION, WEBSESSION, DATA
 from .security import CSP_POLICY

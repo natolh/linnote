@@ -3,7 +3,7 @@ from typing import List
 from pandas import read_excel
 from linnote.core.assessment import Mark
 from linnote.core.user import Student
-from linnote.core.utils import WEBSESSION
+from linnote.core.utils import DATA
 
 
 def load_results(file: Path, scale: int) -> List['Mark']:
@@ -17,8 +17,6 @@ def load_results(file: Path, scale: int) -> List['Mark']:
     - filepath: Path pointing to the file to load.
     - scale:    Scale used to compute marks from scores.
     """
-    session = WEBSESSION()
-
     records = read_excel(
         file, names=['student_id', 'score'], usecols=[0, 1],
         converters={'student_id': int, 'score': float})
@@ -26,7 +24,7 @@ def load_results(file: Path, scale: int) -> List['Mark']:
 
     results = list()
     for student_id, score in zip(records['student_id'], records['score']):
-        student = session.query(Student).filter_by(aid=student_id).first()
+        student = DATA.query(Student).filter_by(aid=student_id).first()
         if student is not None:
             mark = Mark(student, score, scale)
             results.append(mark)

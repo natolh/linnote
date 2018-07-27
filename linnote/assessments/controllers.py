@@ -15,7 +15,7 @@ from sqlalchemy.orm.session import make_transient
 from linnote.core.assessment import Assessment, Mark
 from linnote.core.ranking import Ranking
 from linnote.core.user import Group
-from linnote.core.utils import WEBSESSION
+from linnote.core.utils import DATA
 from .logic import load_results
 from .forms import AssessmentForm, MergeForm
 
@@ -28,8 +28,7 @@ class ListView(MethodView):
     @staticmethod
     def get():
         """Display the assessments collection."""
-        session = WEBSESSION()
-        assessments = session.query(Assessment).all()
+        assessments = DATA.query(Assessment).all()
         return render_template('assessments.html', assessments=assessments)
 
 
@@ -41,16 +40,15 @@ class MainView(MethodView):
     @staticmethod
     def get(identifier):
         """Display a form for creating a new assessment."""
-        session = WEBSESSION()
         if identifier:
-            assessment = session.query(Assessment).get(identifier)
+            assessment = DATA.query(Assessment).get(identifier)
             form = AssessmentForm(obj=assessment)
-            form.groups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
+            form.groups.choices = [(g.identifier, g.name) for g in DATA.query(Group).all()]
             context = dict(assessment=assessment, form=form)
 
         else:
             form = AssessmentForm()
-            form.groups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
+            form.groups.choices = [(g.identifier, g.name) for g in DATA.query(Group).all()]
             context = dict(form=form)
 
         return render_template('assessment/ressource.html', **context)
@@ -58,12 +56,11 @@ class MainView(MethodView):
     @staticmethod
     def post(identifier):
         """Create a new assessment."""
-        session = WEBSESSION()
         form = AssessmentForm()
-        form.groups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
+        form.groups.choices = [(g.identifier, g.name) for g in DATA.query(Group).all()]
 
         if form.validate() and identifier is not None:
-            assessment = session.query(Assessment).get(identifier)
+            assessment = DATA.query(Assessment).get(identifier)
             make_transient(assessment)
             assessment.title = form.title.data
             assessment.scale = form.coefficient.data
@@ -75,13 +72,13 @@ class MainView(MethodView):
 
                 # Regenrate ranking.
                 general_ranking = Ranking(assessment)
-                session.add(general_ranking)
+                DATA.add(general_ranking)
                 subroup_rankings = []
                 if form.groups.data:
                     for group in form.groups.data:
                         ranking = Ranking(assessment, group)
                         subroup_rankings.append(ranking)
-                session.add_all(subroup_rankings)
+                DATA.add_all(subroup_rankings)
 
             assessment.rescale(assessment.scale)
 
@@ -99,17 +96,17 @@ class MainView(MethodView):
 
                 # Create ranking.
                 general_ranking = Ranking(assessment)
-                session.add(general_ranking)
+                DATA.add(general_ranking)
                 subroup_rankings = []
                 if form.groups.data:
                     for group_id in form.groups.data:
                         group = session.query(Group).get(group_id)
                         ranking = Ranking(assessment, group)
                         subroup_rankings.append(ranking)
-                session.add_all(subroup_rankings)
+                DATA.add_all(subroup_rankings)
 
-        assessment = session.merge(assessment)
-        session.commit()
+        assessment = DATA.merge(assessment)
+        DATA.commit()
         return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 
 
@@ -121,8 +118,7 @@ class ResultsView(MethodView):
     @staticmethod
     def get(identifier):
         """Display assessment's results."""
-        session = WEBSESSION()
-        assessment = session.query(Assessment).get(identifier)
+        assessment = DATA.query(Assessment).get(identifier)
         return render_template('assessment/results.html',
                                 assessment=assessment)
 
@@ -135,10 +131,9 @@ class MergeController(MethodView):
 
     @staticmethod
     def load(id=None):
-        session = WEBSESSION()
         if not id:
-            return session.query(Assessment).all()
-        return session.query(Assessment).get(id)
+            return DATA.query(Assessment).all()
+        return DATA.query(Assessment).get(id)
 
     def render(self, **kwargs):
         return render_template(self.template, **kwargs)
@@ -160,9 +155,8 @@ class MergeController(MethodView):
             assessments = [self.load(a) for a in form.assessments.data]
             assessment = Assessment.merge(form.title.data, *assessments)
             assessment.creator = current_user
-            session = WEBSESSION()
-            session.add(assessment)
-            session.commit()
+            DATA.add(assessment)
+            DATA.commit()
         return redirect(url_for('assessments.assessments'))
 
 
@@ -177,8 +171,7 @@ class ReportController(MethodView):
 
     @staticmethod
     def load(id):
-        session = WEBSESSION()
-        return session.query(Assessment).get(id)
+        return DATA.query(Assessment).get(id)
 
     def render(self, **kwargs):
         return render_template(self.template, **kwargs)
