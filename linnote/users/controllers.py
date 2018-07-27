@@ -104,8 +104,7 @@ class UserRessource(MethodView):
 
         elif form.validate():
             user = User(**form.data)
-            profile = Administrator(user=user)
-            session.add(profile)
+            profile = Administrator(identity=user)
 
         session.merge(user)
         session.commit()
