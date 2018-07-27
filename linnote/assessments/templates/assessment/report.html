@@ -14,7 +14,7 @@
 
 {% for ranking in assessment.rankings %}
 <section>
-    <h2>{{ ranking.group.name }}</h2>
+    <h2>{{ ranking.group.name|default('Général') }}</h2>
     <table class="results">
         <thead>
             <tr>
