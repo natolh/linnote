@@ -28,24 +28,14 @@ BASE = declarative_base()
 
 # Create a session factory
 CONFIG = load(APP_DIR.parent.joinpath('configuration.ini'))
-ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=280)
+ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=20)
 SESSION = sessionmaker(bind=ENGINE)
 
 
 # Create a scoped session for use in the application.
-WEBSESSION = scoped_session(SESSION, _app_ctx_stack.__ident_func__)
-DATA = WEBSESSION()
+DATA = scoped_session(SESSION, _app_ctx_stack.__ident_func__)
 
 
-def configure(app):
-    """
-    Configure the flask app to use the session.
-
-    Place a reference to the scoped_session in a 'session' attribute of the
-    application. Ensure that the 'session' is correctly removed at the teardown
-    of each request.
-
-    Return: None.
-    """
-    app.session = WEBSESSION
-    app.teardown_appcontext(lambda *args, **kwargs: app.session.remove())
+def configure(app) -> None:
+    """Ensure the scoped session is closed at the end of the request."""
+    app.teardown_appcontext(lambda exception: DATA.remove())
