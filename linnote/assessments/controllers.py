@@ -100,7 +100,7 @@ class MainView(MethodView):
                 subroup_rankings = []
                 if form.groups.data:
                     for group_id in form.groups.data:
-                        group = session.query(Group).get(group_id)
+                        group = DATA.query(Group).get(group_id)
                         ranking = Ranking(assessment, group)
                         subroup_rankings.append(ranking)
                 DATA.add_all(subroup_rankings)
