@@ -13,6 +13,8 @@ from flask.views import MethodView
 from flask_login import current_user, login_required
 from sqlalchemy.orm.session import make_transient
 from linnote.core.assessment import Assessment, Mark
+from linnote.core.ranking import Ranking
+from linnote.core.user import Group
 from linnote.core.utils import WEBSESSION
 from .logic import load_results
 from .forms import AssessmentForm, MergeForm
@@ -39,14 +41,16 @@ class MainView(MethodView):
     @staticmethod
     def get(identifier):
         """Display a form for creating a new assessment."""
+        session = WEBSESSION()
         if identifier:
-            session = WEBSESSION()
             assessment = session.query(Assessment).get(identifier)
             form = AssessmentForm(obj=assessment)
+            form.groups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
             context = dict(assessment=assessment, form=form)
 
         else:
             form = AssessmentForm()
+            form.groups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
             context = dict(form=form)
 
         return render_template('assessment/ressource.html', **context)
@@ -56,6 +60,7 @@ class MainView(MethodView):
         """Create a new assessment."""
         session = WEBSESSION()
         form = AssessmentForm()
+        form.groups.choices = [(g.identifier, g.name) for g in session.query(Group).all()]
 
         if form.validate() and identifier is not None:
             assessment = session.query(Assessment).get(identifier)
@@ -67,6 +72,16 @@ class MainView(MethodView):
             if form.results.data:
                 marks = Mark.load(request.files['results'], form.scale.data)
                 assessment.add_results(marks)
+
+                # Regenrate ranking.
+                general_ranking = Ranking(assessment)
+                session.add(general_ranking)
+                subroup_rankings = []
+                if form.groups.data:
+                    for group in form.groups.data:
+                        ranking = Ranking(assessment, group)
+                        subroup_rankings.append(ranking)
+                session.add_all(subroup_rankings)
 
             assessment.rescale(assessment.scale)
 
@@ -81,6 +96,17 @@ class MainView(MethodView):
             if form.results.data:
                 marks = load_results(request.files['results'], form.scale.data)
                 assessment.add_results(marks)
+
+                # Create ranking.
+                general_ranking = Ranking(assessment)
+                session.add(general_ranking)
+                subroup_rankings = []
+                if form.groups.data:
+                    for group_id in form.groups.data:
+                        group = session.query(Group).get(group_id)
+                        ranking = Ranking(assessment, group)
+                        subroup_rankings.append(ranking)
+                session.add_all(subroup_rankings)
 
         assessment = session.merge(assessment)
         session.commit()

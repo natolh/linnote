@@ -250,6 +250,7 @@ class Assessment(BASE):
     creator = relationship('User', uselist=False)
     results = relationship('Mark', back_populates='assessment', cascade='all')
     reports = relationship('Report', back_populates='assessment')
+    rankings = relationship('Ranking', back_populates='assessment', cascade='all')
 
     def __init__(self, title: str, scale: int, **kwargs) -> None:
         super().__init__()
@@ -347,3 +348,9 @@ class Assessment(BASE):
         """
         for mark in self.results:
             mark.rescale(scale)
+
+    def get_results(self, group=None):
+        if group:
+            res = filter(lambda m: m.student.identity in group, self.results)
+            return list(res)
+        return self.results

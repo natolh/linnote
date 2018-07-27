@@ -27,6 +27,7 @@ def load_results(file: Path, scale: int) -> List['Mark']:
     results = list()
     for student_id, score in zip(records['student_id'], records['score']):
         student = session.query(Student).filter_by(aid=student_id).first()
-        mark = Mark(student, score, scale)
-        results.append(mark)
+        if student is not None:
+            mark = Mark(student, score, scale)
+            results.append(mark)
     return results

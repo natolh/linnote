@@ -36,6 +36,10 @@ class AssessmentForm(Form):
         'Barème du fichier',
         default=20,
         validators=[Optional(), NumberRange(min=0)])
+    groups = SelectMultipleField(
+        'Groupes',
+        coerce=int,
+        validators=[Optional()])
 
 
 class MergeForm(Form):

@@ -12,7 +12,6 @@ from flask import Blueprint, jsonify, url_for
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.assessment import Assessment
-from linnote.core.report import Report
 from linnote.core.user import User, Group
 from linnote.core.utils import WEBSESSION
 
@@ -45,21 +44,6 @@ class GraderController(MethodView):
         assessment.grade(grader)
         session.commit()
         return jsonify(redirect=url_for('assessments.results', identifier=identifier))
-
-
-class ReportView(MethodView):
-    """API for report ressources."""
-
-    decorators = [login_required]
-
-    @staticmethod
-    def delete(identifier):
-        """Delete an report ressource."""
-        session = WEBSESSION()
-        report = session.query(Report).get(identifier)
-        session.delete(report)
-        session.commit()
-        return jsonify(redirect=url_for('reports.reports'))
 
 
 class GroupView(MethodView):
@@ -99,9 +83,6 @@ BLUEPRINT.add_url_rule(
 BLUEPRINT.add_url_rule(
     '/assessments/<int:identifier>/marks/grader/<grader>',
     view_func=GraderController.as_view('grade'))
-BLUEPRINT.add_url_rule(
-    '/reports/<identifier>',
-    view_func=ReportView.as_view('report'))
 BLUEPRINT.add_url_rule(
     '/students/groups/<int:identifier>',
     view_func=GroupView.as_view('group'))

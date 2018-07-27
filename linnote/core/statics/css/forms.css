@@ -25,6 +25,10 @@ form fieldset > [role="group"] {
     margin: 0;
 }
 
+form fieldset > div.fullsize {
+    grid-column: 1 / -1;
+}
+
 @media screen and (min-width: 500px) {
     form fieldset {
         grid-template-columns: repeat(2, 1fr);
