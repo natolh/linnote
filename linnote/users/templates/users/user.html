@@ -5,21 +5,24 @@
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
-    <div class="module">
-        <div>
-            <h1>{{ title }}</h1>
-        </div>
-        <div role="toolbar">
-            <menu type="toolbar">
-                <input form="identity" type="submit" value="enregistrer">
-            </menu>
-        </div>
-    </div>
 {% endblock %}
 
 {% block content %}
+<header>
+    <h1>{{ title }}</h1>
+</header>
 <section>
-    <h2>Identité</h2>
+    <header>
+        <div>
+            <h2>Identité</h2>
+            <p>
+                L'adresse email sert d'identifiant de connexion à la plateforme.
+            </p>
+        </div>
+
+        <input form="identity" type="submit" value="enregistrer">
+    </header>
+
     <form id="identity" method="post" enctype="multipart/form-data">
         {{ form.csrf_token }}
         <fieldset>
@@ -42,7 +45,9 @@
 </section>
 {% if user %}
 <section>
-    <h2>Confidentialité</h2>
+    <header>
+        <h2>Confidentialité</h2>
+    </header>
     <div class="action-box sensitive">
         <div class="description">
             <p class="title">

@@ -5,14 +5,15 @@ Styling for header section.
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 */
-header {
+body > header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     width: 100vw;
+    z-index: 100;
 }
 
-header .site {
+body > header .site {
     padding: .5rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -20,7 +21,7 @@ header .site {
     background-color: var(--color-main);
 }
 
-header .site a {
+body > header .site a {
     display: flex;
     align-items: center;
     font-size: 0.8rem;
@@ -31,29 +32,29 @@ header .site a {
     transition: color 100ms ease-out;
 }
 
-header .site a:hover, header .site a:focus, header .site a:active, header .site a.active {
+body > header .site a:hover, body > header .site a:focus, body > header .site a:active, body > header .site a.active {
     color: white !important;
     transition: color 100ms ease-in;
 }
 
-header .site nav {
+body > header .site nav {
     height: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
 }
 
-header .site nav ul {
+body > header .site nav ul {
     height: 100%;
     display: flex;
     align-items: stretch;
     }
 
-header .site nav li {
+body > header .site nav li {
     display: flex;
-    align-items: strech;
+    align-items: stretch;
 }
 
-header .site nav li:not(:last-child) {
+body > header .site nav li:not(:last-child) {
     margin-right: 0.7rem;
 }
 
@@ -66,72 +67,63 @@ header .site nav li:not(:last-child) {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* Module header */
-header .module {
+/* Header for main section */
+main > header {
+    padding: 0;
+    display: grid;
+    grid: "heading toolbar" auto
+          "nav nav" auto
+          / auto;
+    gap: 1rem;
+}
+
+main > header menu[type="toolbar"] {
+    grid-area: toolbar;
     display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
-    background-color: hsl(338, 52%, 40%);
+    align-self: center;
+    justify-self: flex-end;
 }
 
-/* Module navigation */
-header .module [role="navigation"] {
-    display: flex;
-    flex-direction: column;
-}
-
-header .module [role="navigation"] menu {
-    display: flex;
-}
-
-header .module [role="navigation"] li {
-    display: flex;
-}
-
-header .module [role="navigation"] a {
-    padding: .5rem;
-    font-size: 1rem;
-    color: white;
-    border-bottom: 5px solid transparent;
-}
-
-header .module [role="navigation"] menu :first-child a {
-    padding-left: 0;
-}
-
-header .module [role="navigation"] a:hover, header .module [role="navigation"] a:active, header .module [role="navigation"] a:focus,header .module [role="navigation"] a.selected {
-    border-bottom: 5px solid white;
-}
-
-/* Module menu */
-header .module [role="toolbar"] {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-header .module [role="toolbar"] menu {
-    display: flex;
-}
-
-header .module [role="toolbar"] li {
+main > header menu[type="toolbar"] li {
     display: contents;
 }
 
-header .module [role="toolbar"] li:not(:last-of-type) {
-    margin-right: .2rem;
+main > header menu[type="toolbar"] a {
+    background-color: gold;
+    border-radius: 3px;
+    padding: 10px;
 }
 
-header .module [role="toolbar"] a {
+main > header menu[type="toolbar"] li:not(:last-of-type) a {
+    margin-right: 10px;
+}
+
+main > header menu[type="navigation"] {
+    grid-area: nav;
     display: flex;
-    height: 2rem;
-    border-radius: 2px;
-    padding: 0 10px;
-    justify-content: center;
-    align-items: center;
-    color: white;
+    border-bottom: 2px solid hsl(0, 0%, 90%);
 }
 
-header .module [role="toolbar"] a:active, header .module [role="toolbar"] a:hover, header .module [role="toolbar"] a:focus {
-    background-color: rgba(255, 255, 255, 0.1);
+main > header menu[type="navigation"] li {
+    display: contents;
+}
+
+main > header menu[type="navigation"] li:not(:last-of-type) a {
+    margin-right: 20px;
+}
+
+main > header menu[type="navigation"] a {
+    font-family: "Open Sans";
+    font-weight: 400;
+    text-transform: capitalize;
+    position: relative;
+    bottom: -2px;
+    color: hsl(0, 0%, 40%);
+    border-bottom: 2px solid transparent;
+    padding: .8rem 0;
+}
+
+main > header menu[type="navigation"] a:hover {
+    color: black;
+    border-color: hsl(340, 65%, 40%);
 }

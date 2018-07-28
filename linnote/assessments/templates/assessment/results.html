@@ -5,30 +5,20 @@
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
-    <div class="module">
-        <div role="navigation">
-            <h1>{{ assessment.title }}</h1>
-            {% include 'assessment/menu.html' %}
-        </div>
-        <div role="toolbar">
-            <menu type="toolbar">
-                <li>
-                    <button class='xhr' data-method='post' data-action="{{ url_for('api.grade', identifier=assessment.identifier, grader='top_linear') }}">
-                        Lisser
-                    </button>
-                </li>
-                <li>
-                    <a href="{{ url_for('assessments.report', id=assessment.identifier) }}" target="_blank">
-                        Rapport
-                    </a>
-                </li>
-            </menu>
-
-        </div>
-    </div>
 {% endblock %}
 
 {% block content %}
+<header>
+    <h1>{{ assessment.title }}</h1>
+    <menu type="toolbar">
+        <li>
+            <button class='xhr' data-method='post' data-action="{{ url_for('api.grade', identifier=assessment.identifier, grader='top_linear') }}">
+                Lisser
+            </button>
+        </li>
+    </menu>
+    {% include 'assessment/menu.html' %}
+</header>
 <div role="table" class="flex">
 {% for result in assessment.results %}
     <ul role="row">

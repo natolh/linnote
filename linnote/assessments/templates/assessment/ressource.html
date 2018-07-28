@@ -5,68 +5,67 @@
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
-    <div class="module">
-        <div role="navigation">
-        {% if assessment is defined %}
-            <h1>{{ assessment.title }}</h1>
-            {% include 'assessment/menu.html' %}
-        {% else %}
-        <h1>
-            Nouvelle épreuve
-        </h1>
-        {% endif %}
-        </div>
-    </div>
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
+<header>
+{% if assessment is defined %}
+    <h1>{{ assessment.title }}</h1>
+    {% include 'assessment/menu.html' %}
+{% else %}
+    <h1>Nouvelle épreuve</h1>
+{% endif %}
+</header>
+<section>
+    <form method="post" enctype="multipart/form-data">
 
-    {{ form.csrf_token }}
-
-    <div role="group">
-        {{ form.title.label }}
-        {{ form.title(autocomplete="off", autofocus="on") }}
-    </div>
-
-    <fieldset>
-        <div role="group">
-            {{ form.coefficient.label }}
-            {{ form.coefficient(type="number", autocomplete="off") }}
-         </div>
-         <div role="group">
-            {{ form.precision.label }}
-            {{ form.precision(type="number", autocomplete="off") }}
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend>Analyse en sous-groupes</legend>
-        <div class="fullsize" role="group">
-            {{ form.groups.label }}
-            {{ form.groups() }}
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend>Importer des notes</legend>
+        {{ form.csrf_token }}
 
         <div role="group">
-            {{ form.results.label }}
-            {{ form.results() }}
+            {{ form.title.label }}
+            {{ form.title(autocomplete="off", autofocus="on") }}
         </div>
-        <div role="group">
-            {{ form.scale.label }}
-            {{ form.scale(type="number", autocomplete="off") }}
-        </div>
-    </fieldset>
 
-    {% if assessment is defined %}
-        <input type="submit" value="Modifier">
-    {% else %}
-        <input type="submit" value="Créer">
-    {% endif %}
-</form>
+        <fieldset>
+            <div role="group">
+                {{ form.coefficient.label }}
+                {{ form.coefficient(type="number", autocomplete="off") }}
+            </div>
+            <div role="group">
+                {{ form.precision.label }}
+                {{ form.precision(type="number", autocomplete="off") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Analyse en sous-groupes</legend>
+            <div class="fullsize" role="group">
+                {{ form.groups.label }}
+                {{ form.groups() }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Importer des notes</legend>
+
+            <div role="group">
+                {{ form.results.label }}
+                {{ form.results() }}
+            </div>
+            <div role="group">
+                {{ form.scale.label }}
+                {{ form.scale(type="number", autocomplete="off") }}
+            </div>
+        </fieldset>
+
+        {% if assessment is defined %}
+            <input type="submit" value="Modifier">
+        {% else %}
+            <input type="submit" value="Créer">
+        {% endif %}
+    </form>
+</section>
+
 
 {% if assessment %}
 <section>

@@ -18,57 +18,57 @@ body {
     display: grid;
     grid: "header" min-content
           "main" auto
-          / 1fr;
+          / auto;
 }
 
 main {
+    padding: 2rem;
     display: grid;
-    grid: min-content / 1fr;
-    grid-auto-rows: min-content;
+    grid: auto / repeat(6, 1fr);
+    align-content: flex-start;
+    gap: 2rem;
 }
 
-@media screen and (min-width: 600px) {
-    main {
-        grid-template: min-content / repeat(3, 1fr);
-    }
-}
-
-@media screen and (min-width: 900px) {
-    main {
-        grid-template: min-content / repeat(4, 1fr);
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    main {
-        grid-template: min-content / repeat(6, 1fr);
-    }
-}
-
-main > :nth-child(n) {
+main > section, main > header, main > div {
     grid-column: 1 / -1;
-    padding: 1rem;
 }
 
 /* Typography */
 h1 {
+    grid-area: heading;
     display: flex;
-    margin: 1rem 0 .5rem 0;
-    align-items: center;
-    justify-content: center;
-    font-family: "Droid Sans";
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
+    font-family: "Open Sans";
+    font-size: 2rem;
+    font-weight: 200;
+    text-transform: capitalize;
 }
 
-@media screen and (min-width: 900px) {
-    h1 {
-        justify-content: flex-start;
-    }
+h2 {
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    color: hsl(0, 0%, 30%);
 }
 
 /* Dirty section */
+
+main > section {
+    display: block;
+    padding: 2rem;
+    border: 1px solid hsl(0, 0%, 95%);
+    box-shadow: 0 0 20px 0 hsl(0, 0%, 95%);
+    border-radius: 5px;
+}
+
+main > section header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+main > section header p {
+    color: hsl(0, 0%, 50%);
+}
 
 .action-box.sensitive .information {
     font-size: 1rem;
@@ -103,8 +103,6 @@ h1 {
     padding: 1rem 1.5rem;
     border-radius: 3px;
 }
-
-
 
 @media screen and (min-width: 900px) {
 

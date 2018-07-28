@@ -5,35 +5,32 @@
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
-    <div class="module">
-        <div role="navigation">
-            <h1>Utilisateurs</h1>
-            <menu type="navigation">
-                <li>
-                    <a href="{{ url_for('users.users') }}">
-                        Utilisateurs
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('users.groups') }}">
-                        Groupes
-                    </a>
-                </li>
-            </menu>
-        </div>
-        <div role="toolbar">
-            <menu type="toolbar">
-                <li>
-                    <a href="{{ url_for('users.user') }}">
-                        Ajouter
-                    </a>
-                </li>
-            </menu>
-        </div>
-    </div>
 {% endblock %}
 
 {% block content %}
+<header>
+    <h1>Utilisateurs</h1>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('users.user') }}">
+                Ajouter
+            </a>
+        </li>
+    </menu>
+    <menu type="navigation">
+        <li>
+            <a href="{{ url_for('users.users') }}">
+                personnes
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('users.groups') }}">
+                groupes
+            </a>
+        </li>
+    </menu>
+</header>
+
 <ul class="cards">
     {% for user in users %}
     <li>

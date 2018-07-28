@@ -4,44 +4,67 @@
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
-    <div class="module">
-        <div role="navigation">
-            <h1>Mon compte</h1>
-            {% include 'menu.html' %}
-        </div>
-        <div role="toolbar">
-            <menu type="toolbar">
-                <li>
-                    <a href="{{ url_for('account.logout') }}">
-                        Déconnexion
-                    </a>
-                </li>
-            </menu>
-        </div>
-    </div>
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {{ form.csrf_token }}
+<header>
+    <h1>compte</h1>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('account.logout') }}">
+                Déconnexion
+            </a>
+        </li>
+    </menu>
+    {% include 'menu.html' %}
+</header>
 
-    <fieldset>
-        <div role="group">
-            {{ form.firstname.label }}
-            {{ form.firstname() }}
+<section>
+    <header>
+        <div>
+            <h2>Identité</h2>
+            <p>
+                Votre adresse email constitue votre identifiant pour la plateforme.
+            </p>
         </div>
+        <input form="identity" type="submit" value="enregistrer">
+    </header>
+    <form id="identity" method="post">
+        {{ form.csrf_token }}
+
+        <fieldset>
+            <div role="group">
+                {{ form.firstname.label }}
+                {{ form.firstname() }}
+            </div>
+
+            <div role="group">
+                {{ form.lastname.label }}
+                {{ form.lastname() }}
+            </div>
+        </fieldset>
 
         <div role="group">
-            {{ form.lastname.label }}
-            {{ form.lastname() }}
+            {{ form.email.label }}
+            {{ form.email() }}
         </div>
-    </fieldset>
+    </form>
+</section>
 
-    <div role="group">
-        {{ form.email.label }}
-        {{ form.email() }}
-    </div>
-
-    <input type="submit" value="enregistrer">
-</form>
+<section>
+    <header>
+        <div>
+            <h2>
+                {% if current_user.profile.role == 'administrator' %}
+                Administrateur
+                {% else %}
+                Profil
+                {% endif %}
+            </h2>
+            <p>
+                Le profil est vide.
+            </p>
+        </div>
+    </header>
+</section>
 {% endblock %}

@@ -5,28 +5,25 @@
 
 {% block header %}
 {% include 'workspaces/admin.html' %}
-<div class="module">
-    <div>
-        <h1>Épreuves</h1>
-    </div>
-    <div role="toolbar">
-        <menu type="toolbar">
-            <li>
-                <a href="{{ url_for('assessments.merger') }}">
-                    Fusionner
-                </a>
-            </li>
-            <li>
-                <a href="{{ url_for('assessments.assessment') }}">
-                    Ajouter
-                </a>
-            </li>
-        </menu>
-    </div>
-</div>
 {% endblock %}
 
 {% block content %}
+<header>
+    <h1>Épreuves</h1>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('assessments.merger') }}">
+                Fusionner
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('assessments.assessment') }}">
+                Ajouter
+            </a>
+        </li>
+    </menu>
+</header>
+
 <ul class="cards">
     {% for assessment in assessments %}
     <li>

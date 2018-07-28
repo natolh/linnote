@@ -5,28 +5,29 @@
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
-    <div class="module">
-        <div>
-            <h1>Nouveau groupe</h1>
-        </div>
-    </div>
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
+<header>
+    <h1>Nouveau groupe</h1>
+</header>
 
-    {{ form.csrf_token }}
+<section>
+    <form method="post" enctype="multipart/form-data">
 
-    <div role="group">
-        {{ form.title.label }}
-        {{ form.title(autocomplete="off", autofocus="on") }}
-    </div>
+        {{ form.csrf_token }}
 
-    <div role="group">
-        {{ form.students.label }}
-        {{ form.students() }}
-    </div>
+        <div role="group">
+            {{ form.title.label }}
+            {{ form.title(autocomplete="off", autofocus="on") }}
+        </div>
 
-    <input type="submit" value="Créer">
-</form>
+        <div role="group">
+            {{ form.students.label }}
+            {{ form.students() }}
+        </div>
+
+        <input type="submit" value="Créer">
+    </form>
+</section>
 {% endblock %}
