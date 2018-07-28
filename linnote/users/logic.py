@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Forms for the 'users' application module.
+
+Author: Anatole Hanniet, 2016-2018.
+License: Mozilla Public License, see 'LICENSE.txt' for details.
+"""
+
 from pathlib import Path
 from pandas import read_excel
 from linnote.core.user import Group, Student, User

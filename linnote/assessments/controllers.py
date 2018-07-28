@@ -114,13 +114,18 @@ class ResultsView(MethodView):
     """Controller for managing assessment's results."""
 
     decorators = [login_required]
+    template = 'assessment/results.html'
 
-    @staticmethod
-    def get(identifier):
+    @classmethod
+    def render(cls, **kwargs):
+        """Render the view."""
+        return render_template(cls.template, **kwargs)
+
+    def get(self, identifier):
         """Display assessment's results."""
-        assessment = DATA.query(Assessment).get(identifier)
-        return render_template('assessment/results.html',
-                                assessment=assessment)
+        data = DATA()
+        assessment = data.query(Assessment).get(identifier)
+        return self.render(assessment=assessment)
 
 
 class MergeController(MethodView):
@@ -130,13 +135,17 @@ class MergeController(MethodView):
     template = 'merger.html'
 
     @staticmethod
-    def load(id=None):
-        if not id:
-            return DATA.query(Assessment).all()
-        return DATA.query(Assessment).get(id)
+    def load(identifier=None):
+        """Load data."""
+        data = DATA()
+        if not identifier:
+            return data.query(Assessment).all()
+        return data.query(Assessment).get(identifier)
 
-    def render(self, **kwargs):
-        return render_template(self.template, **kwargs)
+    @classmethod
+    def render(cls, **kwargs):
+        """Render the view."""
+        return render_template(cls.template, **kwargs)
 
     def get(self):
         assessments = self.load()

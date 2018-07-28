@@ -39,6 +39,7 @@ class GraderController(MethodView):
 
     @staticmethod
     def post(identifier, grader):
+        """Adjust marks."""
         assessment = DATA.query(Assessment).get(identifier)
         assessment.grade(grader)
         DATA.commit()

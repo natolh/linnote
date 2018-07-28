@@ -350,6 +350,11 @@ class Assessment(BASE):
             mark.rescale(scale)
 
     def get_results(self, group=None):
+        """
+        Fetch assessment's results or a part of it.
+
+        If group is provided, only results of group's members are returned. Else, all assessment's results are returned.
+        """
         if group:
             res = filter(lambda m: m.student.identity in group, self.results)
             return list(res)

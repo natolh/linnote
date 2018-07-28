@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Buisness logic for the 'assessments' application module.
+
+Author: Anatole Hanniet, 2016-2018.
+License: Mozilla Public License, see 'LICENSE.txt' for details.
+"""
+
 from pathlib import Path
 from typing import List
 from pandas import read_excel
