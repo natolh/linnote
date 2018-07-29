@@ -39,8 +39,9 @@ class User(BASE):
         self.lastname = lastname
         self.email = email
 
-        if kwargs.get('password'):
-            self.set_password_hash(kwargs.get('password'))
+        password = kwargs.get('password', None)
+        if password:
+            self.set_password_hash(password)
 
     def __repr__(self) -> str:
         return f'<User {self.identifier}: {self.fullname}>'
