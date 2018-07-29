@@ -112,11 +112,9 @@ class Administrator(Profile):
     # Model definition.
     __tablename__ = 'profiles__administrators'
     __mapper_args__ = {'polymorphic_identity': 'administrator'}
-    identifier = Column(Integer(),
-                        ForeignKey('profiles.identifier'),
+    identifier = Column(Integer(), ForeignKey('profiles.identifier'),
                         primary_key=True)
-    is_superuser = Column(Boolean(),
-                          default=False)
+    is_superuser = Column(Boolean(), default=False)
 
 
 class Student(Profile):
