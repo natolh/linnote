@@ -89,12 +89,6 @@ class User(BASE):
         """Boolean showing if the current user account is active or not."""
         return True
 
-    def update(self, data):
-        """Update user's attribute using dict values."""
-        for key, value in data.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-
 
 class Profile(BASE):
     """User's details not related to his identity in the application."""
