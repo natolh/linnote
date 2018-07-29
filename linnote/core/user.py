@@ -101,7 +101,9 @@ class Profile(BASE):
     role = Column(String(250), nullable=False)
     identity = relationship('User', back_populates='profile', uselist=False)
 
-    __mapper_args__ = {'polymorphic_on': role, 'polymorphic_identity': '*', 'with_polymorphic': '*'}
+    __mapper_args__ = {
+        'polymorphic_on': role, 'polymorphic_identity': '*',
+        'with_polymorphic': '*'}
 
 
 class Administrator(Profile):
