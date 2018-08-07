@@ -9,9 +9,10 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from functools import wraps
-from flask import redirect, render_template, url_for
+from flask import redirect, render_template, url_for, request
 from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
+from jwt import decode
 from linnote.core.user import User
 from linnote.core.utils import DATA
 from .forms import LoginForm, PasswordForm, ProfileForm
@@ -37,23 +38,47 @@ class Login(MethodView):
 
     decorators = [skip_if_authenticated]
 
-    @staticmethod
-    def get():
-        """Get the login formular or skip is user is already authentificated."""
+    def get(self):
+        """
+        Display login formular or allow for login using a token.
+        """
+        token = request.args.get('token', None)
+        if token:
+            return self.login_from_token(token)
+
         form = LoginForm()
         return render_template('authentification/login.html', form=form)
 
     def post(self):
         """Process the login formular, login the user, redirect to his desk."""
+        return self.login_from_formular()
+
+    @staticmethod
+    def login_from_formular():
         form = LoginForm()
+        data = DATA()
+
         if form.validate():
-            user = DATA.query(User).filter(User.username == form.identifier.data).one_or_none()
+            users = data.query(User)
+            user = users.filter_by(username=form.identifier.data).one_or_none()
 
             if user and user.is_authentic(form.password.data):
                 login_user(user)
                 return redirect(url_for('assessments.assessments'))
 
         return self.get()
+
+
+    @staticmethod
+    def login_from_token(token):
+        data = DATA()
+        claims = decode(token, 'secret')
+        users = data.query(User)
+        user = users.filter_by(username=claims['username']).one_or_none()
+
+        if user:
+            login_user(user)
+            return redirect(url_for('assessments.assessments'))
 
 
 class Logout(MethodView):

@@ -28,7 +28,7 @@
         <fieldset>
             <div role="group">
                 {{ form.firstname.label }}
-                {{ form.firstname(autofocus="on") }}
+                {{ form.firstname(autofocus="autofocus") }}
             </div>
 
             <div role="group">
@@ -44,6 +44,20 @@
     </form>
 </section>
 {% if user %}
+<section>
+    <header>
+        <div>
+            <h2>
+                Sécurité
+            </h2>
+            <p>
+                Ce lien permet d'accéder au compte pour l'initialiser ou le réinitialiser. La durée de validité du lien est de une heure à partir de sa création.
+            </p>
+        </div>
+    </header>
+        <input type="text" readonly value="{{ url_for('account.login', token=user.access_token(), _external=True) }}">
+
+</section>
 <section>
     <header>
         <h2>Confidentialité</h2>
