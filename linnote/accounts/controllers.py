@@ -8,6 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from functools import wraps
 from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
@@ -16,15 +17,29 @@ from linnote.core.utils import DATA
 from .forms import LoginForm, PasswordForm, ProfileForm
 
 
+def skip_if_authenticated(function):
+    """
+    Redirect user to homepage if authentificated.
+
+    This function purpose is to be used as a decorator on the login page to
+    avoid the hassle of login a user that is already authentificated.
+    """
+    @wraps(function)
+    def wrapped(*args, **kwargs):
+        if current_user.is_authenticated:
+            return redirect(url_for('assessments.assessment'))
+        return function(*args, **kwargs)
+    return wrapped
+
+
 class Login(MethodView):
     """Controller for managing user login task."""
+
+    decorators = [skip_if_authenticated]
 
     @staticmethod
     def get():
         """Get the login formular or skip is user is already authentificated."""
-        if current_user.is_authenticated:
-            return redirect(url_for('assessments.assessment'))
-
         form = LoginForm()
         return render_template('authentification/login.html', form=form)
 
