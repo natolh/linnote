@@ -15,7 +15,7 @@ pandas = "*"
 xlrd = "*"
 matplotlib = "*"
 gunicorn = "*"
-jwcrypto = "*"
+pyjwt = "*"
 
 [dev-packages]
 pylint = "*"
