@@ -49,6 +49,12 @@ h2 {
     color: hsl(0, 0%, 30%);
 }
 
+h3 {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    color: hsl(0, 0%, 15%);
+}
+
 /* Dirty section */
 
 main > section {
@@ -63,11 +69,14 @@ main > section header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
 }
 
-main > section header p {
+main > section header p, main > section .sub p {
     color: hsl(0, 0%, 50%);
+}
+
+main > section .sub .heading {
+    margin-bottom: 0.5rem;
 }
 
 .action-box.sensitive .information {
@@ -170,4 +179,12 @@ a, button {
 em {
     font-weight: bolder;
     font-style: normal;
+}
+
+div.sub {
+    margin-top: 1rem;
+}
+
+main > section header + div.sub {
+    margin-top: 1.5rem;
 }

@@ -23,25 +23,27 @@
         <input form="identity" type="submit" value="enregistrer">
     </header>
 
-    <form id="identity" method="post" enctype="multipart/form-data">
-        {{ form.csrf_token }}
-        <fieldset>
-            <div role="group">
-                {{ form.firstname.label }}
-                {{ form.firstname(autofocus="autofocus") }}
-            </div>
+    <div class="sub">
+        <form id="identity" method="post" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <fieldset>
+                <div role="group">
+                    {{ form.firstname.label }}
+                    {{ form.firstname(autofocus="autofocus") }}
+                </div>
+
+                <div role="group">
+                    {{ form.lastname.label }}
+                    {{ form.lastname() }}
+                </div>
+            </fieldset>
 
             <div role="group">
-                {{ form.lastname.label }}
-                {{ form.lastname() }}
+                {{ form.email.label }}
+                {{ form.email() }}
             </div>
-        </fieldset>
-
-        <div role="group">
-            {{ form.email.label }}
-            {{ form.email() }}
-        </div>
-    </form>
+        </form>
+    </div>
 </section>
 {% if user %}
 <section>
@@ -50,23 +52,28 @@
             <h2>
                 Sécurité
             </h2>
-            <p>
-                Ce lien permet d'accéder au compte pour l'initialiser ou le réinitialiser. La durée de validité du lien est de une heure à partir de sa création.
-            </p>
         </div>
     </header>
-        <input type="text" readonly value="{{ url_for('account.login', token=user.access_token(), _external=True) }}">
+    <div class="sub">
+        <div class="heading">
+            <h3>Jeton de connexion</h3>
+            <p>
+                Ce lien temporaire (valide pour une heure), permet à l'utilisateur de se connecter sans mot de passe pour initialiser ou réinitialiser son compte.
+            </p>
+        </div>
 
+        <input type="text" readonly value="{{ url_for('account.login', token=user.access_token(), _external=True) }}">
+    </div>
 </section>
 <section>
     <header>
         <h2>Confidentialité</h2>
     </header>
-    <div class="action-box sensitive">
-        <div class="description">
-            <p class="title">
+    <div class="danger sub">
+        <div class="heading">
+            <h3>
                 Supprimer le compte
-            </p>
+            </h3>
             <p class="informations">
                 <em>La suppression du compte est définitive, les données de l'utilisateur ne pourront pas être restaurées</em>.
                 Veuillez noter et informer l'utilisateur que certaines données associées à son compte seront conservées de manière anonyme pour le bon fonctionnement de la plateforme. De plus, veuillez noter et informer l'utilisateur que ses données persisteront quelques temps au sein des copies de sauvegarde de la plateforme mais seront à terme (délai imprévisible) également supprimées.
