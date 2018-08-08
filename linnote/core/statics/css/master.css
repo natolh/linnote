@@ -139,19 +139,27 @@ a, button {
 }
 
 [type="button"], button {
+    font-size: .9rem;
     text-align: center;
     text-decoration: none;
-    box-sizing: border-box;
     border: none;
-    max-width: 10rem;
     cursor: pointer;
-    padding: 0.4rem 0.5rem;
-    border-radius: 0.15rem;
+    padding: .6rem 1.2rem;
+    border-radius: 3rem;
     color: white;
     background-color: var(--color-main);
     -webkit-appearance: none;
     -moz-appearance: none;
     vertical-align: middle;
+}
+
+[type="button"].danger, button.danger {
+    font-weight: 600;
+    background-color: var(--color-error);
+}
+
+[type="button"].danger:hover, button.danger:hover {
+    background-color: var(--color-error-light);
 }
 
 /* Flex tables */

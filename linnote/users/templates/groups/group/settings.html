@@ -38,14 +38,14 @@
         <div>
             <h2>Suppression</h2>
             <p>
-                La suppression d'un groupe est irréversible, celle-ci n'entraîne pas la suppression des comptes utilisateurs membres du groupe.
+                La suppression d'un groupe est <em>irréversible</em>, celle-ci <em>n'entraîne pas la suppression des comptes utilisateurs</em> membres du groupe.
             </p>
         </div>
     </header>
     <div class="sub">
-        <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.group', identifier=group.identifier) }}">
-                Supprimer
-            </button>
+        <button class="danger xhr" data-method="delete" data-action="{{ url_for('api.group', identifier=group.identifier) }}">
+            Supprimer le groupe « {{ group.name }} »
+        </button>
     </div>
 </section>
 {% endblock %}
