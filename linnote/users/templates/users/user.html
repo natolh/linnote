@@ -89,11 +89,10 @@
             </h3>
             <p class="informations">
                 <em>La suppression du compte est définitive, les données de l'utilisateur ne pourront pas être restaurées</em>.
-                Veuillez noter et informer l'utilisateur que certaines données associées à son compte seront conservées de manière anonyme pour le bon fonctionnement de la plateforme. De plus, veuillez noter et informer l'utilisateur que ses données persisteront quelques temps au sein des copies de sauvegarde de la plateforme mais seront à terme (délai imprévisible) également supprimées.
             </p>
         </div>
-        <button type="button" class="xhr" data-action="{{ url_for('api.user', identifier=user.identifier) }}" data-method="delete">
-            Supprimer le compte de {{ user.fullname }}
+        <button class="danger xhr" data-action="{{ url_for('api.user', identifier=user.identifier) }}" data-method="delete">
+            Supprimer le compte de « {{ user.fullname }} »
         </button>
     </div>
 </section>
