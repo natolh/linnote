@@ -43,11 +43,17 @@ class GroupRessource(MethodView):
     def post(self):
         """Create a new user group."""
         form = GroupForm()
-        if form.validate():
-            group = load_group(request.files['students'], form.title.data)
-            DATA.merge(group)
-            DATA.commit()
+        data = DATA()
 
+        if form.validate() and form.students.data:
+            group = load_group(request.files['students'], form.title.data)
+            data.merge(group)
+
+        elif form.validate():
+            group = Group(name=form.title.data)
+            data.add(group)
+
+        data.commit()
         return self.get()
 
     @classmethod
