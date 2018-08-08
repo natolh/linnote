@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% set title = group.name %}
+{% set active_page = 'utilisateurs' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ title }}</h1>
+</header>
+<section>
+    <header>
+        <h2>Membres du groupe</h2>
+    </header>
+    <div class="sub">
+        {% for user in group.members %}
+            {{ user.fullname }}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

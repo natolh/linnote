@@ -74,6 +74,11 @@ class UserView(MethodView):
         return jsonify(redirect=url_for('users.users'))
 
 
+def whoohoooo(data):
+    print(data[0])
+    return jsonify(None)
+
+
 # Register routes to controllers.
 BLUEPRINT.add_url_rule(
     '/assessments/<int:identifier>',
@@ -87,3 +92,8 @@ BLUEPRINT.add_url_rule(
 BLUEPRINT.add_url_rule(
     '/users/<int:identifier>',
     view_func=UserView.as_view('user'))
+BLUEPRINT.add_url_rule(
+    '/users/whoooohoohho',
+    view_func=whoohoooo,
+    methods=["POST"]
+)

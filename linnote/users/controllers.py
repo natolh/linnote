@@ -45,17 +45,6 @@ class GroupBaseController(MethodView):
     """Controller for managing a user group ressource."""
 
     decorators = [login_required]
-    template = 'groups/group.html'
-
-    def get(self, identifier):
-        """Display a form for creating a new user group."""
-        group = self.load(identifier)
-        form = GroupForm(obj=group)
-        return self.render(form=form, group=group)
-
-    def post(self):
-        """Create a new user group."""
-        pass
 
     @staticmethod
     def load(identifier):
@@ -90,6 +79,33 @@ class GroupCreationController(GroupBaseController):
 
         data.commit()
         return redirect(url_for('users.group', identifier=group.identifier))
+
+
+class GroupSettingsController(GroupBaseController):
+
+    template = 'groups/group/settings.html'
+
+    def get(self, identifier):
+        """Display a form for creating a new user group."""
+        group = self.load(identifier)
+        form = GroupForm(obj=group)
+        return self.render(form=form, group=group)
+
+    def post(self):
+        """Create a new user group."""
+        pass
+
+
+class GroupMembersController(GroupBaseController):
+
+    template = 'groups/group/members.html'
+
+    def get(self, identifier):
+        group = self.load(identifier)
+        return self.render(group=group)
+
+    def post(self, identifier):
+        pass
 
 
 class UsersController(MethodView):
@@ -159,17 +175,23 @@ class UserCreationController(UserBaseController):
 class UserController(UserBaseController):
 
     def get(self, identifier):
+        data = DATA()
         user = self.load(identifier)
         form = UserForm(obj=user)
+        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
         return self.render(form=form, user=user)
 
     def post(self, identifier):
-        form = UserForm()
         data = DATA()
+        form = UserForm()
+        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
 
         if form.validate():
             user = self.load(identifier)
-            form.populate_obj(user)
+            user.first_name = form.firstname.data
+            user.last_name = form.lastname.data
+            user.email = form.email.data
+            user.groups = [data.query(Group).get(id) for id in form.groups.data]
 
         data.add(user)
         data.commit()
