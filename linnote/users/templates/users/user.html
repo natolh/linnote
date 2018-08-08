@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set title = user.fullname or 'Nouvel utilisateur' %}
+{% set title = user.fullname %}
 {% set active_page = 'utilisateurs' %}
 
 {% block header %}
@@ -45,7 +45,6 @@
         </form>
     </div>
 </section>
-{% if user %}
 <section>
     <header>
         <div>
@@ -84,5 +83,4 @@
         </button>
     </div>
 </section>
-{% endif %}
 {% endblock %}

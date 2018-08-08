@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% set title = 'Nouvel utilisateur' %}
+{% set active_page = 'utilisateurs' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ title }}</h1>
+</header>
+<section>
+    <header>
+        <div>
+            <h2>Identité</h2>
+            <p>
+                L'adresse email sert d'identifiant de connexion à la plateforme.
+            </p>
+        </div>
+
+        <input form="identity" type="submit" value="enregistrer">
+    </header>
+
+    <div class="sub">
+        <form id="identity" method="post" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <fieldset>
+                <div role="group">
+                    {{ form.firstname.label }}
+                    {{ form.firstname(autofocus="autofocus") }}
+                </div>
+
+                <div role="group">
+                    {{ form.lastname.label }}
+                    {{ form.lastname() }}
+                </div>
+            </fieldset>
+
+            <div role="group">
+                {{ form.email.label }}
+                {{ form.email() }}
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -8,7 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.user import Group, User, Administrator
@@ -17,19 +17,31 @@ from .forms import GroupForm, UserForm
 from .logic import load_group
 
 
-class GroupCollection(MethodView):
+class GroupsController(MethodView):
     """Controller for managing user groups collection."""
 
     decorators = [login_required]
+    template = 'groups/groups.html'
+
+    def get(self):
+        """Display the collection of user groups."""
+        groups = self.load()
+        return self.render(groups=groups)
 
     @staticmethod
-    def get():
-        """Display the collection of user groups."""
-        groups = DATA.query(Group).all()
-        return render_template('groups/groups.html', groups=groups)
+    def load():
+        """Load groups."""
+        data = DATA()
+        groups = data.query(Group).all()
+        return groups
+
+    @classmethod
+    def render(cls, **kwargs):
+        """Render groups view."""
+        return render_template(cls.template, **kwargs)
 
 
-class GroupRessource(MethodView):
+class GroupController(MethodView):
     """Controller for managing a user group ressource."""
 
     decorators = [login_required]
@@ -60,57 +72,87 @@ class GroupRessource(MethodView):
     def render(cls, **kwargs):
         return render_template(cls.template, **kwargs)
 
-class UserCollection(MethodView):
+
+class UsersController(MethodView):
     """Controller for managing users collection."""
 
     decorators = [login_required]
+    template = 'users/users.html'
+
+    def get(self):
+        """Display the collection of users."""
+        users = self.load()
+        return self.render(users=users)
 
     @staticmethod
-    def get():
-        """Display the collection of users."""
-        users = DATA.query(User).all()
-        return render_template('users/users.html', users=users)
+    def load():
+        data = DATA()
+        users = data.query(User).all()
+        return users
+
+    @classmethod
+    def render(cls, **kwargs):
+        return render_template(cls.template, **kwargs)
 
 
-class UserRessource(MethodView):
+class UserBaseController(MethodView):
     """Controller for managing a user ressource."""
 
     decorators = [login_required]
-
-    @staticmethod
-    def render(**kwargs):
-        return render_template('users/user.html', **kwargs)
+    template = 'users/user.html'
 
     @staticmethod
     def load(identifier=None):
-        return DATA.query(User).get(identifier)
+        data = DATA()
+        user = data.query(User).get(identifier)
+        return user
 
-    def get(self, identifier=None):
+    @classmethod
+    def render(cls, **kwargs):
+        return render_template(cls.template, **kwargs)
+
+
+class UserCreationController(UserBaseController):
+
+    template = 'users/creation.html'
+
+    def get(self):
         """Display a form for creating a new user."""
-        if identifier:
-            user = self.load(identifier)
-            form = UserForm(obj=user)
-            context = dict(form=form, user=user)
+        form = UserForm()
+        return self.render(form=form, user=None)
 
-        else:
-            form = UserForm()
-            context = dict(form=form, user=None)
-
-        return self.render(**context)
-
-    def post(self, identifier=None):
+    def post(self):
         """Create a new user."""
         form = UserForm()
+        data = DATA()
 
-        if form.validate() and identifier is not None:
+        if form.validate():
+            user = User(**form.data)
+            profile = Administrator(identity=user)
+            data.add(profile)
+
+        data.merge(user)
+        data.commit()
+
+        return redirect(url_for('users.user', identifier=user.identifier))
+
+
+class UserController(UserBaseController):
+
+    def get(self, identifier):
+        user = self.load(identifier)
+        form = UserForm(obj=user)
+        return self.render(form=form, user=user)
+
+    def post(self, identifier):
+        form = UserForm()
+        data = DATA()
+
+        if form.validate():
             user = self.load(identifier)
             form.populate_obj(user)
 
-        elif form.validate():
-            user = User(**form.data)
-            profile = Administrator(identity=user)
-            DATA.add(profile)
+        data.add(user)
+        data.commit()
 
-        DATA.merge(user)
-        DATA.commit()
-        return self.get(user.identifier)
+        return self.get(identifier=identifier)
