@@ -41,36 +41,55 @@ class GroupsController(MethodView):
         return render_template(cls.template, **kwargs)
 
 
-class GroupController(MethodView):
+class GroupBaseController(MethodView):
     """Controller for managing a user group ressource."""
 
     decorators = [login_required]
     template = 'groups/group.html'
 
-    def get(self):
+    def get(self, identifier):
         """Display a form for creating a new user group."""
-        form = GroupForm()
-        return self.render(form=form)
+        group = self.load(identifier)
+        form = GroupForm(obj=group)
+        return self.render(form=form, group=group)
 
     def post(self):
         """Create a new user group."""
-        form = GroupForm()
+        pass
+
+    @staticmethod
+    def load(identifier):
         data = DATA()
-
-        if form.validate() and form.students.data:
-            group = load_group(request.files['students'], form.title.data)
-            data.merge(group)
-
-        elif form.validate():
-            group = Group(name=form.title.data)
-            data.add(group)
-
-        data.commit()
-        return self.get()
+        group = data.query(Group).get(identifier)
+        return group
 
     @classmethod
     def render(cls, **kwargs):
         return render_template(cls.template, **kwargs)
+
+
+class GroupCreationController(GroupBaseController):
+
+    template = 'groups/creation.html'
+
+    def get(self):
+        form = GroupForm()
+        return self.render(form=form)
+
+    def post(self):
+        form = GroupForm()
+        data = DATA()
+
+        if form.validate() and form.students.data:
+            group = load_group(request.files['students'], form.name.data)
+            data.merge(group)
+
+        elif form.validate():
+            group = Group(name=form.name.data)
+            data.add(group)
+
+        data.commit()
+        return redirect(url_for('users.group', identifier=group.identifier))
 
 
 class UsersController(MethodView):

@@ -16,7 +16,7 @@ from wtforms.validators import DataRequired, Length, Optional
 
 class GroupForm(Form):
     """Form for creating a group of students."""
-    title = StringField('Titre', validators=[DataRequired(), Length(min=2)])
+    name = StringField('Titre', validators=[DataRequired(), Length(min=2)])
     students = FileField('Listing', validators=[Optional()])
 
 

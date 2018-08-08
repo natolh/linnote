@@ -12,7 +12,7 @@
     <h1>Utilisateurs</h1>
     <menu type="toolbar">
         <li>
-            <a href="{{ url_for('users.group') }}">
+            <a href="{{ url_for('users.group_creation') }}">
                 Ajouter
             </a>
         </li>
@@ -39,9 +39,7 @@
             </p>
         </div>
         <div class="footer quick-actions">
-            <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.group', identifier=group.identifier) }}">
-                Supprimer
-            </button>
+            <a href="{{ url_for('users.group', identifier=group.identifier) }}">Ouvrir</a>
         </div>
     </li>
     {% endfor %}
