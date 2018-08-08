@@ -9,8 +9,8 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask_wtf import FlaskForm as Form
-from flask_wtf.file import FileField, FileRequired
-from wtforms.fields import StringField
+from flask_wtf.file import FileField
+from wtforms.fields import StringField, SelectMultipleField
 from wtforms.validators import DataRequired, Length, Optional
 
 
@@ -25,3 +25,4 @@ class UserForm(Form):
     firstname = StringField('Prénom', validators=[DataRequired()])
     lastname = StringField('Nom', validators=[DataRequired()])
     email = StringField('Adresse email', validators=[DataRequired()])
+    groups = SelectMultipleField('Groupes', validators=[Optional()], coerce=int)

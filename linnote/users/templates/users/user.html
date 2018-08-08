@@ -47,6 +47,20 @@
 </section>
 <section>
     <header>
+        <h2>Groupes</h2>
+        <div>
+            <input form="identity" type="submit" value="enregistrer">
+            <input form="identity" type="reset" value="effacer">
+        </div>
+
+    </header>
+    <div class="sub">
+        {{ form.groups.label }}
+        {{ form.groups(form="identity") }}
+    </div>
+</section>
+<section>
+    <header>
         <div>
             <h2>
                 Sécurité
