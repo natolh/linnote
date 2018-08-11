@@ -36,57 +36,39 @@ class ListView(MethodView):
         return render_template('assessments.html', assessments=assessments)
 
 
-class MainView(MethodView):
+class AssessmentController(MethodView):
     """Controller for managing an assessment ressource."""
 
     decorators = [login_required]
+    template = None
 
     @staticmethod
-    def get(identifier):
-        """Display a form for creating a new assessment."""
-        if identifier:
-            assessment = DATA.query(Assessment).get(identifier)
-            form = AssessmentForm(obj=assessment)
-            form.groups.choices = [(g.identifier, g.name) for g in DATA.query(Group).all()]
-            context = dict(assessment=assessment, form=form)
+    def load(identifier):
+        data = DATA()
+        assessment = data.query(Assessment).get(identifier)
+        return assessment
 
-        else:
-            form = AssessmentForm()
-            form.groups.choices = [(g.identifier, g.name) for g in DATA.query(Group).all()]
-            context = dict(form=form)
+    @classmethod
+    def render(cls, **kwargs):
+        return render_template(cls.template, **kwargs)
 
-        return render_template('assessment/ressource.html', **context)
 
-    @staticmethod
-    def post(identifier):
-        """Create a new assessment."""
+class AssessmentCreationController(AssessmentController):
+
+    template = 'assessment/creation.html'
+
+    def get(self):
+        data = DATA()
         form = AssessmentForm()
-        form.groups.choices = [(g.identifier, g.name) for g in DATA.query(Group).all()]
+        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+        return self.render(form=form)
 
-        if form.validate() and identifier is not None:
-            assessment = DATA.query(Assessment).get(identifier)
-            make_transient(assessment)
-            assessment.title = form.title.data
-            assessment.scale = form.coefficient.data
-            assessment.precision = form.precision.data
+    def post(self):
+        data = DATA()
+        form = AssessmentForm()
+        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
 
-            if form.results.data:
-                marks = Mark.load(request.files['results'], form.scale.data)
-                assessment.add_results(marks)
-
-                # Regenrate ranking.
-                general_ranking = Ranking(assessment)
-                DATA.add(general_ranking)
-                subroup_rankings = []
-                if form.groups.data:
-                    for group in form.groups.data:
-                        ranking = Ranking(assessment, group)
-                        subroup_rankings.append(ranking)
-                DATA.add_all(subroup_rankings)
-
-            assessment.rescale(assessment.scale)
-
-        elif form.validate():
+        if form.validate():
             title = form.title.data
             scale = form.coefficient.data
             precision = form.precision.data
@@ -100,17 +82,51 @@ class MainView(MethodView):
 
                 # Create ranking.
                 general_ranking = Ranking(assessment)
-                DATA.add(general_ranking)
+                data.add(general_ranking)
                 subroup_rankings = []
                 if form.groups.data:
                     for group_id in form.groups.data:
-                        group = DATA.query(Group).get(group_id)
+                        group = data.query(Group).get(group_id)
                         ranking = Ranking(assessment, group)
                         subroup_rankings.append(ranking)
-                DATA.add_all(subroup_rankings)
+                data.add_all(subroup_rankings)
 
-        assessment = DATA.merge(assessment)
-        DATA.commit()
+        assessment = data.merge(assessment)
+        data.commit()
+        return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
+
+
+class AssessmentSettingsController(AssessmentController):
+
+    template = 'assessment/settings.html'
+
+    def get(self, identifier):
+        data = DATA()
+        assessment = self.load(identifier)
+        form = AssessmentForm(obj=assessment)
+        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+        return self.render(assessment=assessment, form=form)
+
+    def post(self, identifier):
+        data = DATA()
+        form = AssessmentForm()
+        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+
+        if form.validate():
+            assessment = self.load(identifier)
+            assessment.title = form.title.data
+            assessment.scale = form.coefficient.data
+            assessment.precision = form.precision.data
+
+            if form.groups.data:
+                subroup_rankings = []
+                for group in form.groups.data:
+                    ranking = Ranking(assessment, group)
+                    subroup_rankings.append(ranking)
+                data.add_all(subroup_rankings)
+
+        assessment.rescale(assessment.scale)
+        data.commit()
         return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 
 

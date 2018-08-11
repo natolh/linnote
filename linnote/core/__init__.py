@@ -18,7 +18,6 @@ from .utils import CSP_POLICY
 from .utils.configuration import load
 from .utils import configure as configure_session
 from .assessment import Assessment, Mark
-from .report import Report
 from .user import Group, Student, User
 
 

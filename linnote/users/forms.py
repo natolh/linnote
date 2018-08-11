@@ -24,7 +24,7 @@ class UserImportationForm(Form):
 
 class GroupCreationForm(Form):
     name = FormField(GroupForm)
-    members = FormField(UserImportationForm)
+    members = FormField(UserImportationForm, label='members')
 
 
 class UserForm(Form):

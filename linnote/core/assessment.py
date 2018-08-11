@@ -249,7 +249,6 @@ class Assessment(BASE):
 
     creator = relationship('User', uselist=False)
     results = relationship('Mark', back_populates='assessment', cascade='all')
-    reports = relationship('Report', back_populates='assessment')
     rankings = relationship('Ranking', back_populates='assessment', cascade='all')
 
     def __init__(self, title: str, scale: int, **kwargs) -> None:

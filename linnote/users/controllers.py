@@ -69,12 +69,12 @@ class GroupCreationController(GroupBaseController):
         form = GroupCreationForm()
         data = DATA()
 
-        if form.validate() and form.members.data:
-            group = load_group(request.files['members'], form.name.data)
+        if form.validate() and form.members.data['users']:
+            group = load_group(request.files['members-users'], form.name.data['name'])
             data.merge(group)
 
         elif form.validate():
-            group = Group(name=form.name.data)
+            group = Group(name=form.name.data['name'])
             data.add(group)
 
         data.commit()

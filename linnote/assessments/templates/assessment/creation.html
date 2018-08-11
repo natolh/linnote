@@ -9,12 +9,7 @@
 
 {% block content %}
 <header>
-{% if assessment is defined %}
-    <h1>{{ assessment.title }}</h1>
-    {% include 'assessment/menu.html' %}
-{% else %}
     <h1>Nouvelle épreuve</h1>
-{% endif %}
 </header>
 <section>
     <form method="post" enctype="multipart/form-data">
@@ -58,31 +53,7 @@
             </div>
         </fieldset>
 
-        {% if assessment is defined %}
-            <input type="submit" value="Modifier">
-        {% else %}
-            <input type="submit" value="Créer">
-        {% endif %}
+        <input type="submit" value="Créer">
     </form>
 </section>
-
-
-{% if assessment %}
-<section>
-    <div class="action-box sensitive">
-        <div class="description">
-            <p class="title">
-                Supprimer l'épreuve
-            </p>
-            <p class="informations">
-                <em>La suppression de l'épreuve est définitive, les données ne pourront pas être restaurées</em>. La suppression de l'épreuve entraîne la suppression des notes et des rapports associés.
-            </p>
-        </div>
-        <button class="xhr" type="button" name="button" data-method="delete" data-action="{{ url_for('api.assessment', identifier=assessment.identifier) }}">
-            Supprimer l'épreuve « {{ assessment.title }} »
-        </button>
-    </div>
-</section>
-{% endif %}
-
 {% endblock %}

@@ -112,8 +112,7 @@ class Profile(BASE):
     identity = relationship('User', back_populates='profile', uselist=False)
 
     __mapper_args__ = {
-        'polymorphic_on': role, 'polymorphic_identity': '*',
-        'with_polymorphic': '*'}
+        'polymorphic_on': role, 'with_polymorphic': '*'}
 
 
 class Administrator(Profile):
