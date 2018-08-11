@@ -29,28 +29,29 @@
         </div>
         <input form="identity" type="submit" value="enregistrer">
     </header>
-    <form id="identity" method="post">
-        {{ form.csrf_token }}
+    <div class="sub">
+        <form id="identity" method="post">
+            {{ form.csrf_token }}
 
-        <fieldset>
+            <fieldset>
+                <div role="group">
+                    {{ form.firstname.label }}
+                    {{ form.firstname() }}
+                </div>
+
+                <div role="group">
+                    {{ form.lastname.label }}
+                    {{ form.lastname() }}
+                </div>
+            </fieldset>
+
             <div role="group">
-                {{ form.firstname.label }}
-                {{ form.firstname() }}
+                {{ form.email.label }}
+                {{ form.email() }}
             </div>
-
-            <div role="group">
-                {{ form.lastname.label }}
-                {{ form.lastname() }}
-            </div>
-        </fieldset>
-
-        <div role="group">
-            {{ form.email.label }}
-            {{ form.email() }}
-        </div>
-    </form>
+        </form>
+    </div>
 </section>
-
 <section>
     <header>
         <div>
@@ -61,10 +62,12 @@
                 Profil
                 {% endif %}
             </h2>
-            <p>
-                Le profil est vide.
-            </p>
         </div>
     </header>
+    <div class="sub">
+        <p>
+            Le profil est vide.
+        </p>
+    </div>
 </section>
 {% endblock %}
