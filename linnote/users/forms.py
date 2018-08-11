@@ -10,14 +10,21 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileField
-from wtforms.fields import StringField, SelectMultipleField
+from wtforms.fields import StringField, SelectMultipleField, FormField
 from wtforms.validators import DataRequired, Length, Optional
 
 
 class GroupForm(Form):
     """Form for creating a group of students."""
-    name = StringField('Titre', validators=[DataRequired(), Length(min=2)])
-    students = FileField('Listing', validators=[Optional()])
+    name = StringField('Intitulé', validators=[DataRequired(), Length(min=2)])
+
+class UserImportationForm(Form):
+    users = FileField('Listing', validators=[Optional()])
+
+
+class GroupCreationForm(Form):
+    name = FormField(GroupForm)
+    members = FormField(UserImportationForm)
 
 
 class UserForm(Form):

@@ -145,3 +145,16 @@ div.sub {
 main > section header + div.sub {
     margin-top: 1.5rem;
 }
+
+.list {
+
+}
+
+.list > div {
+    display: flex;
+    padding: .5rem 0rem;
+}
+
+.list > div:not(:last-child) {
+    border-bottom: 1px solid rgb(240, 240, 240);
+}

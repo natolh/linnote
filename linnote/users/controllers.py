@@ -13,7 +13,7 @@ from flask.views import MethodView
 from flask_login import login_required
 from linnote.core.user import Group, User, Administrator
 from linnote.core.utils import DATA
-from .forms import GroupForm, UserForm
+from .forms import GroupForm, GroupCreationForm, UserImportationForm, UserForm
 from .logic import load_group
 
 
@@ -62,15 +62,15 @@ class GroupCreationController(GroupBaseController):
     template = 'groups/creation.html'
 
     def get(self):
-        form = GroupForm()
+        form = GroupCreationForm()
         return self.render(form=form)
 
     def post(self):
-        form = GroupForm()
+        form = GroupCreationForm()
         data = DATA()
 
-        if form.validate() and form.students.data:
-            group = load_group(request.files['students'], form.name.data)
+        if form.validate() and form.members.data:
+            group = load_group(request.files['members'], form.name.data)
             data.merge(group)
 
         elif form.validate():

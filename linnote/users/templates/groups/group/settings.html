@@ -10,6 +10,18 @@
 {% block content %}
 <header>
     <h1>{{ title }}</h1>
+    <menu type="navigation">
+        <li>
+            <a href="{{ url_for('users.group_members', identifier=group.identifier) }}">
+                membres
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('users.group', identifier=group.identifier) }}">
+                paramètres
+            </a>
+        </li>
+    </menu>
 </header>
 <section>
     <header>
@@ -19,15 +31,9 @@
     <div class="sub">
         <form id="group" method="post" enctype="multipart/form-data">
             {{ form.csrf_token }}
-
             <div role="group">
                 {{ form.name.label }}
                 {{ form.name(autocomplete="off", autofocus="on") }}
-            </div>
-
-            <div role="group">
-                {{ form.students.label }}
-                {{ form.students() }}
             </div>
         </form>
     </div>
