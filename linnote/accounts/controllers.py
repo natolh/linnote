@@ -53,8 +53,7 @@ class Login(MethodView):
         """Process the login formular, login the user, redirect to his desk."""
         return self.login_from_formular()
 
-    @staticmethod
-    def login_from_formular():
+    def login_from_formular(self):
         form = LoginForm()
         data = DATA()
 
