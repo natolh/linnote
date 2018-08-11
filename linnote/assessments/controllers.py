@@ -15,8 +15,7 @@ from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required
 from matplotlib import pyplot
-from sqlalchemy.orm.session import make_transient
-from linnote.core.assessment import Assessment, Mark
+from linnote.core.assessment import Assessment
 from linnote.core.ranking import Ranking
 from linnote.core.user import Group
 from linnote.core.utils import DATA
@@ -120,7 +119,8 @@ class AssessmentSettingsController(AssessmentController):
 
             if form.groups.data:
                 subroup_rankings = []
-                for group in form.groups.data:
+                for group_id in form.groups.data:
+                    group = data.query(Group).get(group_id)
                     ranking = Ranking(assessment, group)
                     subroup_rankings.append(ranking)
                 data.add_all(subroup_rankings)
