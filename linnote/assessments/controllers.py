@@ -218,22 +218,22 @@ class ReportController(MethodView):
         for ranking in assessment.rankings:
             value = attrgetter('mark.value')
             marks = [value(rank) for rank in ranking]
-        document = StringIO()
-        coefficient = assessment.scale
-        pyplot.figure(figsize=(6, 4))
-        pyplot.hist(marks, bins=coefficient, range=(0, coefficient),
-                    color=(0.80, 0.80, 0.80), histtype="stepfilled")
-        pyplot.title("Répartition des notes")
-        pyplot.savefig(document, format="svg")
-        document.seek(0)
-        yield "\n".join(document.readlines()[5:-1])
+            document = StringIO()
+            coefficient = assessment.scale
+            pyplot.figure(figsize=(6, 4))
+            pyplot.hist(marks, bins=coefficient, range=(0, coefficient),
+                        color=(0.80, 0.80, 0.80), histtype="stepfilled")
+            pyplot.title("Répartition des notes")
+            pyplot.savefig(document, format="svg")
+            document.seek(0)
+            yield "\n".join(document.readlines()[5:-1])
 
     @staticmethod
     def statistics(assessment):
         for ranking in assessment.rankings:
             marks = [rank.mark for rank in ranking]
             marks = [mark.value for mark in marks]
-        yield {"size": len(marks), "maximum": max(marks, default=0),
-                "minimum": min(marks, default=0),
-                "mean": mean(marks) if marks else 0,
-                "median": median(marks) if marks else 0}
+            yield {"size": len(marks), "maximum": max(marks, default=0),
+                    "minimum": min(marks, default=0),
+                    "mean": mean(marks) if marks else 0,
+                    "median": median(marks) if marks else 0}
