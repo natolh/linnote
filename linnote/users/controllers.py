@@ -11,7 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_login import login_required
-from linnote.core.user import Group, User, Administrator
+from linnote.core.user import Group, User, Administrator, Profile
 from linnote.core.utils import DATA
 from .forms import GroupForm, GroupCreationForm, UserImportationForm, UserForm
 from .logic import load_group
@@ -122,7 +122,7 @@ class UsersController(MethodView):
     @staticmethod
     def load():
         data = DATA()
-        users = data.query(User).all()
+        users = data.query(User).join(Profile).filter(Profile.role == 'administrator').all()
         return users
 
     @classmethod
