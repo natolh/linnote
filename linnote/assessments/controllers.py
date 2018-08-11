@@ -175,6 +175,7 @@ class MergeController(MethodView):
         return self.render(form=form)
 
     def post(self):
+        data = DATA()
         assessments = self.load()
         form = MergeForm()
         form.assessments.choices = [
@@ -184,8 +185,13 @@ class MergeController(MethodView):
             assessments = [self.load(a) for a in form.assessments.data]
             assessment = Assessment.merge(form.title.data, *assessments)
             assessment.creator = current_user
-            DATA.add(assessment)
-            DATA.commit()
+            data.add(assessment)
+
+            # Create ranking.
+            general_ranking = Ranking(assessment)
+            data.add(general_ranking)
+
+        data.commit()
         return redirect(url_for('assessments.assessments'))
 
 
