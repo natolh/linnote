@@ -8,9 +8,13 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from io import StringIO
+from operator import attrgetter
+from statistics import mean, median
 from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required
+from matplotlib import pyplot
 from sqlalchemy.orm.session import make_transient
 from linnote.core.assessment import Assessment, Mark
 from linnote.core.ranking import Ranking
@@ -174,9 +178,11 @@ class ReportController(MethodView):
     decorators = [login_required]
     template = 'assessment/report.html'
 
-    def get(self, id):
-        assessment = self.load(id)
-        return self.render(assessment=assessment)
+    def get(self, identifier):
+        assessment = self.load(identifier)
+        statistics = self.statistics(assessment)
+        histograms = self.histogram(assessment)
+        return self.render(assessment=assessment, statistics=statistics, histograms=histograms)
 
     @staticmethod
     def load(id):
@@ -184,3 +190,28 @@ class ReportController(MethodView):
 
     def render(self, **kwargs):
         return render_template(self.template, **kwargs)
+
+    @staticmethod
+    def histogram(assessment):
+        for ranking in assessment.rankings:
+            value = attrgetter('mark.value')
+            marks = [value(rank) for rank in ranking]
+        document = StringIO()
+        coefficient = assessment.scale
+        pyplot.figure(figsize=(6, 4))
+        pyplot.hist(marks, bins=coefficient, range=(0, coefficient),
+                    color=(0.80, 0.80, 0.80), histtype="stepfilled")
+        pyplot.title("Répartition des notes")
+        pyplot.savefig(document, format="svg")
+        document.seek(0)
+        yield "\n".join(document.readlines()[5:-1])
+
+    @staticmethod
+    def statistics(assessment):
+        for ranking in assessment.rankings:
+            marks = [rank.mark for rank in ranking]
+            marks = [mark.value for mark in marks]
+        yield {"size": len(marks), "maximum": max(marks, default=0),
+                "minimum": min(marks, default=0),
+                "mean": mean(marks) if marks else 0,
+                "median": median(marks) if marks else 0}

@@ -15,6 +15,35 @@
 {% for ranking in assessment.rankings %}
 <section>
     <h2>{{ ranking.group.name|default('Général') }}</h2>
+    {% for group_statistics in statistics %}
+    <table class="statistics">
+        <thead>
+            <tr>
+                <th>Effectif</th>
+                <th>Minimale</th>
+                <th>Médiane</th>
+                <th>Moyenne</th>
+                <th>Maximale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ group_statistics['size'] }}</td>
+                <td>{{ group_statistics['minimum'] }}</td>
+                <td>{{ group_statistics['median'] }}</td>
+                <td>{{ group_statistics['mean'] }}</td>
+                <td>{{ group_statistics['maximum'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+    {% for group_histogram in histograms %}
+        <svg viewBox="0 0 432 288">
+            {% autoescape false %}
+                {{ group_histogram }}
+            {% endautoescape %}
+        </svg>
+    {% endfor %}
     <table class="results">
         <thead>
             <tr>

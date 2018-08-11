@@ -42,5 +42,5 @@ BLUEPRINT.add_url_rule(
     '/assessments/merge',
     view_func=MERGER_VIEW)
 BLUEPRINT.add_url_rule(
-    '/assessment/<int:id>/report',
+    '/assessment/<int:identifier>/report',
     view_func=REPORT_VIEW)
