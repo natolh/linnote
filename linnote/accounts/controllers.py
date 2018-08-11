@@ -78,7 +78,7 @@ class Login(MethodView):
 
         if user:
             login_user(user)
-            return redirect(url_for('assessments.assessments'))
+            return redirect(url_for('account.password'))
 
 
 class Logout(MethodView):
