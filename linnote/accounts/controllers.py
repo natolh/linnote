@@ -111,12 +111,12 @@ class Profile(MethodView):
     """Controller for managing the user's profile."""
 
     decorators = [login_required]
+    template = 'profile.html'
 
-    @staticmethod
-    def get():
+    def get(self):
         """Get the profile modification formular."""
         form = ProfileForm(obj=current_user)
-        return render_template('profile.html', form=form)
+        return self.render(form=form)
 
     def post(self):
         """Process the profile modification formular."""
@@ -125,3 +125,8 @@ class Profile(MethodView):
             form.populate_obj(current_user)
             DATA.commit()
         return self.get()
+
+    @classmethod
+    def render(cls, **kwargs):
+        """Render the view."""
+        return render_template(cls.template, **kwargs)
