@@ -120,10 +120,11 @@ class Profile(MethodView):
 
     def post(self):
         """Process the profile modification formular."""
+        data = DATA()
         form = ProfileForm()
         if form.validate():
             form.populate_obj(current_user)
-            DATA.commit()
+            data.commit()
         return self.get()
 
     @classmethod
