@@ -36,7 +36,7 @@ def create_app(name=None, config_path='configuration.ini', blueprints=None):
     # Configure app.
     configure_app(app, config_path)
     LOGIN_MANAGER.init_app(app)
-    Talisman(app, content_security_policy=CSP_POLICY)
+    Talisman(app, force_https=False, strict_transport_security=False, content_security_policy=CSP_POLICY)
 
     # Register blueprints to the app.
     if blueprints:
