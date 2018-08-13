@@ -91,10 +91,14 @@ class Password(MethodView):
         """Process the password modification formular."""
         data = DATA()
         form = PasswordForm()
-        if all([form.validate(),
-                current_user.is_authentic(form.old_password.data)]):
+
+        valid_form = form.validate()
+        authentic_user = current_user.is_authentic(form.old_password.data)
+
+        if all([valid_form, authentic_user]):
             current_user.set_password_hash(form.password.data)
             data.commit()
+
         return self.get()
 
     @classmethod
