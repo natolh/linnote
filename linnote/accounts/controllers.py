@@ -80,12 +80,12 @@ class Password(MethodView):
     """Controller for managing the user's account password."""
 
     decorators = [login_required]
+    template = 'password.html'
 
-    @staticmethod
-    def get():
+    def get(self):
         """Get the password modification formular."""
         form = PasswordForm()
-        return render_template('password.html', form=form)
+        return self.render(form=form)
 
     def post(self):
         """Process the password modification formular."""
@@ -97,6 +97,11 @@ class Password(MethodView):
             DATA.commit()
 
         return self.get()
+
+    @classmethod
+    def render(cls, **kwargs):
+        """Render the view."""
+        return render_template(cls.template, **kwargs)
 
 
 class Profile(MethodView):
