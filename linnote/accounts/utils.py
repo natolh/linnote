@@ -9,6 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from functools import wraps
+from flask import redirect, url_for
 from flask_login import LoginManager
 from flask_login import current_user
 from linnote.core.user import User
