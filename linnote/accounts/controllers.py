@@ -119,7 +119,7 @@ class Profile(MethodView):
     template = 'profile.html'
 
     def get(self):
-        """Get the profile modification formular."""
+        """Display the profile."""
         form = ProfileForm(obj=current_user)
         return self.render(form=form)
 
