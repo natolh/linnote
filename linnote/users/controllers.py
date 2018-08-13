@@ -199,15 +199,20 @@ class UserController(UserBaseController):
         """View a user."""
         data = DATA()
         user = self.load(identifier)
+        groups = data.query(Group).all()
+
         form = UserForm(obj=user)
-        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+        form.groups.choices = [(g.identifier, g.name) for g in groups]
+
         return self.render(form=form, user=user)
 
     def post(self, identifier: int):
         """Update user's details."""
         data = DATA()
+        groups = data.query(Group).all()
+
         form = UserForm()
-        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+        form.groups.choices = [(g.identifier, g.name) for g in groups]
 
         if form.validate():
             user = self.load(identifier)
