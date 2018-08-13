@@ -95,7 +95,7 @@ class Password(MethodView):
         valid_form = form.validate()
         authentic_user = current_user.is_authentic(form.old_password.data)
 
-        if all([valid_form, authentic_user]):
+        if valid_form and authentic_user:
             current_user.set_password_hash(form.password.data)
             data.commit()
 
