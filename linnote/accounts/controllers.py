@@ -108,7 +108,12 @@ class Password(MethodView):
 
 
 class Profile(MethodView):
-    """Controller for managing the user's profile."""
+    """
+    Control user's account profile view.
+
+    Profile view expose user's identity data as well as extra user's related
+    data known as profile.
+    """
 
     decorators = [login_required]
     template = 'profile.html'
