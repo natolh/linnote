@@ -14,7 +14,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from jwt import decode
 from linnote.core.user import User
 from linnote.core.utils import DATA
-from .forms import LoginForm, PasswordForm, ProfileForm
+from .forms import LoginForm, PasswordForm, PasswordResetForm, ProfileForm
 from .utils import skip_if_authenticated
 
 
@@ -104,6 +104,31 @@ class Password(MethodView):
     @classmethod
     def render(cls, **kwargs):
         """Render the view."""
+        return render_template(cls.template, **kwargs)
+
+
+class PasswordResetController(MethodView):
+    """Controller for resetting the user's account password."""
+
+    decorators = [login_required]
+    template = 'password-reset.html'
+
+    def get(self):
+        form = PasswordResetForm()
+        return self.render(form=form)
+
+    def post(self):
+        data = DATA()
+        form = PasswordResetForm()
+
+        if form.validate():
+            current_user.set_password_hash(form.password.data)
+            data.commit()
+            return redirect(url_for('assessments.assessments'))
+        return self.get()
+
+    @classmethod
+    def render(cls, **kwargs):
         return render_template(cls.template, **kwargs)
 
 
