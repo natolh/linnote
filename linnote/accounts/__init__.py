@@ -20,7 +20,9 @@ PASSWORD = Password.as_view('password')
 
 
 # Register routes to controllers.
-BLUEPRINT = Blueprint('account', __name__, url_prefix='/account', template_folder='templates', static_folder='statics')
+BLUEPRINT = Blueprint(
+    'account', __name__, url_prefix='/account', template_folder='templates',
+    static_folder='statics')
 
 
 BLUEPRINT.add_url_rule('/login', view_func=LOGIN)
