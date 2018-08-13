@@ -52,7 +52,6 @@ class Login(MethodView):
 
         return self.get()
 
-
     @staticmethod
     def login_from_token(token):
         data = DATA()
