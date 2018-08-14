@@ -66,6 +66,22 @@ class AssessmentController(MethodView):
         """Render a template."""
         return render_template(cls.template, **kwargs)
 
+    @staticmethod
+    def rank(assessment, groups_id=None) -> None:
+        """(Re)generate rankings for the assessment."""
+        data = DATA()
+
+        # Load groups from groups_id provided in the form.
+        if groups_id:
+            groups = data.query(Group)
+            groups = [groups.get(group_id) for group_id in groups_id]
+        else:
+            groups = None
+
+        # Make rankings and persist.
+        assessment.rankings = rank(assessment, groups)
+        data.commit()
+
 
 class AssessmentCreationController(AssessmentController):
     """Controls assessment's creation view."""
@@ -80,8 +96,7 @@ class AssessmentCreationController(AssessmentController):
         form.groups.choices = [(g.identifier, g.name) for g in groups]
         return self.render(form=form)
 
-    @staticmethod
-    def post():
+    def post(self):
         """Create a new assessment."""
         data = DATA()
         form = AssessmentForm()
@@ -99,15 +114,11 @@ class AssessmentCreationController(AssessmentController):
             if form.results.data:
                 marks = load_results(request.files['results'], form.scale.data)
                 assessment.add_results(marks)
+                self.rank(assessment, form.groups.data)
 
-                # Create ranking.
-                if form.groups.data:
-                    groups = [data.query(Group).get(gid) for gid in form.groups.data]
-                    rankings = rank(assessment, groups)
-                    data.add_all(rankings)
+            assessment = data.merge(assessment)
+            data.commit()
 
-        assessment = data.merge(assessment)
-        data.commit()
         return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 
 
@@ -136,14 +147,10 @@ class AssessmentSettingsController(AssessmentController):
             assessment.scale = form.coefficient.data
             assessment.precision = form.precision.data
 
-            if form.groups.data:
-                groups = [data.query(Group).get(group_id)
-                          for group_id in form.groups.data]
-                rankings = rank(assessment, groups)
-                data.add_all(rankings)
+            self.rank(assessment, form.groups.data)
+            assessment.rescale(assessment.scale)
+            data.commit()
 
-        assessment.rescale(assessment.scale)
-        data.commit()
         return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 
 
