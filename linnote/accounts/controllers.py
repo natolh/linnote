@@ -58,10 +58,10 @@ class Login(MethodView):
         claims = decode(token, 'secret')
         users = data.query(User)
         user = users.filter_by(username=claims['username']).one_or_none()
-
         if user:
             login_user(user)
             return redirect(url_for('account.password'))
+        return None
 
 
 class Logout(MethodView):
@@ -114,10 +114,12 @@ class PasswordResetController(MethodView):
     template = 'password-reset.html'
 
     def get(self):
+        """Build user's account password reset view."""
         form = PasswordResetForm()
         return self.render(form=form)
 
     def post(self):
+        """Reset user's account password."""
         data = DATA()
         form = PasswordResetForm()
 
@@ -129,6 +131,7 @@ class PasswordResetController(MethodView):
 
     @classmethod
     def render(cls, **kwargs):
+        """Render the view."""
         return render_template(cls.template, **kwargs)
 
 

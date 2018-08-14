@@ -40,4 +40,5 @@ LOGIN_MANAGER.login_view = 'account.login'
 @LOGIN_MANAGER.user_loader
 def load_user(identifier):
     """Load user."""
-    return DATA.query(User).filter(User.identifier == identifier).one_or_none()
+    data = DATA()
+    return data.query(User).filter(User.identifier == identifier).one_or_none()

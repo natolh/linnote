@@ -24,45 +24,52 @@ from .forms import AssessmentForm, MergeForm
 
 
 class ListView(MethodView):
-    """Controller for managing assessments collection."""
+    """Controls assessments view."""
 
     decorators = [login_required]
 
     @staticmethod
     def get():
-        """Display the assessments collection."""
-        assessments = DATA.query(Assessment).all()
+        """Build assessments view."""
+        data = DATA()
+        assessments = data.query(Assessment).all()
         return render_template('assessments.html', assessments=assessments)
 
 
 class AssessmentController(MethodView):
-    """Controller for managing an assessment ressource."""
+    """Commons methods for controllers of assessment's views."""
 
     decorators = [login_required]
-    template = None
+    template = ''
 
     @staticmethod
     def load(identifier):
+        """Load assessment from storage."""
         data = DATA()
         assessment = data.query(Assessment).get(identifier)
         return assessment
 
     @classmethod
     def render(cls, **kwargs):
+        """Render a template."""
         return render_template(cls.template, **kwargs)
 
 
 class AssessmentCreationController(AssessmentController):
+    """Controls assessment's creation view."""
 
     template = 'assessment/creation.html'
 
     def get(self):
+        """Build assessment's creation view."""
         data = DATA()
         form = AssessmentForm()
         form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
         return self.render(form=form)
 
-    def post(self):
+    @staticmethod
+    def post():
+        """Create a new assessment."""
         data = DATA()
         form = AssessmentForm()
         form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
@@ -96,10 +103,12 @@ class AssessmentCreationController(AssessmentController):
 
 
 class AssessmentSettingsController(AssessmentController):
+    """Controls assessment's settings view."""
 
     template = 'assessment/settings.html'
 
     def get(self, identifier):
+        """Build assessment's settings view."""
         data = DATA()
         assessment = self.load(identifier)
         form = AssessmentForm(obj=assessment)
@@ -107,6 +116,7 @@ class AssessmentSettingsController(AssessmentController):
         return self.render(assessment=assessment, form=form)
 
     def post(self, identifier):
+        """Update assessment's settings."""
         data = DATA()
         form = AssessmentForm()
         form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
@@ -131,43 +141,31 @@ class AssessmentSettingsController(AssessmentController):
 
 
 class ResultsView(MethodView):
-    """Controller for managing assessment's results."""
+    """Controls assessment's results view."""
 
     decorators = [login_required]
     template = 'assessment/results.html'
 
-    @classmethod
-    def render(cls, **kwargs):
-        """Render the view."""
-        return render_template(cls.template, **kwargs)
-
     def get(self, identifier):
-        """Display assessment's results."""
+        """Build assessment's results view."""
         data = DATA()
         assessment = data.query(Assessment).get(identifier)
         return self.render(assessment=assessment)
 
-
-class MergeController(MethodView):
-    """Controller for merging assessments."""
-
-    decorators = [login_required]
-    template = 'merger.html'
-
-    @staticmethod
-    def load(identifier=None):
-        """Load data."""
-        data = DATA()
-        if not identifier:
-            return data.query(Assessment).all()
-        return data.query(Assessment).get(identifier)
-
     @classmethod
     def render(cls, **kwargs):
         """Render the view."""
         return render_template(cls.template, **kwargs)
 
+
+class MergeController(MethodView):
+    """Controls assessments merging view."""
+
+    decorators = [login_required]
+    template = 'merger.html'
+
     def get(self):
+        """Build assessments merging view."""
         assessments = self.load()
         form = MergeForm()
         form.assessments.choices = [
@@ -175,6 +173,7 @@ class MergeController(MethodView):
         return self.render(form=form)
 
     def post(self):
+        """Merge assessments."""
         data = DATA()
         assessments = self.load()
         form = MergeForm()
@@ -194,27 +193,46 @@ class MergeController(MethodView):
         data.commit()
         return redirect(url_for('assessments.assessments'))
 
+    @staticmethod
+    def load(identifier=None):
+        """Load assessment(s) from storage."""
+        data = DATA()
+        if not identifier:
+            return data.query(Assessment).all()
+        return data.query(Assessment).get(identifier)
+
+    @classmethod
+    def render(cls, **kwargs):
+        """Render the view."""
+        return render_template(cls.template, **kwargs)
+
 
 class ReportController(MethodView):
+    """Controls assessment's report view."""
 
     decorators = [login_required]
     template = 'assessment/report.html'
 
     def get(self, identifier):
+        """Build assessment's report view."""
         assessment = self.load(identifier)
         statistics = self.statistics(assessment)
         histograms = self.histogram(assessment)
         return self.render(assessment=assessment, statistics=statistics, histograms=histograms)
 
     @staticmethod
-    def load(id):
-        return DATA.query(Assessment).get(id)
+    def load(identifier):
+        """Load assessment from storage."""
+        data = DATA()
+        return data.query(Assessment).get(identifier)
 
     def render(self, **kwargs):
+        """Render the view."""
         return render_template(self.template, **kwargs)
 
     @staticmethod
     def histogram(assessment):
+        """Build an histogram of assessment's marks."""
         for ranking in assessment.rankings:
             value = attrgetter('mark.value')
             marks = [value(rank) for rank in ranking]
@@ -230,10 +248,11 @@ class ReportController(MethodView):
 
     @staticmethod
     def statistics(assessment):
+        """Build descriptive statistics of assessment's marks."""
         for ranking in assessment.rankings:
             marks = [rank.mark for rank in ranking]
             marks = [mark.value for mark in marks]
             yield {"size": len(marks), "maximum": max(marks, default=0),
-                    "minimum": min(marks, default=0),
-                    "mean": mean(marks) if marks else 0,
-                    "median": median(marks) if marks else 0}
+                   "minimum": min(marks, default=0),
+                   "mean": mean(marks) if marks else 0,
+                   "median": median(marks) if marks else 0}

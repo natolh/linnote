@@ -27,9 +27,10 @@ class AssessmentView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an assessment ressource."""
-        assessment = DATA.query(Assessment).get(identifier)
-        DATA.delete(assessment)
-        DATA.commit()
+        data = DATA()
+        assessment = data.query(Assessment).get(identifier)
+        data.delete(assessment)
+        data.commit()
         return jsonify(redirect=url_for('assessments.assessments'))
 
 
@@ -40,9 +41,10 @@ class GraderController(MethodView):
     @staticmethod
     def post(identifier, grader):
         """Adjust marks."""
-        assessment = DATA.query(Assessment).get(identifier)
+        data = DATA()
+        assessment = data.query(Assessment).get(identifier)
         assessment.grade(grader)
-        DATA.commit()
+        data.commit()
         return jsonify(redirect=url_for('assessments.results', identifier=identifier))
 
 
@@ -54,9 +56,10 @@ class GroupView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete an group ressource."""
-        group = DATA.query(Group).get(identifier)
-        DATA.delete(group)
-        DATA.commit()
+        data = DATA()
+        group = data.query(Group).get(identifier)
+        data.delete(group)
+        data.commit()
         return jsonify(redirect=url_for('users.groups'))
 
 
@@ -68,15 +71,11 @@ class UserView(MethodView):
     @staticmethod
     def delete(identifier):
         """Delete a user ressource."""
-        user = DATA.query(User).get(identifier)
-        DATA.delete(user)
-        DATA.commit()
+        data = DATA()
+        user = data.query(User).get(identifier)
+        data.delete(user)
+        data.commit()
         return jsonify(redirect=url_for('users.users'))
-
-
-def whoohoooo(data):
-    print(data[0])
-    return jsonify(None)
 
 
 # Register routes to controllers.
@@ -92,8 +91,3 @@ BLUEPRINT.add_url_rule(
 BLUEPRINT.add_url_rule(
     '/users/<int:identifier>',
     view_func=UserView.as_view('user'))
-BLUEPRINT.add_url_rule(
-    '/users/whoooohoohho',
-    view_func=whoohoooo,
-    methods=["POST"]
-)

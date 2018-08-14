@@ -9,7 +9,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import Blueprint
-from .controllers import ListView, AssessmentCreationController, AssessmentSettingsController, ResultsView, MergeController
+from .controllers import ListView, AssessmentCreationController
+from .controllers import AssessmentSettingsController, ResultsView
+from .controllers import MergeController
 from .controllers import ReportController
 
 
