@@ -11,6 +11,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from io import StringIO
 from operator import attrgetter
 from statistics import mean, median
+from typing import List
 from flask import redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required
@@ -23,17 +24,28 @@ from .logic import load_results
 from .forms import AssessmentForm, MergeForm
 
 
-class ListView(MethodView):
+class AssessmentsController(MethodView):
     """Controls assessments view."""
 
     decorators = [login_required]
+    template = 'assessments.html'
+
+    def get(self):
+        """Build assessments view."""
+        assessments = self.load()
+        return self.render(assessments=assessments)
 
     @staticmethod
-    def get():
-        """Build assessments view."""
+    def load() -> List[Assessment]:
+        """Load assessments from storage."""
         data = DATA()
         assessments = data.query(Assessment).all()
-        return render_template('assessments.html', assessments=assessments)
+        return assessments
+
+    @classmethod
+    def render(cls, **kwargs):
+        """Render the view."""
+        return render_template(cls.template, **kwargs)
 
 
 class AssessmentController(MethodView):

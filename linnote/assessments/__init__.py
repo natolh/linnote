@@ -9,14 +9,14 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import Blueprint
-from .controllers import ListView, AssessmentCreationController
+from .controllers import AssessmentsController, AssessmentCreationController
 from .controllers import AssessmentSettingsController, ResultsView
 from .controllers import MergeController
 from .controllers import ReportController
 
 
 # Build controllers functions.
-LIST_VIEW = ListView.as_view('assessments')
+LIST_VIEW = AssessmentsController.as_view('assessments')
 ASSESSMENT_CREATION = AssessmentCreationController.as_view('assessment_creation')
 ASSESSMENT_SETTINGS = AssessmentSettingsController.as_view('assessment')
 RESULTS_VIEW = ResultsView.as_view('results')
