@@ -20,7 +20,7 @@ from linnote.core.assessment import Assessment
 from linnote.core.ranking import Ranking
 from linnote.core.user import Group
 from linnote.core.utils import DATA
-from .logic import load_results
+from .logic import load_results, rank
 from .forms import AssessmentForm, MergeForm
 
 
@@ -76,7 +76,8 @@ class AssessmentCreationController(AssessmentController):
         """Build assessment's creation view."""
         data = DATA()
         form = AssessmentForm()
-        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+        groups = data.query(Group).all()
+        form.groups.choices = [(g.identifier, g.name) for g in groups]
         return self.render(form=form)
 
     @staticmethod
@@ -84,7 +85,8 @@ class AssessmentCreationController(AssessmentController):
         """Create a new assessment."""
         data = DATA()
         form = AssessmentForm()
-        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+        groups = data.query(Group).all()
+        form.groups.choices = [(g.identifier, g.name) for g in groups]
 
         if form.validate():
             title = form.title.data
@@ -99,15 +101,10 @@ class AssessmentCreationController(AssessmentController):
                 assessment.add_results(marks)
 
                 # Create ranking.
-                general_ranking = Ranking(assessment)
-                data.add(general_ranking)
-                subroup_rankings = []
                 if form.groups.data:
-                    for group_id in form.groups.data:
-                        group = data.query(Group).get(group_id)
-                        ranking = Ranking(assessment, group)
-                        subroup_rankings.append(ranking)
-                data.add_all(subroup_rankings)
+                    groups = [data.query(Group).get(gid) for gid in form.groups.data]
+                    rankings = rank(assessment, groups)
+                    data.add_all(rankings)
 
         assessment = data.merge(assessment)
         data.commit()
@@ -140,12 +137,10 @@ class AssessmentSettingsController(AssessmentController):
             assessment.precision = form.precision.data
 
             if form.groups.data:
-                subroup_rankings = []
-                for group_id in form.groups.data:
-                    group = data.query(Group).get(group_id)
-                    ranking = Ranking(assessment, group)
-                    subroup_rankings.append(ranking)
-                data.add_all(subroup_rankings)
+                groups = [data.query(Group).get(group_id)
+                          for group_id in form.groups.data]
+                rankings = rank(assessment, groups)
+                data.add_all(rankings)
 
         assessment.rescale(assessment.scale)
         data.commit()

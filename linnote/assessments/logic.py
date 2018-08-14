@@ -11,8 +11,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from pathlib import Path
 from typing import List
 from pandas import read_excel
-from linnote.core.assessment import Mark
-from linnote.core.user import Student
+from linnote.core.assessment import Assessment, Mark
+from linnote.core.ranking import Ranking
+from linnote.core.user import Group, Student
 from linnote.core.utils import DATA
 
 
@@ -40,3 +41,20 @@ def load_results(file: Path, scale: int) -> List['Mark']:
             mark = Mark(student, score, scale)
             results.append(mark)
     return results
+
+
+def rank(assessment: Assessment, groups: List[Group] = None) -> List[Ranking]:
+    """(Re)generate rankings for the assessment."""
+    rankings = list()
+
+    # General ranking (included all participating students).
+    ranking_general = Ranking(assessment)
+    rankings.append(ranking_general)
+
+    # Ranking analysis on groups of the participating students.
+    if groups is not None:
+        for group in groups:
+            ranking = Ranking(assessment, group)
+            rankings.append(ranking)
+
+    return rankings
