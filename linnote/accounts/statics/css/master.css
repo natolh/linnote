@@ -19,14 +19,14 @@ body {
     grid: "main" auto
           "footer" min-content
           / 1fr;
-    background: linear-gradient(to bottom right, hsl(30, 60%, 75%), hsl(340, 70%, 30%));
+    background: linear-gradient(to bottom right, hsl(30, 60%, 75%, 0.85), hsl(340, 70%, 30%, 0.85));
 }
 
 main {
     grid-area: main;
     justify-self: center;
     align-self: center;
-    padding: 1rem;
+    padding: 4rem 2rem;
     width: 100vw;
     max-width: 350px;
     display: flex;
