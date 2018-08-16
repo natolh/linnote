@@ -39,6 +39,7 @@ class Login(MethodView):
         return self.login_from_formular()
 
     def login_from_formular(self):
+        """Classic login."""
         form = LoginForm()
         data = DATA()
 
@@ -54,6 +55,7 @@ class Login(MethodView):
 
     @staticmethod
     def login_from_token(token):
+        """Token login."""
         data = DATA()
         claims = decode(token, 'secret')
         users = data.query(User)
