@@ -123,7 +123,7 @@ main > header menu[type="navigation"] a {
     padding: .8rem 0;
 }
 
-main > header menu[type="navigation"] a:hover {
+main > header menu[type="navigation"] a:hover, main > header menu[type="navigation"] a.active {
     color: black;
     border-color: hsl(340, 65%, 40%);
 }

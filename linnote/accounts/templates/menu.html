@@ -1,12 +1,14 @@
+{% set menu = [
+    ('profil', url_for('account.profile')),
+    ('sécurité', url_for('account.password'))]
+%}
+
 <menu type="navigation">
-    <li>
-        <a href="{{ url_for('account.profile') }}">
-            profil
-        </a>
-    </li>
-    <li>
-        <a href="{{ url_for('account.password') }}">
-            sécurité
-        </a>
-    </li>
-</menu>
+        {% for id, href in menu %}
+        <li>
+            <a class="{%if id == section %}active{% endif %}" href="{{ href }}">
+                {{ id }}
+            </a>
+        </li>
+        {% endfor %}
+    </menu>

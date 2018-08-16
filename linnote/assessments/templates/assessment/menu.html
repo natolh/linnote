@@ -1,18 +1,17 @@
 <!-- Submenu for assessment module -->
+{% set assessment_id = assessment.identifier %}
+{% set menu = [
+    ('classements', url_for('assessments.rankings', identifier=assessment_id)),
+    ('résultats', url_for('assessments.results', identifier=assessment_id)),
+    ('paramètres', url_for('assessments.assessment', identifier=assessment_id))]
+%}
+
 <menu type="navigation">
+    {% for id, href in menu %}
     <li>
-        <a href="{{ url_for('assessments.rankings', identifier=assessment.identifier) }}" target="_blank">
-            Classement
+        <a class="{%if id == section %}active{% endif %}" href="{{ href }}">
+            {{ id }}
         </a>
     </li>
-    <li>
-        <a href="{{ url_for('assessments.results', identifier=assessment.identifier) }}">
-            Résultats
-        </a>
-    </li>
-    <li>
-        <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
-            Paramètres
-        </a>
-    </li>
+    {% endfor %}
 </menu>
