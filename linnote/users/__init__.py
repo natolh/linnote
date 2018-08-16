@@ -27,13 +27,13 @@ USER = User.as_view('user')
 USER_CREATION = UserCreation.as_view('user_creation')
 
 # Register routes to controllers.
-BLUEPRINT = Blueprint('users', __name__, url_prefix='/admin', template_folder='templates')
+BLUEPRINT = Blueprint('users', __name__, url_prefix='/users', template_folder='templates')
 
 
-BLUEPRINT.add_url_rule('/users/groups', view_func=GROUPS)
-BLUEPRINT.add_url_rule('/users/group', view_func=GROUP_CREATION)
-BLUEPRINT.add_url_rule('/users/group/<int:identifier>', view_func=GROUP_SETTINGS)
-BLUEPRINT.add_url_rule('/users/group/<int:identifier>/members', view_func=GROUP_MEMBERS)
-BLUEPRINT.add_url_rule('/users', view_func=USERS)
-BLUEPRINT.add_url_rule('/user', view_func=USER_CREATION)
-BLUEPRINT.add_url_rule('/user/<int:identifier>', view_func=USER)
+BLUEPRINT.add_url_rule('/groups', view_func=GROUPS)
+BLUEPRINT.add_url_rule('/groups/', view_func=GROUP_CREATION)
+BLUEPRINT.add_url_rule('/groups/<int:identifier>', view_func=GROUP_SETTINGS)
+BLUEPRINT.add_url_rule('/groups/<int:identifier>/members', view_func=GROUP_MEMBERS)
+BLUEPRINT.add_url_rule('', view_func=USERS)
+BLUEPRINT.add_url_rule('/', view_func=USER_CREATION)
+BLUEPRINT.add_url_rule('/<int:identifier>', view_func=USER)
