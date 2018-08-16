@@ -12,7 +12,7 @@ from flask import Blueprint
 from .controllers import AssessmentsController, AssessmentCreationController
 from .controllers import AssessmentSettingsController, ResultsView
 from .controllers import MergeController
-from .controllers import ReportController
+from .controllers import AssessmentRankingsController
 
 
 # Build controllers functions.
@@ -21,28 +21,16 @@ ASSESSMENT_CREATION = AssessmentCreationController.as_view('assessment_creation'
 ASSESSMENT_SETTINGS = AssessmentSettingsController.as_view('assessment')
 RESULTS_VIEW = ResultsView.as_view('results')
 MERGER_VIEW = MergeController.as_view('merger')
-REPORT_VIEW = ReportController.as_view('report')
+RANKINGS_VIEW = AssessmentRankingsController.as_view('rankings')
 
 
 # Register routes to controllers.
-BLUEPRINT = Blueprint('assessments', __name__, url_prefix='/admin', template_folder='templates')
+BLUEPRINT = Blueprint('assessments', __name__, url_prefix='/assessments', template_folder='templates')
 
 
-BLUEPRINT.add_url_rule(
-    '/assessments',
-    view_func=LIST_VIEW)
-BLUEPRINT.add_url_rule(
-    '/assessment',
-    view_func=ASSESSMENT_CREATION)
-BLUEPRINT.add_url_rule(
-    '/assessment/<int:identifier>',
-    view_func=ASSESSMENT_SETTINGS)
-BLUEPRINT.add_url_rule(
-    '/assessment/<int:identifier>/results',
-    view_func=RESULTS_VIEW)
-BLUEPRINT.add_url_rule(
-    '/assessments/merge',
-    view_func=MERGER_VIEW)
-BLUEPRINT.add_url_rule(
-    '/assessment/<int:identifier>/report',
-    view_func=REPORT_VIEW)
+BLUEPRINT.add_url_rule('', view_func=LIST_VIEW)
+BLUEPRINT.add_url_rule('/', view_func=ASSESSMENT_CREATION)
+BLUEPRINT.add_url_rule('/<int:identifier>', view_func=ASSESSMENT_SETTINGS)
+BLUEPRINT.add_url_rule('/<int:identifier>/results', view_func=RESULTS_VIEW)
+BLUEPRINT.add_url_rule('/merge', view_func=MERGER_VIEW)
+BLUEPRINT.add_url_rule('/<int:identifier>/rankings', view_func=RANKINGS_VIEW)

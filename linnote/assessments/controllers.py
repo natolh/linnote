@@ -222,13 +222,13 @@ class MergeController(MethodView):
         return render_template(cls.template, **kwargs)
 
 
-class ReportController(MethodView):
+class AssessmentRankingsController(MethodView):
     """Controls assessment's report view."""
 
-    template = 'assessment/report.html'
+    template = 'assessment/rankings.html'
 
     def get(self, identifier):
-        """Build assessment's report view."""
+        """Build assessment's rankings view."""
         assessment = self.load(identifier)
         statistics = self.statistics(assessment)
         histograms = self.histogram(assessment)
