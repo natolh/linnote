@@ -62,7 +62,7 @@ class Login(MethodView):
         user = users.filter_by(username=claims['username']).one_or_none()
         if user:
             login_user(user)
-            return redirect(url_for('account.password'))
+            return redirect(url_for('account.reset'))
         return None
 
 
@@ -113,7 +113,7 @@ class PasswordResetController(MethodView):
     """Controller for resetting the user's account password."""
 
     decorators = [login_required]
-    template = 'password-reset.html'
+    template = 'password.html'
 
     def get(self):
         """Build user's account password reset view."""

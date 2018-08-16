@@ -10,6 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from .controllers import Login, Logout, Profile, Password
+from .controllers import PasswordResetController
 
 
 # Build controllers functions.
@@ -17,6 +18,7 @@ LOGIN = Login.as_view('login')
 LOGOUT = Logout.as_view('logout')
 PROFILE = Profile.as_view('profile')
 PASSWORD = Password.as_view('password')
+RESET = PasswordResetController.as_view('reset')
 
 
 # Register routes to controllers.
@@ -29,3 +31,4 @@ BLUEPRINT.add_url_rule('/login', view_func=LOGIN)
 BLUEPRINT.add_url_rule('/logout', view_func=LOGOUT)
 BLUEPRINT.add_url_rule('/profile', view_func=PROFILE)
 BLUEPRINT.add_url_rule('/password', view_func=PASSWORD)
+BLUEPRINT.add_url_rule('/reset', view_func=RESET)
