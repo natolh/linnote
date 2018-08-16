@@ -19,15 +19,19 @@ class LoginForm(Form):
     password = PasswordField('Mot de passe', validators=[DataRequired()])
 
 
-class PasswordForm(Form):
-    """Form for editing the user's password."""
-    old_password = PasswordField(
-        'Ancien mot de passe',
-        validators=[DataRequired()])
+class PasswordResetForm(Form):
+    """Form for reseting the user's password."""
     password = PasswordField(
         'Nouveau mot de passe',
         validators=[DataRequired(), EqualTo('password_confirm')])
     password_confirm = PasswordField('Confirmer')
+
+
+class PasswordForm(PasswordResetForm):
+    """Form for editing the user's password."""
+    old_password = PasswordField(
+        'Ancien mot de passe',
+        validators=[DataRequired()])
 
 
 class ProfileForm(Form):
