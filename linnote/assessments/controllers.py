@@ -257,6 +257,7 @@ class AssessmentRankingsController(MethodView):
                         color=(0.80, 0.80, 0.80), histtype="stepfilled")
             pyplot.title("Répartition des notes")
             pyplot.savefig(document, format="svg")
+            plot.close()
             document.seek(0)
             yield "\n".join(document.readlines()[5:-1])
 
