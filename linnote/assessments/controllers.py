@@ -132,7 +132,8 @@ class AssessmentSettingsController(AssessmentController):
         data = DATA()
         assessment = self.load(identifier)
         form = AssessmentForm(obj=assessment)
-        form.groups.choices = [(g.identifier, g.name) for g in data.query(Group).all()]
+        groups = data.query(Group).all()
+        form.groups.choices = [(g.identifier, g.name) for g in groups]
         return self.render(assessment=assessment, form=form)
 
     def post(self, identifier):
