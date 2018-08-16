@@ -9,11 +9,12 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from functools import wraps
-from flask import redirect, url_for
+from flask import redirect, request, url_for
 from flask_login import LoginManager
 from flask_login import current_user
 from linnote.core.user import User
 from linnote.core.utils import DATA
+from linnote.core.utils.jwt import decode
 
 
 def skip_if_authenticated(function):
@@ -28,6 +29,18 @@ def skip_if_authenticated(function):
         if current_user.is_authenticated:
             return redirect(url_for('assessments.assessment_creation'))
         return function(*args, **kwargs)
+    return wrapped
+
+
+def logged_by_token(function):
+    """Token login."""
+    @wraps(function)
+    def wrapped(*args, **kwargs):
+        token = request.args.get('token')
+        if token:
+            claims = decode(token)
+            return function(*args, username=claims['username'], **kwargs)
+        return function(*args, username=None, **kwargs)
     return wrapped
 
 

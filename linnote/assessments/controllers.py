@@ -225,7 +225,6 @@ class MergeController(MethodView):
 class ReportController(MethodView):
     """Controls assessment's report view."""
 
-    decorators = [login_required]
     template = 'assessment/report.html'
 
     def get(self, identifier):

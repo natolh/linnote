@@ -8,38 +8,30 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from flask import redirect, render_template, url_for, request
+from flask import redirect, render_template, url_for
 from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
 from linnote.core.user import User
 from linnote.core.utils import DATA
-from linnote.core.utils.jwt import decode
 from .forms import LoginForm, PasswordForm, PasswordResetForm, ProfileForm
-from .utils import skip_if_authenticated
+from .utils import skip_if_authenticated, logged_by_token
 
 
 class Login(MethodView):
     """Controller for managing user login task."""
 
     decorators = [skip_if_authenticated]
+    template = 'authentification/login.html'
 
     def get(self):
         """
         Display login formular or allow for login using a token.
         """
-        token = request.args.get('token', None)
-        if token:
-            return self.login_from_token(token)
-
         form = LoginForm()
-        return render_template('authentification/login.html', form=form)
+        return self.render(form=form)
 
     def post(self):
         """Process the login formular, login the user, redirect to his desk."""
-        return self.login_from_formular()
-
-    def login_from_formular(self):
-        """Classic login."""
         form = LoginForm()
         data = DATA()
 
@@ -51,19 +43,12 @@ class Login(MethodView):
                 login_user(user)
                 return redirect(url_for('assessments.assessments'))
 
-        return self.get()
+        return self.render(form=form)
 
-    @staticmethod
-    def login_from_token(token):
-        """Token login."""
-        data = DATA()
-        claims = decode(token)
-        users = data.query(User)
-        user = users.filter_by(username=claims['username']).one_or_none()
-        if user:
-            login_user(user)
-            return redirect(url_for('account.reset'))
-        return None
+    @classmethod
+    def render(cls, **kwargs):
+        """Render the view."""
+        return render_template(cls.template, **kwargs)
 
 
 class Logout(MethodView):
@@ -101,7 +86,7 @@ class Password(MethodView):
             current_user.set_password_hash(form.password.data)
             data.commit()
 
-        return self.get()
+        return self.render(form=form)
 
     @classmethod
     def render(cls, **kwargs):
@@ -112,24 +97,32 @@ class Password(MethodView):
 class PasswordResetController(MethodView):
     """Controller for resetting the user's account password."""
 
-    decorators = [login_required]
-    template = 'password.html'
+    template = 'reset.html'
 
     def get(self):
         """Build user's account password reset view."""
         form = PasswordResetForm()
         return self.render(form=form)
 
-    def post(self):
+    @logged_by_token
+    def post(self, username):
         """Reset user's account password."""
         data = DATA()
+        user = data.query(User).filter_by(username=username).one_or_none()
         form = PasswordResetForm()
 
-        if form.validate():
-            current_user.set_password_hash(form.password.data)
+        if form.validate() and user:
+            user.set_password_hash(form.password.data)
             data.commit()
             return redirect(url_for('assessments.assessments'))
-        return self.get()
+        return self.render(form=form)
+
+    @staticmethod
+    def load(username):
+        """Load user from storage."""
+        data = DATA()
+        user = data.query(User).get(username)
+        return user
 
     @classmethod
     def render(cls, **kwargs):

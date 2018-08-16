@@ -75,7 +75,7 @@
             </p>
         </div>
 
-        <input type="text" readonly value="{{ url_for('account.login', token=user.access_token(), _external=True) }}">
+        <input type="text" readonly value="{{ url_for('account.reset', token=user.access_token(), _external=True) }}">
     </div>
 </section>
 <section>
