@@ -15,7 +15,7 @@
         <ul>
             {% for id, href in menu %}
             <li>
-                <a class="{%if id == active_page %}active{% endif %}" href="{{ href }}">
+                <a class="{%if id == module %}active{% endif %}" href="{{ href }}">
                     {{ id }}
                 </a>
             </li>
