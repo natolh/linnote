@@ -9,12 +9,12 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from time import time
-from jwt import encode
 from sqlalchemy import Column, Table
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
+from .utils.jwt import encode
 from .utils.database import BASE
 
 
@@ -92,13 +92,13 @@ class User(BASE):
         """Boolean showing if the current user account is active or not."""
         return True
 
-    def access_token(self, algorithm='HS512', duration=3600):
+    def access_token(self, duration=3600):
         """
         Create a temporary JWT access token.
         """
         current_time = time()
         expiration_time = current_time + duration
-        return encode({'issuer': 'linnote', 'iat': current_time, 'exp': expiration_time, 'username': self.username}, 'secret', algorithm=algorithm)
+        return encode({'issuer': 'linnote', 'iat': current_time, 'exp': expiration_time, 'username': self.username})
 
 
 class Profile(BASE):

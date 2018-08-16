@@ -11,9 +11,9 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from flask import redirect, render_template, url_for, request
 from flask.views import MethodView
 from flask_login import current_user, login_required, login_user, logout_user
-from jwt import decode
 from linnote.core.user import User
 from linnote.core.utils import DATA
+from linnote.core.utils.jwt import decode
 from .forms import LoginForm, PasswordForm, PasswordResetForm, ProfileForm
 from .utils import skip_if_authenticated
 
@@ -57,7 +57,7 @@ class Login(MethodView):
     def login_from_token(token):
         """Token login."""
         data = DATA()
-        claims = decode(token, 'secret')
+        claims = decode(token)
         users = data.query(User)
         user = users.filter_by(username=claims['username']).one_or_none()
         if user:
