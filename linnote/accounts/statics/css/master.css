@@ -17,7 +17,7 @@ html {
 body {
     display: grid;
     grid: "main" auto
-          "footer" min-content
+          "footer" minmax(4rem, min-content)
           / 1fr;
     background: linear-gradient(to bottom right, hsl(30, 60%, 75%, 0.85), hsl(340, 70%, 30%, 0.85));
 }
@@ -26,7 +26,7 @@ main {
     grid-area: main;
     justify-self: center;
     align-self: center;
-    padding: 4rem 2rem;
+    padding: 3rem 2rem;
     width: 100vw;
     max-width: 350px;
     display: flex;
@@ -34,6 +34,7 @@ main {
     align-items: center;
     background-color: hsla(0, 0%, 100%, 1);
     border-radius: 3px;
+    box-shadow: 0 0 2rem hsla(0, 0%, 0%, 0.2);
 }
 
 #brand {
@@ -42,7 +43,7 @@ main {
     letter-spacing: -0.1rem;
     text-transform: uppercase;
     text-align: center;
-    color: hsla(0, 0%, 0%, 0.33);
+    color: hsla(0, 0%, 0%, 0.4);
 }
 
 hr {
@@ -50,7 +51,7 @@ hr {
     width: 3rem;
     background-color: hsla(0, 0%, 0%, 0.1);
     border: none;
-    margin: .75rem 0 1.5rem 0;
+    margin: .75rem 0 2.25rem 0;
 }
 
 form {
@@ -58,7 +59,13 @@ form {
 }
 
 input[type="submit"] {
+    margin-top: 2.15rem;
+    background-color: var(--color-main-deep);
     width: 100%;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus, input[type="submit"]:active {
+    background-color: var(--color-main-light);
 }
 
 input {

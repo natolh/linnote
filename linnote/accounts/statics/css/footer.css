@@ -8,7 +8,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 */
 
 footer {
-    --footer-color-text: hsla(0, 0%, 100%, 0.5);
+    --footer-color-text: hsla(0, 0%, 100%, 0.6);
     --footer-color-text-highlight: hsl(0, 0%, 100%);
 
     display: flex;
@@ -17,19 +17,17 @@ footer {
     align-items: center;
     padding: .6rem 1rem;
     color: var(--footer-color-text);
-    font-size: 0.8rem;
-    line-height: 1.4rem;
+    font-size: 0.9rem;
 }
 
 @media screen and (min-width: 590px) {
     footer {
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: center;
     }
 }
 
 footer a {
-    font-weight: lighter;
     border-bottom: 1px solid var(--footer-color-text);
 }
 
