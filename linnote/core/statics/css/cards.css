@@ -42,7 +42,19 @@ An active cards deck embeded each card content inside a link so that the whole c
 }
 
 .user.cards.deck {
-    grid: auto / repeat(4, 1fr);
+    grid: auto / 1fr;
+}
+
+@media screen and (min-width: 800px) {
+    .user.cards.deck {
+        grid: auto / repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .user.cards.deck {
+        grid: auto / repeat(3, 1fr);
+    }
 }
 
 .group.cards.deck {
