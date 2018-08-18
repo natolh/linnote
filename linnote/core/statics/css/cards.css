@@ -19,13 +19,14 @@ An active cards deck embeded each card content inside a link so that the whole c
 .active.cards.deck > :nth-child(n) > a {
     padding: 1.5rem;
     border-radius: 5px;
-    background-color: hsl(0, 0%, 98%);
+    background-color: hsl(0, 0%, 90%);
     border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
     transition: all ease-out 40ms;
 }
 
 .active.cards.deck > :nth-child(n) > a:hover {
-    border-color: var(--color-main);
+    border-top-color: var(--color-main);
     transition: border ease-in 200ms;
 }
 
