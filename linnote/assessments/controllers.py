@@ -154,7 +154,7 @@ class AssessmentSettingsController(AssessmentController):
         return redirect(url_for('assessments.assessment', identifier=assessment.identifier))
 
 
-class ResultsView(MethodView):
+class AssessmentResultsController(MethodView):
     """Controls assessment's results view."""
 
     decorators = [login_required]
@@ -175,8 +175,7 @@ class ResultsView(MethodView):
             data = DATA()
             marks = load_results(request.files['results'], form.scale.data)
             assessment.add_results(marks)
-            rank(assessment)
-            assessment = data.merge(assessment)
+            assessment.rankings = rank(assessment)
             data.commit()
         return self.render(assessment=assessment, form=form)
 

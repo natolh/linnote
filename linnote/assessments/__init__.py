@@ -10,7 +10,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from flask import Blueprint
 from .controllers import AssessmentsController, AssessmentCreationController
-from .controllers import AssessmentSettingsController, ResultsView
+from .controllers import AssessmentSettingsController, AssessmentResultsController
 from .controllers import MergeController
 from .controllers import AssessmentRankingsController
 
@@ -19,7 +19,7 @@ from .controllers import AssessmentRankingsController
 LIST_VIEW = AssessmentsController.as_view('assessments')
 ASSESSMENT_CREATION = AssessmentCreationController.as_view('assessment_creation')
 ASSESSMENT_SETTINGS = AssessmentSettingsController.as_view('assessment')
-RESULTS_VIEW = ResultsView.as_view('results')
+RESULTS_VIEW = AssessmentResultsController.as_view('results')
 MERGER_VIEW = MergeController.as_view('merger')
 RANKINGS_VIEW = AssessmentRankingsController.as_view('rankings')
 
