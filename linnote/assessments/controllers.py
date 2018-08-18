@@ -201,12 +201,10 @@ class MergeController(MethodView):
             assessment.creator = current_user
             data.add(assessment)
 
-            # Create ranking.
-            general_ranking = Ranking(assessment)
-            data.add(general_ranking)
+            rank(assessment)
 
         data.commit()
-        return redirect(url_for('assessments.assessments'))
+        return self.render(form=form)
 
     @staticmethod
     def load(identifier=None):
