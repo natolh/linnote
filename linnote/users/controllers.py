@@ -216,11 +216,10 @@ class UserController(UserBaseController):
 
         if form.validate():
             user = self.load(identifier)
-            user.first_name = form.firstname.data
-            user.last_name = form.lastname.data
+            user.firstname = form.firstname.data
+            user.lastname = form.lastname.data
             user.email = form.email.data
             user.groups = [data.query(Group).get(id) for id in form.groups.data]
 
-        data.add(user)
         data.commit()
-        return self.get(identifier=identifier)
+        return self.render(form=form, user=user)
