@@ -31,23 +31,20 @@
     </menu>
 </header>
 
-<ul class="cards">
+<ul class="user active cards deck">
     {% for user in users %}
     <li>
-        <div class="header">
-            <p>
-                {% if user.is_staff %}🎖{% endif %}
-                {{ user.fullname }}
-            </p>
-        </div>
-        <div class="content">
-            <em>Email</em> : {{ user.email }}
-        </div>
-        <div class="footer quick-actions">
-            <a href="{{ url_for('users.user', identifier=user.identifier) }}">
-                Détails
-            </a>
-        </div>
+        <a href="{{ url_for('users.user', identifier=user.identifier) }}">
+            <div class="heading">
+                <p>
+                    {{ user.fullname }}
+                </p>
+            </div>
+            <div class="content">
+                Email :
+                {{ user.email }}
+            </div>
+        </a>
     </li>
     {% endfor %}
 </ul>

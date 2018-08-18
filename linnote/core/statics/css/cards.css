@@ -1,116 +1,49 @@
 @charset "UTF-8";
 
-.cards {
+/* General definitions for cards decks and cards. */
+.cards.deck {
     grid-column: 1 / -1;
     display: grid;
-    grid-template: min-content / 1fr;
-    grid-gap: 1.5rem .5rem;
+    grid-gap: 2rem;
 }
 
-@media screen and (min-width: 600px) {
-    .cards {
-        grid-template: auto / repeat(2, 1fr);
-    }
+/*
+Rules for active cards deck
+
+An active cards deck embeded each card content inside a link so that the whole card becam clickable. The card container is take-out the design and merely serve as syntax.
+*/
+.active.cards.deck > li {
+    display: contents;
 }
 
-@media screen and (min-width: 900px) {
-    .cards {
-        grid-template: auto / repeat(3, 1fr);
-    }
+.active.cards.deck > :nth-child(n) > a {
+    padding: 1.5rem;
+    border-radius: 5px;
+    background-color: hsl(0, 0%, 98%);
+    border-top: 10px solid transparent;
+    transition: all ease-out 40ms;
 }
 
-@media screen and (min-width: 1200px) {
-    .cards {
-        grid-template: auto / repeat(4, 1fr);
-    }
+.active.cards.deck > :nth-child(n) > a:hover {
+    border-color: var(--color-main);
+    transition: border ease-in 200ms;
 }
 
-.cards [type="button"], .cards button {
-    display: inline-block;
+.cards.deck .heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
-.cards > li {
-    display: flex;
-    flex-direction: column;
-    border-radius: 3px;
-    background-color: hsl(0, 0%, 90%);
-    transition: all 200ms ease-out;
+/* Tailored cards decks & cards */
+.assessment.cards.deck {
+    grid: auto / repeat(4, 1fr);
 }
 
-.cards > li > :nth-child(n) {
-    flex: 0 0 auto;
+.user.cards.deck {
+    grid: auto / repeat(4, 1fr);
 }
 
-.cards > li .content {
-    flex-grow: 1;
-    flex-shrink: 1;
-}
-
-.cards > li .header, .cards > li .content, .cards > li .footer {
-    padding: 0.8rem 1rem;
-}
-
-.cards > li .header {
-    border-bottom: 1px solid hsl(0, 0%, 85%);
-    font-weight: bolder;
-}
-
-.cards > li > :last-child {
-    border: none;
-}
-
-.cards li:hover, li:active, li:focus {
-    transition: all 100ms ease-in;
-    background-color: hsl(0, 0%, 85%);
-}
-
-.cards > li > :not(:last-child) {
-    border-bottom-color: hsl(0, 0%, 80%);
-}
-
-.cards a, .cards button {
-    min-height: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    font-size: 0.9rem;
-    font-weight: normal;
-    background-color: transparent;
-    border: 1px solid var(--color-main);
-    color: var(--color-main);
-    transition: all 100ms ease-out;
-    border-radius: 3px;
-}
-
-.cards a:hover, .cards button:hover, .cards a:focus, .cards button:focus{
-    color: white;
-    background-color: var(--color-main);
-    transition: color 300ms ease-in;
-    transition: all 300ms ease-in;
-}
-
-.cards a:hover {
-    text-decoration: underline;
-}
-
-.quick-actions {
-    display: flex;
-}
-
-.quick-actions a, .quick-actions button {
-    max-width: initial;
-}
-
-.quick-actions :not(:last-child) {
-    margin-right: 0.5rem;
-}
-
-.quick-actions > :nth-child(n) {
-    flex: 1 1 100%;
-}
-
-.cards em {
-    font-weight: bolder;
-    font-style: normal;
+.group.cards.deck {
+    grid: auto / repeat(4, 1fr);
 }

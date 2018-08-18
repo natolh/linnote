@@ -24,30 +24,24 @@
     </menu>
 </header>
 
-<ul class="cards">
+<ul class="assessment active cards deck">
     {% for assessment in assessments %}
     <li>
-        <div class="header">
-            {{ assessment.title }}
-        </div>
-        <ul class="content">
-            <li>
-                <em>Date de création : </em>
-                {{ assessment.creation_date.strftime('%d/%m/%Y') }}
-            </li>
-            <li>
-                <em>Auteur : </em>
-                {{ assessment.creator }}
-            </li>
-        </ul>
-        <div class="footer quick-actions">
-            <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
-                Détails
-            </a>
-            <a href="{{ url_for('assessments.rankings', identifier=assessment.identifier) }}" target="_blank">
-                Rapport
-            </a>
-        </div>
+        <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
+            <div class="heading">
+                {{ assessment.title }}
+            </div>
+            <ul class="content">
+                <li>
+                    Date de création :
+                    {{ assessment.creation_date.strftime('%d/%m/%Y') }}
+                </li>
+                <li>
+                    Auteur :
+                    {{ assessment.creator }}
+                </li>
+            </ul>
+        </a>
     </li>
     {% endfor %}
 </ul>

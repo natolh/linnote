@@ -30,17 +30,16 @@
         </li>
     </menu>
 </header>
-<ul class="cards">
+<ul class="group active cards deck">
     {% for group in groups %}
     <li>
-        <div class="header">
-            <p>
-                {{ group.name }}
-            </p>
-        </div>
-        <div class="footer quick-actions">
-            <a href="{{ url_for('users.group', identifier=group.identifier) }}">Ouvrir</a>
-        </div>
+        <a href="{{ url_for('users.group', identifier=group.identifier) }}">
+            <div class="heading">
+                <p>
+                    {{ group.name }}
+                </p>
+            </div>
+        </a>
     </li>
     {% endfor %}
 </ul>
