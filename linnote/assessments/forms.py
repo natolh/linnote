@@ -42,6 +42,18 @@ class AssessmentForm(Form):
         validators=[Optional()])
 
 
+class ResultsImportationForm(Form):
+    """Importation formular for assessment's results."""
+
+    results = FileField(
+        'Fichier',
+        validators=[DataRequired()])
+    scale = FloatField(
+        'Barème',
+        default=20,
+        validators=[DataRequired(), NumberRange(min=0)])
+
+
 class MergeForm(Form):
     """Assessment merging form."""
 

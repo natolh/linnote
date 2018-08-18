@@ -20,6 +20,29 @@
     </menu>
     {% include 'assessment/menu.html' %}
 </header>
+<section>
+    <header>
+        <h2>Importer des résultats</h2>
+    </header>
+    <div class="sub">
+        <form method="post" enctype="multipart/form-data">
+
+            {{ form.csrf_token() }}
+
+            <fieldset>
+                <div role="group">
+                    {{ form.results.label }}
+                    {{ form.results() }}
+                </div>
+                <div role="group">
+                    {{ form.scale.label }}
+                    {{ form.scale() }}
+                </div>
+            </fieldset>
+            <input type="submit" value="enregistrer">
+        </form>
+    </div>
+</section>
 <div role="grid" class="results">
 {% for result in assessment.results %}
     <ul>

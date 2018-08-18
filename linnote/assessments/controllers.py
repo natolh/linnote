@@ -17,11 +17,10 @@ from flask.views import MethodView
 from flask_login import current_user, login_required
 from matplotlib import pyplot
 from linnote.core.assessment import Assessment
-from linnote.core.ranking import Ranking
 from linnote.core.user import Group
 from linnote.core.utils import DATA
 from .logic import load_results, rank
-from .forms import AssessmentForm, MergeForm
+from .forms import AssessmentForm, MergeForm, ResultsImportationForm
 
 
 class AssessmentsController(MethodView):
@@ -163,9 +162,31 @@ class ResultsView(MethodView):
 
     def get(self, identifier):
         """Build assessment's results view."""
+        assessment = self.load(identifier)
+        form = ResultsImportationForm()
+        return self.render(assessment=assessment, form=form)
+
+    def post(self, identifier):
+        """Import new assessment's results."""
+        assessment = self.load(identifier)
+        form = ResultsImportationForm()
+
+        if form.validate():
+            data = DATA()
+            marks = load_results(request.files['results'], form.scale.data)
+            assessment.add_results(marks)
+            rank(assessment)
+            assessment = data.merge(assessment)
+            data.commit()
+        return self.render(assessment=assessment, form=form)
+
+    @staticmethod
+    def load(identifier):
+        """Load assessment from storage."""
         data = DATA()
-        assessment = data.query(Assessment).get(identifier)
-        return self.render(assessment=assessment)
+        assessments = data.query(Assessment)
+        assessment = assessments.get(identifier)
+        return assessment
 
     @classmethod
     def render(cls, **kwargs):
