@@ -17,7 +17,6 @@ from flask import _app_ctx_stack
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
-from linnote import APP_DIR
 from .configuration import load
 
 
@@ -27,7 +26,7 @@ BASE = declarative_base()
 
 
 # Create a session factory
-CONFIG = load(APP_DIR.parent.joinpath('configuration.ini'))
+CONFIG = load('configuration.ini')
 ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=20)
 SESSION = sessionmaker(bind=ENGINE)
 

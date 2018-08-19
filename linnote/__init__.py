@@ -8,9 +8,7 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from pathlib import Path
 import matplotlib
 
 
-APP_DIR = Path(__file__).resolve().parent
 matplotlib.use('Agg')
