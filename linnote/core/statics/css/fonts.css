@@ -6,7 +6,7 @@
     font-style: normal;
     src: local('Lato-Regular'),
          local('Lato Regular'),
-         url('/static/fonts/Lato/Lato-Regular.woff') format('woff');
+         url('/static/fonts/Lato/Regular.woff') format('woff');
 }
 
 @font-face {
