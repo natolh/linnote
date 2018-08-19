@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implement ranking tools.
+Ranking tools.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -19,14 +19,12 @@ from linnote.core.utils.database import BASE
 
 def ranker(function):
     """Decorator for tie handling methods."""
-
     @wraps(function)
     def wrapper(position, group):
         """Wrapping function."""
         size = sum(1 for _ in group)
         rank, offset = function(position, size)
         return repeat(rank, size), offset
-
     return wrapper
 
 
