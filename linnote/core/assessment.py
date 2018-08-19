@@ -20,8 +20,8 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
-from linnote.core.user import Student
-from linnote.core.utils.database import BASE
+from .user import Student
+from .utils import BASE
 
 
 class Mark(BASE):
