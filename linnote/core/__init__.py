@@ -17,8 +17,6 @@ from linnote.account.utils import LOGIN_MANAGER
 from .utils import CSP_POLICY
 from .utils.configuration import load
 from .utils import configure as configure_session
-from .assessment import Assessment, Mark
-from .user import Group, Student, User
 
 
 def create_app(name=None, config_path='configuration.ini', blueprints=None):
