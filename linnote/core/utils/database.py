@@ -27,7 +27,7 @@ BASE = declarative_base()
 
 # Create a session factory
 CONFIG = load('configuration.ini')
-ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=20)
+ENGINE = create_engine(CONFIG.get('DATABASE', 'URL'), pool_recycle=240)
 SESSION = sessionmaker(bind=ENGINE)
 
 
