@@ -2,31 +2,35 @@
 # -*- coding: utf-8 -*-
 
 """
-Accounts module.
+This module allow the user to manage his account.
+
+The user can edit his profile, change his password, reset his account, and
+obviously login/logout from the application.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from flask import Blueprint
-from .controllers import Login, Logout, Profile, Password
-from .controllers import PasswordResetController
+from .controllers import AccountLoginController, AccountLogoutController
+from .controllers import AccountProfileController, AccountPasswordController
+from .controllers import AccountResetController
 
 
-# Build controllers functions.
-LOGIN = Login.as_view('login')
-LOGOUT = Logout.as_view('logout')
-PROFILE = Profile.as_view('profile')
-PASSWORD = Password.as_view('password')
-RESET = PasswordResetController.as_view('reset')
+# Create the module.
+BLUEPRINT = Blueprint('account', __name__)
+BLUEPRINT.url_prefix = '/account'
+BLUEPRINT.template_folder = 'templates'
+BLUEPRINT.static_folder = 'statics'
 
+# Build views' controllers.
+LOGIN = AccountLoginController.as_view('login')
+LOGOUT = AccountLogoutController.as_view('logout')
+PROFILE = AccountProfileController.as_view('profile')
+PASSWORD = AccountPasswordController.as_view('password')
+RESET = AccountResetController.as_view('reset')
 
-# Register routes to controllers.
-BLUEPRINT = Blueprint(
-    'account', __name__, url_prefix='/account', template_folder='templates',
-    static_folder='statics')
-
-
+# Register views' controllers routes.
 BLUEPRINT.add_url_rule('/login', view_func=LOGIN)
 BLUEPRINT.add_url_rule('/logout', view_func=LOGOUT)
 BLUEPRINT.add_url_rule('/profile', view_func=PROFILE)
