@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Forms for the 'accounts' application module.
+Forms for the 'account' application module.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
