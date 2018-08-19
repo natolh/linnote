@@ -8,8 +8,8 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from linnote.core import create_app
 from linnote import account, assessments, services, users
+from linnote.core import create_app
 
 
 BLUEPRINTS = [account, assessments, services, users]
