@@ -25,7 +25,9 @@ RANKINGS_VIEW = AssessmentRankingsController.as_view('rankings')
 
 
 # Register routes to controllers.
-BLUEPRINT = Blueprint('assessments', __name__, url_prefix='/assessments', template_folder='templates')
+BLUEPRINT = Blueprint('assessments', __name__)
+BLUEPRINT.url_prefix = '/assessments'
+BLUEPRINT.template_folder = 'templates'
 
 
 BLUEPRINT.add_url_rule('', view_func=LIST_VIEW)
