@@ -14,7 +14,7 @@ from operator import attrgetter
 from sqlalchemy import Column
 from sqlalchemy import Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from linnote.core.utils.database import BASE
+from .utils import BASE
 
 
 def ranker(function):
