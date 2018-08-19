@@ -23,7 +23,7 @@ def locate(configuration_path: Union[str, Path]) -> Path:
     root = Path.cwd()
     configuration_path = Path(configuration_path)
     if not configuration_path.is_absolute():
-        configuration_path = root.parent.joinpath(configuration_path)
+        configuration_path = root.joinpath(configuration_path)
     return configuration_path
 
 def load(configuration_path: Union[str, Path]) -> ConfigParser:
