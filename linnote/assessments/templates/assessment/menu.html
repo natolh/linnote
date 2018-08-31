@@ -1,9 +1,9 @@
 <!-- Submenu for assessment module -->
 {% set assessment_id = assessment.identifier %}
 {% set menu = [
-    ('classements', url_for('assessments.rankings', identifier=assessment_id)),
     ('résultats', url_for('assessments.results', identifier=assessment_id)),
-    ('paramètres', url_for('assessments.assessment', identifier=assessment_id))]
+    ('classements', url_for('assessments.rankings', identifier=assessment_id)),
+    ('paramètres', url_for('assessments.settings', identifier=assessment_id))]
 %}
 
 <menu type="navigation">

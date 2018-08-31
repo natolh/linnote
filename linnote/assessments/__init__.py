@@ -18,7 +18,8 @@ from .controllers import AssessmentRankingsController
 # Build controllers functions.
 LIST_VIEW = AssessmentsController.as_view('assessments')
 ASSESSMENT_CREATION = AssessmentCreationController.as_view('assessment_creation')
-ASSESSMENT_SETTINGS = AssessmentSettingsController.as_view('assessment')
+ASSESSMENT = AssessmentResultsController.as_view('assessment')
+SETTINGS = AssessmentSettingsController.as_view('settings')
 RESULTS_VIEW = AssessmentResultsController.as_view('results')
 MERGER_VIEW = MergeController.as_view('merger')
 RANKINGS_VIEW = AssessmentRankingsController.as_view('rankings')
@@ -32,7 +33,8 @@ BLUEPRINT.template_folder = 'templates'
 
 BLUEPRINT.add_url_rule('', view_func=LIST_VIEW)
 BLUEPRINT.add_url_rule('/', view_func=ASSESSMENT_CREATION)
-BLUEPRINT.add_url_rule('/<int:identifier>', view_func=ASSESSMENT_SETTINGS)
+BLUEPRINT.add_url_rule('/<int:identifier>', view_func=ASSESSMENT)
+BLUEPRINT.add_url_rule('/<int:identifier>/settings', view_func=SETTINGS)
 BLUEPRINT.add_url_rule('/<int:identifier>/results', view_func=RESULTS_VIEW)
 BLUEPRINT.add_url_rule('/merge', view_func=MERGER_VIEW)
 BLUEPRINT.add_url_rule('/<int:identifier>/rankings', view_func=RANKINGS_VIEW)
