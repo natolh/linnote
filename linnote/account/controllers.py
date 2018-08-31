@@ -128,7 +128,7 @@ class AccountPasswordController(MethodView):
 class AccountResetController(MethodView):
     """Controller for resetting the user's account password."""
 
-    template = 'reset.html'
+    template = 'authentification/reset.html'
 
     def get(self):
         """Build user's account password reset view."""
