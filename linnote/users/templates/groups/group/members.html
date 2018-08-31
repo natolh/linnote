@@ -23,25 +23,21 @@
         </li>
     </menu>
 </header>
-<section>
-    <header>
-        <h2>Statistiques</h2>
-    </header>
-    <div class="sub">
-        Taille : {{ group.members|length }}
-    </div>
-</section>
-<section>
-        <header>
-            <h2>Membres</h2>
-        </header>
-        <div class="sub list">
-            {% for user in group.members %}
-                <div>
-                    <p>{{ user.fullname }}</p>
-                    <span></span>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+<ul class="user active cards deck">
+    {% for user in group.members %}
+    <li>
+        <a href="{{ url_for('users.user', identifier=user.identifier) }}">
+            <div class="heading">
+                <p>
+                    {{ user.fullname }}
+                </p>
+            </div>
+            <div class="content">
+                Email :
+                {{ user.email }}
+            </div>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
