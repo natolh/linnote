@@ -19,7 +19,8 @@ from .controllers import UserCreationController as UserCreation
 
 # Build controllers functions.
 GROUPS = Groups.as_view('groups')
-GROUP_SETTINGS = GroupSettings.as_view('group')
+GROUP = GroupMembers.as_view('group')
+GROUP_SETTINGS = GroupSettings.as_view('group_settings')
 GROUP_MEMBERS = GroupMembers.as_view('group_members')
 GROUP_CREATION = GroupCreation.as_view('group_creation')
 USERS = Users.as_view('users')
@@ -32,8 +33,9 @@ BLUEPRINT = Blueprint('users', __name__, url_prefix='/users', template_folder='t
 
 BLUEPRINT.add_url_rule('/groups', view_func=GROUPS)
 BLUEPRINT.add_url_rule('/groups/', view_func=GROUP_CREATION)
-BLUEPRINT.add_url_rule('/groups/<int:identifier>', view_func=GROUP_SETTINGS)
+BLUEPRINT.add_url_rule('/groups/<int:identifier>', view_func=GROUP)
 BLUEPRINT.add_url_rule('/groups/<int:identifier>/members', view_func=GROUP_MEMBERS)
+BLUEPRINT.add_url_rule('/groups/<int:identifier>/settings', view_func=GROUP_SETTINGS)
 BLUEPRINT.add_url_rule('', view_func=USERS)
 BLUEPRINT.add_url_rule('/', view_func=USER_CREATION)
 BLUEPRINT.add_url_rule('/<int:identifier>', view_func=USER)
