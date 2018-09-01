@@ -17,6 +17,8 @@ def locate(configuration_path: Union[str, Path]) -> Path:
     """
     Locate a configuration file and return it in the form of a Path object.
 
+    The configuration_path could be a path-like string or a Path object. If it
+    is a string it will be casted to a Path object.
     If the path provided is not absolute, the path is assumed to be relative
     to the current working directory.
     """
