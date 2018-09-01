@@ -96,9 +96,12 @@ class User(BASE):
         """
         Create a temporary JWT access token.
         """
-        current_time = time()
-        expiration_time = current_time + duration
-        return encode({'issuer': 'linnote', 'iat': current_time, 'exp': expiration_time, 'username': self.username})
+        token = dict()
+        token['issuer'] = 'linnote'
+        token['iat'] = time()
+        token['exp'] = token['iat'] + duration
+        token['username'] = self.username
+        return encode(token)
 
 
 class Profile(BASE):
