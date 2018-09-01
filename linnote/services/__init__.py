@@ -35,6 +35,7 @@ class AssessmentView(MethodView):
 
 
 class GraderController(MethodView):
+    """API for enabling / removing mark adjustments."""
 
     decorators = [login_required]
 
