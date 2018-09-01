@@ -20,9 +20,9 @@ def locate(configuration_path: Union[str, Path]) -> Path:
     If the path provided is not absolute, the path is assumed to be relative
     to the current working directory.
     """
-    root = Path.cwd()
     configuration_path = Path(configuration_path)
     if not configuration_path.is_absolute():
+        root = Path.cwd()
         configuration_path = root.joinpath(configuration_path)
     return configuration_path
 
