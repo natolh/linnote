@@ -17,20 +17,22 @@ from .controllers import UserController as User
 from .controllers import UserCreationController as UserCreation
 
 
-# Build controllers functions.
+# Create the module.
+BLUEPRINT = Blueprint('users', __name__)
+BLUEPRINT.url_prefix = '/users'
+BLUEPRINT.template_folder = 'templates'
+
+# Build views' controllers.
 GROUPS = Groups.as_view('groups')
-GROUP = GroupMembers.as_view('group')
-GROUP_SETTINGS = GroupSettings.as_view('group_settings')
-GROUP_MEMBERS = GroupMembers.as_view('group_members')
 GROUP_CREATION = GroupCreation.as_view('group_creation')
+GROUP = GroupMembers.as_view('group')
+GROUP_MEMBERS = GroupMembers.as_view('group_members')
+GROUP_SETTINGS = GroupSettings.as_view('group_settings')
 USERS = Users.as_view('users')
-USER = User.as_view('user')
 USER_CREATION = UserCreation.as_view('user_creation')
+USER = User.as_view('user')
 
-# Register routes to controllers.
-BLUEPRINT = Blueprint('users', __name__, url_prefix='/users', template_folder='templates')
-
-
+# Register views' controllers routes.
 BLUEPRINT.add_url_rule('/groups', view_func=GROUPS)
 BLUEPRINT.add_url_rule('/groups/', view_func=GROUP_CREATION)
 BLUEPRINT.add_url_rule('/groups/<int:identifier>', view_func=GROUP)
