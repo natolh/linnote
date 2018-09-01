@@ -78,7 +78,7 @@ def average(position, size):
 
 
 @ranker
-def sequential(position, size):
+def sequential(position, _size):
     """
     Tie handling function.
 
