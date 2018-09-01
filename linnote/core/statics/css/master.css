@@ -1,0 +1,186 @@
+@charset "UTF-8";
+
+@import url('normalize.css');
+@import url('reset.css');
+@import url('fonts.css');
+@import url('colors.css');
+@import url('header.css');
+@import url('forms.css');
+@import url('cards.css');
+@import url('messages.css');
+
+html {
+    font-size: 16px;
+    font-family: "Lato";
+}
+
+body {
+    display: grid;
+    grid: "header" min-content
+          "main" auto
+          / auto;
+}
+
+main {
+    padding: 2rem;
+    display: grid;
+    grid: auto / repeat(6, 1fr);
+    align-content: flex-start;
+    gap: 2rem;
+}
+
+main > section, main > header, main > div {
+    grid-column: 1 / -1;
+}
+
+/* Typography */
+h1 {
+    grid-area: heading;
+    display: flex;
+    font-family: "Open Sans";
+    font-size: 2rem;
+    font-weight: 200;
+    text-transform: capitalize;
+}
+
+h2 {
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    color: hsl(0, 0%, 30%);
+}
+
+h3 {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    color: hsl(0, 0%, 15%);
+}
+
+/* Dirty section */
+
+main > section {
+    display: block;
+    padding: 2rem;
+    border: 1px solid hsl(0, 0%, 95%);
+    box-shadow: 0 0 20px 0 hsl(0, 0%, 95%);
+    border-radius: 5px;
+}
+
+main > section header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+main > section header p, main > section .sub p {
+    color: hsl(0, 0%, 50%);
+}
+
+main > section .sub .heading {
+    margin-bottom: 0.5rem;
+}
+
+a[type="button"]:hover, button:hover {
+    background-color: var(--color-main-light);
+}
+
+a, button {
+    cursor: pointer;
+}
+
+[type="button"], button {
+    font-size: .9rem;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    padding: .6rem 1.2rem;
+    border-radius: 3rem;
+    color: white;
+    background-color: var(--color-main);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    vertical-align: middle;
+}
+
+[type="button"].danger, button.danger {
+    font-weight: 600;
+    background-color: var(--color-error);
+}
+
+[type="button"].danger:hover, button.danger:hover {
+    background-color: var(--color-error-light);
+}
+
+/* Flex tables */
+
+[role="table"].flex [role="row"] {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 3px;
+    background-color: rgb(240, 240, 240);
+    margin-bottom: 0.3rem;
+    padding: 1rem;
+}
+
+[role="table"].flex > [role="row"] > [role="cell"]:not(:last-child) {
+    margin-right: 0.5rem;
+}
+
+[role="table"].flex [role="row"] [role="cell"] .heading {
+    display: block;
+    font-weight: bold;
+}
+
+em {
+    font-weight: bolder;
+    font-style: normal;
+}
+
+div.sub {
+    margin-top: 1rem;
+}
+
+main > section header + div.sub {
+    margin-top: 1.5rem;
+}
+
+.list > div {
+    display: flex;
+    padding: .5rem 0rem;
+}
+
+.list > div:not(:last-child) {
+    border-bottom: 1px solid rgb(240, 240, 240);
+}
+
+div[role="grid"] {
+    display: grid;
+}
+
+div.results[role="grid"] {
+    grid: auto / repeat(auto-fit, minmax(10rem, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 1.5rem;
+}
+
+div.results[role="grid"] > :nth-child(n) {
+    border-radius: 5px;
+    padding: 1rem;
+    background-color: hsl(0, 0%, 95%);
+}
+
+div.results[role="grid"] p.heading {
+    font-weight: bold;
+    font-size: .8rem;
+    margin-bottom: .5rem;
+    text-transform: uppercase;
+    color: var(--color-neutral-deep);
+}
+
+div.results[role="grid"] p.mark {
+    font-size: 2rem;
+    color: hsl(0, 0%, 30%);
+    font-weight: bold;
+}

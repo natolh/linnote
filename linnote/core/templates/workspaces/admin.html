@@ -1,0 +1,25 @@
+{% set menu = [
+    ('utilisateurs', url_for('users.users')),
+    ('épreuves', url_for('assessments.assessments')),
+    ('compte', url_for('account.profile'))]
+%}
+
+<div class="site">
+    <!-- Brand / Home -->
+    <a id="brand" href="/">
+        linnote
+    </a>
+
+    <!-- Main menu -->
+    <nav>
+        <ul>
+            {% for id, href in menu %}
+            <li>
+                <a class="{%if id == module %}active{% endif %}" href="{{ href }}">
+                    {{ id }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>

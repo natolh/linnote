@@ -11,18 +11,17 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
+from abc import ABC, abstractmethod
 from copy import copy
 from itertools import groupby
 from operator import attrgetter
-from pathlib import Path
 from typing import List
-from pandas import read_excel
 from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
-from linnote.core.user import Student
-from linnote.core.utils.database import BASE
+from .user import Student
+from .utils import BASE
 
 
 class Mark(BASE):
@@ -38,13 +37,13 @@ class Mark(BASE):
 
     identifier = Column(Integer, primary_key=True)
     assessment_id = Column(Integer, ForeignKey('assessments.identifier'))
-    student_id = Column(Integer, ForeignKey('students.identifier'))
+    student_id = Column(Integer, ForeignKey('profiles__students.identifier'))
     _score = Column(Float, nullable=False)
     _bonus = Column(Float)
     _scale = Column(Integer, nullable=False)
 
     assessment = relationship('Assessment', back_populates='results')
-    student = relationship('Student', back_populates='results', cascade='all')
+    student = relationship('Student', back_populates='results')
 
     def __init__(self, student, score, scale, **kwargs):
         """
@@ -74,24 +73,24 @@ class Mark(BASE):
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def __gt__(self, other):
-        if isinstance(other, Mark):
-            return self.value > other.value
-        return NotImplemented
-
     def __lt__(self, other):
         if isinstance(other, Mark):
             return self.value < other.value
         return NotImplemented
 
-    def __ge__(self, other):
+    def __gt__(self, other):
         if isinstance(other, Mark):
-            return self.value >= other.value
+            return self.value > other.value
         return NotImplemented
 
     def __le__(self, other):
         if isinstance(other, Mark):
             return self.value <= other.value
+        return NotImplemented
+
+    def __ge__(self, other):
+        if isinstance(other, Mark):
+            return self.value >= other.value
         return NotImplemented
 
     def __add__(self, other):
@@ -108,12 +107,11 @@ class Mark(BASE):
 
         return NotImplemented
 
-    def __copy__(self):
-        # Reimplement copy to copy the object, not the record.
-        return Mark(self.student, self.score, self.scale, bonus=self.bonus)
-
     def __radd__(self, other):
         return self.__add__(other)
+
+    def __copy__(self):
+        return Mark(self.student, self.score, self.scale, bonus=self.bonus)
 
     def __hash__(self) -> int:
         return hash(self.identifier)
@@ -127,30 +125,6 @@ class Mark(BASE):
     def bonus(self, value):
         """Change the score bonus."""
         self._bonus = value
-
-    @classmethod
-    def load(cls, filepath: Path, scale: int) -> List['Mark']:
-        """
-        Load results from tabular file.
-
-        Currently, only Excel files are supported. The file should follow a
-        predefined, non customizable layout: (1) student identifier, (2)
-        score. Further columns are ignored.
-
-        - filepath: Path object. Path pointing to the file to load.
-        - scale:    Integer. Scale used to compute marks from scores.
-        """
-        records = read_excel(
-            filepath, names=['student_id', 'score'],
-            usecols=[0, 1], converters={'student_id': int, 'score': float})
-        records = records.to_dict(orient='list')
-
-        results = list()
-        for student_id, score in zip(records['student_id'], records['score']):
-            student = Student(student_id)
-            mark = cls(student, score, scale)
-            results.append(mark)
-        return results
 
     @staticmethod
     def merge(*args: List['Mark']) -> List['Mark']:
@@ -200,28 +174,74 @@ class Mark(BASE):
         return self._score + self._bonus
 
 
+class Grader(ABC):
+    """
+    Abstract Base Class for graders.
+
+    Automatically assign a grade based on student's score according to a
+    formula. The formula can auto-adjust it's parameters or parameters can be
+    defined by the user.
+
+    About grading:
+    - https://en.wikipedia.org/wiki/Grading_on_a_curve
+    - https://www.wikihow.com/Curve-Grades
+    - https://divisbyzero.com/2008/12/22/how-to-curve-an-exam-and-assign-grades
+    - https://academia.stackexchange.com/questions/8261
+    """
+
+    @abstractmethod
+    def __call__(self, mark):
+        return mark
+
+    def apply(self, sequence):
+        """Apply the curve to a sequence of marks."""
+        marks = map(self, sequence)
+        return list(marks)
+
+    @staticmethod
+    def _set(mark: Mark, new: float) -> Mark:
+        if new > mark.scale:
+            mark.bonus = mark.scale - mark.score
+        else:
+            mark.bonus = new - mark.value
+        return mark
+
+
+class TopLinear(Grader):
+    """
+    Top-Linear grader.
+
+    Transform the best mark of the assessment to reach the top of the scale.
+    Transform following marks proportionnaly.
+    """
+
+    def __init__(self, marks):
+        super().__init__()
+        self.slope = marks[0].scale / max(marks).value
+
+    def __call__(self, mark: Mark) -> Mark:
+        score = self.slope * mark.value
+        return self._set(mark, score)
+
+
 class Assessment(BASE):
     """
     Evaluation of students knowledge.
 
     - identifier:   Integer. A unique number to identify the assessment.
     - title:        String. String for assessment identification by humans.
-    - coefficient:  Integer. Maximal possible score.
+    - scale:        Integer. Maximal possible score.
     - precision:    Integer. Maximal number of decimals to keep for mark
                     computations.
     - results:      Collection of Mark. Students marks to the assessment.
     - reports:      Collection of Report.
     """
 
-    # Change name of 'coefficient' attribute to 'scale'. Make this
-    # attribute private (_scale) and make a setter that automatically call the
-    # 'rescale' method on modification.
-
     __tablename__ = 'assessments'
 
     identifier = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False, index=True)
-    coefficient = Column(Integer, nullable=False)
+    scale = Column(Integer, nullable=False)
     precision = Column(Integer, nullable=False, default=3)
     creator_id = Column(Integer, ForeignKey('users.identifier'))
     creation_date = Column(
@@ -229,12 +249,12 @@ class Assessment(BASE):
 
     creator = relationship('User', uselist=False)
     results = relationship('Mark', back_populates='assessment', cascade='all')
-    reports = relationship('Report', back_populates='assessment')
+    rankings = relationship('Ranking', back_populates='assessment', cascade='all')
 
-    def __init__(self, title: str, coefficient: int, **kwargs) -> None:
+    def __init__(self, title: str, scale: int, **kwargs) -> None:
         super().__init__()
         self.title = title
-        self.coefficient = coefficient
+        self.scale = scale
         self.precision = kwargs.get('precision', 3)
         self.creator = kwargs.get('creator', None)
 
@@ -244,26 +264,6 @@ class Assessment(BASE):
     def __str__(self) -> str:
         return self.title
 
-    def __add__(self, other):
-        if isinstance(other, Assessment):
-            title = f'{self.title} & {other.title}'
-            coefficient = self.coefficient + other.coefficient
-            precision = min([self.precision, other.precision])
-
-            assessment = Assessment(title, coefficient, precision=precision)
-            results = Mark.merge(self.results, other.results)
-            assessment.add_results(results)
-
-            return assessment
-
-        return NotImplemented
-
-    def __radd__(self, other):
-        if other is 0:
-            return self
-
-        return NotImplemented
-
     def add_result(self, mark: Mark) -> None:
         """
         Add a new result to the assessment.
@@ -272,12 +272,12 @@ class Assessment(BASE):
 
         Ensure that there is not an assessment's result for the student, if so
         raise an AttributeError. If the mark scale is not equal to the
-        assessment coefficient, the mark is automatically rescale before being
+        assessment scale, the mark is automatically rescale before being
         added.
         """
-        if mark.student not in self.attendees():
-            if mark.scale is not self.coefficient:
-                mark.rescale(self.coefficient)
+        if mark.student not in self.attendees:
+            if mark.scale is not self.scale:
+                mark.rescale(self.scale)
             self.results.append(mark)
         raise AttributeError('a result is already known for this student')
 
@@ -288,46 +288,74 @@ class Assessment(BASE):
         - marks:    Collection of Mark objects. The marks to add.
 
         Ensure that there is not an assessment's result for the student. If
-        the mark scale is not equal to the assessment coefficient, the mark is
+        the mark scale is not equal to the assessment scale, the mark is
         automatically rescale before being added.
         """
-        attendees = self.attendees()
+        attendees = self.attendees
         marks = [mark for mark in marks if mark.student not in attendees]
-        if marks[0].scale is not self.coefficient:
+        if marks[0].scale is not self.scale:
             for mark in marks:
-                mark.rescale(self.coefficient)
+                mark.rescale(self.scale)
         self.results.extend(marks)
 
+    @property
     def attendees(self) -> List[Student]:
-        """Students that have taken the assessment."""
-        get_students = attrgetter('student')
-        attendees = map(get_students, self.results)
+        """
+        Students that have taken the assessment.
+        """
+        get_student = attrgetter('student')
+        attendees = map(get_student, self.results)
         return list(attendees)
 
+    def grade(self, name: str) -> None:
+        """Grade the assessment."""
+        graders = {'top_linear': TopLinear}
+        grader = getattr(graders, name, TopLinear)
+        grader = grader(self.results)
+        grader.apply(self.results)
+
+    @property
     def expected(self) -> List[Student]:
-        """Studends that must take the assessment."""
+        """
+        Students called for the assessment.
+        """
         raise NotImplementedError
 
-    def rescale(self, new_scale: int) -> None:
+    @classmethod
+    def merge(cls, title: str, *args) -> 'Assessment':
         """
-        Rescale assessment's results.
+        Merge assessments into one assessment.
 
-        Change the assessment 'scale' and recompute students scores for the
-        new 'scale'.
+        The product of merging multiple assessments is a new assessment with
+        'title' as title. Assessments involved in the merge are preserved.
+        """
+        # Merge data of assessments.
+        scale = sum(map(attrgetter('scale'), args))
+        precision = min(map(attrgetter('precision'), args))
+        results = Mark.merge(*list(map(attrgetter('results'), args)))
+        # Create the assessment.
+        assessment = cls(title, scale, precision=precision)
+        assessment.add_results(results)
+        return assessment
 
-        - new_scale: Integer. The desired scale.
+    def rescale(self, scale: int) -> None:
+        """
+        Rescale assessment's marks.
+
+        Change the assessment scale to 'scale' and recompute students' marks
+        accordingly.
         """
         for mark in self.results:
-            mark.rescale(new_scale)
+            mark.rescale(scale)
 
-    def transform(self) -> None:
-        """Mark post-process function."""
-        maximum = max(self.results).value
+    def get_results(self, group=None):
+        """
+        Fetch assessment's results or a part of it.
 
-        for mark in self.results:
-            bonus = (mark.value / maximum) * (mark.scale - maximum)
-
-            if not mark.value + bonus > mark.scale:
-                mark.bonus += bonus
-            else:
-                mark.bonus = mark.scale - mark.value
+        If group is provided, only results of group's members are returned.
+        Else, all assessment's results are returned.
+        """
+        if group:
+            res = filter(lambda m: m.student.identity in group, self.results)
+            return list(res)
+        return self.results

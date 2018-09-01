@@ -2,10 +2,16 @@
 # -*- coding: utf-8 -*-
 
 """
-Miscellaneaous tools for the project.
+Miscellaneaous tools.
+
+Currently contains tools for connecting to the database and tools for loading
+configuration file.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from .database import configure, SESSION, WEBSESSION
+from .configuration import load as load_configuration
+from .database import configure
+from .database import BASE, DATA, SESSION
+from .security import CSP_POLICY

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implement ranking tools.
+Ranking tools.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -11,18 +11,20 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 from functools import wraps
 from itertools import groupby, repeat
 from operator import attrgetter
+from sqlalchemy import Column
+from sqlalchemy import Integer, ForeignKey
+from sqlalchemy.orm import relationship
+from .utils import BASE
 
 
 def ranker(function):
     """Decorator for tie handling methods."""
-
     @wraps(function)
     def wrapper(position, group):
         """Wrapping function."""
         size = sum(1 for _ in group)
         rank, offset = function(position, size)
         return repeat(rank, size), offset
-
     return wrapper
 
 
@@ -76,7 +78,7 @@ def average(position, size):
 
 
 @ranker
-def sequential(position, size):
+def sequential(position, _size):
     """
     Tie handling function.
 
@@ -90,32 +92,29 @@ def sequential(position, size):
     return position, 1
 
 
-class Ranking:
+class Ranking(BASE):
     """A list of students ordered by their performance to an assessment."""
 
-    def __init__(self, items, key=None, **kwargs):
-        """
-        Create a new ranking.
+    # Model definition.
+    __tablename__ = 'rankings'
+    identifier = Column(Integer(), primary_key=True)
+    assessment_id = Column(Integer(), ForeignKey('assessments.identifier'))
+    group_id = Column(Integer(), ForeignKey('groups.identifier'))
 
-        - items:    An interable. Items to rank.
-        * key:      A callable. When call upon 'item' return a sortable object.
-        * reverse:  Boolean. If set to True, items are ranked by decreasing
-                    order ; if set to False items are ranked by increasing
-                    order.
-        * start:    Integer. Starting rank.
-        * handle:   Callable. A callable to determine rank for tied values and
-                    the next rank.
+    assessment = relationship('Assessment')
+    group = relationship('Group')
+    ranks = relationship('Rank', back_populates='ranking', cascade='all')
 
-        Return: None.
-        """
+    def __init__(self, assessment, group=None, **kwargs) -> None:
         super().__init__()
-        self.ranks = [Rank(item, key(item)) for item in items]
-        self.key = attrgetter('score')
+        self.assessment = assessment
+        self.group = group
+        self.ranks = [Rank(self, result) for result in assessment.get_results(group)]
         self.start = kwargs.get('start', 1)
         self.handle = kwargs.get('handle', high)
 
         # Establish ranking.
-        self.ranks.sort(key=self.key, reverse=kwargs.get('reverse', True))
+        self.ranks.sort(key=attrgetter('mark.score'), reverse=kwargs.get('reverse', True))
         for rank, item in self.rank():
             item.position = rank
 
@@ -128,31 +127,31 @@ class Ranking:
     def rank(self):
         """Calculate ranks."""
         index = self.start
-        for _, group in groupby(self.ranks, self.key):
+        for _, group in groupby(self.ranks, attrgetter('mark.score')):
             group = list(group)
             ranks, offset = self.handle(index, group)
             index += offset
             yield from zip(ranks, group)
 
 
-class Rank:
-    """Base element of a ranking."""
+class Rank(BASE):
+    """Base block in a ranking."""
 
-    def __init__(self, item, score, position=None):
-        """
-        Create a new rank.
+    # Model definition.
+    __tablename__ = 'ranks'
+    identifier = Column(Integer(), primary_key=True)
+    ranking_id = Column(Integer(), ForeignKey('rankings.identifier'))
+    mark_id = Column(Integer(), ForeignKey('marks.identifier'))
+    position = Column(Integer(), nullable=False)
 
-        - item:         An object. The item beeing ranked.
-        - score:        A sortable value. The score of the person, this value
-                        is used to rank.
-        - position:     Integer. The student's position in the ranking.
+    ranking = relationship('Ranking', back_populates='ranks')
+    mark = relationship('Mark')
 
-        Return: None.
-        """
+    def __init__(self, ranking, mark, position=None) -> None:
         super().__init__()
-        self.item = item
-        self.score = score
+        self.ranking = ranking
+        self.mark = mark
         self.position = position
 
-    def __repr__(self):
-        return f'<Rank #{self.position}: {self.score}>'
+    def __repr__(self) -> str:
+        return f'<Rank #{self.position}: {self.mark}>'

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% set title = 'Nouvelle épreuve' %}
+{% set module = 'épreuves' %}
+{% set section = 'paramètres' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ assessment.title }}</h1>
+    {% include 'assessment/menu.html' %}
+</header>
+<section>
+    <form method="post" enctype="multipart/form-data">
+
+        {{ form.csrf_token }}
+
+        <div role="group">
+            {{ form.title.label }}
+            {{ form.title(autocomplete="off", autofocus="on") }}
+        </div>
+
+        <fieldset>
+            <div role="group">
+                {{ form.coefficient.label }}
+                {{ form.coefficient(type="number", autocomplete="off") }}
+            </div>
+            <div role="group">
+                {{ form.precision.label }}
+                {{ form.precision(type="number", autocomplete="off") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Analyse en sous-groupes</legend>
+            <div class="fullsize" role="group">
+                {{ form.groups.label }}
+                {{ form.groups() }}
+            </div>
+        </fieldset>
+
+        <input type="submit" value="Modifier">
+    </form>
+</section>
+<section>
+    <header>
+        <div>
+            <h2>Suppression</h2>
+            <p class="informations">
+                <em>La suppression de l'épreuve est définitive, les données ne pourront pas être restaurées</em>. La suppression de l'épreuve entraîne la suppression des notes et des rapports associés.
+            </p>
+        </div>
+    </header>
+    <div class="sub">
+        <button class="danger xhr" data-method="delete" data-action="{{ url_for('api.assessment', identifier=assessment.identifier) }}">
+            Supprimer l'épreuve « {{ assessment.title }} »
+        </button>
+    </div>
+</section>
+{% endblock %}

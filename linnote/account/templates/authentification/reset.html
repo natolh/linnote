@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <title>linnote</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='specials/favicon.png') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/forms.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+        <link rel="stylesheet" href="{{ url_for('account.static', filename='css/footer.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('account.static', filename='css/master.css') }}">
+    </head>
+    <body>
+        <main>
+            <h1>
+                Réinitialiser le mot de passe
+            </h1>
+            <form id="password" method="post">
+                {{ form.csrf_token }}
+
+                {% if form.old_password %}
+                <div role="group">
+                    {{ form.old_password.label }}
+                    {{ form.old_password() }}
+                </div>
+                {% endif %}
+
+                <div role="group">
+                    {{ form.password.label }}
+                    {{ form.password() }}
+                </div>
+
+                <div role="group">
+                    {{ form.password_confirm.label }}
+                    {{ form.password_confirm() }}
+                </div>
+
+                <input type="submit" value="modifier">
+            </form>
+        </main>
+    </body>
+    <footer>
+        <ul class="links">
+            <li>
+                <a href="https://github.com/natolh/linnote">
+                    Code Source
+                </a>
+            </li>
+        </ul>
+    </footer>
+</html>

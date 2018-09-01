@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+
+        <title>{{ title|default('linnote') }}</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='specials/favicon.png') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Style -->
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/master.css') }}">
+
+        <!-- Animation -->
+        <script src="{{ url_for('static', filename='scripts/master.js') }}" defer></script>
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <header>
+            {% block header %}
+            {% endblock %}
+        </header>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% set title = "Fusion d'épreuves" %}
+{% set module = 'épreuves' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ title }}</h1>
+</header>
+<section>
+    <form method="post">
+        {{ form.csrf_token }}
+
+        <div role="group">
+            {{ form.title.label }}
+            {{ form.title() }}
+        </div>
+
+        <div role="group">
+            {{ form.assessments.label }}
+            {{ form.assessments() }}
+        </div>
+
+        <input type="submit" value="fusionner">
+        </form>
+</section>
+{% endblock %}

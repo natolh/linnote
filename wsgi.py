@@ -8,10 +8,10 @@ Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
-from linnote.client import create_app
-from linnote.client import api, site, accounts, assessments, reports, users
+from linnote import create_app
+from linnote import account, assessments, services, users
 
 
-BLUEPRINTS = [api, site, accounts, assessments, reports, users]
+BLUEPRINTS = [account, assessments, services, users]
 APPLICATION = create_app('linnote', config_path='configuration.ini',
                          blueprints=BLUEPRINTS)

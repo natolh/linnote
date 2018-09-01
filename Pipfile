@@ -14,11 +14,14 @@ alembic = "*"
 pandas = "*"
 xlrd = "*"
 matplotlib = "*"
+gunicorn = "*"
+pyjwt = "*"
 
 [dev-packages]
 pylint = "*"
 mypy = "*"
-"autopep8" = "*"
+autopep8 = "*"
+rope = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"

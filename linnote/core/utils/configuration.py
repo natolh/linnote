@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Configuration.
+Tools to read INI configuration files.
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -10,23 +10,38 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 
 from configparser import ConfigParser
 from pathlib import Path
-from linnote import APP_DIR
+from typing import Union
 
 
-def load(config_path):
+def locate(configuration_path: Union[str, Path]) -> Path:
     """
-    Load configuration from INI file.
+    Locate a configuration file and return it in the form of a Path object.
 
-    - configfile:   A pathlike object. Path to the configuration file default
-                    to the file named 'configuration.ini' in the app directory.
-
-    Return: A config object.
+    If the path provided is not absolute, the path is assumed to be relative
+    to the current working directory.
     """
-    # Locate configuration file.
-    config_path = Path(config_path)
-    if not config_path.is_absolute():
-        config_path = APP_DIR.parent.joinpath(config_path)
+    root = Path.cwd()
+    configuration_path = Path(configuration_path)
+    if not configuration_path.is_absolute():
+        configuration_path = root.joinpath(configuration_path)
+    return configuration_path
 
+def load(configuration_path: Union[str, Path]) -> ConfigParser:
+    """
+    Load a configuration file.
+
+    If the path provided is not absolute, the path is assumed to be relative
+    to the current working directory. See 'locate' function for further
+    details.
+    """
+    configuration_file = locate(configuration_path)
     configuration = ConfigParser()
-    configuration.read(config_path)
+    configuration.read(configuration_file)
     return configuration
+
+def save(configuration_path: Union[str, Path], configuration: ConfigParser):
+    """
+    Save the configuration.
+    """
+    configuration_file = locate(configuration_path)
+    configuration.write(configuration_file.open('w'))

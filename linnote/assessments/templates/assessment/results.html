@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% set title = 'Résultats' %}
+{% set module = 'épreuves' %}
+{% set section = 'résultats' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ assessment.title }}</h1>
+    <menu type="toolbar">
+        <li>
+            <button class='xhr' data-method='post' data-action="{{ url_for('api.grade', identifier=assessment.identifier, grader='top_linear') }}">
+                Lisser
+            </button>
+        </li>
+    </menu>
+    {% include 'assessment/menu.html' %}
+</header>
+<section>
+    <header>
+        <h2>Importer des résultats</h2>
+    </header>
+    <div class="sub">
+        <form method="post" enctype="multipart/form-data">
+
+            {{ form.csrf_token() }}
+
+            <fieldset>
+                <div role="group">
+                    {{ form.results.label }}
+                    {{ form.results() }}
+                </div>
+                <div role="group">
+                    {{ form.scale.label }}
+                    {{ form.scale() }}
+                </div>
+            </fieldset>
+            <input type="submit" value="enregistrer">
+        </form>
+    </div>
+</section>
+<div role="grid" class="results">
+{% for result in assessment.results %}
+    <ul>
+        <p class="heading">
+            {{ result.student.identity.fullname }}
+        </p>
+        <p class="mark">
+            {{ result.value|round(assessment.precision) }}
+            / {{ result.scale }}
+        </p>
+    </ul>
+{% endfor %}
+</div>
+{% endblock %}

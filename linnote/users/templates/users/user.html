@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% set title = user.fullname %}
+{% set module = 'utilisateurs' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ title }}</h1>
+</header>
+<section>
+    <header>
+        <div>
+            <h2>Identité</h2>
+            <p>
+                L'adresse email sert d'identifiant de connexion à la plateforme.
+            </p>
+        </div>
+
+        <input form="identity" type="submit" value="enregistrer">
+    </header>
+
+    <div class="sub">
+        <form id="identity" method="post" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <fieldset>
+                <div role="group">
+                    {{ form.firstname.label }}
+                    {{ form.firstname(autofocus="autofocus") }}
+                </div>
+
+                <div role="group">
+                    {{ form.lastname.label }}
+                    {{ form.lastname() }}
+                </div>
+            </fieldset>
+
+            <div role="group">
+                {{ form.email.label }}
+                {{ form.email() }}
+            </div>
+        </form>
+    </div>
+</section>
+<section>
+    <header>
+        <h2>Groupes</h2>
+        <div>
+            <input form="identity" type="submit" value="enregistrer">
+            <input form="identity" type="reset" value="effacer">
+        </div>
+
+    </header>
+    <div class="sub">
+        {{ form.groups.label }}
+        {{ form.groups(form="identity") }}
+    </div>
+</section>
+<section>
+    <header>
+        <div>
+            <h2>
+                Sécurité
+            </h2>
+        </div>
+    </header>
+    <div class="sub">
+        <div class="heading">
+            <h3>Jeton de connexion</h3>
+            <p>
+                Permet à l'utilisateur de se connecter sans mot de passe pour initialiser ou réinitialiser son compte. Le lien est valable 60 minutes à compter de sa création.
+            </p>
+        </div>
+
+        <input type="text" readonly value="{{ url_for('account.reset', token=user.access_token(), _external=True) }}">
+    </div>
+</section>
+<section>
+    <header>
+        <h2>Confidentialité</h2>
+    </header>
+    <div class="danger sub">
+        <div class="heading">
+            <h3>
+                Supprimer le compte
+            </h3>
+            <p class="informations">
+                <em>La suppression du compte est définitive, les données de l'utilisateur ne pourront pas être restaurées</em>.
+            </p>
+        </div>
+        <button class="danger xhr" data-action="{{ url_for('api.user', identifier=user.identifier) }}" data-method="delete">
+            Supprimer le compte de « {{ user.fullname }} »
+        </button>
+    </div>
+</section>
+{% endblock %}

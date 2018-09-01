@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% set module = 'compte' %}
+{% set section = 'profil' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>compte</h1>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('account.logout') }}">
+                Déconnexion
+            </a>
+        </li>
+    </menu>
+    {% include 'menu.html' %}
+</header>
+
+<section>
+    <header>
+        <div>
+            <h2>Identité</h2>
+            <p>
+                Votre adresse email constitue votre identifiant pour la plateforme.
+            </p>
+        </div>
+        <input form="identity" type="submit" value="enregistrer">
+    </header>
+    <div class="sub">
+        <form id="identity" method="post">
+            {{ form.csrf_token }}
+
+            <fieldset>
+                <div role="group">
+                    {{ form.firstname.label }}
+                    {{ form.firstname() }}
+                </div>
+
+                <div role="group">
+                    {{ form.lastname.label }}
+                    {{ form.lastname() }}
+                </div>
+            </fieldset>
+
+            <div role="group">
+                {{ form.email.label }}
+                {{ form.email() }}
+            </div>
+        </form>
+    </div>
+</section>
+<section>
+    <header>
+        <div>
+            <h2>
+                {% if current_user.profile.role == 'administrator' %}
+                Administrateur
+                {% else %}
+                Profil
+                {% endif %}
+            </h2>
+        </div>
+    </header>
+    <div class="sub">
+        <p>
+            Le profil est vide.
+        </p>
+    </div>
+</section>
+{% endblock %}

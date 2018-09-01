@@ -1,0 +1,129 @@
+@charset "UTF-8";
+/*
+Styling for header section.
+
+Author: Anatole Hanniet, 2016-2018.
+License: Mozilla Public License, see 'LICENSE.txt' for details.
+*/
+body > header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    z-index: 100;
+}
+
+body > header .site {
+    padding: .5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-main);
+}
+
+body > header .site a {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: normal;
+    letter-spacing: 0.03rem;
+    text-transform: capitalize;
+    color: rgba(255, 255, 255, 0.75);
+    transition: color 100ms ease-out;
+}
+
+body > header .site a:hover, body > header .site a:focus, body > header .site a:active, body > header .site a.active {
+    color: white !important;
+    transition: color 100ms ease-in;
+}
+
+body > header .site nav {
+    height: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+body > header .site nav ul {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    }
+
+body > header .site nav li {
+    display: flex;
+    align-items: stretch;
+}
+
+body > header .site nav li:not(:last-child) {
+    margin-right: 0.7rem;
+}
+
+#brand {
+    margin-right: 50px;
+    font-size: 1rem;
+    font-weight: lighter;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Header for main section */
+main > header {
+    padding: 0;
+    display: grid;
+    grid: "heading toolbar" auto
+          "nav nav" auto
+          / auto;
+    gap: 1rem;
+}
+
+main > header menu[type="toolbar"] {
+    grid-area: toolbar;
+    display: flex;
+    align-self: center;
+    justify-self: flex-end;
+}
+
+main > header menu[type="toolbar"] li {
+    display: contents;
+}
+
+main > header menu[type="toolbar"] a {
+    background-color: gold;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+main > header menu[type="toolbar"] li:not(:last-of-type) a {
+    margin-right: 10px;
+}
+
+main > header menu[type="navigation"] {
+    grid-area: nav;
+    display: flex;
+    border-bottom: 2px solid hsl(0, 0%, 90%);
+}
+
+main > header menu[type="navigation"] li {
+    display: contents;
+}
+
+main > header menu[type="navigation"] li:not(:last-of-type) a {
+    margin-right: 20px;
+}
+
+main > header menu[type="navigation"] a {
+    font-family: "Open Sans";
+    font-weight: 400;
+    text-transform: capitalize;
+    position: relative;
+    bottom: -2px;
+    color: hsl(0, 0%, 40%);
+    border-bottom: 2px solid transparent;
+    padding: .8rem 0;
+}
+
+main > header menu[type="navigation"] a:hover, main > header menu[type="navigation"] a.active {
+    color: black;
+    border-color: hsl(340, 65%, 40%);
+}

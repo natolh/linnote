@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% set title = 'Épreuves' %}
+{% set module = 'épreuves' %}
+
+{% block header %}
+{% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>Épreuves</h1>
+    <menu type="toolbar">
+        <li>
+            <a href="{{ url_for('assessments.merger') }}">
+                Fusionner
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('assessments.assessment_creation') }}">
+                Ajouter
+            </a>
+        </li>
+    </menu>
+</header>
+
+<ul class="assessment active cards deck">
+    {% for assessment in assessments %}
+    <li>
+        <a href="{{ url_for('assessments.assessment', identifier=assessment.identifier) }}">
+            <div class="heading">
+                {{ assessment.title }}
+            </div>
+            <ul class="content">
+                <li>
+                    Date de création :
+                    {{ assessment.creation_date.strftime('%d/%m/%Y') }}
+                </li>
+                <li>
+                    Auteur :
+                    {{ assessment.creator }}
+                </li>
+            </ul>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

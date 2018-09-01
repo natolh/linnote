@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <title>linnote</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='specials/favicon.png') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/forms.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+        <link rel="stylesheet" href="{{ url_for('account.static', filename='css/footer.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('account.static', filename='css/master.css') }}">
+    </head>
+    <body>
+        <main>
+            <h1 id="brand">
+                linnote
+            </h1>
+            <hr>
+            <form method="post">
+                {{ form.csrf_token }}
+
+                <div role="group">
+                    {{ form.identifier.label }}
+                    {{ form.identifier(autofocus="on") }}
+                </div>
+
+                <div role="group">
+                    {{ form.password.label }}
+                    {{ form.password() }}
+                </div>
+
+                <input type="submit" value="connexion">
+            </form>
+        </main>
+        <footer>
+            <ul class="links">
+                <li>
+                    <a href="https://github.com/natolh/linnote">
+                        Code Source
+                    </a>
+                </li>
+            </ul>
+        </footer>
+    </body>
+</html>

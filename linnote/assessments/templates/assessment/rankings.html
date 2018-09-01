@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% set title = assessment.title %}
+
+{% block head %}
+    <meta name="author" content="{{ current_user.fullname }}">
+    <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='css/ranking.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>
+    {{ title }}
+</h1>
+
+{% for ranking in assessment.rankings %}
+<section>
+    <h2>{{ ranking.group.name|default('Général') }}</h2>
+    <table class="statistics">
+        <thead>
+            <tr>
+                <th>Effectif</th>
+                <th>Minimale</th>
+                <th>Médiane</th>
+                <th>Moyenne</th>
+                <th>Maximale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% set stats = statistics.__next__() %}
+                <td>{{ stats['size'] }}</td>
+                <td>{{ stats['minimum'] }}</td>
+                <td>{{ stats['median'] }}</td>
+                <td>{{ stats['mean'] }}</td>
+                <td>{{ stats['maximum'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <svg viewBox="0 0 432 288">
+        {% autoescape false %}
+            {{ histograms.__next__() }}
+        {% endautoescape %}
+    </svg>
+    <table class="results">
+        <thead>
+            <tr>
+                <th class="left-align">Anonymat</th>
+                <th class="left-align">Note brute</th>
+                <th class="left-align">Note</th>
+                <th class="right-align">Rang</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rank in ranking %}
+            <tr>
+                <td class="left-align">
+                    <strong>
+                        {{ rank.mark.student.aid }}
+                    </strong>
+                </td>
+                <td class="left-align">
+                    {{ rank.mark.score|round(assessment.precision) }}
+                </td>
+                <td class="left-align">
+                    {{ rank.mark.value|round(assessment.precision) }}
+                </td>
+                <td class="right-align">
+                    {{ rank.position }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endfor %}
+{% endblock %}

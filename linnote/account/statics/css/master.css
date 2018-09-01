@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+/*
+Main styles for the account application
+
+Author: Anatole Hanniet, 2016-2018.
+License: Mozilla Public License, see 'LICENSE.txt' for details.
+*/
+
+html {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 100%;
+}
+
+body {
+    display: grid;
+    grid: "main" auto
+          "footer" minmax(4rem, min-content)
+          / 1fr;
+    background: linear-gradient(to bottom right, hsl(30, 60%, 75%, 0.85), hsl(340, 70%, 30%, 0.85));
+}
+
+main {
+    grid-area: main;
+    justify-self: center;
+    align-self: center;
+    padding: 3rem 2rem;
+    width: 100vw;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsla(0, 0%, 100%, 1);
+    border-radius: 5px;
+    box-shadow: 0 0 2rem hsla(0, 0%, 0%, 0.2);
+}
+
+#brand {
+    font-family: 'Open Sans';
+    font-weight: lighter;
+    letter-spacing: -0.1rem;
+    text-transform: uppercase;
+    text-align: center;
+    color: hsla(0, 0%, 0%, 0.4);
+}
+
+hr {
+    height: 1px;
+    width: 3rem;
+    background-color: hsla(0, 0%, 0%, 0.1);
+    border: none;
+    margin: .75rem 0 2.25rem 0;
+}
+
+form {
+    width: 100%;
+}
+
+input[type="submit"] {
+    margin-top: 2.15rem;
+    background-color: var(--color-main-deep);
+    width: 100%;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus, input[type="submit"]:active {
+    background-color: var(--color-main-light);
+}
+
+input {
+    border-width: 1px 1px 2px 1px;
+}
+
+label {
+    font-weight: 300;
+    color: rgb(200, 200, 200);
+}
+
+form div[role="group"]:focus-within label {
+    color: rgb(100, 100, 100);
+}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% set title = 'Nouvelle épreuve' %}
+{% set module = 'épreuves' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>Nouvelle épreuve</h1>
+</header>
+<section>
+    <form method="post" enctype="multipart/form-data">
+
+        {{ form.csrf_token }}
+
+        <div role="group">
+            {{ form.title.label }}
+            {{ form.title(autocomplete="off", autofocus="on") }}
+        </div>
+
+        <fieldset>
+            <div role="group">
+                {{ form.coefficient.label }}
+                {{ form.coefficient(type="number", autocomplete="off") }}
+            </div>
+            <div role="group">
+                {{ form.precision.label }}
+                {{ form.precision(type="number", autocomplete="off") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Analyse en sous-groupes</legend>
+            <div class="fullsize" role="group">
+                {{ form.groups.label }}
+                {{ form.groups() }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Importer des notes</legend>
+
+            <div role="group">
+                {{ form.results.label }}
+                {{ form.results() }}
+            </div>
+            <div role="group">
+                {{ form.scale.label }}
+                {{ form.scale(type="number", autocomplete="off") }}
+            </div>
+        </fieldset>
+
+        <input type="submit" value="Créer">
+    </form>
+</section>
+{% endblock %}

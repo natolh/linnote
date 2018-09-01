@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+/* General definitions for cards decks and cards. */
+.cards.deck {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-gap: 2rem;
+}
+
+/*
+Rules for active cards deck
+
+An active cards deck embeded each card content inside a link so that the whole card becam clickable. The card container is take-out the design and merely serve as syntax.
+*/
+.active.cards.deck > li {
+    display: contents;
+}
+
+.active.cards.deck > :nth-child(n) > a {
+    padding: 1.5rem;
+    border-radius: 5px;
+    background-color: hsl(0, 0%, 90%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    transition: all ease-out 40ms;
+}
+
+.active.cards.deck > :nth-child(n) > a:hover {
+    border-top-color: var(--color-main);
+    transition: border ease-in 200ms;
+}
+
+.cards.deck .heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Tailored cards decks & cards */
+.assessment.cards.deck {
+    grid: auto / repeat(4, 1fr);
+}
+
+.user.cards.deck {
+    grid: auto / 1fr;
+}
+
+@media screen and (min-width: 800px) {
+    .user.cards.deck {
+        grid: auto / repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .user.cards.deck {
+        grid: auto / repeat(3, 1fr);
+    }
+}
+
+.group.cards.deck {
+    grid: auto / repeat(4, 1fr);
+}

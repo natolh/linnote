@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% set title = group.name %}
+{% set module = 'utilisateurs' %}
+
+{% block header %}
+    {% include 'workspaces/admin.html' %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ title }}</h1>
+    <menu type="navigation">
+        <li>
+            <a href="{{ url_for('users.group_members', identifier=group.identifier) }}">
+                membres
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('users.group_settings', identifier=group.identifier) }}">
+                paramètres
+            </a>
+        </li>
+    </menu>
+</header>
+<section>
+    <header>
+        <h2>Paramètres</h2>
+        <input form="group" type="submit" value="enregistrer">
+    </header>
+    <div class="sub">
+        <form id="group" method="post" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <div role="group">
+                {{ form.name.label }}
+                {{ form.name(autocomplete="off", autofocus="on") }}
+            </div>
+        </form>
+    </div>
+
+</section>
+<section>
+    <header>
+        <div>
+            <h2>Suppression</h2>
+            <p>
+                La suppression d'un groupe est <em>irréversible</em>, celle-ci <em>n'entraîne pas la suppression des comptes utilisateurs</em> membres du groupe.
+            </p>
+        </div>
+    </header>
+    <div class="sub">
+        <button class="danger xhr" data-method="delete" data-action="{{ url_for('api.group', identifier=group.identifier) }}">
+            Supprimer le groupe « {{ group.name }} »
+        </button>
+    </div>
+</section>
+{% endblock %}
