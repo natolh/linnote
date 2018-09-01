@@ -20,10 +20,12 @@ class GroupForm(Form):
 
 
 class UserImportationForm(Form):
+    """Form for importing a list of users."""
     members = FileField('Listing', validators=[Optional()])
 
 
 class GroupCreationForm(GroupForm, UserImportationForm):
+    """Form for creating and, if needed, creating and importing users in it."""
     pass
 
 
