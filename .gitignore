@@ -11,9 +11,6 @@ __pycache__
 .pytest_cache
 .env
 
-# Others
-linnote/ressources/public/media/**
-
 # Configuration
 *.cfg
 *.conf
