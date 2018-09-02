@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tools to read INI configuration files.
+Handle configuration file (INI-style).
 
 Author: Anatole Hanniet, 2016-2018.
 License: Mozilla Public License, see 'LICENSE.txt' for details.
@@ -17,9 +17,10 @@ def load(configuration_path: Union[str, Path]) -> ConfigParser:
     """
     Load a configuration file.
 
-    If the path provided is not absolute, the path is assumed to be relative
-    to the current working directory. If the path point to a directory or a
-    non existent file a FileNotFoundError is raised by Path.open().
+    The path provided in 'configuration_path' should exist, point to a file
+    and the file should be a valid configuration file (INI-style) to be parsed
+    by ConfigParser. If the path is not absolute, the path is assumed to be
+    relative to the current working directory.
     """
     configuration = ConfigParser()
     configuration_file = Path(configuration_path).open()
