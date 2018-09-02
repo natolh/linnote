@@ -324,10 +324,11 @@ class Assessment(BASE):
     @classmethod
     def merge(cls, title: str, *args) -> 'Assessment':
         """
-        Merge assessments into one assessment.
+        Merge multiple assessments into one.
 
-        The product of merging multiple assessments is a new assessment with
-        'title' as title. Assessments involved in the merge are preserved.
+        Create a new Assessment with 'title' as title. Other attributes of the
+        new Assessment are determined using this function accordingly to the
+        set of assessments to merge.
         """
         # Merge data of assessments.
         scale = sum(map(attrgetter('scale'), args))
