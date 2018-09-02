@@ -322,7 +322,7 @@ class Assessment(BASE):
         raise NotImplementedError
 
     @classmethod
-    def merge(cls, title: str, *args) -> 'Assessment':
+    def merge(cls, title: str, *assessments) -> 'Assessment':
         """
         Merge multiple assessments into one.
 
@@ -330,11 +330,16 @@ class Assessment(BASE):
         new Assessment are determined using this function accordingly to the
         set of assessments to merge.
         """
-        # Merge data of assessments.
-        scale = sum(map(attrgetter('scale'), args))
-        precision = min(map(attrgetter('precision'), args))
-        results = Mark.merge(*list(map(attrgetter('results'), args)))
-        # Create the assessment.
+        # Merge.
+        scales = [assessment.scale for assessment in assessments]
+        scale = sum(scales)
+
+        precision = min([assessment.precision for assessment in assessments])
+
+        results = [assessment.results for assessment in assessments]
+        results = Mark.merge(results)
+
+        # Create the new assessment.
         assessment = cls(title, scale, precision=precision)
         assessment.add_results(results)
         return assessment
