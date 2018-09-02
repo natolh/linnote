@@ -101,7 +101,7 @@ class Ranking(BASE):
     assessment_id = Column(Integer(), ForeignKey('assessments.identifier'))
     group_id = Column(Integer(), ForeignKey('groups.identifier'))
 
-    assessment = relationship('Assessment')
+    assessment = relationship('Assessment', back_populates='rankings')
     group = relationship('Group')
     ranks = relationship('Rank', back_populates='ranking', cascade='all')
 
