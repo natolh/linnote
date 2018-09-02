@@ -12,7 +12,6 @@ from flask import Flask
 import matplotlib
 from linnote.account import LOGIN
 from linnote.account.utils import LOGIN_MANAGER
-from linnote.core.utils import CSP_POLICY
 from linnote.core.utils.configuration import load
 from linnote.core.utils import configure as configure_session
 
