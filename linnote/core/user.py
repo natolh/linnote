@@ -95,6 +95,9 @@ class User(BASE):
     def access_token(self, duration=3600):
         """
         Create a temporary JWT access token.
+
+        Currently used only for initializing account's password or recovering
+        it.
         """
         token = dict()
         token['issuer'] = 'linnote'
