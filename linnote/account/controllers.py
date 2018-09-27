@@ -21,7 +21,7 @@ class AccountLoginController(MethodView):
     """Controller for managing user login task."""
 
     decorators = [skip_if_authenticated]
-    template = 'authentification/login.html'
+    template = 'account/authentification/login.html'
 
     def get(self):
         """
@@ -72,7 +72,7 @@ class AccountProfileController(MethodView):
     """
 
     decorators = [login_required]
-    template = 'profile.html'
+    template = 'account/profile.html'
 
     def get(self):
         """Display the profile."""
@@ -98,7 +98,7 @@ class AccountPasswordController(MethodView):
     """Controller for managing the user's account password."""
 
     decorators = [login_required]
-    template = 'password.html'
+    template = 'account/password.html'
 
     def get(self):
         """Get the password modification formular."""
@@ -128,7 +128,7 @@ class AccountPasswordController(MethodView):
 class AccountResetController(MethodView):
     """Controller for resetting the user's account password."""
 
-    template = 'authentification/reset.html'
+    template = 'account/authentification/reset.html'
 
     def get(self):
         """Build user's account password reset view."""

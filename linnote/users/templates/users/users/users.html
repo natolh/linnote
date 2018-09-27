@@ -2,6 +2,7 @@
 
 {% set title = 'Utilisateurs' %}
 {% set module = 'utilisateurs' %}
+{% set section = 'personnes' %}
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
@@ -17,18 +18,7 @@
             </a>
         </li>
     </menu>
-    <menu type="navigation">
-        <li>
-            <a href="{{ url_for('users.users') }}">
-                personnes
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('users.groups') }}">
-                groupes
-            </a>
-        </li>
-    </menu>
+    {% include 'users/menu.html' %}
 </header>
 
 <ul class="user active cards deck">

@@ -27,7 +27,7 @@ class AssessmentsController(MethodView):
     """Controls assessments view."""
 
     decorators = [login_required]
-    template = 'assessments.html'
+    template = 'assessments/assessments.html'
 
     def get(self):
         """Build assessments view."""
@@ -85,7 +85,7 @@ class AssessmentController(MethodView):
 class AssessmentCreationController(AssessmentController):
     """Controls assessment's creation view."""
 
-    template = 'assessment/creation.html'
+    template = 'assessments/assessment/creation.html'
 
     def get(self):
         """Build assessment's creation view."""
@@ -124,7 +124,7 @@ class AssessmentCreationController(AssessmentController):
 class AssessmentSettingsController(AssessmentController):
     """Controls assessment's settings view."""
 
-    template = 'assessment/settings.html'
+    template = 'assessments/assessment/settings.html'
 
     def get(self, identifier):
         """Build assessment's settings view."""
@@ -158,7 +158,7 @@ class AssessmentResultsController(MethodView):
     """Controls assessment's results view."""
 
     decorators = [login_required]
-    template = 'assessment/results.html'
+    template = 'assessments/assessment/results.html'
 
     def get(self, identifier):
         """Build assessment's results view."""
@@ -197,7 +197,7 @@ class MergeController(MethodView):
     """Controls assessments merging view."""
 
     decorators = [login_required]
-    template = 'merger.html'
+    template = 'assessments/merger.html'
 
     def get(self):
         """Build assessments merging view."""
@@ -243,7 +243,7 @@ class MergeController(MethodView):
 class AssessmentRankingsController(MethodView):
     """Controls assessment's report view."""
 
-    template = 'assessment/rankings.html'
+    template = 'assessments/assessment/rankings.html'
 
     def get(self, identifier):
         """Build assessment's rankings view."""
