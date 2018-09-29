@@ -35,13 +35,11 @@ class User(BASE):
     groups = relationship(
         'Group', secondary='users_groups', back_populates='members')
 
-    def __init__(self, firstname, lastname, email, **kwargs) -> None:
+    def __init__(self, firstname, lastname, email, password=None) -> None:
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
-
-        password = kwargs.get('password', None)
         if password:
             self.set_password_hash(password)
 
