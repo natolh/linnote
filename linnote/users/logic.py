@@ -30,5 +30,5 @@ def load_group(file: Path, name: str = None) -> Group:
     for student in students:
         user = User(student['first_name'], student['last_name'], student['email'])
         student = Student(identity=user, aid=int(student['identifier']))
-        group.members.append(user)
+        group.append(user)
     return group

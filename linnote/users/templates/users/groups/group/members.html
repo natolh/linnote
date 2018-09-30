@@ -24,7 +24,7 @@
     </menu>
 </header>
 <ul class="user active cards deck">
-    {% for user in group.members %}
+    {% for user in group %}
     <li>
         <a href="{{ url_for('users.user', identifier=user.identifier) }}">
             <div class="heading">
