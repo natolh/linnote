@@ -171,6 +171,9 @@ class Group(BASE):
     def __repr__(self) -> str:
         return f'<User Group: {self.name}>'
 
+    def __str__(self) -> str:
+        return self.name
+
     def __len__(self) -> int:
         return len(self.members)
 
