@@ -169,7 +169,7 @@ class Group(BASE):
         'User', secondary='users_groups', back_populates='groups')
 
     def __repr__(self) -> str:
-        return f'<Group of students: {self.name}>'
+        return f'<User Group: {self.name}>'
 
     def __len__(self) -> int:
         return len(self.members)
