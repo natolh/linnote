@@ -22,13 +22,15 @@ def load_group(file: Path, name: str = None) -> Group:
 
     Return: A 'Group' object.
     """
-    group = Group(name=name)
+    fields = ['identifier', 'firstname', 'lastname', 'email']
+    types = {'identifier': int}
 
-    students = read_excel(
-        file, names=['identifier', 'first_name', 'last_name', 'email'])
-    students = students.to_dict('records')
-    for student in students:
-        user = User(student['first_name'], student['last_name'], student['email'])
-        student = Student(identity=user, aid=int(student['identifier']))
-        group.members.append(user)
+    records = read_excel(file, names=fields, dtypes=types)
+    records = records.to_dict('records')
+
+    group = Group(name=name)
+    for record in records:
+        user = User(record['firstname'], record['lastname'], record['email'])
+        Student(identity=user, aid=record['identifier'])
+        group.append(user)
     return group

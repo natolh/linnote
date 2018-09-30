@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
-{% set title = group.name %}
+{% set title = 'Utilisateurs' %}
 {% set module = 'utilisateurs' %}
+{% set section = 'personnes' %}
 
 {% block header %}
     {% include 'workspaces/admin.html' %}
@@ -9,22 +10,19 @@
 
 {% block content %}
 <header>
-    <h1>{{ title }}</h1>
-    <menu type="navigation">
+    <h1>Utilisateurs</h1>
+    <menu type="toolbar">
         <li>
-            <a href="{{ url_for('users.group_members', identifier=group.identifier) }}">
-                membres
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('users.group_settings', identifier=group.identifier) }}">
-                paramètres
+            <a href="{{ url_for('users.user_creation') }}">
+                Ajouter
             </a>
         </li>
     </menu>
+    {% include 'users/menu.html' %}
 </header>
+
 <ul class="user active cards deck">
-    {% for user in group.members %}
+    {% for user in users %}
     <li>
         <a href="{{ url_for('users.user', identifier=user.identifier) }}">
             <div class="heading">

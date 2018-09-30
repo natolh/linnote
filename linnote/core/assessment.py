@@ -20,7 +20,6 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, Float, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
-from .user import Student
 from .utils import BASE
 
 
@@ -299,7 +298,7 @@ class Assessment(BASE):
         self.results.extend(marks)
 
     @property
-    def attendees(self) -> List[Student]:
+    def attendees(self) -> List['Student']:
         """
         Students that have taken the assessment.
         """
@@ -315,7 +314,7 @@ class Assessment(BASE):
         grader.apply(self.results)
 
     @property
-    def expected(self) -> List[Student]:
+    def expected(self) -> List['Student']:
         """
         Students called for the assessment.
         """

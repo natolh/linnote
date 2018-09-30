@@ -22,7 +22,7 @@ class GroupsController(MethodView):
     """Controls the view of users groups."""
 
     decorators = [login_required]
-    template = 'groups/groups.html'
+    template = 'users/groups/groups.html'
 
     def get(self):
         """Display users groups."""
@@ -64,7 +64,7 @@ class GroupBaseController(MethodView):
 class GroupCreationController(GroupBaseController):
     """Controls the view for creating new users groups."""
 
-    template = 'groups/creation.html'
+    template = 'users/groups/creation.html'
 
     def get(self):
         """Display a form to gather data needed to create a users group."""
@@ -92,7 +92,7 @@ class GroupCreationController(GroupBaseController):
 class GroupSettingsController(GroupBaseController):
     """Controls the view of group's settings."""
 
-    template = 'groups/group/settings.html'
+    template = 'users/groups/group/settings.html'
 
     def get(self, identifier: int):
         """Display group's settings."""
@@ -113,7 +113,7 @@ class GroupSettingsController(GroupBaseController):
 class GroupMembersController(GroupBaseController):
     """Controls the view of group's members."""
 
-    template = 'groups/group/members.html'
+    template = 'users/groups/group/members.html'
 
     def get(self, identifier):
         """Display groups's members."""
@@ -125,7 +125,7 @@ class UsersController(MethodView):
     """Controls the view of users."""
 
     decorators = [login_required]
-    template = 'users/users.html'
+    template = 'users/users/users.html'
 
     def get(self):
         """Display users."""
@@ -150,7 +150,7 @@ class UserBaseController(MethodView):
     """Common methods for controllers of user's view."""
 
     decorators = [login_required]
-    template = 'users/user.html'
+    template = 'users/users/user.html'
 
     @staticmethod
     def load(identifier: int) -> User:
@@ -168,7 +168,7 @@ class UserBaseController(MethodView):
 class UserCreationController(UserBaseController):
     """Controls the view for creating a user."""
 
-    template = 'users/creation.html'
+    template = 'users/users/creation.html'
 
     def get(self):
         """Display a form for creating a new user."""

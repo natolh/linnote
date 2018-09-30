@@ -9,6 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from time import time
+from typing import Iterator, List
 from sqlalchemy import Column, Table
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -35,13 +36,11 @@ class User(BASE):
     groups = relationship(
         'Group', secondary='users_groups', back_populates='members')
 
-    def __init__(self, firstname, lastname, email, **kwargs) -> None:
+    def __init__(self, firstname, lastname, email, password=None) -> None:
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
-
-        password = kwargs.get('password', None)
         if password:
             self.set_password_hash(password)
 
@@ -95,6 +94,9 @@ class User(BASE):
     def access_token(self, duration=3600):
         """
         Create a temporary JWT access token.
+
+        Currently used only for initializing account's password or recovering
+        it.
         """
         token = dict()
         token['issuer'] = 'linnote'
@@ -156,30 +158,78 @@ class Student(Profile):
 
 
 class Group(BASE):
-    """A bunch of users that are somewhat related."""
+    """
+    A bunch of users that are somewhat related.
 
-    # Model definition.
+    The 'members' attribute that stores the collection of group's users is a
+    'list' to ensure compatibility with SQLAlchemy. But Group methods will
+    behave like if it is a set to ensure that no duplicate is present.
+    """
+
+    # SQLAlchemy model definition.
     __tablename__ = 'groups'
-    identifier = Column(
-        Integer(), primary_key=True)
-    name = Column(
-        String(250), nullable=False, unique=True, index=True)
+    identifier = Column(Integer(), primary_key=True)
+    name = Column(String(250), nullable=False, unique=True, index=True)
     members = relationship(
         'User', secondary='users_groups', back_populates='groups')
 
+    # Object methods.
+    def __init__(self, name: str = None, members: List[User] = None) -> None:
+        super().__init__()
+        self.name = name
+        self.members = members if members else list()
+
     def __repr__(self) -> str:
-        return f'<Group of students: {self.name}>'
+        return f'<User Group: {self.name}>'
+
+    def __str__(self) -> str:
+        return self.name if self.name else ''
 
     def __len__(self) -> int:
         return len(self.members)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator:
         return iter(self.members)
 
-    def __contains__(self, item) -> bool:
-        if not isinstance(item, User):
-            raise TypeError
-        return item in self.members
+    def __contains__(self, value) -> bool:
+        return value in self.members
+
+    def append(self, user: User):
+        """
+        Add a new user to group's members.
+
+        If the user is already present in the list, it will not be added a
+        second time.
+        """
+        if not user in set(self.members):
+            self.members.append(user)
+
+    def extend(self, users: List[User]):
+        """
+        Add a list of users to group's members.
+
+        If a user is already present in the list, it will not be added a
+        second time.
+        """
+        actual_members = set(self.members)
+        candidates = set(users)
+        self.members.extend(candidates - actual_members)
+
+    def remove(self, user: User):
+        """Remove a user from group's members."""
+        self.members.remove(user)
+
+    def pop(self, user: User) -> User:
+        """
+        Remove a user from group's members.
+
+        The removed user is then returned.
+        """
+        return self.members.pop(user)
+
+    def clear(self):
+        """Remove all group's members."""
+        self.members.clear()
 
 
 USERS_GROUPS = Table(

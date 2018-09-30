@@ -1,0 +1,14 @@
+{% set menu = [
+    ('personnes', url_for('users.users')),
+    ('groupes', url_for('users.groups'))]
+%}
+
+<menu type="navigation">
+        {% for id, href in menu %}
+        <li>
+            <a class="{%if id == section %}active{% endif %}" href="{{ href }}">
+                {{ id }}
+            </a>
+        </li>
+        {% endfor %}
+    </menu>
