@@ -9,6 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from time import time
+from typing import Iterator
 from sqlalchemy import Column, Table
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -177,7 +178,7 @@ class Group(BASE):
     def __len__(self) -> int:
         return len(self.members)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator:
         return iter(self.members)
 
     def __contains__(self, item) -> bool:
