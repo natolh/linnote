@@ -160,15 +160,14 @@ class Student(Profile):
 class Group(BASE):
     """A bunch of users that are somewhat related."""
 
-    # Model definition.
+    # SQLAlchemy model definition.
     __tablename__ = 'groups'
-    identifier = Column(
-        Integer(), primary_key=True)
-    name = Column(
-        String(250), nullable=False, unique=True, index=True)
+    identifier = Column(Integer(), primary_key=True)
+    name = Column(String(250), nullable=False, unique=True, index=True)
     members = relationship(
         'User', secondary='users_groups', back_populates='groups')
 
+    # Object methods.
     def __init__(self, name: str = None, members: List[User] = None) -> None:
         super().__init__()
         self.name = name
