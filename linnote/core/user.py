@@ -158,7 +158,13 @@ class Student(Profile):
 
 
 class Group(BASE):
-    """A bunch of users that are somewhat related."""
+    """
+    A bunch of users that are somewhat related.
+
+    The 'members' attribute that stores the collection of group's users is a
+    'list' to ensure compatibility with SQLAlchemy. But Group methods will
+    behave like if it is a set to ensure that no duplicate is present.
+    """
 
     # SQLAlchemy model definition.
     __tablename__ = 'groups'
@@ -187,6 +193,43 @@ class Group(BASE):
 
     def __contains__(self, value) -> bool:
         return value in self.members
+
+    def append(self, user: User):
+        """
+        Add a new user to group's members.
+
+        If the user is already present in the list, it will not be added a
+        second time.
+        """
+        if not user in set(self.members):
+            self.members.append(user)
+
+    def extend(self, users: List[User]):
+        """
+        Add a list of users to group's members.
+
+        If a user is already present in the list, it will not be added a
+        second time.
+        """
+        actual_members = set(self.members)
+        candidates = set(users)
+        self.members.extend(candidates - actual_members)
+
+    def remove(self, user: User):
+        """Remove a user from group's members."""
+        self.members.remove(user)
+
+    def pop(self, user: User) -> User:
+        """
+        Remove a user from group's members.
+
+        The removed user is then returned.
+        """
+        return self.members.pop(user)
+
+    def clear(self):
+        """Remove all group's members."""
+        self.members.clear()
 
 
 USERS_GROUPS = Table(
