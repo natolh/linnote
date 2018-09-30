@@ -9,7 +9,7 @@ License: Mozilla Public License, see 'LICENSE.txt' for details.
 """
 
 from time import time
-from typing import Iterator
+from typing import Iterator, List
 from sqlalchemy import Column, Table
 from sqlalchemy import Boolean, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -168,6 +168,11 @@ class Group(BASE):
         String(250), nullable=False, unique=True, index=True)
     members = relationship(
         'User', secondary='users_groups', back_populates='groups')
+
+    def __init__(self, name: str = None, members: List[User] = None) -> None:
+        super().__init__()
+        self.name = name
+        self.members = members
 
     def __repr__(self) -> str:
         return f'<User Group: {self.name}>'
