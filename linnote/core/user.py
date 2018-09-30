@@ -181,10 +181,8 @@ class Group(BASE):
     def __iter__(self) -> Iterator:
         return iter(self.members)
 
-    def __contains__(self, item) -> bool:
-        if not isinstance(item, User):
-            raise TypeError
-        return item in self.members
+    def __contains__(self, value) -> bool:
+        return value in self.members
 
 
 USERS_GROUPS = Table(
