@@ -177,13 +177,13 @@ class Group(BASE):
     def __init__(self, name: str = None, members: List[User] = None) -> None:
         super().__init__()
         self.name = name
-        self.members = members
+        self.members = members if members else list()
 
     def __repr__(self) -> str:
         return f'<User Group: {self.name}>'
 
     def __str__(self) -> str:
-        return self.name
+        return self.name if self.name else ''
 
     def __len__(self) -> int:
         return len(self.members)
